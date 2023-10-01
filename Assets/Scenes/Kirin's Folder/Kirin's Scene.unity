@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 1320181413}
   - component: {fileID: 1320181414}
   - component: {fileID: 1320181417}
+  - component: {fileID: 1320181418}
   m_Layer: 0
   m_Name: Turnip_Boy
   m_TagString: Untagged
@@ -350,6 +351,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c5fd28105c75a4aad8086e9bf9dcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1320181418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320181412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba66f76704c4daf44a802c300d72c8a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1607275751
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,15 +375,16 @@ GameObject:
   - component: {fileID: 1607275754}
   - component: {fileID: 1607275753}
   - component: {fileID: 1607275752}
+  - component: {fileID: 1607275756}
   m_Layer: 0
   m_Name: turnip_placeholder
-  m_TagString: Untagged
+  m_TagString: Cooktop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!68 &1607275752
-EdgeCollider2D:
+--- !u!70 &1607275752
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -379,38 +393,12 @@ EdgeCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
-  m_Points:
-  - {x: 0.5835301, y: -8.757952}
-  - {x: -0.9017591, y: -8.669754}
-  - {x: -1.7440164, y: -10.286324}
-  - {x: -2.6978383, y: -10.757107}
-  - {x: -4.1212435, y: -10.099451}
-  - {x: -5.799324, y: -6.9502497}
-  - {x: -6.9574575, y: -2.8534186}
-  - {x: -6.3760285, y: 0.5454246}
-  - {x: -4.5871882, y: 2.2338748}
-  - {x: -6.2728806, y: 7.364765}
-  - {x: -5.107209, y: 8.6924515}
-  - {x: 0.047634125, y: 10.6087885}
-  - {x: 2.4685671, y: 8.882368}
-  - {x: 5.5188155, y: 8.601938}
-  - {x: 6.1926727, y: 6.236535}
-  - {x: 4.0312533, y: 2.3790743}
-  - {x: 6.224661, y: 0.9475229}
-  - {x: 6.796769, y: -3.5989861}
-  - {x: 3.8396294, y: -10.094639}
-  - {x: 2.5734756, y: -10.785004}
-  - {x: 1.1361475, y: -10.031319}
-  - {x: 0.62665796, y: -8.76743}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+  m_Offset: {x: 0.07898339, y: -0.27645147}
+  m_Size: {x: 15.188088, y: 21.032862}
+  m_Direction: 0
 --- !u!50 &1607275753
 Rigidbody2D:
   serializedVersion: 4
@@ -497,3 +485,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &1607275756
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1607275751}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -6.5672746, y: -2.6459413}
+  - {x: -6.525338, y: -0.31118998}
+  - {x: -5.3202457, y: 1.8526527}
+  - {x: -5.004269, y: 3.635116}
+  - {x: -6.815345, y: 6.0948195}
+  - {x: -5.0532084, y: 8.727658}
+  - {x: -2.3331685, y: 8.647312}
+  - {x: 0.12539771, y: 10.40218}
+  - {x: 2.1468902, y: 9.097131}
+  - {x: 2.2636027, y: 8.14671}
+  - {x: 3.4819949, y: 9.01054}
+  - {x: 5.4828105, y: 8.106757}
+  - {x: 6.021198, y: 6.539679}
+  - {x: 4.7989855, y: 3.8313062}
+  - {x: 3.6229925, y: 2.90911}
+  - {x: 5.162828, y: 1.7643548}
+  - {x: 6.570642, y: -0.8677857}
+  - {x: 6.1483417, y: -5.401911}
+  - {x: 5.5064726, y: -8.211259}
+  - {x: 4.224995, y: -10.488914}
+  - {x: 1.6221675, y: -10.596871}
+  - {x: 0.49450767, y: -8.786985}
+  - {x: -0.9327954, y: -9.833775}
+  - {x: -2.5967002, y: -10.778289}
+  - {x: -4.5351295, y: -9.438116}
+  - {x: -5.830089, y: -7.15783}
+  - {x: -6.460129, y: -4.4494886}
+  - {x: -6.583451, y: -2.6459436}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0

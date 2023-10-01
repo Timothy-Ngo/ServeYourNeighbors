@@ -33,7 +33,7 @@ public class Player_Movement : MonoBehaviour {
         // Flips sprite for right/left movement change
         // if moving left and still facing right, flip
         // if moving right and not facing right, flip
-        if(inputHorizontal < 0 && facingRight || (inputHorizontal > 0 && !facingRight)) {
+        if (inputHorizontal < 0 && facingRight || (inputHorizontal > 0 && !facingRight)) {
             Flip();
         }
 
