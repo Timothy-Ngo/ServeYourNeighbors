@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player_Movement : MonoBehaviour {
+    // movement
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     float speed = 5f;
@@ -13,9 +14,15 @@ public class Player_Movement : MonoBehaviour {
     float inputHorizontal, inputVertical;
     bool facingRight = true;
 
+    // animation
+    Animator animator;
+    string currentState;
+
     void Start() {
+        // set components
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     void Update() {
@@ -37,6 +44,7 @@ public class Player_Movement : MonoBehaviour {
             Flip();
         }
 
+        // set velocity and MOVE!!!
         rb.velocity = new Vector2(inputHorizontal * speed, inputVertical * speed);
     }
 
@@ -47,5 +55,15 @@ public class Player_Movement : MonoBehaviour {
             sr.flipX = false;
         }
         facingRight = !facingRight;
+    }
+
+    private void ChangeAnimationState(string newState) {
+        if (currentState == newState) {
+            return;
+        }
+
+        //plays new state and sets current state to new
+        animator.Play(newState);
+        currentState = newState;
     }
 }
