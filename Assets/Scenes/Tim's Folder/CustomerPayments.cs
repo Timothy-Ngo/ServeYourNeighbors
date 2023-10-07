@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CustomerPayments : MonoBehaviour
 {
+
+    public AudioClip collectPaymentSfx;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +22,7 @@ public class CustomerPayments : MonoBehaviour
     private void CollectPayment(int amount)
     {
         Currency.inst.Deposit(amount);
+        SoundFX.inst.PlaySoundFXClip(collectPaymentSfx, transform, 1f);
     }
 
     public void StandardPayment()
