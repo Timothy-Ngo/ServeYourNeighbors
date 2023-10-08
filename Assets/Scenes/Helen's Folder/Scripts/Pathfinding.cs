@@ -21,17 +21,13 @@ public class Pathfinding : MonoBehaviour
     private HashSet<PathNode> closedList; // used to store already searched nodes
     public Pathfinding(int width, int height)
     {
-        grid = new Grid<PathNode>(width, height, 1f, Vector3.zero, (Grid<PathNode> g, int x, int y) => new PathNode(g, x, y));
+        grid = new Grid<PathNode>(width, height, 1f, Vector3.zero, (int x, int y) => new PathNode(x, y));
     }
 
     public List<Vector3> FindPath(Vector3 startWorldPosition, Vector3 endWorldPosition)
     {
         grid.GetXY(startWorldPosition, out int startX, out int startY);
         grid.GetXY(endWorldPosition, out int endX, out int endY);
-        Debug.Log("startX: " + startX);
-        Debug.Log("startY: " + startY);
-        Debug.Log("endX: " + endX);
-        Debug.Log("endY: " + endY);
 
         List<PathNode> path = FindPath(startX, startY, endX, endY);
         if (path == null)

@@ -19,7 +19,7 @@ public class Grid<TGridObject>
 
 
     // Constructor -- constructs grid array with dimensions of given width and height
-    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<Grid<TGridObject>, int, int, TGridObject> createGridObject)
+    public Grid(int width, int height, float cellSize, Vector3 originPosition, Func<int, int, TGridObject> createGridObject)
     {
         this.width = width;
         this.height = height;
@@ -35,36 +35,37 @@ public class Grid<TGridObject>
         {
             for (int y = 0; y < gridArray.GetLength(1); y ++)
             {
-                gridArray[x, y] = createGridObject(this, x, y);
+                gridArray[x, y] = createGridObject(x, y);
             }
         }
 
 
-        bool showDebug = true;
-        if (showDebug)
+        
+        if (FoodieSystem.inst.showDebug)
         {
             for ( int x = 0; x < gridArray.GetLength(0); x++ )
             {
                 for (int y = 0; y < gridArray.GetLength(1); y++ )
                 {
                     // creates the numbers
-                    debugTextArray[x, y] = CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPostion(x,y) + new Vector3(cellSize, cellSize) * 0.5f, 80, Color.white, TextAnchor.MiddleCenter);
+                    debugTextArray[x, y] = CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x,y) + new Vector3(cellSize, cellSize) * 0.5f, 80, Color.white, TextAnchor.MiddleCenter);
+                    debugTextArray[x, y].transform.parent = GameObject.Find("DebugTextGrid").transform; // puts the numbers under a gameObject
 
                     // draws the grid lines
-                    Debug.DrawLine(GetWorldPostion(x, y), GetWorldPostion(x, y + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPostion(x, y), GetWorldPostion(x + 1, y), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
+                    Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
                 }
 
             
             }
 
-            Debug.DrawLine(GetWorldPostion(0, height), GetWorldPostion(width, height), Color.white, 100f);
-            Debug.DrawLine(GetWorldPostion(width, 0), GetWorldPostion(width, height), Color.white, 100f);
+            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
+            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
         }
     }
 
     // returns the world position of a coordinate
-    private Vector3 GetWorldPostion(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize + originPosition; 
     }

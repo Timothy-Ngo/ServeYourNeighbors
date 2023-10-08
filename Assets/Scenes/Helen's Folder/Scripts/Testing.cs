@@ -20,8 +20,8 @@ public class Testing : MonoBehaviour
             pathfinding.GetGrid().GetXY(mouseWorldPosition, out int x, out int y);
             float cellSize = pathfinding.GetGrid().GetCellSize();
 
-            List<PathNode> path = pathfinding.FindPath(3, 0, x, y);
-            FoodieMovement.inst.SetTargetPosition(mouseWorldPosition, pathfinding);
+            List<PathNode> path = pathfinding.FindPath(0, 0, x, y);
+            //SetTargetPosition(mouseWorldPosition, pathfinding);
 
 
             if (path != null)

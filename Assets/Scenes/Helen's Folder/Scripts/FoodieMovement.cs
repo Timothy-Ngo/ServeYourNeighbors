@@ -4,32 +4,24 @@ using UnityEngine;
 
 public class FoodieMovement : MonoBehaviour
 {
-    public static FoodieMovement inst;
-    private void Awake()
-    {
-        inst = this;
-    }
 
-    public float speed = 20f;
-    public Transform foodie;
-
+    // Pathfinding
+    
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
+    public float speed = 20f;
+
     void Start()
     {
-        Transform bodyTransform = transform.Find("Body");
+        
     }
     
     void Update()
     {
         
         HandleMovement();
-        /*
-        if (Input.GetMouseButtonDown(0))
-        {
-            SetTargetPosition(Utils.GetMouseWorldPosition());
-        }
-        */
+       
+        
     }
 
     // moves one space
@@ -38,14 +30,17 @@ public class FoodieMovement : MonoBehaviour
         // if path exists
         if (pathVectorList != null)
         {
+            FoodieSystem.inst.pathfinding.GetGrid().GetXY(transform.position, out int x, out int y);
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(true);
+
             Vector3 targetPosition = pathVectorList[currentPathIndex];
 
             // if targetPosition is far enough 
-            if (Vector3.Distance(foodie.transform.position, targetPosition) > 0.5f)
+            if (Vector3.Distance(transform.position, targetPosition) > speed / 40f)
             {
                 // moves towards targetPosition
-                Vector3 moveDir = (targetPosition - foodie.transform.position).normalized;
-                foodie.transform.position = foodie.transform.position + moveDir * speed * Time.deltaTime;
+                Vector3 moveDir = (targetPosition - transform.position).normalized;
+                transform.position = transform.position + moveDir * speed * Time.deltaTime;
             }
             else // if close to targetPosition
             {
@@ -53,7 +48,8 @@ public class FoodieMovement : MonoBehaviour
                 currentPathIndex++;
                 if(currentPathIndex >= pathVectorList.Count)
                 {
-                    foodie.transform.position = targetPosition; // snaps foodie to targetPosition
+
+                    transform.position = targetPosition; // snaps foodie to targetPosition
                     StopMoving();
                     
                 }
@@ -68,23 +64,19 @@ public class FoodieMovement : MonoBehaviour
 
     public Vector3 GetPosition()
     {
-        return foodie.transform.position;
+        return transform.position;
     }
 
     public void SetTargetPosition(Vector3 targetPosition, Pathfinding pathfinding)
     {
-        Debug.Log(targetPosition);
         currentPathIndex = 0;
-        Debug.Log(pathVectorList);
-        Debug.Log(GetPosition());
-        //List<Vector3> testPath = pathfinding.FindPath(GetPosition(), targetPosition);
-        //Debug.Log("testPathLength: " + testPath.Count);
 
         pathVectorList = pathfinding.FindPath(GetPosition(), targetPosition);
-        Debug.Log("pathVectorList: " + pathVectorList);
         if (pathVectorList != null && pathVectorList.Count > 1)
         {
             pathVectorList.RemoveAt(0);
         } 
     }
+
+    
 }

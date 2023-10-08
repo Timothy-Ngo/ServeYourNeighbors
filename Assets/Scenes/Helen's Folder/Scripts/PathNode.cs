@@ -5,7 +5,6 @@ using UnityEngine;
 public class PathNode
 {
     // constructer variables
-    private Grid<PathNode> grid;
     public int x;
     public int y;
 
@@ -16,9 +15,8 @@ public class PathNode
 
     public bool isWalkable;
     public PathNode cameFromNode; // reference to previous node
-    public PathNode(Grid<PathNode> grid, int x, int y)
+    public PathNode(int x, int y)
     {
-        this.grid = grid;
         this.x = x;
         this.y = y;
         isWalkable = true;
