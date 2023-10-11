@@ -13,7 +13,7 @@ public class Player_Interaction : MonoBehaviour {
     bool cooktopRange = false;
     bool cooking = false;
     int cookTime = 5; // time in seconds
-    SpriteRenderer soup;
+    GameObject dish;
 
     Timer timer_script;
 
@@ -22,8 +22,7 @@ public class Player_Interaction : MonoBehaviour {
         messageText = interactionMessage.GetComponent<TextMeshProUGUI>();
         interactionMessage.SetActive(false);
 
-        soup = GameObject.Find("tomato_soup").GetComponent<SpriteRenderer>(); // https://docs.unity3d.com/ScriptReference/GameObject.Find.html
-        soup.enabled = false;
+        dish = GameObject.Find("cook_station/dish");
 
         timer_script = FindObjectOfType<Timer>();
     }
@@ -71,8 +70,8 @@ public class Player_Interaction : MonoBehaviour {
     IEnumerator CookWaiter(int sec) {
         timer_script.SetMaxTime(sec);
         yield return new WaitForSeconds(sec);
+        dish.GetComponent<Food>().SetDish("tomatoSoup"); // https://forum.unity.com/threads/calling-function-from-other-scripts-c.57072/
         Debug.Log("You have cooked something!");
-        soup.enabled = true;
         cooking = false;
     }
 }

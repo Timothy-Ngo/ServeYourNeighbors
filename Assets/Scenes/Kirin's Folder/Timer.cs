@@ -9,7 +9,9 @@ using UnityEngine.UI;
 
 public class Timer : MonoBehaviour {
     Image timerBar;
-    float maxTime = 0, timeLeft = 0;
+    public float maxTime = 0, timeLeft = 0;
+    bool running = false;
+    bool complete = false;
 
     void Start() {
         timerBar = GetComponent<Image>();
@@ -21,18 +23,27 @@ public class Timer : MonoBehaviour {
         timeLeft = sec;
         timerBar.fillAmount = 1;
         timerBar.enabled = true; // https://discussions.unity.com/t/how-to-make-a-ui-image-appear-disappear/163474
+        running = true;
     }
 
     void Update() {
-        if (timeLeft > 0) {
+        if(timeLeft > 0 && running) {
             timeLeft -= Time.deltaTime;
 
             // image type must be "Filled" for this to work
             // https://discussions.unity.com/t/my-health-bars-image-fillamount-doesnt-change/153541
             timerBar.fillAmount = timeLeft / maxTime;
-        }
-        else {
+        } else if(timeLeft <= 0 && running) {
+            running = false;
+            complete = true;
+        } else {
             timerBar.enabled = false; // https://discussions.unity.com/t/how-to-make-a-ui-image-appear-disappear/163474
         }
+    }
+
+    // can call this in Update() to check if the timer is done
+    public bool TimerComplete() {
+        Debug.Log("done!");
+        return complete;
     }
 }
