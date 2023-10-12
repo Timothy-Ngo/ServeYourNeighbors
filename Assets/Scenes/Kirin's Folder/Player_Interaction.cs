@@ -17,19 +17,31 @@ public class Player_Interaction : MonoBehaviour {
     private void Start() {
         interactionMessage = GameObject.Find("InteractionPrompt");
         messageText = interactionMessage.GetComponent<TextMeshProUGUI>();
-        interactionMessage.SetActive(false);
+        SetInteraction(false);
 
         cooktop = GameObject.Find("cook_station");
     }
 
     private void Update() {
-        // use TakeAction function to display a prompt and await user interaction
-        if (cooktopRange && !cooktop.GetComponent<Cooking>().IsCooking()) {
-            if(TakeAction("[C] Cook", KeyCode.C)) {
-                cooktop.GetComponent<Cooking>().StartCooking();
-                interactionMessage.SetActive(false);
+        if(cooktopRange) {
+            if(!cooktop.GetComponent<Cooking>().IsPrepping() && !cooktop.GetComponent<Cooking>().IsCooking()) {
+                // use TakeAction function to display a prompt and await user interaction
+                if (TakeAction("[C] Cook", KeyCode.C)) {
+                    cooktop.GetComponent<Cooking>().StartPrep();
+                    SetInteraction(false);
+                }
+            } else if (cooktop.GetComponent<Cooking>().IsPrepping()) {
+                Prompt("Light it up!!!");
+            } else if (!cooktop.GetComponent<Cooking>().IsPrepping()) {
+                SetInteraction(false);
             }
         }
+
+
+    }
+
+    public void SetInteraction(bool status) {
+        interactionMessage.SetActive(status);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
@@ -51,12 +63,17 @@ public class Player_Interaction : MonoBehaviour {
 
     // displays a given prompt and awaits user interaction
     private bool TakeAction(string prompt, KeyCode action_keycode) {
-        interactionMessage.SetActive(true);
+        SetInteraction(true);
         messageText.SetText(prompt);
         if(Input.GetKeyDown(action_keycode)) {
             return true;
         } else {
             return false;
         }
+    }
+
+    private void Prompt(string prompt) {
+        SetInteraction(true);
+        messageText.SetText(prompt);
     }
 }
