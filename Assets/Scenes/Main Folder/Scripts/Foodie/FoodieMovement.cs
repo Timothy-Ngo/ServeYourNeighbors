@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class FoodieMovement : MonoBehaviour
@@ -10,12 +11,14 @@ public class FoodieMovement : MonoBehaviour
     private int currentPathIndex;
     private List<Vector3> pathVectorList;
     public float speed = 20f;
-    private SpriteRenderer sr;
+    private SpriteRenderer foodieSR;
+    private SpriteRenderer sightRangeSR;
     public bool facingRight = true;
 
     void Start()
     {
-        sr = gameObject.GetComponent<SpriteRenderer>();
+        foodieSR = gameObject.GetComponent<SpriteRenderer>();
+        sightRangeSR = gameObject.GetComponentInChildren<SpriteRenderer>();
     }
     
     void Update()
@@ -91,12 +94,14 @@ public class FoodieMovement : MonoBehaviour
         // flips sprite when moving -- modified code from Player_Movement
         if (targetPosition.x < transform.position.x && facingRight || targetPosition.x >= transform.position.x && !facingRight)
         {
-            sr.flipX = false;
+            foodieSR.flipX = false;
+            sightRangeSR.flipX = false;
             facingRight = !facingRight;
         }
         else
         {
-            sr.flipX = true;
+            foodieSR.flipX = true;
+            sightRangeSR.flipX = true;
         }
 
         
