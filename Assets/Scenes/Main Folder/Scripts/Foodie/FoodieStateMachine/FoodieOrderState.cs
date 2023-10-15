@@ -6,13 +6,14 @@ public class FoodieOrderState : FoodieState
 {
     public Vector3 table;
     bool atTable = false;
-    int orderTime = 2;
+    int orderTime = 5;
     bool isOrdering = false;
     
     public bool orderGiven = false;
 
     public FoodieOrderState(Foodie foodie, FoodieStateMachine foodieStateMachine) : base(foodie, foodieStateMachine)
     {
+        orderTime = foodie.orderTime;
     }
 
     public override void AnimationTriggerEvent()
@@ -35,7 +36,7 @@ public class FoodieOrderState : FoodieState
         base.Update();
 
         // PLACEHOLDER: takes order
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             orderGiven = true;
             Debug.Log("key press");
@@ -78,7 +79,7 @@ public class FoodieOrderState : FoodieState
         {
 
             isOrdering = true;
-            Debug.Log("in FoodieOrderState");
+            //Debug.Log("in FoodieOrderState");
 
             // set a timer for their order and they order
             foodie.orderBubble.SetActive(true);

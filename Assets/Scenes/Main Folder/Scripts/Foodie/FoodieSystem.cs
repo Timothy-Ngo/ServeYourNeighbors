@@ -14,8 +14,10 @@ public class FoodieSystem : MonoBehaviour
     {
         inst = this;
         pathfinding = new Pathfinding(gridWidth, gridHeight, startPoint, cellSize); // initializes pathfinding grid
+                                                                                    // Note: this warning is given on this line, be aware incase future problems arise ("You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all UnityEngine.MonoBehaviour:.ctor()")
 
-        
+
+
 
     }
 

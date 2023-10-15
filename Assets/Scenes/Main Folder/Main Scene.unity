@@ -666,6 +666,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6570177558672555007, guid: 924f0f2e5ce91bf4a977cf5da58ef797, type: 3}
+      propertyPath: orderTime
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 924f0f2e5ce91bf4a977cf5da58ef797, type: 3}
 --- !u!1 &320538792

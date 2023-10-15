@@ -42,7 +42,7 @@ public class FoodieLineState : FoodieState
             inLine = false;
             
             foodie.stateMachine.ChangeState(foodie.orderState);
-            Debug.Log("changing state");
+            //Debug.Log("changing state");
         }
         
         if (!inLine && !hasBeenInLine) 
@@ -62,7 +62,7 @@ public class FoodieLineState : FoodieState
 
             // finds target position in line based on placeInLine
             Vector3 targetPosition = new Vector3(FoodieSystem.inst.startOfLine.x + placeInLine, FoodieSystem.inst.startOfLine.y);
-            Debug.Log("targetPosition: " + targetPosition);
+            //Debug.Log("targetPosition: " + targetPosition);
 
             // moves foodie 
             foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);

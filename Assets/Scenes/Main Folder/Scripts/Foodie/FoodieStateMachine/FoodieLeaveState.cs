@@ -31,7 +31,7 @@ public class FoodieLeaveState : FoodieState
 
         if (!atDespawnPoint)
         {
-            Debug.Log("leaving");
+            //Debug.Log("leaving");
             foodie.foodieMovement.SetTargetPosition(FoodieSystem.inst.despawnPoint, FoodieSystem.inst.pathfinding);
             atDespawnPoint = AtDespawnPoint();
             

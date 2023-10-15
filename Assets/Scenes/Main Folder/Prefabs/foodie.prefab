@@ -141,6 +141,7 @@ MonoBehaviour:
   foodieMovement: {fileID: 0}
   orderBubble: {fileID: 2958076496324784907}
   timerScript: {fileID: 722390387455592613}
+  orderTime: 10
 --- !u!1 &2958076496324784907
 GameObject:
   m_ObjectHideFlags: 0

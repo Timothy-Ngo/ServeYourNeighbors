@@ -8,10 +8,13 @@ using UnityEngine.UIElements;
 public class Foodie : MonoBehaviour
 {
 
+    [Header("-----FOODIE-----")]
     public FoodieMovement foodieMovement;
     public GameObject orderBubble;
     public Timer timerScript;
-    
+
+    [Header("-----ORDERING SETTINGS-----")]
+    public int orderTime = 10;
 
 
     private void Awake()

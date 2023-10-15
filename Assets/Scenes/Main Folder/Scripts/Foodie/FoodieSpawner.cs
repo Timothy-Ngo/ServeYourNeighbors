@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class FoodieSpawner : MonoBehaviour
 {
+    [Tooltip("When ever you want to make changes to this prefab, make sure you do it in the projects window and not the foodie object in the hierarchy")]
     [SerializeField] private GameObject foodiePrefab; // makes variable accessible in inspector
 
     [SerializeField] private float foodieInterval = 3.5f; // # of seconds before foodie spawns
@@ -39,7 +40,7 @@ public class FoodieSpawner : MonoBehaviour
 
             GameObject newFoodie = Instantiate(foodie, spawnPoint, Quaternion.identity);
             newFoodie.transform.parent = foodieParent;
-            Debug.Log("Foodie Instantiated");
+            //Debug.Log("Foodie Instantiated");
         }
     }
 }
