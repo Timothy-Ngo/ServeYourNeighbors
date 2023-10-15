@@ -39,7 +39,7 @@ public class CustomerPayments : MonoBehaviour
         SoundFX.inst.PlaySoundFXClip(collectPaymentSfx, transform, 1f);
     }
 
-    public void RandomPayment() // This is actually dumb I don't like it
+    public void RandomPayment() // This is actually dumb I don't like it, will change in the future
     {
         float probability = Random.value;
         Debug.Log($"Random value: {probability}");

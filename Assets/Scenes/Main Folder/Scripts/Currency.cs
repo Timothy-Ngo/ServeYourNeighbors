@@ -55,7 +55,7 @@ public class Currency : MonoBehaviour
 
     public void UpdateTextUI()
     {
-        currentGoldText.text = "Gold: " + gold;
+        currentGoldText.text = "Gold:\n" + gold;
     }
 
     public bool AbleToWithdraw(int amount)

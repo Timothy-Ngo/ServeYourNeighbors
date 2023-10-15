@@ -42,3 +42,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor and Background
+    uniqueID: 4059126627
+    locked: 0
+  - name: Interactables and Furniture
+    uniqueID: 183315085
+    locked: 0
+  - name: Player
+    uniqueID: 2961644243
+    locked: 0
