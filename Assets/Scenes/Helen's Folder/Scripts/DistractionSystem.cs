@@ -27,6 +27,7 @@ public class DistractionSystem : MonoBehaviour
         {
             animatronicDistraction.distractionTrigger.enabled = true;
 
+            // ON text
             animatronicDistraction.statusText.enabled = true;
             animatronicDistraction.statusText.text = "ON";
         }

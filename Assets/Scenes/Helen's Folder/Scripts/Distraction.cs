@@ -21,12 +21,14 @@ public class Distraction : MonoBehaviour
 
     private void Update()
     {
+        // ON status always shows even if not hovering over
         if (statusText.text == "ON")
         {
             statusText.enabled = true;
         }
     }
 
+    // hover over distraction to see affect range + status (on or off)
     private void OnMouseOver()
     {
         distractionSR.enabled = true;
