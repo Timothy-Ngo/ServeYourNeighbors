@@ -5,18 +5,20 @@ using UnityEngine;
 // tutorial for FSM: https://youtu.be/RQd44qSaqww?si=udxdALY2aHQrMB00
 public class FoodieStateMachine
 {
-    public FoodieState currentEnemyState { get; set; }
-    
+    public FoodieState currentFoodieState { get; set; }
+    public FoodieState previousFoodieState { get; set; }
+
     public void Initialize(FoodieState startingState)
     {
-        currentEnemyState = startingState;
-        currentEnemyState.EnterState();
+        currentFoodieState = startingState;
+        currentFoodieState.EnterState();
     }
 
     public void ChangeState(FoodieState newState)
     {
-        currentEnemyState.ExitState();
-        currentEnemyState = newState;
-        currentEnemyState.EnterState();
+        previousFoodieState = currentFoodieState;
+        currentFoodieState.ExitState();
+        currentFoodieState = newState;
+        currentFoodieState.EnterState();
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,10 +13,15 @@ public class Foodie : MonoBehaviour
     public FoodieMovement foodieMovement;
     public GameObject orderBubble;
     public Timer timerScript;
+    public TextMeshProUGUI distractedText;
+    public Collider2D foodieCollider;
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 10;
 
+    [Header("-----DISTRACTION SETTINGS-----")]
+    public int distractedTime = 2;
+    public Timer distractionTimerScript;
 
     private void Awake()
     {
@@ -24,6 +30,7 @@ public class Foodie : MonoBehaviour
         orderState = new FoodieOrderState(this, stateMachine);
         leaveState = new FoodieLeaveState(this, stateMachine);
         eatState = new FoodieEatState(this, stateMachine);
+        distractedState = new FoodieDistractedState(this, stateMachine);
 
         orderBubble.SetActive(false);
 
@@ -32,15 +39,19 @@ public class Foodie : MonoBehaviour
     public void Start()
     {
         foodieMovement = GetComponent<FoodieMovement>();
+        distractedText.enabled = false;
 
         stateMachine.Initialize(lineState);
 
-        
+        // https://docs.unity3d.com/ScriptReference/Physics.IgnoreLayerCollision.html
+        Physics2D.IgnoreLayerCollision(7, 8); // foodies ignore collision with player
+        Physics2D.IgnoreLayerCollision(7, 7); // foodies ignore collision with other foodies
     }
 
     public void Update()
     {
-        stateMachine.currentEnemyState.Update();
+        stateMachine.currentFoodieState.Update();
+        
     }
 
     public FoodieStateMachine stateMachine { get; set; }
@@ -48,13 +59,19 @@ public class Foodie : MonoBehaviour
     public FoodieOrderState orderState { get; set; }
     public FoodieLeaveState leaveState { get; set; }
     public FoodieEatState eatState { get; set; }
-
+    public FoodieDistractedState distractedState { get; set; }
 
     public void DestroyFoodie()
     {
         Destroy(gameObject);
     }
-
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        // if foodies are in distraction radius --> become distracted
+        if (collision.gameObject.tag == "Distraction")
+            stateMachine.ChangeState(distractedState);
+    }
 
     // ---------------------------------------  OLD CODE  -------------------------------------------- //
 

@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class DistractionSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static DistractionSystem inst;
+
+    private void Awake()
+    {
+        inst = this;
+    }
+
+
+    public Distraction animatronicDistraction;
+    
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        // turns on distraction
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            animatronicDistraction.distractionTrigger.enabled = true;
+
+            animatronicDistraction.statusText.enabled = true;
+            animatronicDistraction.statusText.text = "ON";
+        }
     }
+
+    
+
 }

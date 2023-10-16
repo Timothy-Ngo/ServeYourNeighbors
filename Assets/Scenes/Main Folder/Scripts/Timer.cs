@@ -12,6 +12,7 @@ public class Timer : MonoBehaviour {
     public float maxTime = 0, timeLeft = 0;
     bool running = false;
     bool complete = false;
+    public bool paused = false;
 
     void Start() {
         timerBar = GetComponent<Image>();
@@ -21,12 +22,16 @@ public class Timer : MonoBehaviour {
     public void SetMaxTime(int sec) {
         maxTime = sec;
         timeLeft = sec;
-        timerBar.fillAmount = 1;
         timerBar.enabled = true; // https://discussions.unity.com/t/how-to-make-a-ui-image-appear-disappear/163474
+        timerBar.fillAmount = 1;
         running = true;
     }
 
     void Update() {
+        if (paused) 
+        { 
+            return; 
+        } 
         if(timeLeft > 0 && running) {
             timeLeft -= Time.deltaTime;
 
