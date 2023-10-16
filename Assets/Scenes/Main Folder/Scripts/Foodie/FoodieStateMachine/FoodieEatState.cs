@@ -29,7 +29,7 @@ public class FoodieEatState : FoodieState
     {
         base.Update();
 
-        Debug.Log("eating");
+        //Debug.Log("eating");
 
         // when done eating --> foodie leave
         if (foodie.timerScript.timeLeft <= 0 && eating)

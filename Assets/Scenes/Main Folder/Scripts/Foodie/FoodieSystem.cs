@@ -16,9 +16,6 @@ public class FoodieSystem : MonoBehaviour
         pathfinding = new Pathfinding(gridWidth, gridHeight, startPoint, cellSize); // initializes pathfinding grid
                                                                                     // Note: this warning is given on this line, be aware incase future problems arise ("You are trying to create a MonoBehaviour using the 'new' keyword.  This is not allowed.  MonoBehaviours can only be added using AddComponent(). Alternatively, your script can inherit from ScriptableObject or no base class at all UnityEngine.MonoBehaviour:.ctor()")
 
-
-
-
     }
 
     
@@ -52,17 +49,26 @@ public class FoodieSystem : MonoBehaviour
 
         availableSeats = new Queue<Vector3>();
 
+        GetCurrentSeats();
+
+    }
+
+    public void GetCurrentSeats()
+    {
+        seats.Clear();
+        availableSeats.Clear();
         foreach (Transform transform in tableChairParent.transform)
         {
-            seats.Add(transform.position);
+            if (transform.gameObject.activeSelf)
+            {
+                seats.Add(transform.position);
+            }
         }
 
         foreach (Vector3 table in seats)
         {
             availableSeats.Enqueue(table);
         }
-
-
     }
 
     

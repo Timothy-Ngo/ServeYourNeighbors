@@ -43,4 +43,9 @@ public class FoodieSpawner : MonoBehaviour
             //Debug.Log("Foodie Instantiated");
         }
     }
+
+    public void SpawnWaveOfFoodies()
+    {
+        StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, spawnAmount));
+    }
 }

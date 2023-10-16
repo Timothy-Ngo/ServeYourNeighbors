@@ -5,6 +5,14 @@ using UnityEngine;
 
 public class Upgrades : MonoBehaviour
 {
+    public static Upgrades inst;
+
+    private void Awake()
+    {
+        inst = this;
+    }
+    [Header("Upgrades UI")]
+    public GameObject upgradesScreen;
 
     [Header("Table Upgrade")]
     public GameObject tablesParent;
@@ -24,7 +32,7 @@ public class Upgrades : MonoBehaviour
         Restaurant = 2
     }
     [Header("Main Layout Upgrades")]
-    public LayoutLevel currentLayout = LayoutLevel.Shack;    
+    public LayoutLevel currentLayout = LayoutLevel.Shack;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +45,14 @@ public class Upgrades : MonoBehaviour
         for (int i = 1; i < tables.Count; i++)
         {
             tables[i].SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U)) // For testing only
+        {
+            ToggleUpgradesScreen();
         }
     }
 
@@ -57,7 +73,20 @@ public class Upgrades : MonoBehaviour
 
     // ------------------------
 
+
+    //-----OBSERVABLE IMPLEMENTATION-----
+
+    public void NotifyObservers() // Different from the standard observable implementation as we are utilizing singletons, so no need for registering and unregistering Observers for the time being
+    {
+        FoodieSystem.inst.GetCurrentSeats();
+    }
+
     // -----UPGRADE IMPLEMENTATIONS-----
+
+    public void ToggleUpgradesScreen()
+    {
+        upgradesScreen.SetActive(!upgradesScreen.activeSelf);
+    }
     public void Tables(int cost) // Increase the amount of tables
     {
         int numOfActiveTables = GetNumOfActiveTables();
@@ -71,6 +100,7 @@ public class Upgrades : MonoBehaviour
         {
             Currency.inst.Withdraw(cost);
             tables[numOfActiveTables].SetActive(true);
+            NotifyObservers();
             Debug.Log("Bought a table upgrade");
         }
         else
