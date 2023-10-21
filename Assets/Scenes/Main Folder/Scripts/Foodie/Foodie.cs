@@ -20,6 +20,7 @@ public class Foodie : MonoBehaviour
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 10;
+    public Sprite order;
 
     [Header("-----DISTRACTION SETTINGS-----")]
     public int distractedTime = 2;
@@ -35,6 +36,7 @@ public class Foodie : MonoBehaviour
         distractedState = new FoodieDistractedState(this, stateMachine);
 
         orderBubble.SetActive(false);
+        orderBubble.GetComponentInChildren<SpriteRenderer>().sprite = order;
 
     }
 

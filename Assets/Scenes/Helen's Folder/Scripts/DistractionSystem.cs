@@ -13,6 +13,7 @@ public class DistractionSystem : MonoBehaviour
 
 
     public Distraction animatronicDistraction;
+    public bool showDebug = false;
     
 
     void Start()
@@ -22,17 +23,23 @@ public class DistractionSystem : MonoBehaviour
 
     void Update()
     {
-        // turns on distraction
-        if (Input.GetKeyDown(KeyCode.U))
+        if (showDebug)
         {
-            animatronicDistraction.distractionTrigger.enabled = true;
-
-            // ON text
-            animatronicDistraction.statusText.enabled = true;
-            animatronicDistraction.statusText.text = "ON";
+            // turns on distraction
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                StartDistraction();
+            }
         }
     }
 
-    
+    public void StartDistraction()
+    {
+        animatronicDistraction.distractionTrigger.enabled = true;
+
+        // ON text
+        animatronicDistraction.statusText.enabled = true;
+        animatronicDistraction.statusText.text = "ON";
+    }
 
 }

@@ -8,6 +8,9 @@ TagManager:
   - Foodie
   - Distraction
   - Table
+  - IngredientBox
+  - TrashCan
+  - DistractionCircle
   layers:
   - Default
   - TransparentFX

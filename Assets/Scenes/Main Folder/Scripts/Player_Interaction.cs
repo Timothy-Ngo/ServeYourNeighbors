@@ -11,12 +11,20 @@ public class Player_Interaction : MonoBehaviour {
     TMP_Text messageText;
 
     // this should become an array in the future for multiple available cooktops to interact with
-    GameObject cooktop;
-    bool cooktopRange = false;
-    private bool tableRange = false;
+    //GameObject cooktop;
 
-    [Header("Tables")] 
-    [SerializeField] private Table table;
+
+    [Header("-----RANGES----")]
+    bool cooktopRange = false;
+    bool tableRange = false;
+    bool ingredientBoxRange = false;
+    bool trashCanRange = false;
+    bool distractionRange = false;
+
+    [Header("-----SCRIPTS----")] 
+    Cooking cooktopScript;
+    [SerializeField] private Table tableScript;
+    IngredientBox ingredientBoxScript;
     
 
     private void Start() {
@@ -24,37 +32,99 @@ public class Player_Interaction : MonoBehaviour {
         messageText = interactionMessage.GetComponent<TextMeshProUGUI>();
         SetInteraction(false);
 
-        cooktop = GameObject.Find("cook_station");
+        //cooktop = GameObject.Find("cook_station");
+        //cooktopScript = cooktop.GetComponent<Cooking>();
     }
 
     private void Update() {
         if(cooktopRange) {
-            if(!cooktop.GetComponent<Cooking>().IsPrepping() && !cooktop.GetComponent<Cooking>().IsCooking()) {
+            if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
                 if (TakeAction("[C] Cook", KeyCode.C)) {
-                    cooktop.GetComponent<Cooking>().StartPrep();
+                    cooktopScript.StartPrep();
                     SetInteraction(false);
                 }
-            } else if (cooktop.GetComponent<Cooking>().IsPrepping()) {
+            } 
+            else if (cooktopScript.IsPrepping()) {
                 Prompt("Light it up!!!");
-            } else if (!cooktop.GetComponent<Cooking>().IsPrepping()) {
-                SetInteraction(false);
             }
+            // if food is ready
+            else if (cooktopScript.IsFoodReady()) {
+                if (PickupSystem.inst.isHoldingSomething())
+                {
+                    Prompt("Hands Are Full");
+                }
+                else if (TakeAction("[F] Get Dish", KeyCode.F))
+                {
+                    PickupSystem.inst.PickUpItem(cooktopScript.dish.GetComponent<SpriteRenderer>().sprite);
+                    cooktopScript.ResetCooktop();
+                    SetInteraction(false);
+                }
+            }
+            else if (!cooktopScript.IsPrepping()) {
+                SetInteraction(false);
+            } 
         }
 
         if (tableRange)
         {
-            // need to add a check for if food is already on the table
-            if (TakeAction("[F] Give Order", KeyCode.F))
+
+            // ERROR: NullReferenceException on if line -- doesn't affect gameplay as far as I know
+            // Checks if there is a foodie ordering at the table, if the player is holding a dish, and if the dish is correct
+            if (tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish() && PickupSystem.inst.GetItem() == tableScript.foodie.order)
             {
-                // Make dish pop up on table, 
-                // change foodie to eating state
-                Debug.Log($"current table object: {table.gameObject}");
-                table.foodie.orderState.ReceivedOrder();
-                SetInteraction(false);
+                // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
+                if (TakeAction("[F] Give Dish", KeyCode.F))
+                {
+                    // Make dish pop up on table, 
+                    // change foodie to eating state
+                    Debug.Log($"current table object: {tableScript.gameObject}");
+                    tableScript.foodie.orderState.ReceivedOrder();
+
+                    PickupSystem.inst.DropItem();
+
+                    SetInteraction(false);
+                }
             }
         }
 
+        if (ingredientBoxRange)
+        {
+            // if player isn't holding anything
+            if (!PickupSystem.inst.isHoldingSomething())
+            {
+                if (TakeAction("[F] Get Ingredient", KeyCode.F))
+                {
+                    PickupSystem.inst.PickUpItem(ingredientBoxScript.ingredient);
+                    SetInteraction(false);
+                }
+            }
+        }
+
+        if (trashCanRange)
+        {
+            // if player is holding something
+            if (PickupSystem.inst.isHoldingSomething())
+            {
+                if (TakeAction("[F] Throw Away", KeyCode.F))
+                {
+                    PickupSystem.inst.DropItem();
+                    SetInteraction(false);
+                }
+            }
+        }
+
+        if (distractionRange)
+        {
+            if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF")
+            {
+                if (TakeAction("[E] Turn On", KeyCode.E))
+                {
+                    DistractionSystem.inst.StartDistraction();
+                    SetInteraction(false);
+                }
+            }
+        }
 
     }
 
@@ -64,17 +134,35 @@ public class Player_Interaction : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         // to create new interactions, add a tag to the collision object in question
-        if(collision.tag == "Cooktop" && !cooktop.GetComponent<Cooking>().IsCooking()) {
+        if(collision.tag == "Cooktop") { //&& !cooktopScript.IsCooking()) {
             Debug.Log("Within range of cooktop");
             cooktopRange = true;
+            cooktopScript = collision.gameObject.transform.GetComponent<Cooking>();
         }
         else if (collision.CompareTag("Table"))
         {
             Debug.Log("Within range of table");
             tableRange = true;
-            table = collision.gameObject.transform.parent.GetComponent<Table>();
-            Debug.Log($"table: {table}");
+            tableScript = collision.gameObject.transform.parent.GetComponent<Table>();
+            Debug.Log($"table: {tableScript}");
 
+        }
+        else if (collision.CompareTag("IngredientBox"))
+        {
+            Debug.Log("Within range of ingredient box");
+            ingredientBoxRange = true;
+            ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
+            Debug.Log("ingredientBox: " + collision.gameObject.name);
+        }
+        else if (collision.CompareTag("TrashCan"))
+        {
+            Debug.Log("Within range of trash can");
+            trashCanRange = true;
+        }
+        else if (collision.CompareTag("Distraction"))
+        {
+            Debug.Log("Within range of distraction");
+            distractionRange = true;
         }
         
     }
@@ -87,10 +175,26 @@ public class Player_Interaction : MonoBehaviour {
         else if (collision.CompareTag("Table"))
         {
             tableRange = false;
-            table = null;
+            tableScript = null;
             Debug.Log("Out of range of table");
         }
-        
+        else if (collision.CompareTag("IngredientBox"))
+        {
+            ingredientBoxRange = false;
+            ingredientBoxScript = null;
+            Debug.Log("Out of range of ingredient box");
+        }
+        else if (collision.CompareTag("TrashCan"))
+        {
+            trashCanRange = false;
+            Debug.Log("Out of range of trash can");
+        }
+        else if (collision.CompareTag("Distraction"))
+        {
+            distractionRange = false;
+            Debug.Log("Out of range of distraction");
+        }
+
 
         interactionMessage.SetActive(false);
     }
