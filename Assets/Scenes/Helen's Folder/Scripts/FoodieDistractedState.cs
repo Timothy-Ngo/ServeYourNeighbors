@@ -62,9 +62,7 @@ public class FoodieDistractedState : FoodieState
             foodie.timerScript.paused = false;
 
             // turns distraction off when distraction duration is finished
-            DistractionSystem.inst.animatronicDistraction.distractionTrigger.enabled = false;
-            DistractionSystem.inst.animatronicDistraction.statusText.text = "OFF";
-            DistractionSystem.inst.animatronicDistraction.statusText.enabled = false;
+            DistractionSystem.inst.ResetDistraction();
 
             foodie.stateMachine.ChangeState(pausedState);
             

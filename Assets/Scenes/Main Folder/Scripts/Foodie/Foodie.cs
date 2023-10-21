@@ -73,7 +73,7 @@ public class Foodie : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // if foodies are in distraction radius --> become distracted
-        if (collision.gameObject.tag == "Distraction")
+        if (collision.gameObject.tag == "DistractionCircle")
             stateMachine.ChangeState(distractedState);
     }
 

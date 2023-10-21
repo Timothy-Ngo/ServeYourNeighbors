@@ -59,7 +59,7 @@ public class FoodieOrderState : FoodieState
 
         if (!AtTable() && !atTable) // puts foodie at a table
         {
-            
+            Debug.Log("at table");
             atTable = true;
 
             // finds available table from tables            
@@ -72,14 +72,14 @@ public class FoodieOrderState : FoodieState
             GetFoodieTableScript();
 
         }
-        
-        
+
+        Debug.Log("attable: " + AtTable());
         // if foodie is at the table and hasn't ordered yet
         if (AtTable() && !isOrdering)
         {
 
             isOrdering = true;
-            //Debug.Log("in FoodieOrderState");
+            Debug.Log("in FoodieOrderState");
 
             // set a timer for their order and they order
             foodie.orderBubble.SetActive(true);
@@ -120,6 +120,7 @@ public class FoodieOrderState : FoodieState
 
     public bool AtTable()
     {
-        return foodie.transform.position.x == tablePosition.x && foodie.transform.position.y == tablePosition.y;
+        return Mathf.Approximately(tablePosition.x,foodie.transform.position.x) &&
+                Mathf.Approximately(tablePosition.y, foodie.transform.position.y);
     }
 }

@@ -10,6 +10,16 @@ public class Upgrades : MonoBehaviour
     private void Awake()
     {
         inst = this;
+
+        foreach (Transform transform in tablesParent.transform)
+        {
+            tables.Add(transform.gameObject);
+        }
+        tables[0].SetActive(true);
+        for (int i = 1; i < tables.Count; i++)
+        {
+            tables[i].SetActive(false);
+        }
     }
     [Header("Upgrades UI")]
     public GameObject upgradesScreen;
@@ -37,15 +47,7 @@ public class Upgrades : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform transform in tablesParent.transform)
-        {
-            tables.Add(transform.gameObject);
-        }
-        tables[0].SetActive(true);
-        for (int i = 1; i < tables.Count; i++)
-        {
-            tables[i].SetActive(false);
-        }
+        
     }
 
     private void Update()

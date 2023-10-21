@@ -42,4 +42,10 @@ public class DistractionSystem : MonoBehaviour
         animatronicDistraction.statusText.text = "ON";
     }
 
+    public void ResetDistraction()
+    {
+        animatronicDistraction.distractionTrigger.enabled = false;
+        animatronicDistraction.statusText.text = "OFF";
+        animatronicDistraction.statusText.enabled = false;
+    }
 }
