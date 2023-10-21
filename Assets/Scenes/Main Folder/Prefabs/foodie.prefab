@@ -299,7 +299,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1333323053
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 6de7dd57f3dab0c47b0d5d49d27b1037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -369,7 +369,9 @@ MonoBehaviour:
   timerScript: {fileID: 722390387455592613}
   distractedText: {fileID: 4745854944033754898}
   foodieCollider: {fileID: 1987003699042778043}
-  orderTime: 4
+  table: {fileID: 0}
+  tablePosition: {x: 0, y: 0, z: 0}
+  orderTime: 10
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
 --- !u!50 &7786817822798990141

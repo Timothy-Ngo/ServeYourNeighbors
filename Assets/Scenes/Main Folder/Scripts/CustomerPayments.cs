@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class CustomerPayments : MonoBehaviour
 {
+    public static CustomerPayments inst;
 
+    private void Awake()
+    {
+        inst = this;
+    }
+    
     [Header("Price Categories")]
     public int cheapPayment = 10;
     public int standardPayment = 20;

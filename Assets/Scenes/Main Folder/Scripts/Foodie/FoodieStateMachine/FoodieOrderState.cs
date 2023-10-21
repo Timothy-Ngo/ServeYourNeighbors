@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class FoodieOrderState : FoodieState
 {
-    public Vector3 table;
+    public Vector3 tablePosition;
+    public Table tableScript;
     bool atTable = false;
     int orderTime = 5;
     bool isOrdering = false;
+    
     
     public bool orderGiven = false;
 
@@ -24,6 +26,7 @@ public class FoodieOrderState : FoodieState
     public override void EnterState()
     {
         base.EnterState();
+
     }
 
     public override void ExitState()
@@ -34,13 +37,7 @@ public class FoodieOrderState : FoodieState
     public override void Update()
     {
         base.Update();
-
-        // PLACEHOLDER: takes order
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            orderGiven = true;
-            Debug.Log("key press");
-        }
+        
 
         // order given --> goes into eating
         if (isOrdering && foodie.timerScript.timeLeft > 0 && orderGiven)
@@ -55,27 +52,30 @@ public class FoodieOrderState : FoodieState
         {
 
             foodie.orderBubble.SetActive(false);
-            FoodieSystem.inst.availableSeats.Enqueue(table);
+            FoodieSystem.inst.availableSeats.Enqueue(tablePosition);
 
             foodie.stateMachine.ChangeState(foodie.leaveState);
         }
 
-        if (!atTable) // puts foodie at a table
+        if (!AtTable() && !atTable) // puts foodie at a table
         {
             
             atTable = true;
 
             // finds available table from tables            
-            table = FoodieSystem.inst.availableSeats.Dequeue();
+            tablePosition = FoodieSystem.inst.availableSeats.Dequeue();
 
             // moves foodie to table
-            foodie.foodieMovement.SetTargetPosition(table, FoodieSystem.inst.pathfinding);
+            foodie.foodieMovement.SetTargetPosition(tablePosition, FoodieSystem.inst.pathfinding);
+            foodie.tablePosition = tablePosition;
             
+            GetFoodieTableScript();
 
         }
         
+        
         // if foodie is at the table and hasn't ordered yet
-        if (foodie.transform.position.x == table.x && foodie.transform.position.y == table.y && !isOrdering)
+        if (AtTable() && !isOrdering)
         {
 
             isOrdering = true;
@@ -90,5 +90,36 @@ public class FoodieOrderState : FoodieState
 
         
 
+    }
+
+    public void ReceivedOrder()
+    {
+        if (atTable)
+        {
+            orderGiven = true;
+        }
+    }
+
+    public void GetFoodieTableScript()
+    {
+        foreach (Table table in FoodieSystem.inst.tables) // Finds table script that foodie is at
+        {
+            
+            if (Mathf.Approximately(foodie.tablePosition.x, table.gameObject.transform.position.x) &&
+                Mathf.Approximately(foodie.tablePosition.y, table.gameObject.transform.position.y))
+            {
+                Debug.Log("Table initialize");
+                foodie.table = table;
+                foodie.tablePosition = table.gameObject.transform.position;
+                foodie.table.SetFoodie(foodie);
+                break;
+            }
+        }
+    }
+    
+
+    public bool AtTable()
+    {
+        return foodie.transform.position.x == tablePosition.x && foodie.transform.position.y == tablePosition.y;
     }
 }

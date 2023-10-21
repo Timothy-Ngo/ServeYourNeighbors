@@ -67,6 +67,7 @@ public class FoodieLineState : FoodieState
             // moves foodie 
             foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             
+            
         }
         else
         {

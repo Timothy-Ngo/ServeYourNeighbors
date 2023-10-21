@@ -15,6 +15,8 @@ public class Foodie : MonoBehaviour
     public Timer timerScript;
     public TextMeshProUGUI distractedText;
     public Collider2D foodieCollider;
+    public Table table;
+    public Vector3 tablePosition;
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 10;

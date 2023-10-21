@@ -17,11 +17,12 @@ public class Currency : MonoBehaviour
         inst = this;
     }
 
+    public int startingGold;
     public int gold;
 
     void Start()
     {
-        Deposit(1000);
+        Deposit(startingGold);
     }
 
 

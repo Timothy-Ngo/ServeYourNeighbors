@@ -6,6 +6,7 @@ public class FoodieEatState : FoodieState
 {
     bool eating;
     int eatingTime = 2;
+    
     public FoodieEatState(Foodie foodie, FoodieStateMachine foodieStateMachine) : base(foodie, foodieStateMachine)
     {
     }
@@ -18,11 +19,15 @@ public class FoodieEatState : FoodieState
     public override void EnterState()
     {
         base.EnterState();
+        foodie.table.SetDish();
     }
 
     public override void ExitState()
     {
         base.ExitState();
+        Debug.Assert(foodie.table != null);
+        foodie.table.RemoveDish();
+
     }
 
     public override void Update()
@@ -35,7 +40,7 @@ public class FoodieEatState : FoodieState
         if (foodie.timerScript.timeLeft <= 0 && eating)
         {
 
-            FoodieSystem.inst.availableSeats.Enqueue(foodie.orderState.table);
+            FoodieSystem.inst.availableSeats.Enqueue(foodie.orderState.tablePosition);
             foodie.stateMachine.ChangeState(foodie.leaveState);
         }
 
@@ -46,4 +51,6 @@ public class FoodieEatState : FoodieState
             foodie.timerScript.SetMaxTime(eatingTime);
         }
     }
+    
+    
 }

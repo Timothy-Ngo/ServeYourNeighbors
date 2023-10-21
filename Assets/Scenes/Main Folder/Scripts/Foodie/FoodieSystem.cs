@@ -18,6 +18,7 @@ public class FoodieSystem : MonoBehaviour
 
     }
 
+
     
     public Pathfinding pathfinding;
     
@@ -35,6 +36,7 @@ public class FoodieSystem : MonoBehaviour
     public List<Vector3> seats;
     public Queue<Vector3> availableSeats;
     public GameObject tableChairParent;
+    public List<Table> tables;
 
     [Header("Leave State")]
     public Vector3 despawnPoint;
@@ -59,6 +61,7 @@ public class FoodieSystem : MonoBehaviour
         availableSeats.Clear();
         foreach (Transform transform in tableChairParent.transform)
         {
+            tables.Add(transform.gameObject.GetComponent<Table>());
             if (transform.gameObject.activeSelf)
             {
                 seats.Add(transform.position);
@@ -69,6 +72,7 @@ public class FoodieSystem : MonoBehaviour
         {
             availableSeats.Enqueue(table);
         }
+
     }
 
     

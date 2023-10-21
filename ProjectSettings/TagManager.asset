@@ -7,6 +7,7 @@ TagManager:
   - Cooktop
   - Foodie
   - Distraction
+  - Table
   layers:
   - Default
   - TransparentFX
@@ -50,8 +51,14 @@ TagManager:
   - name: Interactables and Furniture
     uniqueID: 183315085
     locked: 0
-  - name: Player and Foodies
+  - name: Dishes
+    uniqueID: 2386427911
+    locked: 0
+  - name: Foodies
     uniqueID: 2961644243
+    locked: 0
+  - name: Player
+    uniqueID: 3324342783
     locked: 0
   - name: UI
     uniqueID: 3812465603

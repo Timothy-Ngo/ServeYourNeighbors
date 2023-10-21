@@ -23,7 +23,7 @@ public class FoodieSpawner : MonoBehaviour
     void Start()
     {
         spawnPoint = spawnObject.transform.position;
-        StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, spawnAmount));
+        
     }
 
     // Update is called once per frame
@@ -46,6 +46,7 @@ public class FoodieSpawner : MonoBehaviour
 
     public void SpawnWaveOfFoodies()
     {
+        Debug.Log("Spawn wave of foodies");
         StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, spawnAmount));
     }
 }
