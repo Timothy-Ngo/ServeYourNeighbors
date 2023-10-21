@@ -1247,7 +1247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animatronicDistraction: {fileID: 429303890}
-  showDebug: 1
+  showDebug: 0
 --- !u!4 &530494409
 Transform:
   m_ObjectHideFlags: 0
