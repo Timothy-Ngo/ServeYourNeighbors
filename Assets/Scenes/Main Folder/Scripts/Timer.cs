@@ -28,10 +28,10 @@ public class Timer : MonoBehaviour {
     }
 
     void Update() {
-        if (paused) 
-        { 
+        if (paused) { 
             return; 
         } 
+
         if(timeLeft > 0 && running) {
             timeLeft -= Time.deltaTime;
 
