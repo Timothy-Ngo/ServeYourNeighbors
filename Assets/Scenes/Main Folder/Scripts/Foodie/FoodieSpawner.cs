@@ -49,4 +49,9 @@ public class FoodieSpawner : MonoBehaviour
         Debug.Log("Spawn wave of foodies");
         StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, spawnAmount));
     }
+
+    public void SpawnWaveOf(int amountOfFoodies)
+    {
+        StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, amountOfFoodies));
+    }
 }

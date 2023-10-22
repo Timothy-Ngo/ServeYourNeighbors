@@ -73,7 +73,7 @@ public class FoodieOrderState : FoodieState
 
         }
 
-        Debug.Log("attable: " + AtTable());
+        //Debug.Log("attable: " + AtTable());
         // if foodie is at the table and hasn't ordered yet
         if (AtTable() && !isOrdering)
         {

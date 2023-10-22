@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,18 +21,41 @@ public class Upgrades : MonoBehaviour
         {
             tables[i].SetActive(false);
         }
+        
+        
+        foreach (Transform transform in cookStationsParent.transform)
+        {
+            cookStations.Add(transform.gameObject);
+        }
+        cookStations[0].SetActive(true);
+        for (int i = 1; i < cookStations.Count; i++)
+        {
+            cookStations[i].SetActive(false);
+        }
+        
     }
-    [Header("Upgrades UI")]
+    [Header("-----UPGRADES UI-----")]
     public GameObject upgradesScreen;
 
-    [Header("Table Upgrade")]
+    [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
     [SerializeField] private List<GameObject> tables;
+    public int tablesUpgradeCost = 50;
+    public TextMeshProUGUI tablesDescription;
 
-    [Header("Speed Boost Upgrade")]
+    [Header("-----COOK STATIONS UPGRADE-----")]
+    public GameObject cookStationsParent;
+    [SerializeField] private List<GameObject> cookStations;
+    public int cookStationsUpgradeCost = 50;
+    public TextMeshProUGUI cookStationsDescription;
+    
+    [Header("-----SPEED BOOST UPGRADE-----")] 
+    [SerializeField] private Player_Movement playerMovement;
     public bool isGMO = false;
-
-    [Header("Distraction Upgrades")]
+    public int speedBoostUpgradeCost = 100;
+    public TextMeshProUGUI speedBoostDescription;
+    
+    [Header("-----DISTRACTION UPGRADES-----")]
     public bool hasAnimatronic = false;
     public bool hasHibachiChef = false;
 
@@ -41,13 +65,15 @@ public class Upgrades : MonoBehaviour
         Tavern = 1,
         Restaurant = 2
     }
-    [Header("Main Layout Upgrades")]
+    [Header("-----MAIN LAYOUT UPGRADES-----")]
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        tablesDescription.text += $" ({tablesUpgradeCost}g)";
+        speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)";
+        cookStationsDescription.text += $" ({cookStationsUpgradeCost}g)";
     }
 
     private void Update()
@@ -72,6 +98,20 @@ public class Upgrades : MonoBehaviour
 
         return numOfActiveTables;
     }
+    
+    public int GetNumOfActiveCookStations()
+    {
+        int numOfActiveCookStations = 0;
+        foreach (GameObject gameObject in cookStations)
+        {
+            if (gameObject.activeSelf)
+            {
+                numOfActiveCookStations++;
+            }
+        }
+
+        return numOfActiveCookStations;
+    }
 
     // ------------------------
 
@@ -89,7 +129,7 @@ public class Upgrades : MonoBehaviour
     {
         upgradesScreen.SetActive(!upgradesScreen.activeSelf);
     }
-    public void Tables(int cost) // Increase the amount of tables
+    public void Tables() // Increase the amount of tables
     {
         int numOfActiveTables = GetNumOfActiveTables();
         if (numOfActiveTables == tables.Count)
@@ -98,9 +138,9 @@ public class Upgrades : MonoBehaviour
             return;
         }
 
-        if (Currency.inst.AbleToWithdraw(cost))
+        if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
-            Currency.inst.Withdraw(cost);
+            Currency.inst.Withdraw(tablesUpgradeCost);
             tables[numOfActiveTables].SetActive(true);
             NotifyObservers();
             Debug.Log("Bought a table upgrade");
@@ -110,8 +150,30 @@ public class Upgrades : MonoBehaviour
             Debug.Log("Insufficient funds for table upgrade");
         }
     }
+    
+    public void CookStations() // Increase the amount of tables
+    {
+        int numOfActiveCookStations = GetNumOfActiveCookStations();
+        if (numOfActiveCookStations == cookStations.Count)
+        {
+            Debug.Log("All cook stations have been bought");
+            return;
+        }
 
-    public void BecomeGMO(int cost) // Player Speed boost
+        if (Currency.inst.AbleToWithdraw(cookStationsUpgradeCost))
+        {
+            Currency.inst.Withdraw(cookStationsUpgradeCost);
+            cookStations[numOfActiveCookStations].SetActive(true);
+            NotifyObservers();
+            Debug.Log("Bought a cook stations upgrade");
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for cook stations upgrade");
+        }
+    }
+
+    public void BecomeGMO() // Player Speed boost
     {
         if (isGMO)
         {
@@ -119,10 +181,10 @@ public class Upgrades : MonoBehaviour
             return;
         }
 
-        if (Currency.inst.AbleToWithdraw(cost))
+        if (Currency.inst.AbleToWithdraw(speedBoostUpgradeCost))
         {
-            Currency.inst.Withdraw(cost);
-            Time.timeScale = 2; // TODO: Temporary code to simulate speed boost of player. Must be replaced in the future.
+            Currency.inst.Withdraw(speedBoostUpgradeCost);
+            playerMovement.speed += playerMovement.speed / 2; 
             isGMO = true;
             Debug.Log("dRUgS ArE goOd, iTs nOT LiKE itS gOinG to KiLl yA");
         }
