@@ -15,9 +15,11 @@ public class Food : MonoBehaviour {
 
     // pre-load sprites in inspector
     public Sprite tomatoSoup;
+    public Sprite msgBall;
 
     // pre-load sprites in inspector
     public Sprite tomatoIngredient;
+    public Sprite msg;
 
     private void Start() {
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -44,6 +46,10 @@ public class Food : MonoBehaviour {
         {
             sr.sprite = tomatoSoup;
         } 
+        else if (ingredient == msg)
+        {
+            sr.sprite = msgBall;
+        }
         else
         {
             Debug.Log("INVALID DISH SPRITE");

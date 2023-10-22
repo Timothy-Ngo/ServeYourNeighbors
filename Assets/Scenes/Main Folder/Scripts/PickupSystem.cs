@@ -23,6 +23,7 @@ public class PickupSystem : MonoBehaviour
     [Header("-----LISTS-----")] // manually add items in the inspector
     public List<Sprite> dishes;
     public List<Sprite> ingredients;
+    public List<Sprite> foodies;
 
     [Header("-----DEBUGGING-----")]
     [SerializeField] bool showDebug = false;
@@ -66,7 +67,7 @@ public class PickupSystem : MonoBehaviour
                 Debug.Log("holding ingredient");
                 holdingIngredient = true;
             }
-            else
+            else if (foodies.Contains(item))
             {
                 Debug.Log("holding foodie");
                 holdingFoodie = true;

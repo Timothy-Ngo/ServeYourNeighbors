@@ -5,6 +5,8 @@ using UnityEngine;
 public class Table : MonoBehaviour
 {
     public GameObject dish;
+    public SpriteRenderer dishSR;
+
     public Foodie foodie;
     // Start is called before the first frame update
     void Start()
@@ -34,7 +36,10 @@ public class Table : MonoBehaviour
     public void SetDish()
     {
         dish.SetActive(true); // Temp Dish, should be replaced later by getting a specific dish from player
+        Debug.Log(PickupSystem.inst.GetItem());
+        dishSR.sprite = PickupSystem.inst.GetItem();
         Debug.Log("Set Dish called");
+        PickupSystem.inst.DropItem();
     }
 
     public void RemoveDish()

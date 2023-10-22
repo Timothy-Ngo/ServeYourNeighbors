@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 8584186661708686048}
   - component: {fileID: 8584186661708686079}
   m_Layer: 8
-  m_Name: ~Turnip_Boy
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,6 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c5fd28105c75a4aad8086e9bf9dcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 7
 --- !u!114 &8584186661708686079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba66f76704c4daf44a802c300d72c8a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  table: {fileID: 0}
+  tableScript: {fileID: 0}
 --- !u!1 &8584186662588716090
 GameObject:
   m_ObjectHideFlags: 0

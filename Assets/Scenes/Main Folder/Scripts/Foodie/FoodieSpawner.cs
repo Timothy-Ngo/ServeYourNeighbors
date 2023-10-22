@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class FoodieSpawner : MonoBehaviour
 {
+    public static FoodieSpawner inst;
+    private void Awake()
+    {
+        inst = this;
+    }
+
     [Tooltip("When ever you want to make changes to this prefab, make sure you do it in the projects window and not the foodie object in the hierarchy")]
     [SerializeField] private GameObject foodiePrefab; // makes variable accessible in inspector
 
@@ -18,6 +24,8 @@ public class FoodieSpawner : MonoBehaviour
     [SerializeField] private int spawnAmount = 1;
 
     [SerializeField] private GameObject spawnObject;
+
+    [SerializeField] GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -53,5 +61,23 @@ public class FoodieSpawner : MonoBehaviour
     public void SpawnWaveOf(int amountOfFoodies)
     {
         StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, amountOfFoodies));
+    }
+
+    private IEnumerator SpawnKidnappedFoodie()
+    {
+        Vector3 spawnPosition = player.transform.position;
+        GameObject newFoodie = Instantiate(foodiePrefab, spawnPosition, Quaternion.identity);
+        newFoodie.transform.parent = foodieParent;
+        Foodie foodieScript = newFoodie.GetComponent<Foodie>();
+        yield return new WaitForSeconds(0.1f);
+        foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
+
+        
+        
+    }
+
+    public void ReleaseFoodie()
+    {
+        StartCoroutine(SpawnKidnappedFoodie());
     }
 }

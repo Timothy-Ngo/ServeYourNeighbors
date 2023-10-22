@@ -17,6 +17,13 @@ public class Foodie : MonoBehaviour
     public Collider2D foodieCollider;
     public Table table;
     public Vector3 tablePosition;
+    private SpriteRenderer sr;
+    public Sprite foodieSprite;
+
+    [Header("-----FOODIE SIGHT-----")]
+    public GameObject foodieSight;
+    public SpriteRenderer sightSR;
+    bool sightToggleEnabled = false;
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 10;
@@ -44,17 +51,27 @@ public class Foodie : MonoBehaviour
     {
         foodieMovement = GetComponent<FoodieMovement>();
         distractedText.enabled = false;
+        sightSR.enabled = false;
+        sr = GetComponent<SpriteRenderer>();
+        foodieSprite = sr.sprite;
 
         stateMachine.Initialize(lineState);
 
         // https://docs.unity3d.com/ScriptReference/Physics.IgnoreLayerCollision.html
         Physics2D.IgnoreLayerCollision(7, 8); // foodies ignore collision with player
         Physics2D.IgnoreLayerCollision(7, 7); // foodies ignore collision with other foodies
+        Physics2D.IgnoreLayerCollision(2, 9); // foodies sight ignores collision with distraction area affect
     }
 
     public void Update()
     {
         stateMachine.currentFoodieState.Update();
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            sightToggleEnabled = !sightToggleEnabled;
+            sightSR.enabled = sightToggleEnabled;
+        }
         
     }
 
@@ -73,8 +90,19 @@ public class Foodie : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // if foodies are in distraction radius --> become distracted
-        if (collision.gameObject.tag == "DistractionCircle")
+        if (collision.gameObject.tag == "DistractionCircle" && stateMachine.currentFoodieState != distractedState)
             stateMachine.ChangeState(distractedState);
+    }
+
+    private void OnMouseOver()
+    {
+        sightSR.enabled = true;
+    }
+
+    private void OnMouseExit()
+    {
+        if (!sightToggleEnabled)
+            sightSR.enabled = false;
     }
 
     // ---------------------------------------  OLD CODE  -------------------------------------------- //

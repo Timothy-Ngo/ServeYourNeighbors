@@ -68,7 +68,7 @@ public class FoodieMovement : MonoBehaviour
 
     private void Flip()
     {
-        
+        transform.Rotate(new Vector3(0, 180, 0));
     }
 
     public void StopMoving()
@@ -91,17 +91,23 @@ public class FoodieMovement : MonoBehaviour
             pathVectorList.RemoveAt(0);
         }
 
+
+
         // flips sprite when moving -- modified code from Player_Movement
-        if (targetPosition.x < transform.position.x && facingRight || targetPosition.x >= transform.position.x && !facingRight)
+        if (targetPosition.x <= transform.position.x && facingRight || targetPosition.x > transform.position.x && !facingRight)
         {
-            foodieSR.flipX = false;
-            sightRangeSR.flipX = false;
+            //foodieSR.flipX = false;
+            //sightRangeSR.flipX = false;
+            Flip();
             facingRight = !facingRight;
+
+            
         }
         else
         {
-            foodieSR.flipX = true;
-            sightRangeSR.flipX = true;
+            //Flip();
+            //foodieSR.flipX = true;
+            //sightRangeSR.flipX = true;
         }
 
         

@@ -35,8 +35,9 @@ public class FoodieDistractedState : FoodieState
         base.Update();
 
         // if they're not distracted
-        if (!isDistracted)
+        if (!isDistracted && DistractionSystem.inst.animatronicDistraction.distractionTrigger.enabled)
         {
+            Debug.Log("is distracted");
             isDistracted = true;
 
             // pause foodie's timer
@@ -49,17 +50,24 @@ public class FoodieDistractedState : FoodieState
             foodie.distractedText.enabled = true;
             foodie.distractedText.text = "Distracted";
 
+            // turn off foodie sight
+            foodie.foodieSight.SetActive(false);
+
             // start distraction timer
             foodie.distractionTimerScript.SetMaxTime(distractedTime);
             //foodie.foodieMovement.StopMoving(); // messes with foodie movement
         }
-        else if (foodie.distractionTimerScript.timeLeft <= 0 && isDistracted)
+        if (foodie.distractionTimerScript.timeLeft <= 0 && isDistracted)
         {
+            Debug.Log("Distraction ended");
             isDistracted = false;
             foodie.distractedText.enabled = false; // disable distracted text
 
             // resume foodies task before being distracted
             foodie.timerScript.paused = false;
+
+            // turn foodie's sight back on
+            foodie.foodieSight.SetActive(true);
 
             // turns distraction off when distraction duration is finished
             DistractionSystem.inst.ResetDistraction();

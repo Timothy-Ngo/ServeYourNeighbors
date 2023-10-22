@@ -13,18 +13,23 @@ public class Player_Interaction : MonoBehaviour {
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
 
-
+    bool foodieReleased = false;
     [Header("-----RANGES----")]
     bool cooktopRange = false;
     bool tableRange = false;
     bool ingredientBoxRange = false;
     bool trashCanRange = false;
     bool distractionRange = false;
+    bool foodieRange = false;
+    bool grinderRange = false;
+    bool foodieSightRange = false;
 
     [Header("-----SCRIPTS----")] 
     Cooking cooktopScript;
     [SerializeField] private Table tableScript;
     IngredientBox ingredientBoxScript;
+    Foodie foodieScript;
+    Grinder grinderScript;
     
 
     private void Start() {
@@ -66,12 +71,12 @@ public class Player_Interaction : MonoBehaviour {
             } 
         }
 
-        if (tableRange)
+        else if (tableRange)
         {
 
             // ERROR: NullReferenceException on if line -- doesn't affect gameplay as far as I know
             // Checks if there is a foodie ordering at the table, if the player is holding a dish, and if the dish is correct
-            if (tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish() && PickupSystem.inst.GetItem() == tableScript.foodie.order)
+            if (tableScript.foodie != null && tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish()) //&& PickupSystem.inst.GetItem() == tableScript.foodie.order)
             {
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
                 if (TakeAction("[F] Give Dish", KeyCode.F))
@@ -81,14 +86,16 @@ public class Player_Interaction : MonoBehaviour {
                     Debug.Log($"current table object: {tableScript.gameObject}");
                     tableScript.foodie.orderState.ReceivedOrder();
 
-                    PickupSystem.inst.DropItem();
+                    // when foodie state is in eating state -- table is set
+                    //      - table gets dish from what player is holding
+                    //      - player drops object
 
                     SetInteraction(false);
                 }
             }
         }
 
-        if (ingredientBoxRange)
+        else if (ingredientBoxRange)
         {
             // if player isn't holding anything
             if (!PickupSystem.inst.isHoldingSomething())
@@ -101,7 +108,7 @@ public class Player_Interaction : MonoBehaviour {
             }
         }
 
-        if (trashCanRange)
+        else if (trashCanRange)
         {
             // if player is holding something
             if (PickupSystem.inst.isHoldingSomething())
@@ -114,7 +121,7 @@ public class Player_Interaction : MonoBehaviour {
             }
         }
 
-        if (distractionRange)
+        else if (distractionRange)
         {
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF")
             {
@@ -123,6 +130,68 @@ public class Player_Interaction : MonoBehaviour {
                     DistractionSystem.inst.StartDistraction();
                     SetInteraction(false);
                 }
+            }
+        }
+
+        else if (foodieRange)
+        {
+            // cannot kidnap if holding something or if the foodie is in line outside
+            if (!PickupSystem.inst.isHoldingSomething() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
+            {
+                if (TakeAction("[E] Kidnap", KeyCode.E))
+                {
+                    foodieReleased = false; // flag for when player is caught kidnapping
+                    // pick up the foodie
+                    PickupSystem.inst.PickUpItem(foodieScript.foodieSprite);
+                    
+                    // if foodie was at a table --> put table back into available tables
+                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState || foodieScript.stateMachine.currentFoodieState == foodieScript.eatState)
+                    {
+                        FoodieSystem.inst.availableSeats.Enqueue(foodieScript.tablePosition);
+                    }
+
+                    // destroy foodie
+                    foodieScript.DestroyFoodie(); 
+
+                    SetInteraction(false);
+                }
+            }
+        }
+
+        else if (grinderRange)
+        {
+            if (PickupSystem.inst.isHoldingFoodie())
+            {
+                if (TakeAction("[F] Grind", KeyCode.F))
+                {
+                    PickupSystem.inst.DropItem();
+                    grinderScript.StartGrinding();
+                    SetInteraction(false);
+                }
+            }
+            else if (grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone()) 
+            {
+                if (TakeAction("[F] Take MSG", KeyCode.F))
+                {
+                    grinderScript.TakeMSG();
+                    SetInteraction(false);
+                }
+            }
+        }
+
+        if (foodieSightRange)
+        {
+            if (PickupSystem.inst.isHoldingFoodie())
+            {
+                // flag makes sure code inside is only called once per collision
+                if (!foodieReleased)
+                {
+                    foodieReleased = true;
+                    Debug.Log("Caught kidnapping");
+                    FoodieSpawner.inst.ReleaseFoodie();
+                    PickupSystem.inst.DropItem();
+                }
+                    
             }
         }
 
@@ -164,6 +233,23 @@ public class Player_Interaction : MonoBehaviour {
             Debug.Log("Within range of distraction");
             distractionRange = true;
         }
+        else if (collision.CompareTag("Foodie"))
+        {
+            Debug.Log("Within range of foodie");
+            foodieRange = true;
+            foodieScript = collision.GetComponentInParent<Foodie>();
+        }
+        else if (collision.CompareTag("Grinder"))
+        {
+            Debug.Log("Within range of grinder");
+            grinderRange = true;
+            grinderScript = collision.GetComponent<Grinder>();
+        }
+        else if (collision.CompareTag("FoodieSight"))
+        {
+            Debug.Log("Within range of foodie sight");
+            foodieSightRange = true;
+        }
         
     }
 
@@ -194,7 +280,23 @@ public class Player_Interaction : MonoBehaviour {
             distractionRange = false;
             Debug.Log("Out of range of distraction");
         }
-
+        else if (collision.CompareTag("Foodie"))
+        {
+            foodieRange = false;
+            foodieScript = null;
+            Debug.Log("Out of range of foodie");
+        }
+        else if (collision.CompareTag("Grinder"))
+        {
+            grinderRange = false;
+            grinderScript = null;
+            Debug.Log("Out of range of grinder");
+        }
+        else if (collision.CompareTag("FoodieSight"))
+        {
+            foodieSightRange = false;
+            Debug.Log("Out of range of foodie sight");
+        }
 
         interactionMessage.SetActive(false);
     }

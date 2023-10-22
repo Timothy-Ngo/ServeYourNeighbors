@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5098117139198248735}
   - component: {fileID: 4494675786206971112}
   - component: {fileID: 1610437456629237630}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair Renderer (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2421367022316976305}
   - component: {fileID: 7155032378588048763}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: table_and_2_chairs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,6 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dish: {fileID: 8295210261215548965}
+  dishSR: {fileID: 5131462595147077561}
   foodie: {fileID: 0}
 --- !u!1 &8295210261215548965
 GameObject:
@@ -186,8 +187,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4036207930284998296}
   - component: {fileID: 5131462595147077561}
-  m_Layer: 0
-  m_Name: 'Tomato Soup '
+  m_Layer: 8
+  m_Name: Food
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +248,7 @@ SpriteRenderer:
   m_SortingLayerID: -482501693
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a46e5c93d96a3e447b8bb54a2012d0ad, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -255,7 +256,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &9133640436254864951
@@ -269,7 +270,7 @@ GameObject:
   - component: {fileID: 9133640436254864950}
   - component: {fileID: 9133640436254864968}
   - component: {fileID: 9133640436254864969}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chair Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -398,7 +399,7 @@ GameObject:
   - component: {fileID: 9133640437308568805}
   - component: {fileID: 5300314520403841488}
   - component: {fileID: 5018387904202541041}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Table Renderer
   m_TagString: Table
   m_Icon: {fileID: 0}

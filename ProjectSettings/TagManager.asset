@@ -11,6 +11,8 @@ TagManager:
   - IngredientBox
   - TrashCan
   - DistractionCircle
+  - Grinder
+  - FoodieSight
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - 
   - Foodie
   - FoodieIgnoreCollisions
-  - 
+  - Distraction
   - 
   - 
   - 
