@@ -70,6 +70,8 @@ public class FoodieSpawner : MonoBehaviour
         newFoodie.transform.parent = foodieParent;
         Foodie foodieScript = newFoodie.GetComponent<Foodie>();
         yield return new WaitForSeconds(0.1f);
+        if (FoodieSystem.inst.line.Contains(foodieScript.foodieMovement))
+            FoodieSystem.inst.line.Remove(foodieScript.foodieMovement);
         foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
 
         
