@@ -3057,6 +3057,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: dc364f150bea1ab4c8233c44743f2e6f, type: 3}
   ingredients:
   - {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
+  toppings:
   - {fileID: 21300000, guid: e0977b3751135ed4f8e925c5494dd564, type: 3}
   foodies:
   - {fileID: 21300000, guid: 6de7dd57f3dab0c47b0d5d49d27b1037, type: 3}

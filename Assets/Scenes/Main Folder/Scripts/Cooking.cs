@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cooking : MonoBehaviour {
-
     [Header("-----SPRITES-----")]
     private SpriteRenderer sr;
     public Sprite std;

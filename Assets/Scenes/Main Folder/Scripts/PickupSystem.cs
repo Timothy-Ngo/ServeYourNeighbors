@@ -16,13 +16,15 @@ public class PickupSystem : MonoBehaviour
     private bool holdingSomething = false;
 
     [Header("-----FLAGS-----")] // flags to ensure nothing but ingredients get cooked
-    private bool holdingIngredient = false;
-    private bool holdingFoodie = false;
     private bool holdingDish = false;
+    private bool holdingIngredient = false;
+    private bool holdingTopping = false;
+    private bool holdingFoodie = false;
 
     [Header("-----LISTS-----")] // manually add items in the inspector
     public List<Sprite> dishes;
     public List<Sprite> ingredients;
+    public List<Sprite> toppings;
     public List<Sprite> foodies;
 
     [Header("-----DEBUGGING-----")]
@@ -32,7 +34,6 @@ public class PickupSystem : MonoBehaviour
 
     private void Start()
     {
-
         holding = playerHolding.GetComponent<SpriteRenderer>();
     }
 
@@ -67,6 +68,11 @@ public class PickupSystem : MonoBehaviour
                 Debug.Log("holding ingredient");
                 holdingIngredient = true;
             }
+            else if (toppings.Contains(item)) 
+            {
+                Debug.Log("holding topping");
+                holdingTopping = true;
+            }
             else if (foodies.Contains(item))
             {
                 Debug.Log("holding foodie");
@@ -85,13 +91,13 @@ public class PickupSystem : MonoBehaviour
         if (holdingSomething)
         {
             // resets flags
-            holdingIngredient = false;
-            holdingFoodie = false;
             holdingDish = false;
+            holdingIngredient = false;
+            holdingTopping = false;
+            holdingFoodie = false;
 
             // player isn't holding anything
             holding.sprite = null;
-        
         
             holdingSomething = false;
         }
@@ -106,18 +112,21 @@ public class PickupSystem : MonoBehaviour
     {
         return holdingSomething;
     }
+    public bool isHoldingDish() {
+        return holdingDish;
+    }
+
     public bool isHoldingIngredient()
     {
         return holdingIngredient;
     }
 
+    public bool isHoldingTopping() {
+        return holdingTopping;
+    }
+
     public bool isHoldingFoodie()
     {
         return holdingFoodie;
-    }
-
-    public bool isHoldingDish()
-    {
-        return holdingDish;
     }
 }

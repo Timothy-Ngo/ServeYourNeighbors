@@ -55,7 +55,15 @@ public class Player_Interaction : MonoBehaviour {
             }
             // if food is ready
             else if (cooktopScript.IsFoodReady()) {
-                if (PickupSystem.inst.isHoldingSomething())
+                if (PickupSystem.inst.isHoldingTopping()) {
+                    if(TakeAction("[F] Add MSG", KeyCode.F)) 
+                    {
+                        PickupSystem.inst.DropItem();
+                    }
+                    // add value of MSG to value of dish
+                    // update bool hasMSG to dish
+                }
+                else if (PickupSystem.inst.isHoldingSomething())
                 {
                     Prompt("Hands Are Full");
                 }
