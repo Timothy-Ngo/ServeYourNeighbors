@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cooking : MonoBehaviour {
+public class Cooking_QT_Event : MonoBehaviour {
     [Header("-----SPRITES-----")]
     private SpriteRenderer sr;
     public Sprite std;
@@ -13,8 +13,8 @@ public class Cooking : MonoBehaviour {
 
     [Header("-----GAME OBJECTS-----")]
     public GameObject dish;
-    [SerializeField] GameObject match;
     [SerializeField] Timer timer_script;
+    [SerializeField] QT_Event qt_script;
 
     [Header("-----STATE-----")]
     bool prepping = false;
@@ -23,12 +23,20 @@ public class Cooking : MonoBehaviour {
     int cookTime = 5; // time in seconds, can be updated by upgrade system
 
     void Start() {
+        Debug.Log("QT");
         sr = gameObject.GetComponent<SpriteRenderer>();
 
         //dish = GameObject.Find("dish");
         //match = GameObject.Find("Match");
 
         //timer_script = FindObjectOfType<Timer>();
+    }
+
+    private void Update() {
+        if(prepping && qt_script.isComplete()) {
+            prepping = false;
+            StartCooking();
+        }
     }
 
     public void SetCookTime(int newTime) {
@@ -38,12 +46,11 @@ public class Cooking : MonoBehaviour {
     public void StartPrep() {
         Debug.Log("Starting prep");
         prepping = true;
-        match.GetComponent<Match>().SetActive(true);
+        qt_script.resetEvent();
     }
 
     public void StartCooking() {
         prepping = false;
-        match.GetComponent<Match>().SetActive(false);
         cooking = true;
         sr.sprite = fire;
         StartCoroutine(CookWaiter(cookTime, PickupSystem.inst.GetItem())); // when ordering system is combined, this will be a variable passed in to StartCooking() from the oddering system
@@ -57,20 +64,15 @@ public class Cooking : MonoBehaviour {
         return prepping;
     }
 
-    public bool IsFoodReady() {
+    public bool IsFoodReady()
+    {
         return foodReady;
     }
 
-    public void ResetCooktop() {
+    public void ResetCooktop()
+    {
         dish.GetComponent<Food>().ResetDish();
         foodReady = false;
-    }
-
-    public void OnMouseOver() {
-        if (Input.GetMouseButtonDown(0) && prepping) {
-            Debug.Log("Clicked and prepped!");
-            StartCooking();
-        }
     }
 
     // https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
