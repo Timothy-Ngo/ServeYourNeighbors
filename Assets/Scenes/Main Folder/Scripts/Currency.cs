@@ -57,6 +57,7 @@ public class Currency : MonoBehaviour
     public void UpdateTextUI()
     {
         currentGoldText.text = "Gold:\n" + gold;
+        NotifyObservers();
     }
 
     public bool AbleToWithdraw(int amount)
@@ -64,5 +65,9 @@ public class Currency : MonoBehaviour
         return (gold - amount) >= 0;
     }
 
+    public void NotifyObservers()
+    {
+        GameLoop.inst.UpdateObserver();
+    }
 
 }
