@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Player_Interaction : MonoBehaviour {
+public class Player_Interaction_Distraction_Charges : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
 
@@ -28,7 +28,7 @@ public class Player_Interaction : MonoBehaviour {
     Cooking cooktopScript;
     [SerializeField] private Table tableScript;
     IngredientBox ingredientBoxScript;
-    Distraction distractionScript;
+    DistractionCharges distractionScript;
     Foodie foodieScript;
     Grinder grinderScript;
     
@@ -242,8 +242,6 @@ public class Player_Interaction : MonoBehaviour {
         {
             Debug.Log("Within range of distraction");
             distractionRange = true;
-            distractionScript = collision.GetComponent<Distraction>();
-            Debug.Log("distraction: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("Foodie"))
         {
@@ -290,7 +288,7 @@ public class Player_Interaction : MonoBehaviour {
         else if (collision.CompareTag("Distraction"))
         {
             distractionRange = false;
-            distractionScript = null;
+            distractionScript = collision.GetComponent<DistractionCharges>();
             Debug.Log("Out of range of distraction");
         }
         else if (collision.CompareTag("Foodie"))

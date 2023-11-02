@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Player_Interaction : MonoBehaviour {
+public class Player_InteractionGrinder : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
 
@@ -28,9 +28,8 @@ public class Player_Interaction : MonoBehaviour {
     Cooking cooktopScript;
     [SerializeField] private Table tableScript;
     IngredientBox ingredientBoxScript;
-    Distraction distractionScript;
     Foodie foodieScript;
-    Grinder grinderScript;
+    GrinderStack grinderScript;
     
 
     private void Start() {
@@ -132,11 +131,10 @@ public class Player_Interaction : MonoBehaviour {
 
         else if (distractionRange)
         {
-            if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
+            if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF")
             {
                 if (TakeAction("[E] Turn On", KeyCode.E))
                 {
-                    distractionScript.DecrementCharges();
                     DistractionSystem.inst.StartDistraction();
                     SetInteraction(false);
                 }
@@ -175,13 +173,15 @@ public class Player_Interaction : MonoBehaviour {
                 if (TakeAction("[F] Grind", KeyCode.F))
                 {
                     PickupSystem.inst.DropItem();
-                    grinderScript.StartGrinding();
+                    //grinderScript.StartGrinding();
+                    grinderScript.grindingCount += 1;
+                    grinderScript.grindingNumText.text = grinderScript.grindingCount.ToString();
                     SetInteraction(false);
                 }
             }
-            else if (grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone()) 
+            else if (grinderScript.msgCount > 0)//(grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone()) 
             {
-                if (TakeAction("[F] Take MSG", KeyCode.F))
+                if (TakeAction("[E] Take MSG", KeyCode.E))
                 {
                     grinderScript.TakeMSG();
                     SetInteraction(false);
@@ -242,8 +242,6 @@ public class Player_Interaction : MonoBehaviour {
         {
             Debug.Log("Within range of distraction");
             distractionRange = true;
-            distractionScript = collision.GetComponent<Distraction>();
-            Debug.Log("distraction: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("Foodie"))
         {
@@ -255,7 +253,7 @@ public class Player_Interaction : MonoBehaviour {
         {
             Debug.Log("Within range of grinder");
             grinderRange = true;
-            grinderScript = collision.GetComponent<Grinder>();
+            grinderScript = collision.GetComponent<GrinderStack>();
         }
         else if (collision.CompareTag("FoodieSight"))
         {
@@ -290,7 +288,6 @@ public class Player_Interaction : MonoBehaviour {
         else if (collision.CompareTag("Distraction"))
         {
             distractionRange = false;
-            distractionScript = null;
             Debug.Log("Out of range of distraction");
         }
         else if (collision.CompareTag("Foodie"))
