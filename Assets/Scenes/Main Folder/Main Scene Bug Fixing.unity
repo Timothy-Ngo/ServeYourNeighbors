@@ -3113,6 +3113,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183396669}
   m_CullTransparentMesh: 1
+--- !u!114 &1200298488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8247243701125353631, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
+  m_PrefabInstance: {fileID: 1914200323}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de86e4f5edff6a04fb962f6ab0527aab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1206880214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6129992119448886669, guid: 6e1ae98247bfa9443bcd944ff24e8b49, type: 3}
@@ -5356,6 +5367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cook_station (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2896272355097170127, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
+      propertyPath: qt_script
+      value: 
+      objectReference: {fileID: 1200298488}
     - target: {fileID: 2896272355482201791, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: m_Camera
       value: 
@@ -6453,6 +6468,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1920448729}
+    - target: {fileID: 5271624078764930579, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8247243701125353631, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: prompt
       value: 
