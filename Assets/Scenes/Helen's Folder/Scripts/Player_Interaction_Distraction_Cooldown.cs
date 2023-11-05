@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Player_Interaction : MonoBehaviour {
+public class Player_Interaction_Distraction_Cooldown : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
 
@@ -28,7 +28,7 @@ public class Player_Interaction : MonoBehaviour {
     Cooking cooktopScript;
     [SerializeField] private Table tableScript;
     IngredientBox ingredientBoxScript;
-    Distraction distractionScript;
+    DistractionCooldown distractionScript;
     Foodie foodieScript;
     Grinder grinderScript;
     
@@ -52,7 +52,7 @@ public class Player_Interaction : MonoBehaviour {
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
-                Prompt("[C] Cook!!!");
+                Prompt("Light it up!!!");
             }
             // if food is ready
             else if (cooktopScript.IsFoodReady()) {
@@ -132,12 +132,11 @@ public class Player_Interaction : MonoBehaviour {
 
         else if (distractionRange)
         {
-            if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
+            if (DistractionSystemCooldown.inst.animatronicDistraction.statusText.text == "OFF" && !distractionScript.onCooldown)
             {
-                if (TakeAction("[E] Turn On", KeyCode.E))
+                if (TakeAction("[E] Turn On", KeyCode.E) )
                 {
-                    distractionScript.DecrementCharges();
-                    DistractionSystem.inst.StartDistraction();
+                    DistractionSystemCooldown.inst.StartDistraction();
                     SetInteraction(false);
                 }
             }
@@ -242,8 +241,8 @@ public class Player_Interaction : MonoBehaviour {
         {
             Debug.Log("Within range of distraction");
             distractionRange = true;
-            distractionScript = collision.GetComponent<Distraction>();
-            Debug.Log("distraction: " + collision.gameObject.name);
+            distractionScript = collision.GetComponent<DistractionCooldown>();
+            Debug.Log("Distraction: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("Foodie"))
         {

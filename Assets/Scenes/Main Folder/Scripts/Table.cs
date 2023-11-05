@@ -45,7 +45,7 @@ public class Table : MonoBehaviour
     public void RemoveDish()
     {
         dish.SetActive(false);
-        CustomerPayments.inst.RandomPayment();
+        CustomerPayments.inst.TimeBasedPayment(foodie.timeAtOrderTaken/foodie.orderTime);
     }
     
     

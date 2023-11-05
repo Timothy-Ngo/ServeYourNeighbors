@@ -27,6 +27,8 @@ public class Foodie : MonoBehaviour
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 10;
+
+    public float timeAtOrderTaken;
     public Sprite order;
 
     [Header("-----DISTRACTION SETTINGS-----")]

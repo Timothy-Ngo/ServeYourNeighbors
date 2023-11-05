@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Distraction : MonoBehaviour
+public class DistractionCharges : MonoBehaviour
 {
     public Collider2D distractionTrigger; // distraction's collider --> isTrigger is on
     SpriteRenderer distractionSR;
     public TextMeshProUGUI statusText;
-    [SerializeField] TextMeshProUGUI chargesText;
+    public TextMeshProUGUI chargesText;
 
-    [SerializeField] int maxCharges = 2;
+    public int maxCharges = 2;
     int currentCharges;
-
     private void Start()
     {
         distractionTrigger.enabled = false;
@@ -21,9 +20,33 @@ public class Distraction : MonoBehaviour
         distractionSR.enabled = false;
 
         statusText.enabled = false;
-
         currentCharges = maxCharges;
         UpdateChargesText();
+    }
+
+    public void UpdateChargesText()
+    {
+        chargesText.text = currentCharges.ToString();
+    }
+
+    public bool ChargesAvailable()
+    {
+        if (currentCharges > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void DecrementCharges()
+    {
+        currentCharges--;
+        UpdateChargesText();
+    }
+
+    public void ResetCharges()
+    {
+        currentCharges = maxCharges;
     }
 
     private void Update()
@@ -47,36 +70,5 @@ public class Distraction : MonoBehaviour
         if (statusText.text != "ON")
             statusText.enabled = false;
         distractionSR.enabled = false;
-    }
-
-    // --------------- CHARGES --------------- //
-
-    // Updates the text saying how many charges are left
-    public void UpdateChargesText()
-    {
-        chargesText.text = currentCharges.ToString();
-    }
-
-    // Checks if there are any charges left to use
-    public bool ChargesAvailable()
-    {
-        if (currentCharges > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    // Decreases the charges
-    public void DecrementCharges()
-    {
-        currentCharges--;
-        UpdateChargesText();
-    }
-
-    // Resets distractions charges back to max amount
-    public void ResetCharges()
-    {
-        currentCharges = maxCharges;
     }
 }

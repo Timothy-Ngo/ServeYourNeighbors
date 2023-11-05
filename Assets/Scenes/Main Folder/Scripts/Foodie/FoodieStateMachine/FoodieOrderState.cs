@@ -43,6 +43,7 @@ public class FoodieOrderState : FoodieState
         if (isOrdering && foodie.timerScript.timeLeft > 0 && orderGiven)
         {
             foodie.orderBubble.SetActive(false);
+            foodie.timeAtOrderTaken = foodie.timerScript.timeLeft;
             foodie.timerScript.timeLeft = 0;
             foodie.stateMachine.ChangeState(foodie.eatState);
         }
