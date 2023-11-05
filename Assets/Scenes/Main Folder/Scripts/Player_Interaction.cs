@@ -171,6 +171,12 @@ public class Player_Interaction : MonoBehaviour {
                     {
                         FoodieSystem.inst.availableSeats.Enqueue(foodieScript.tablePosition);
                     }
+                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.eatState)
+                    {
+                        // makes food disappear from table
+                        foodieScript.table.dish.SetActive(false); 
+                        Player.inst.food.ResetDish();
+                    }
 
                     // destroy foodie
                     foodieScript.DestroyFoodie(); 
