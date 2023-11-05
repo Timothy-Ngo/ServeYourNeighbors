@@ -20,7 +20,7 @@ public class GameLoop : MonoBehaviour
     [Header("-----DAY CYCLE-----")] [SerializeField]
     private int day = 1;
 
-    public TextMeshProUGUI startNewDayDescription;
+    public TextMeshProUGUI payDescription;
     [SerializeField] int dailyOperationCost = 50;
     
     
@@ -59,7 +59,7 @@ public class GameLoop : MonoBehaviour
         operationCostText.text = $"Goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         // Display price of operations cost to text
-        startNewDayDescription.text += $" ({dailyOperationCost}g)";
+        payDescription.text += $" ({dailyOperationCost}g)";
         
         // Set up the day game loop
         currentWaveCount = wavesPerDay;
@@ -80,6 +80,7 @@ public class GameLoop : MonoBehaviour
                 if (Currency.inst.AbleToWithdraw(dailyOperationCost))
                 {
                     upgradeScreenObj.SetActive(true);
+                    Upgrades.inst.DisableUpgradeButtons();
                     finishedWaves = true;
                 }
                 else
@@ -118,11 +119,12 @@ public class GameLoop : MonoBehaviour
     }
     public void StartNewDay() // Starts a new day after player is done with their upgrades menu 
     {
-        Currency.inst.Withdraw(dailyOperationCost);
         day++;
         if (day % 2 == 0)
         {
             wavesPerDay++;
+            dailyOperationCost += 10;
+            UpdateObserver();
         }
         else if (day % 2 == 1)
         {
@@ -132,9 +134,10 @@ public class GameLoop : MonoBehaviour
         operationCostText.text = $"Reach goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         
+        // Reset distraction 
+        DistractionSystem.inst.animatronicDistraction.ResetCharges();
         // Close upgrade screen
         upgradeScreenObj.SetActive(false);
-        
         // Reset wave count
         currentWaveCount = wavesPerDay;
         
@@ -143,7 +146,7 @@ public class GameLoop : MonoBehaviour
         
         // Reset finished Waves
         finishedWaves = false;
-            
+        
 
     }
     public void UpdateObserver()
@@ -158,5 +161,12 @@ public class GameLoop : MonoBehaviour
     {
         // TODO: This method should maybe? take the player back to the menu in the future 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+    }
+
+    public void PayOperationsCost()
+    {
+        Debug.Assert(Currency.inst.AbleToWithdraw(dailyOperationCost));
+        Currency.inst.Withdraw(dailyOperationCost);
+        Upgrades.inst.EnableUpgradeButtons();
     }
 }

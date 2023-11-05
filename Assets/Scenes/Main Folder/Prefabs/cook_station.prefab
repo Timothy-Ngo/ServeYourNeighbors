@@ -134,7 +134,7 @@ MonoBehaviour:
   fire: {fileID: 21300000, guid: 62f09bcd0ebf68f4c9c84837cb1dfe82, type: 3}
   dish: {fileID: 2896272356619432122}
   timer_script: {fileID: 2896272356102829511}
-  qt_script: {fileID: 0}
+  qt_script: {fileID: 8247243701125353631}
 --- !u!61 &5271624078764930579
 BoxCollider2D:
   m_ObjectHideFlags: 0

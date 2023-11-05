@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Upgrades : MonoBehaviour
 {
@@ -36,6 +37,11 @@ public class Upgrades : MonoBehaviour
     }
     [Header("-----UPGRADES UI-----")]
     public GameObject upgradesScreen;
+
+    public GameObject upgradeButtons;
+    [SerializeField] private Button[] buttons;
+    [SerializeField] private Color greyedOutColor;
+    [SerializeField] private Color normalColor;
 
     [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
@@ -74,6 +80,8 @@ public class Upgrades : MonoBehaviour
         tablesDescription.text += $" ({tablesUpgradeCost}g)";
         speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)";
         cookStationsDescription.text += $" ({cookStationsUpgradeCost}g)";
+
+        buttons = upgradeButtons.GetComponentsInChildren<Button>();
     }
 
     private void Update()
@@ -143,6 +151,7 @@ public class Upgrades : MonoBehaviour
             Currency.inst.Withdraw(tablesUpgradeCost);
             tables[numOfActiveTables].SetActive(true);
             NotifyObservers();
+            CustomerPayments.inst.standardPayment += 10;
             Debug.Log("Bought a table upgrade");
         }
         else
@@ -246,7 +255,24 @@ public class Upgrades : MonoBehaviour
                 break;
 
         }
+    }
 
-    
+
+    public void DisableUpgradeButtons()
+    {
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+            button.enabled = false;
+        }
+    }
+
+    public void EnableUpgradeButtons()
+    {
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+            button.enabled = true;
+        }
     }
 }
