@@ -31,6 +31,9 @@ public class Player_Interaction : MonoBehaviour {
     Distraction distractionScript;
     Foodie foodieScript;
     Grinder grinderScript;
+
+    [Header("-----FOOD-----")] 
+    public Food food;
     
 
     private void Start() {
@@ -46,9 +49,13 @@ public class Player_Interaction : MonoBehaviour {
         if(cooktopRange) {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
-                if (TakeAction("[C] Cook", KeyCode.C)) {
+                if (TakeAction("[C] Cook", KeyCode.C))
+                {
+                    
                     cooktopScript.StartPrep();
                     SetInteraction(false);
+                    food = cooktopScript.gameObject.GetComponentInChildren<Food>();
+                    Debug.Log(food);
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
@@ -60,7 +67,9 @@ public class Player_Interaction : MonoBehaviour {
                     if(TakeAction("[F] Add MSG", KeyCode.F)) 
                     {
                         PickupSystem.inst.DropItem();
+                        food.AddMSG();
                     }
+                    
                     // add value of MSG to value of dish
                     // update bool hasMSG to dish
                 }
@@ -70,9 +79,12 @@ public class Player_Interaction : MonoBehaviour {
                 }
                 else if (TakeAction("[F] Get Dish", KeyCode.F))
                 {
+                    Player.inst.food = food;
+                    bool hasMSG = Player.inst.food.hasMSG;
                     PickupSystem.inst.PickUpItem(cooktopScript.dish.GetComponent<SpriteRenderer>().sprite);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
+                    Player.inst.food.hasMSG = hasMSG;
                 }
             }
             else if (!cooktopScript.IsPrepping()) {

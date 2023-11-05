@@ -56,7 +56,7 @@ public class GameLoop : MonoBehaviour
         playerUI.SetActive(true);
         
         // Display current day's operation cost goal for the player to reach
-        operationCostText.text = $"Reach goal: {dailyOperationCost.ToString()}";
+        operationCostText.text = $"Goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         // Display price of operations cost to text
         startNewDayDescription.text += $" ({dailyOperationCost}g)";
@@ -129,7 +129,7 @@ public class GameLoop : MonoBehaviour
             numFoodiesAtStart++;
         }
         // Display current day's operation cost goal for the player to reach
-        operationCostText.text = $"Reach goal: {dailyOperationCost.ToString()}";
+        operationCostText.text = $"Reach goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         
         // Close upgrade screen

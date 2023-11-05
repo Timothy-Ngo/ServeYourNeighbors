@@ -54,10 +54,18 @@ public class Food : MonoBehaviour {
 
     public void ResetDish()
     {
+        hasMSG = false;
         sr.sprite = null;
     }
 
     public void Display() {
         sr.enabled = true;
     }
+
+    public void AddMSG()
+    {
+        hasMSG = true;
+        Debug.Log("Added MSG");
+    }
+    
 }

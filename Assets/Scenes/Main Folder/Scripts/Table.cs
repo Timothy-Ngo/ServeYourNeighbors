@@ -45,7 +45,21 @@ public class Table : MonoBehaviour
     public void RemoveDish()
     {
         dish.SetActive(false);
-        CustomerPayments.inst.TimeBasedPayment(foodie.timeAtOrderTaken/foodie.orderTime);
+        Food food = Player.inst.food;
+        Debug.Log(Player.inst.food.hasMSG);
+        Debug.Assert(food != null, "food is null");
+        if (food.hasMSG)
+        {
+            Debug.Log("MSGPayment");
+            CustomerPayments.inst.MSGPayment();
+        }
+        else
+        {
+            Debug.Log("Timebased    Payment");
+            CustomerPayments.inst.TimeBasedPayment(foodie.timeAtOrderTaken/foodie.orderTime);
+        }
+
+        Player.inst.food.ResetDish();
     }
     
     

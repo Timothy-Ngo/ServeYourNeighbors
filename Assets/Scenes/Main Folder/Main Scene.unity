@@ -410,7 +410,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &91747040
 RectTransform:
@@ -545,7 +545,7 @@ GameObject:
   - component: {fileID: 179312679}
   - component: {fileID: 179312681}
   - component: {fileID: 179312680}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1072,7 +1072,7 @@ GameObject:
   - component: {fileID: 425036023}
   - component: {fileID: 425036025}
   - component: {fileID: 425036024}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background Shade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1279,7 +1279,7 @@ MonoBehaviour:
   wavesPerDay: 2
   numFoodiesAtStart: 1
   waveInterval: 3
-  upgradeScreenObj: {fileID: 738331740}
+  upgradeScreenObj: {fileID: 1678517639}
   operationCostText: {fileID: 1873691564}
   opCostsAchievedColor: {r: 1, g: 1, b: 1, a: 1}
   opCostsNotAchievedColor: {r: 1, g: 0.078431375, b: 0, a: 1}
@@ -1386,7 +1386,7 @@ GameObject:
   - component: {fileID: 653964494}
   - component: {fileID: 653964496}
   - component: {fileID: 653964495}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Background Panel '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1584,6 +1584,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678517640}
     m_Modifications:
+    - target: {fileID: 816105257954682513, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074463307535568198, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478844656252211467, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6313726
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1716,9 +1740,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Next Day Button
       objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857314, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339493033359605, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_text
       value: Start Next Day
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339493033359607, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778206559680241136, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
@@ -1866,37 +1902,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6671339492838857313, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
   m_PrefabInstance: {fileID: 1439652231}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &738331740
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 738331741}
-  m_Layer: 0
-  m_Name: ~Upgrade Screen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &738331741
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 738331740}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1678517640}
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &766946082 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2421367022316976305, guid: f9be65bf8b36286428d99022122b6722, type: 3}
@@ -1974,7 +1979,7 @@ GameObject:
   - component: {fileID: 809481432}
   - component: {fileID: 809481434}
   - component: {fileID: 809481433}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Description '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2144,6 +2149,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8584186661708686078, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
   m_PrefabInstance: {fileID: 1775829407}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &940067786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940067780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd229fbae801eb644b78db0b61511cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  food: {fileID: 0}
 --- !u!114 &949403113 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8247243701125353631, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
@@ -2252,7 +2270,7 @@ GameObject:
   - component: {fileID: 1041419614}
   - component: {fileID: 1041419616}
   - component: {fileID: 1041419615}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2412,6 +2430,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678517640}
     m_Modifications:
+    - target: {fileID: 816105257954682513, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074463307535568198, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478844656252211467, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6313726
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2544,9 +2586,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: GMO Upgrade Button
       objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857314, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339493033359605, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_text
       value: Become a GMO
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339493033359607, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778206559680241136, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
@@ -2936,7 +2990,7 @@ GameObject:
   - component: {fileID: 1183396670}
   - component: {fileID: 1183396672}
   - component: {fileID: 1183396671}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Description '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3393,6 +3447,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678517640}
     m_Modifications:
+    - target: {fileID: 816105257954682513, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074463307535568198, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478844656252211467, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.6313726
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6313726
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3525,9 +3603,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cooking Stations Upgrade Button
       objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857314, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339493033359605, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_text
       value: stations Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339493033359607, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778206559680241136, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
@@ -3686,6 +3776,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1555204352}
     m_Modifications:
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.33962262
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.33962262
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4206,6 +4308,7 @@ MonoBehaviour:
   cheapProbability: 0.1
   standardProbability: 0.75
   expensiveProbability: 0.05
+  msgBonusMultiplier: 2
   collectPaymentSfx: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
 --- !u!4 &1583506793
 Transform:
@@ -4250,7 +4353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d3d9dec876a784885698a5bce9c038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradesScreen: {fileID: 738331740}
+  upgradesScreen: {fileID: 0}
   tablesParent: {fileID: 437064608}
   tables: []
   tablesUpgradeCost: 75
@@ -4291,7 +4394,7 @@ GameObject:
   - component: {fileID: 1627070338}
   - component: {fileID: 1627070340}
   - component: {fileID: 1627070339}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4426,6 +4529,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1678517640}
     m_Modifications:
+    - target: {fileID: 816105257954682513, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4074463307535568198, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5478844656252211467, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.63008773
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.63008773
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.6320754
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4558,9 +4685,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tables Upgrade Button
       objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857314, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6671339493033359605, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_text
       value: Tables Upgrade
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339493033359607, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778206559680241136, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
@@ -4626,13 +4765,13 @@ GameObject:
   - component: {fileID: 1678517643}
   - component: {fileID: 1678517642}
   - component: {fileID: 1678517641}
-  m_Layer: 0
-  m_Name: Canvas
+  m_Layer: 5
+  m_Name: ~Upgrade Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1678517640
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4652,8 +4791,8 @@ RectTransform:
   - {fileID: 1632590367}
   - {fileID: 671200780}
   - {fileID: 1627070338}
-  m_Father: {fileID: 738331741}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -6128,7 +6267,7 @@ GameObject:
   - component: {fileID: 2143005941}
   - component: {fileID: 2143005943}
   - component: {fileID: 2143005942}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: 'Description '
   m_TagString: Untagged
   m_Icon: {fileID: 0}

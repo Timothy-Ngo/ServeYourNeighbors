@@ -20,7 +20,8 @@ public class CustomerPayments : MonoBehaviour
     public float cheapProbability = 0.10f;
     public float standardProbability = 0.85f;
     public float expensiveProbability = 0.05f;
-    
+
+    [Header("MSG")] public int msgBonusMultiplier = 100;
     
     [Header("Sound FX")]
     public AudioClip collectPaymentSfx;
@@ -63,11 +64,17 @@ public class CustomerPayments : MonoBehaviour
 
     public void TimeBasedPayment(float tipPercentage)
     {
-        // Tip percentage is used to calculate how much of a 20% tip should be paid by the customer
-        float payment = (float)(standardPayment + ((standardPayment/2) * tipPercentage));
+        // Tip percentage is used to calculate how much of a 50% tip should be paid by the customer
+        float payment = (float)(standardPayment + ((standardPayment*0.5) * tipPercentage));
         CollectPayment(Mathf.RoundToInt(payment));
         Debug.Log($"payment (before rounding): {payment}");
 
+    }
+
+    public void MSGPayment()
+    {
+        int payment = standardPayment * msgBonusMultiplier;
+        CollectPayment(payment);
     }
 
 }
