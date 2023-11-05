@@ -8,17 +8,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class QT_Event : MonoBehaviour {
-    public float fillAmount = 0;
+    public float fillAmount;
     public float timeThreshold = 0;
     public KeyCode keycode;
     public bool active = false;
     public bool complete = false;
 
-    public GameObject prompt;
+    [SerializeField] public GameObject prompt;
 
     private void Start() {
         GetComponent<Image>().fillAmount = 0;
-        prompt = GameObject.Find("C");
         prompt.SetActive(false);
     }
 
@@ -29,6 +28,10 @@ public class QT_Event : MonoBehaviour {
             }
 
             timeThreshold += Time.deltaTime;
+
+            if (fillAmount < 0) {
+                fillAmount = 0;
+            }
 
             if (timeThreshold > .1f) {
                 timeThreshold = 0;
@@ -47,13 +50,17 @@ public class QT_Event : MonoBehaviour {
     }
 
     public void resetEvent() {
+        Debug.Log("*********Reset!");
+        fillAmount = 0f;
         prompt.SetActive(true);
         active = true;
         complete = false;
     }
 
     public bool isComplete() {
-        GetComponent<Image>().fillAmount = 0;
+        if(complete) {
+            GetComponent<Image>().fillAmount = 0;
+        }
         return complete;
     }
 }

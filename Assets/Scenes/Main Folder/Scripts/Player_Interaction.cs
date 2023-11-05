@@ -51,7 +51,7 @@ public class Player_Interaction : MonoBehaviour {
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
-                Prompt("Light it up!!!");
+                Prompt("[C] Cook!!!");
             }
             // if food is ready
             else if (cooktopScript.IsFoodReady()) {
