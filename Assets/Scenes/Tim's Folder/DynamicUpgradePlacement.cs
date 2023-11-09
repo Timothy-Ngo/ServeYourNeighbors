@@ -7,8 +7,16 @@ using UnityEngine;
 /// </summary>
 public class DynamicUpgradePlacement : MonoBehaviour
 {
+    [Tooltip("Prefabs of objects that can be dynamically placed in the scene")]
+    [SerializeField] List<GameObject> prefabs;
+    GameObject selectedItem;
 
-    private bool _isEnabled;
+    /// <summary>
+    /// Number of frames to completely interpolate between item position and mouse position
+    /// </summary>
+    [SerializeField] private int interpolationFramesCount = 45; 
+    
+    bool _isEnabled;
     /// <summary>
     /// Will enable and disable the system
     /// </summary>
@@ -22,13 +30,13 @@ public class DynamicUpgradePlacement : MonoBehaviour
         }
     }
 
-    private GameObject selectedItem;
 
     public GameObject uiGameObject;
     // Start is called before the first frame update
     void Start()
     {
         isEnabled = false;
+        
     }
 
     // Update is called once per frame
@@ -41,7 +49,12 @@ public class DynamicUpgradePlacement : MonoBehaviour
 
         if (isEnabled)
         {
-            
+            Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            selectedItem.transform.position = Vector3.Lerp(
+                selectedItem.transform.position,
+                worldMousePosition,
+                interpolationFramesCount
+            );
         }
         
     }
@@ -56,12 +69,20 @@ public class DynamicUpgradePlacement : MonoBehaviour
          *  
          * 
          */
-        uiGameObject.SetActive(enabled);
-        
-        
-        
-        
+        //uiGameObject.SetActive(enabled);
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (enabled)
+        {
+            selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
+        }
+        else
+        {
+            Destroy(selectedItem);            
+        }
 
 
     }
+    
+    
+    
 }

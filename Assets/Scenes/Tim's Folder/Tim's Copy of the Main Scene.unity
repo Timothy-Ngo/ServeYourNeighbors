@@ -1920,7 +1920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &766639216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6564,6 +6564,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bff89b5769d16fa4ea436859cc40b3e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabs:
+  - {fileID: 3992892185172449260, guid: f9be65bf8b36286428d99022122b6722, type: 3}
+  interpolationFramesCount: 45
   uiGameObject: {fileID: 766639215}
 --- !u!4 &2120296883
 Transform:
