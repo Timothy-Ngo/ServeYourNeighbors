@@ -6,7 +6,7 @@ using ScriptableObjects;
 /// <summary>
 /// When enabling and disabling this system utilize the isEnabled variable
 /// </summary>
-public class DynamicUpgradePlacement : MonoBehaviour
+public class PlacementSystem : MonoBehaviour
 {
     [Tooltip("Prefabs of objects that can be dynamically placed in the scene")]
     [SerializeField] List<GameObject> prefabs;
@@ -82,12 +82,16 @@ public class DynamicUpgradePlacement : MonoBehaviour
                     interpolationFramesCount
                 );
             }
+            if (Input.GetKey(KeyCode.Space))
+            {
+                isEnabled = false;
+            }
         }
         
     }
 
 
-    public void Enabled(bool enabled)
+    private void Enabled(bool enabled)
     {
         /*
          * - remove player from scene
@@ -98,10 +102,12 @@ public class DynamicUpgradePlacement : MonoBehaviour
          */
         //uiGameObject.SetActive(enabled);
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
+        Upgrades.inst.ToggleUpgradesScreen();
         if (enabled)
         {
             selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
             selectedItem.transform.parent = tablesParent.transform;
+            
         }
         else
         {

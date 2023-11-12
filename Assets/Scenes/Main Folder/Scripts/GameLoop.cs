@@ -110,6 +110,11 @@ public class GameLoop : MonoBehaviour
 
     }
 
+    void UpgradeMode()
+    {
+        
+    }
+
     public void GameOver()
     {
         endGameScreen.SetActive(true);

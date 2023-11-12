@@ -42,6 +42,8 @@ public class Upgrades : MonoBehaviour
     [SerializeField] private Button[] buttons;
     [SerializeField] private Color greyedOutColor;
     [SerializeField] private Color normalColor;
+    
+    public PlacementSystem placementSystem;
 
     [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
@@ -86,10 +88,7 @@ public class Upgrades : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.U)) // For testing only
-        {
-            ToggleUpgradesScreen();
-        }
+        
     }
 
     // -----HELPER METHODS-----
@@ -121,6 +120,15 @@ public class Upgrades : MonoBehaviour
         return numOfActiveCookStations;
     }
 
+    public void UpdateTablesList()
+    {
+        tables.Clear();
+        foreach (Table table in tablesParent.GetComponentsInChildren<Table>())
+        {
+            tables.Add(table.gameObject);
+        }
+    }
+
     // ------------------------
 
 
@@ -139,18 +147,13 @@ public class Upgrades : MonoBehaviour
     }
     public void Tables() // Increase the amount of tables
     {
-        int numOfActiveTables = GetNumOfActiveTables();
-        if (numOfActiveTables == tables.Count)
-        {
-            Debug.Log("All tables have been bought");
-            return;
-        }
-
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
             Currency.inst.Withdraw(tablesUpgradeCost);
-            tables[numOfActiveTables].SetActive(true);
+            //tables[numOfActiveTables].SetActive(true);
+            placementSystem.isEnabled = true;
             NotifyObservers();
+            UpdateTablesList();
             CustomerPayments.inst.standardPayment += 10;
             Debug.Log("Bought a table upgrade");
         }
