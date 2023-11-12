@@ -11,7 +11,7 @@ public class PickupSystem : MonoBehaviour
     }
 
     [Header("-----PLAYER INFO-----")]
-    [SerializeField] private GameObject playerHolding;
+    [SerializeField] public GameObject playerHolding;
     private SpriteRenderer holding;
     private bool holdingSomething = false;
 

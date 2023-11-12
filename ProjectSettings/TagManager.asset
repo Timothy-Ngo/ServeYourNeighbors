@@ -13,6 +13,7 @@ TagManager:
   - DistractionCircle
   - Grinder
   - FoodieSight
+  - Counter
   layers:
   - Default
   - TransparentFX
