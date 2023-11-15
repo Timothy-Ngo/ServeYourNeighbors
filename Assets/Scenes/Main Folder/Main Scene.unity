@@ -4717,6 +4717,7 @@ MonoBehaviour:
   buttons: []
   greyedOutColor: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
+  placementSystem: {fileID: 0}
   tablesParent: {fileID: 437064608}
   tables: []
   tablesUpgradeCost: 75
@@ -5276,6 +5277,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ~Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8584186661708686079, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: a47d991c460069843b59836324522e44, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
 --- !u!1 &1801985559
