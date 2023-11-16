@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using ScriptableObjects;
 
 /// <summary>
@@ -8,11 +9,18 @@ using ScriptableObjects;
 /// </summary>
 public class PlacementSystem : MonoBehaviour
 {
+    
     [Tooltip("Prefabs of objects that can be dynamically placed in the scene")]
     [SerializeField] List<GameObject> prefabs;
     public GameEvent dragEvent;
     public GameObject tablesParent;
     GameObject selectedItem;
+    [SerializeField] private Color originalFloorColor;
+    [SerializeField] private Color placementFloorColor;
+
+    public GameObject floorsParent;
+    List<SpriteRenderer> floors;
+    
     
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
@@ -44,10 +52,11 @@ public class PlacementSystem : MonoBehaviour
     }
 
 
-    public GameObject uiGameObject;
     // Start is called before the first frame update
     void Start()
     {
+        floors = floorsParent.GetComponentsInChildren<SpriteRenderer>().ToList();
+        
         isEnabled = false;
         isDragging = false;
         
@@ -75,23 +84,31 @@ public class PlacementSystem : MonoBehaviour
             if (isDragging)
             {
                 Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
+                
+                
                 selectedItem.transform.position = Vector3.Lerp(
                     selectedItem.transform.position,
                     worldMousePosition + new Vector3(0, 0, 10),
                     interpolationFramesCount
                 );
+                
             }
             if (Input.GetKey(KeyCode.Space))
             {
                 isEnabled = false;
+                if (!Upgrades.inst.upgradesScreen.activeSelf)
+                {
+                    ChangeFloorColorTo(originalFloorColor);
+                    Upgrades.inst.upgradesScreen.SetActive(true);
+                    
+                }
             }
         }
         
     }
 
 
-    private void Enabled(bool enabled)
+    private void Enabled(bool enable)
     {
         /*
          * - remove player from scene
@@ -102,9 +119,14 @@ public class PlacementSystem : MonoBehaviour
          */
         //uiGameObject.SetActive(enabled);
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
-        Upgrades.inst.ToggleUpgradesScreen();
-        if (enabled)
+        if (Upgrades.inst.upgradesScreen.activeSelf)
         {
+            Upgrades.inst.upgradesScreen.SetActive(false);
+            
+        }
+        if (enable)
+        {
+            ChangeFloorColorTo(placementFloorColor);
             selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
             selectedItem.transform.parent = tablesParent.transform;
             
@@ -116,7 +138,15 @@ public class PlacementSystem : MonoBehaviour
 
 
     }
-    
+
+
+    void ChangeFloorColorTo(Color color)
+    {
+        foreach (SpriteRenderer rend in floors)
+        {
+            rend.color = color;
+        }
+    }
     
     
     
