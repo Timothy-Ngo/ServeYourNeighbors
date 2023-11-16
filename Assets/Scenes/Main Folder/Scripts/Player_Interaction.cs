@@ -33,10 +33,6 @@ public class Player_Interaction : MonoBehaviour {
     Grinder grinderScript;
     public PlayerStats playerStats;
 
-    [Header("-----FOOD-----")] 
-    public Food food;
-    
-
     private void Start() {
         interactionMessage = GameObject.Find("InteractionPrompt");
         messageText = interactionMessage.GetComponent<TextMeshProUGUI>();
@@ -51,10 +47,11 @@ public class Player_Interaction : MonoBehaviour {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
                 if (TakeAction("[C] Cook", KeyCode.C)) {
+                    cooktopScript.SetIngredient(PickupSystem.inst.GetItemInHands());
                     cooktopScript.StartPrep();
+                    PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
-                    food = cooktopScript.gameObject.GetComponentInChildren<Food>();
-                    Debug.Log(food);
+                    
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
@@ -65,24 +62,21 @@ public class Player_Interaction : MonoBehaviour {
                 if (PickupSystem.inst.isHoldingTopping()) {
                     if(TakeAction("[F] Add MSG", KeyCode.F)) 
                     {
-                        PickupSystem.inst.DropItem();
-                        food.AddMSG();
+                        PickupSystem.inst.DestroyItem();
                         playerStats.incMSGAdded();
+                        cooktopScript.dish.GetComponent<FoodObjects>().AddMSG();
                     }
                     
                     // add value of MSG to value of dish
                     // update bool hasMSG to dish
                 }
-                else if (PickupSystem.inst.isHoldingSomething()) {
+                else if (PickupSystem.inst.isHoldingItem()) {
                     Prompt("Hands Are Full");
                 }
                 else if (TakeAction("[F] Get Dish", KeyCode.F)) {
-                    Player.inst.food = food;
-                    bool hasMSG = Player.inst.food.hasMSG;
-                    PickupSystem.inst.PickUpItem(cooktopScript.dish.GetComponent<SpriteRenderer>().sprite);
+                    PickupSystem.inst.PickUpItem(cooktopScript.dish);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
-                    Player.inst.food.hasMSG = hasMSG;
                     playerStats.incDishesMade();
                 }
             }
@@ -102,6 +96,14 @@ public class Player_Interaction : MonoBehaviour {
                     // Make dish pop up on table, 
                     // change foodie to eating state
                     Debug.Log($"current table object: {tableScript.gameObject}");
+
+                    // set dish
+                    tableScript.dish = PickupSystem.inst.GetItemInHands();
+
+                    // place dish down on table
+                    Vector3 offset = new Vector3(0.75f, 0.3f, 0);
+                    PickupSystem.inst.PlaceItem(tableScript.transform, offset);
+
                     tableScript.foodie.orderState.ReceivedOrder();
                     playerStats.incFoodiesServed();
 
@@ -114,11 +116,14 @@ public class Player_Interaction : MonoBehaviour {
             }
         }
 
-        else if (ingredientBoxRange) {
+        else if (ingredientBoxRange)
+        {
             // if player isn't holding anything
-            if (!PickupSystem.inst.isHoldingSomething()) {
-                if (TakeAction("[F] Get Ingredient", KeyCode.F)) {
-                    PickupSystem.inst.PickUpItem(ingredientBoxScript.ingredient);
+            if (!PickupSystem.inst.isHoldingItem())
+            {
+                if (TakeAction("[F] Get Ingredient", KeyCode.F))
+                {
+                    PickupSystem.inst.PickUpIngredient(ingredientBoxScript);
                     SetInteraction(false);
                 }
             }
@@ -126,11 +131,11 @@ public class Player_Interaction : MonoBehaviour {
 
         else if (trashCanRange) {
             // if player is holding something
-            if (PickupSystem.inst.isHoldingSomething())
+            if (PickupSystem.inst.isHoldingItem())
             {
                 if (TakeAction("[F] Throw Away", KeyCode.F))
                 {
-                    PickupSystem.inst.DropItem();
+                    PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
                     playerStats.incItemsThrown();
                 }
@@ -143,10 +148,10 @@ public class Player_Interaction : MonoBehaviour {
             {
                 if (TakeAction("[E] Turn On", KeyCode.E))
                 {
+                    playerStats.incTimesDistracted();
                     distractionScript.DecrementCharges();
                     DistractionSystem.inst.StartDistraction();
                     SetInteraction(false);
-                    playerStats.incTimesDistracted();
                 }
             }
         }
@@ -154,13 +159,13 @@ public class Player_Interaction : MonoBehaviour {
         else if (foodieRange)
         {
             // cannot kidnap if holding something or if the foodie is in line outside
-            if (!PickupSystem.inst.isHoldingSomething() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
+            if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
             {
                 if (TakeAction("[E] Kidnap", KeyCode.E))
                 {
                     foodieReleased = false; // flag for when player is caught kidnapping
-                    // pick up the foodie
-                    PickupSystem.inst.PickUpItem(foodieScript.foodieSprite);
+
+                    foodieScript.foodieSight.SetActive(false);
                     playerStats.incFoodiesKidnapped();
                     
                     // if foodie was at a table --> put table back into available tables
@@ -168,15 +173,16 @@ public class Player_Interaction : MonoBehaviour {
                     {
                         FoodieSystem.inst.availableSeats.Enqueue(foodieScript.tablePosition);
                     }
-                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.eatState)
+                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState)
                     {
-                        // makes food disappear from table
-                        foodieScript.table.dish.SetActive(false); 
-                        Player.inst.food.ResetDish();
+                        // hide the foodie's order bubble and timer bar
+                        foodieScript.HideUI();
                     }
 
-                    // destroy foodie
-                    foodieScript.DestroyFoodie(); 
+                    foodieScript.stateMachine.ChangeState(foodieScript.kidnappedState);
+
+                    // pick up the foodie
+                    PickupSystem.inst.PickUpItem(foodieScript.gameObject);
 
                     SetInteraction(false);
                 }
@@ -189,16 +195,19 @@ public class Player_Interaction : MonoBehaviour {
             {
                 if (TakeAction("[F] Grind", KeyCode.F))
                 {
-                    PickupSystem.inst.DropItem();
                     grinderScript.StartGrinding();
+                    PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
                 }
             }
-            else if (grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone()) 
+            else if (grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()) 
             {
                 if (TakeAction("[F] Take MSG", KeyCode.F))
                 {
                     grinderScript.TakeMSG();
+
+                    PickupSystem.inst.PickUpItem(grinderScript.msgObject);
+
                     SetInteraction(false);
                 }
             }
@@ -213,8 +222,7 @@ public class Player_Interaction : MonoBehaviour {
                 {
                     foodieReleased = true;
                     Debug.Log("Caught kidnapping");
-                    FoodieSpawner.inst.ReleaseFoodie();
-                    PickupSystem.inst.DropItem();
+                    PickupSystem.inst.ReleaseFoodie();
                 }
                     
             }

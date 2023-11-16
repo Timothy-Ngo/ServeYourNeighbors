@@ -33,7 +33,7 @@ public class FoodieKidnappedState : FoodieState
         //foodie.foodieMovement.enabled = false;
         //foodie.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
         foodie.GetComponent<BoxCollider2D>().enabled = false;
-
+        foodie.foodieMovement.StopMoving();
 
         // NOTE: This is probably not the best way to go about moving the kidnapped foodie along with the player. 
         // I did it this way because the foodie wasn't moving with the player when the player kidnapped them.

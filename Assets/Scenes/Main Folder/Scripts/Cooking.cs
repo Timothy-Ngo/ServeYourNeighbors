@@ -13,6 +13,9 @@ public class Cooking : MonoBehaviour {
 
     [Header("-----GAME OBJECTS-----")]
     public GameObject dish;
+    public GameObject dishDefault;
+    private GameObject ingredient;
+    private Sprite ingredientSprite;
     [SerializeField] Timer timer_script;
     [SerializeField] QT_Event qt_script;
 
@@ -38,6 +41,12 @@ public class Cooking : MonoBehaviour {
         }
     }
 
+    public void SetIngredient(GameObject ingredient)
+    {
+        this.ingredient = ingredient;
+        ingredientSprite = ingredient.GetComponent<SpriteRenderer>().sprite;
+    }
+
     public void SetCookTime(int newTime) {
         cookTime = newTime;
     }
@@ -52,7 +61,7 @@ public class Cooking : MonoBehaviour {
         prepping = false;
         cooking = true;
         sr.sprite = fire;
-        StartCoroutine(CookWaiter(cookTime, PickupSystem.inst.GetItem())); // when ordering system is combined, this will be a variable passed in to StartCooking() from the oddering system
+        StartCoroutine(CookWaiter(cookTime)); // when ordering system is combined, this will be a variable passed in to StartCooking() from the oddering system
     }
 
     public bool IsCooking() {
@@ -68,17 +77,17 @@ public class Cooking : MonoBehaviour {
     }
 
     public void ResetCooktop() {
-        dish.GetComponent<Food>().ResetDish();
+        dish = dishDefault;
+        //dish.GetComponent<Food>().ResetDish();
         foodReady = false;
     }
 
     // https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
-    IEnumerator CookWaiter(int sec, Sprite ingredient) {
-        PickupSystem.inst.DropItem();
+    IEnumerator CookWaiter(int sec) {
         timer_script.SetMaxTime(sec);
         yield return new WaitForSeconds(sec);
         sr.sprite = std;
-        dish.GetComponent<Food>().SetDish(ingredient); // https://forum.unity.com/threads/calling-function-from-other-scripts-c.57072/
+        dish = dish.GetComponent<Food>().SetDish(ingredientSprite, gameObject.transform); // https://forum.unity.com/threads/calling-function-from-other-scripts-c.57072/
         Debug.Log("You have cooked something!");
         cooking = false;
         foodReady = true;

@@ -1,6 +1,8 @@
 // Kirin Hardinger
 // October 2023
 
+/*
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -332,3 +334,4 @@ public class Player_Interaction_Counters : MonoBehaviour {
     }
 
 }
+*/

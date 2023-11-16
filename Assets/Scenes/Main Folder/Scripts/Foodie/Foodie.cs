@@ -66,7 +66,7 @@ public class Foodie : MonoBehaviour
         Physics2D.IgnoreLayerCollision(2, 9); // foodies sight ignores collision with distraction area affect
     }
 
-    public void Update()
+    void Update()
     {
         stateMachine.currentFoodieState.Update();
 
@@ -89,6 +89,11 @@ public class Foodie : MonoBehaviour
     public void DestroyFoodie()
     {
         Destroy(gameObject);
+    }
+    public void HideUI()
+    {
+        orderBubble.SetActive(false);
+        timerScript.gameObject.SetActive(false);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)

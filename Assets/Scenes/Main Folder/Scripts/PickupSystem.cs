@@ -7,24 +7,23 @@ public class PickupSystem : MonoBehaviour
     public static PickupSystem inst;
     private void Awake()
     {
-        inst = this; 
+        inst = this;
     }
 
     [Header("-----PLAYER INFO-----")]
-    [SerializeField] public GameObject playerHolding;
-    private SpriteRenderer holding;
-    private bool holdingSomething = false;
+    [SerializeField] GameObject itemInHands;
+    private bool holdingItem = false;
 
-    [Header("-----FLAGS-----")] // flags to ensure nothing but ingredients get cooked
-    private bool holdingDish = false;
+    [Header("-----FLAGS-----")] // flags to ensure only ingredients get cooked and only foodies get grinded
     private bool holdingIngredient = false;
     private bool holdingTopping = false;
+    private bool holdingDish = false;
     private bool holdingFoodie = false;
 
     [Header("-----LISTS-----")] // manually add items in the inspector
-    public List<Sprite> dishes;
     public List<Sprite> ingredients;
     public List<Sprite> toppings;
+    public List<Sprite> dishes;
     public List<Sprite> foodies;
 
     [Header("-----DEBUGGING-----")]
@@ -34,86 +33,100 @@ public class PickupSystem : MonoBehaviour
 
     private void Start()
     {
-        holding = playerHolding.GetComponent<SpriteRenderer>();
+
     }
 
     private void Update()
     {
         if (showDebug)
         {
-            // debugging
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                if (!holdingSomething)
-                    PickUpItem(spriteTest);
-                else
-                    DropItem();
-            }
+
         }
     }
 
-    // change sprite of what player is holding to show pickup
-    public void PickUpItem(Sprite item)
+
+    public void PickUpIngredient(IngredientBox ingredientBoxScript)
     {
-        if (!holdingSomething)
+        itemInHands = ingredientBoxScript.SpawnIngredient();
+        holdingItem = true;
+        holdingIngredient = true;
+    }
+
+    // picks up already existing objects
+    public void PickUpItem(GameObject item)
+    {
+        // puts item in player's hands
+        itemInHands = item;
+        Vector3 offset = new Vector3(0, 1, 0);
+        item.transform.parent = Player.inst.gameObject.transform;
+        item.transform.localPosition = offset;
+
+        holdingItem = true;
+
+        // gets Sprite to check what the item is
+        Sprite itemSprite = item.GetComponent<SpriteRenderer>().sprite;
+        Debug.Log(itemSprite.name);
+
+        // sets flags
+        if (ingredients.Contains(itemSprite))
         {
-            // changes flags
-            if (dishes.Contains(item)) // if item is a dish
-            {
-                Debug.Log("holding dish");
-                holdingDish = true;
-            }
-            else if (ingredients.Contains(item)) // if item is an ingredient
-            {
-                Debug.Log("holding ingredient");
-                holdingIngredient = true;
-            }
-            else if (toppings.Contains(item)) 
-            {
-                Debug.Log("holding topping");
-                holdingTopping = true;
-            }
-            else if (foodies.Contains(item))
-            {
-                Debug.Log("holding foodie");
-                holdingFoodie = true;
-            }
-
-            // changes sprite to item being picked up
-            holding.sprite = item;
-
-            holdingSomething = true;
+            holdingIngredient = true;
         }
-    }
-
-    public void DropItem()
-    {
-        if (holdingSomething)
+        else if (toppings.Contains(itemSprite))
         {
-            // resets flags
-            holdingDish = false;
-            holdingIngredient = false;
-            holdingTopping = false;
-            holdingFoodie = false;
-
-            // player isn't holding anything
-            holding.sprite = null;
-        
-            holdingSomething = false;
+            holdingTopping = true;
+        }
+        else if (dishes.Contains(itemSprite))
+        {
+            holdingDish = true;
+        }
+        else if (foodies.Contains(itemSprite))
+        {
+            holdingFoodie = true;
         }
     }
 
-    public Sprite GetItem()
+    public void PlaceItem(Transform parent, Vector3 offset)
     {
-        return holding.sprite;
+        itemInHands.transform.parent = parent;
+        itemInHands.transform.position = parent.position + offset;
+
+        ResetFlags();
     }
 
-    public bool isHoldingSomething()
+    public void ReleaseFoodie()
     {
-        return holdingSomething;
+
+        Foodie foodieScript = itemInHands.GetComponent<Foodie>();
+        foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
+
+        ResetFlags();
     }
-    public bool isHoldingDish() {
-        return holdingDish;
+
+    // destroys item
+    public void DestroyItem()
+    {
+        Destroy(itemInHands);
+        ResetFlags();
+    }
+
+    private void ResetFlags()
+    {
+        holdingItem = false;
+        holdingIngredient = false;
+        holdingTopping = false;
+        holdingDish = false;
+        holdingFoodie = false;
+    }
+
+    public GameObject GetItemInHands()
+    {
+        return itemInHands;
+    }
+
+    public bool isHoldingItem()
+    {
+        return holdingItem;
     }
 
     public bool isHoldingIngredient()
@@ -121,8 +134,13 @@ public class PickupSystem : MonoBehaviour
         return holdingIngredient;
     }
 
-    public bool isHoldingTopping() {
+    public bool isHoldingTopping()
+    {
         return holdingTopping;
+    }
+    public bool isHoldingDish()
+    {
+        return holdingDish;
     }
 
     public bool isHoldingFoodie()

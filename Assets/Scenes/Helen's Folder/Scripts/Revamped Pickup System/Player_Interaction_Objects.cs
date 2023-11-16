@@ -31,9 +31,6 @@ public class Player_Interaction_Objects : MonoBehaviour {
     Distraction distractionScript;
     Foodie foodieScript;
     GrinderObjects grinderScript;
-
-    [Header("-----FOOD-----")] 
-    public FoodObjects food;
     
 
     private void Start() {
@@ -56,7 +53,6 @@ public class Player_Interaction_Objects : MonoBehaviour {
                     PickupSystemObjects.inst.DestroyItem();
                     SetInteraction(false);
                     //food = cooktopScript.gameObject.GetComponentInChildren<FoodObjects>();
-                    Debug.Log(food);
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
@@ -69,8 +65,7 @@ public class Player_Interaction_Objects : MonoBehaviour {
                     if(TakeAction("[F] Add MSG", KeyCode.F)) 
                     {
                         PickupSystemObjects.inst.DestroyItem();
-                        food = cooktopScript.dish.GetComponent<FoodObjects>();
-                        food.AddMSG();
+                        cooktopScript.dish.GetComponent<FoodObjects>().AddMSG();
                         //cooktopScript.dish.GetComponent<FoodObjects>().AddMSG();
                     }
                     
@@ -83,13 +78,10 @@ public class Player_Interaction_Objects : MonoBehaviour {
                 }
                 else if (TakeAction("[F] Get Dish", KeyCode.F))
                 {
-                    //Player.inst.food = food;
-                    bool hasMSG = Player.inst.food.hasMSG;
                     //PickupSystem.inst.PickUpItem(cooktopScript.dish.GetComponent<SpriteRenderer>().sprite);
                     PickupSystemObjects.inst.PickUpItem(cooktopScript.dish);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
-                    Player.inst.food.hasMSG = hasMSG;
                 }
             }
             else if (!cooktopScript.IsPrepping()) {
@@ -189,7 +181,6 @@ public class Player_Interaction_Objects : MonoBehaviour {
                     {
                         // makes food disappear from table
                         foodieScript.table.dish.SetActive(false); 
-                        Player.inst.food.ResetDish();
                     }
                     else
                     {

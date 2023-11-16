@@ -10,6 +10,8 @@ public class Grinder : MonoBehaviour
     Sprite msg;
     bool msgGrindedUp = false;
     bool grinding = false;
+    [SerializeField] GameObject msgPrefab;
+    public GameObject msgObject;
 
     private void Start()
     {
@@ -32,20 +34,25 @@ public class Grinder : MonoBehaviour
 
     public void FinishGrinding()
     {
-        msgSR.enabled = true;
+        //msgSR.enabled = true;
+        msgObject = SpawnMSG();
+
         grinding = false;
         msgGrindedUp = true;
     }
 
+    private GameObject SpawnMSG()
+    {
+        Vector3 offset = new Vector3(0, 0.22f, 0);
+        Vector3 spawnPosition = gameObject.transform.position + offset;
+        GameObject msg = Instantiate(msgPrefab, spawnPosition, Quaternion.identity, gameObject.transform);
+
+        return msg;
+    }
+
     public void TakeMSG()
     {
-        if (!PickupSystem.inst.isHoldingSomething())
-        {
-            msgSR.enabled = false;
-            PickupSystem.inst.PickUpItem(msg);
-            msgGrindedUp = false;
-        }
-        
+        msgGrindedUp = false;
     }
 
     public bool IsGrindingDone()
