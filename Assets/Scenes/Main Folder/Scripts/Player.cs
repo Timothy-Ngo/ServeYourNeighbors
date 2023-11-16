@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
 
     [Header("Food")] 
     public Food food;
+    public FoodObjects foodObject;
     // Start is called before the first frame update
     void Start()
     {
         food = new Food();
+        foodObject = new FoodObjects();
 
     }
 

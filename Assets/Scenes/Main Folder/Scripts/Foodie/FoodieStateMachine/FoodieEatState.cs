@@ -19,7 +19,9 @@ public class FoodieEatState : FoodieState
     public override void EnterState()
     {
         base.EnterState();
-        foodie.table.SetDish();
+        
+        if (!foodie.table.testing)
+            foodie.table.SetDish();
     }
 
     public override void ExitState()
@@ -27,6 +29,7 @@ public class FoodieEatState : FoodieState
         base.ExitState();
         Debug.Assert(foodie.table != null);
         foodie.table.RemoveDish();
+       
 
     }
 

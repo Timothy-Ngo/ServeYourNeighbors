@@ -43,6 +43,7 @@ public class Foodie : MonoBehaviour
         leaveState = new FoodieLeaveState(this, stateMachine);
         eatState = new FoodieEatState(this, stateMachine);
         distractedState = new FoodieDistractedState(this, stateMachine);
+        kidnappedState = new FoodieKidnappedState(this, stateMachine);
 
         orderBubble.SetActive(false);
         orderBubble.GetComponentInChildren<SpriteRenderer>().sprite = order;
@@ -83,6 +84,7 @@ public class Foodie : MonoBehaviour
     public FoodieLeaveState leaveState { get; set; }
     public FoodieEatState eatState { get; set; }
     public FoodieDistractedState distractedState { get; set; }
+    public FoodieKidnappedState kidnappedState { get; set; }
 
     public void DestroyFoodie()
     {
