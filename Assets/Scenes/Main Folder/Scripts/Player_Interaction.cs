@@ -23,6 +23,7 @@ public class Player_Interaction : MonoBehaviour {
     bool foodieRange = false;
     bool grinderRange = false;
     bool foodieSightRange = false;
+    bool counterRange = false;
 
     [Header("-----SCRIPTS----")] 
     Cooking cooktopScript;
@@ -31,6 +32,7 @@ public class Player_Interaction : MonoBehaviour {
     Distraction distractionScript;
     Foodie foodieScript;
     Grinder grinderScript;
+    Counter counterScript;
     public PlayerStats playerStats;
 
     private void Start() {
@@ -213,6 +215,42 @@ public class Player_Interaction : MonoBehaviour {
             }
         }
 
+        else if (counterRange) 
+        {
+            if (PickupSystem.inst.isHoldingDish() || PickupSystem.inst.isHoldingIngredient() || PickupSystem.inst.isHoldingTopping()) 
+            {
+                if (!counterScript.Full()) 
+                {
+                    if (TakeAction("[F] Place Item", KeyCode.F)) {
+                        Debug.Log("Placed item on counter");
+                        // set dish
+                        counterScript.item = PickupSystem.inst.GetItemInHands();
+
+                        // place dish down on table
+                        Vector3 offset = new Vector3(0f, 0.3f, 0);
+                        PickupSystem.inst.PlaceItem(counterScript.transform, offset);
+                        counterScript.SetFull(true);
+
+                        SetInteraction(false);
+                    }
+                }
+                else 
+                {
+                    Prompt("Counter full");
+                }
+            }
+            else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full()) 
+            {
+                if (TakeAction("[F] Pick Up", KeyCode.F)) 
+                {
+                    Debug.Log("Picked up item from counter");
+                    PickupSystem.inst.PickUpItem(counterScript.item);
+                    counterScript.SetFull(false);
+                    SetInteraction(false);
+                }
+            }
+        }
+
         if (foodieSightRange)
         {
             if (PickupSystem.inst.isHoldingFoodie())
@@ -284,6 +322,12 @@ public class Player_Interaction : MonoBehaviour {
         {
             Debug.Log("Within range of foodie sight");
             foodieSightRange = true;
+        } 
+        else if (collision.CompareTag("Counter")) 
+        {
+            Debug.Log("Within range of counter");
+            counterRange = true;
+            counterScript = collision.GetComponent<Counter>();
         }
         
     }
@@ -332,6 +376,11 @@ public class Player_Interaction : MonoBehaviour {
         {
             foodieSightRange = false;
             Debug.Log("Out of range of foodie sight");
+        }
+        else if (collision.CompareTag("Counter"))
+        {
+            counterRange = false;
+            Debug.Log("Out of range of counter");
         }
 
         interactionMessage.SetActive(false);
