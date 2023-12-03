@@ -66,6 +66,7 @@ public class FoodieLineState : FoodieState
             //Debug.Log("targetPosition: " + targetPosition);
 
             // moves foodie 
+            Debug.Log("LineState: SetTargetPosition");
             foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             
             
@@ -80,8 +81,12 @@ public class FoodieLineState : FoodieState
                 atFrontOfLine = true;
             Vector3 targetPosition = new Vector3(FoodieSystem.inst.startOfLine.x + placeInLine, FoodieSystem.inst.startOfLine.y);
             //Debug.Log("targetPosition: " + targetPosition);
+            if (!atFrontOfLine)
+            {
+                Debug.Log("OrderState2: SetTargetPosition");
 
-            foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
+                foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
+            }
         }
 
     }

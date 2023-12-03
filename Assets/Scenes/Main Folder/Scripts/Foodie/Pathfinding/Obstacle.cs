@@ -9,16 +9,33 @@ public class Obstacle : MonoBehaviour
 
     public Vector3 position = Vector3.zero;
 
+    public bool startTable = false;
+
+    private void Start()
+    {
+        if (startTable)
+        {
+            PlaceObstacle();
+        }
+    }
+
+
     void Update()
     {
+        
+    }
+
+    public void PlaceObstacle()
+    {
+        Debug.Log("PLACING OBSTACLE");
         position = transform.position;
         int x = 0;
         int y = 0;
         // sets position on pathfinding grid as unwalkable
         FoodieSystem.inst.pathfinding.GetGrid().GetXY(transform.position, out x, out y);
-        
-        FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(isWalkable);
-        
+
+        FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(false);
+
         // for debugging
         if (FoodieSystem.inst.showDebug)
             FoodieSystem.inst.pathfinding.GetGrid().GetDebugTextArray()[x, y].color = Color.red;

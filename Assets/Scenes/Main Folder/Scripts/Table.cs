@@ -6,6 +6,7 @@ public class Table : MonoBehaviour
 {
     public GameObject dish;
     public SpriteRenderer dishSR;
+    public Obstacle obstacleScript; // drag and drop from Table in inspector
 
     public Foodie foodie;
     // Start is called before the first frame update

@@ -176,6 +176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dish: {fileID: 8295210261215548965}
   dishSR: {fileID: 5131462595147077561}
+  obstacleScript: {fileID: 5018387904202541041}
   foodie: {fileID: 0}
 --- !u!1 &8295210261215548965
 GameObject:

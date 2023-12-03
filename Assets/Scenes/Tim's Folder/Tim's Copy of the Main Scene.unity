@@ -1926,11 +1926,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6671339492838857313, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
   m_PrefabInstance: {fileID: 1439652231}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &767172121 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3992892185172449260, guid: f9be65bf8b36286428d99022122b6722, type: 3}
-  m_PrefabInstance: {fileID: 1810686998}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &774196843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2254,7 +2249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGoldText: {fileID: 340328198}
-  startingGold: 40
+  startingGold: 1000
   gold: 0
 --- !u!4 &976856198
 Transform:
@@ -5321,6 +5316,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5018387904202541041, guid: f9be65bf8b36286428d99022122b6722, type: 3}
+      propertyPath: startTable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5131462595147077561, guid: f9be65bf8b36286428d99022122b6722, type: 3}
       propertyPath: m_SortingLayer
       value: 6
@@ -6238,7 +6237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 767172121}
+  - {fileID: 3992892185172449260, guid: f9be65bf8b36286428d99022122b6722, type: 3}
   dragEvent: {fileID: 11400000, guid: d8110d1ac5d5cc341b4e5c888efb51a9, type: 2}
   tablesParent: {fileID: 437064608}
   originalFloorColor: {r: 1, g: 1, b: 1, a: 1}

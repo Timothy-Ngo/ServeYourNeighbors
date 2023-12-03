@@ -105,6 +105,7 @@ public class PlacementSystem : MonoBehaviour
 
                 selectedItem.transform.position = new Vector3(Mathf.RoundToInt(selectedItem.transform.position.x) + 0.5f,
                     Mathf.RoundToInt(selectedItem.transform.position.y) + 0.5f, 0f );
+                selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
                 FoodieSystem.inst.GetCurrentSeats();
             }
         }

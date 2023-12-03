@@ -68,6 +68,7 @@ public class FoodieOrderState : FoodieState
 
             // moves foodie to table
             Debug.Log(tablePosition);
+            Debug.Log("OrderState: SetTargetPosition");
             foodie.foodieMovement.SetTargetPosition(tablePosition, FoodieSystem.inst.pathfinding);
             foodie.tablePosition = tablePosition;
             

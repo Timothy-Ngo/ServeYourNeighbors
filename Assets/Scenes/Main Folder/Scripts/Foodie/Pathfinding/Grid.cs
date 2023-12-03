@@ -49,7 +49,7 @@ public class Grid<TGridObject>
                 {
                     // creates the numbers
                     debugTextArray[x, y] = CreateWorldText(gridArray[x, y]?.ToString(), null, GetWorldPosition(x,y) + new Vector3(cellSize, cellSize) * 0.5f, 80, Color.white, TextAnchor.MiddleCenter);
-                    debugTextArray[x, y].transform.parent = GameObject.Find("DebugTextGrid").transform; // puts the numbers under a gameObject
+                    debugTextArray[x, y].transform.parent = GameObject.Find("~DebugTextGrid").transform; // puts the numbers under a gameObject
 
                     // draws the grid lines
                     Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);

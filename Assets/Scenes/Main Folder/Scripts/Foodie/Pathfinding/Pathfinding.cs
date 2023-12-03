@@ -115,6 +115,7 @@ public class Pathfinding : MonoBehaviour
 
         // out of nodes on the openList
         // if reached here, then searched whole grid and could not find path
+        Debug.Log("Path could not be found");
 
         return null;
     }
