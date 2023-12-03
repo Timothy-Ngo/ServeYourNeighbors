@@ -6,7 +6,7 @@ using UnityEngine;
 public class Distraction : MonoBehaviour
 {
     public Collider2D distractionTrigger; // distraction's collider --> isTrigger is on
-    SpriteRenderer distractionSR;
+    public SpriteRenderer distractionSR;
     public TextMeshProUGUI statusText;
     [SerializeField] TextMeshProUGUI chargesText;
 
@@ -17,7 +17,6 @@ public class Distraction : MonoBehaviour
     {
         distractionTrigger.enabled = false;
         
-        distractionSR = distractionTrigger.GetComponent<SpriteRenderer>();
         distractionSR.enabled = false;
 
         statusText.enabled = false;

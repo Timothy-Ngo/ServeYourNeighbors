@@ -6,13 +6,7 @@ using UnityEngine;
 // tutorial: https://youtu.be/alU04hvz6L4?si=Uak7a_jyl9cQwB0X
 public class Pathfinding : MonoBehaviour
 {
-    public static Pathfinding inst;
-
-    private void Awake()
-    {
-        inst = this;
-    }
-
+  
     private const int MOVE_STRAIGHT_COST = 10; // 1 times 10
     private const int MOVE_DIAGONAL_COST = 14; // sqroot(2) = 1.4 -> times 10
 
@@ -171,6 +165,15 @@ public class Pathfinding : MonoBehaviour
         return grid.GetGridObject(x, y);
     }
 
+    public bool IsWalkable(Vector3 worldPosition)
+    {
+        return grid.GetGridObject(worldPosition).isWalkable;
+    }
+
+    public bool IsPlaceable(Vector3 worldPosition)
+    {
+        return grid.GetGridObject(worldPosition).isPlaceable;
+    }
     public Grid<PathNode> GetGrid()
     {
         return grid;

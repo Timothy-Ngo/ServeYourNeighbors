@@ -15,6 +15,8 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] List<GameObject> prefabs;
     public GameEvent dragEvent;
     public GameObject tablesParent;
+    public GameObject cookStationsParent;
+    public GameObject distractionParent;
     GameObject selectedItem;
     [SerializeField] private Color originalFloorColor;
     [SerializeField] private Color placementFloorColor;
@@ -22,7 +24,7 @@ public class PlacementSystem : MonoBehaviour
     public GameObject floorsParent;
     List<SpriteRenderer> floors;
     
-    
+    private Vector3 newPosition;
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
     /// </summary>
@@ -57,7 +59,7 @@ public class PlacementSystem : MonoBehaviour
     void Start()
     {
         floors = floorsParent.GetComponentsInChildren<SpriteRenderer>().ToList();
-        
+        newPosition = new Vector3();
         isEnabled = false;
         isDragging = false;
         
@@ -86,13 +88,19 @@ public class PlacementSystem : MonoBehaviour
             {
                 Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 
-                
+                /*
                 selectedItem.transform.position = Vector3.Lerp(
                     selectedItem.transform.position,
                     worldMousePosition + new Vector3(0, 0, 10),
                     interpolationFramesCount
                 );
-                
+                */
+                newPosition = new Vector3(Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).x) - 0.5f,
+                    Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f );
+                if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                {
+                    selectedItem.transform.position = newPosition;
+                }
             }
             if (Input.GetKey(KeyCode.Space))
             {
@@ -102,16 +110,30 @@ public class PlacementSystem : MonoBehaviour
                     ChangeFloorColorTo(originalFloorColor);
                     Upgrades.inst.upgradesScreen.SetActive(true);
                 }
+                Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                selectedItem.transform.position = newPosition;
+                if (Upgrades.inst.tablePlacementMode)
+                {
+                    Upgrades.inst.tablePlacementMode = false;
+                    selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
+                }
 
-                selectedItem.transform.position = new Vector3(Mathf.RoundToInt(selectedItem.transform.position.x) + 0.5f,
-                    Mathf.RoundToInt(selectedItem.transform.position.y) + 0.5f, 0f );
-                selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
-                FoodieSystem.inst.GetCurrentSeats();
+                if (Upgrades.inst.cookStationPlacementMode)
+                {
+                    Upgrades.inst.cookStationPlacementMode = false;
+                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                }
+
+                if (Upgrades.inst.animatronicPlacementMode)
+                {
+                    Upgrades.inst.animatronicPlacementMode = false;
+                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                }
             }
         }
         
     }
-
+    
 
     private void Enabled(bool enable)
     {
@@ -132,8 +154,21 @@ public class PlacementSystem : MonoBehaviour
         if (enable)
         {
             ChangeFloorColorTo(placementFloorColor);
-            selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
-            selectedItem.transform.parent = tablesParent.transform;
+            if (Upgrades.inst.tablePlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
+                selectedItem.transform.parent = tablesParent.transform;
+            }
+            else if (Upgrades.inst.cookStationPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[1], worldMousePosition, Quaternion.identity);
+                selectedItem.transform.parent = cookStationsParent.transform;
+            }
+            else if (Upgrades.inst.animatronicPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[2], worldMousePosition, Quaternion.identity);
+                selectedItem.transform.parent = distractionParent.transform;
+            }
             
         }
         else

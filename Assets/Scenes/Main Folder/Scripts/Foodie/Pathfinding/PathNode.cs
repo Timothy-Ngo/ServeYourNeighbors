@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PathNode
 {
@@ -14,6 +15,7 @@ public class PathNode
     public int fCost;
 
     public bool isWalkable;
+    public bool isPlaceable = true;
     public PathNode cameFromNode; // reference to previous node
     public PathNode(int x, int y)
     {
@@ -33,6 +35,12 @@ public class PathNode
         //grid.TriggerGridObjectChanged(x, y);
     }
 
+    public void SetIsPlaceable(bool isPlaceable)
+    {
+        this.isPlaceable = isPlaceable;
+    }
+    
+    
     public override string ToString()
     {
         return x + "," + y;

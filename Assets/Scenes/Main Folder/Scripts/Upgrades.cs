@@ -50,12 +50,14 @@ public class Upgrades : MonoBehaviour
     [SerializeField] private List<GameObject> tables;
     public int tablesUpgradeCost = 50;
     public TextMeshProUGUI tablesDescription;
-
+    public bool tablePlacementMode = false;
+    
     [Header("-----COOK STATIONS UPGRADE-----")]
     public GameObject cookStationsParent;
     [SerializeField] private List<GameObject> cookStations;
     public int cookStationsUpgradeCost = 50;
     public TextMeshProUGUI cookStationsDescription;
+    public bool cookStationPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
     [SerializeField] private Player_Movement playerMovement;
@@ -66,6 +68,8 @@ public class Upgrades : MonoBehaviour
     [Header("-----DISTRACTION UPGRADES-----")]
     public bool hasAnimatronic = false;
     public bool hasHibachiChef = false;
+    public int animatronicUpgradeCost = 100;
+    public bool animatronicPlacementMode = false;
 
     public enum LayoutLevel
     {
@@ -167,6 +171,7 @@ public class Upgrades : MonoBehaviour
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
             Currency.inst.Withdraw(tablesUpgradeCost);
+            tablePlacementMode = true; // Must be set true before enabling placement system
             placementSystem.isEnabled = true;
             UpdateTablesList();
             NotifyObservers();
@@ -192,6 +197,23 @@ public class Upgrades : MonoBehaviour
         {
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStations[numOfActiveCookStations].SetActive(true);
+            NotifyObservers();
+            Debug.Log("Bought a cook stations upgrade");
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for cook stations upgrade");
+        }
+    }
+    
+    public void CookStationsPlacementMode() // Increase the amount of tables
+    {
+
+        if (Currency.inst.AbleToWithdraw(cookStationsUpgradeCost))
+        {
+            Currency.inst.Withdraw(cookStationsUpgradeCost);
+            cookStationPlacementMode = true;
+            placementSystem.isEnabled = true;
             NotifyObservers();
             Debug.Log("Bought a cook stations upgrade");
         }
@@ -235,6 +257,21 @@ public class Upgrades : MonoBehaviour
             Currency.inst.Withdraw(cost);
             // TODO: Set animatronic gameobject to active
             Debug.Log("Bought an animatronic");
+        }
+    }
+
+    public void AnimatronicPlacementMode()
+    {
+        if (Currency.inst.AbleToWithdraw(animatronicUpgradeCost))
+        {
+             Currency.inst.Withdraw(animatronicUpgradeCost);
+             animatronicPlacementMode = true; 
+             placementSystem.isEnabled = true;
+             NotifyObservers(); // Make sure distraction system has reference to animatronic
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for animatronic upgrade");
         }
     }
 
