@@ -5,8 +5,6 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
 
-    bool isWalkable = false;
-
     public Vector3 position = Vector3.zero;
 
     /// <summary>

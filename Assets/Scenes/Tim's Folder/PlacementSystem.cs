@@ -28,7 +28,7 @@ public class PlacementSystem : MonoBehaviour
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
     /// </summary>
-    [SerializeField] private int interpolationFramesCount = 45;
+    //[SerializeField] private int interpolationFramesCount = 45;
 
     bool _isDragging;
     public bool isDragging
