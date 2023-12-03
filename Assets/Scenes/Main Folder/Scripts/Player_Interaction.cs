@@ -96,7 +96,7 @@ public class Player_Interaction : MonoBehaviour {
             {
                 Debug.Log("Should be giving dish");
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
-                if (TakeAction("[F] Give Dish", KeyCode.F)) {
+                if (TakeAction("[R] Give Dish", KeyCode.R)) {
                     // Make dish pop up on table, 
                     // change foodie to eating state
                     Debug.Log($"current table object: {tableScript.gameObject}");
