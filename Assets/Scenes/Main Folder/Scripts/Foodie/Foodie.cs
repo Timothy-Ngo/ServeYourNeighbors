@@ -78,7 +78,7 @@ public class Foodie : MonoBehaviour
         
     }
 
-    public FoodieStateMachine stateMachine { get; set; }
+    [SerializeField] public FoodieStateMachine stateMachine { get; set; }
     public FoodieLineState lineState { get; set; }
     public FoodieOrderState orderState { get; set; }
     public FoodieLeaveState leaveState { get; set; }

@@ -1926,6 +1926,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6671339492838857313, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
   m_PrefabInstance: {fileID: 1439652231}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &767172121 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3992892185172449260, guid: f9be65bf8b36286428d99022122b6722, type: 3}
+  m_PrefabInstance: {fileID: 1810686998}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &774196843
 GameObject:
   m_ObjectHideFlags: 0
@@ -2178,7 +2183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd229fbae801eb644b78db0b61511cea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food: {fileID: 0}
 --- !u!114 &949403113 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8247243701125353631, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
@@ -2787,7 +2791,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6502d9aaa196e649bb862f6fbfc317c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredient: {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
+  ingredientPrefab: {fileID: 5099171853773298587, guid: 8c1cd9e69cac21d42bc0ac8575102889, type: 3}
+  showDebug: 0
 --- !u!61 &1111976061
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3570,14 +3575,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6876cd6bb693646a11bf1822db5bcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerHolding: {fileID: 1466130723}
-  dishes:
-  - {fileID: 21300000, guid: a46e5c93d96a3e447b8bb54a2012d0ad, type: 3}
-  - {fileID: 21300000, guid: dc364f150bea1ab4c8233c44743f2e6f, type: 3}
+  itemInHands: {fileID: 0}
   ingredients:
   - {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
   toppings:
   - {fileID: 21300000, guid: e0977b3751135ed4f8e925c5494dd564, type: 3}
+  dishes:
+  - {fileID: 21300000, guid: a713d7c3437658241889b4d1a0fcc0e2, type: 3}
   foodies:
   - {fileID: 21300000, guid: 6de7dd57f3dab0c47b0d5d49d27b1037, type: 3}
   showDebug: 0
@@ -3839,11 +3843,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
---- !u!1 &1466130723 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5653714511992902100, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
-  m_PrefabInstance: {fileID: 1775829407}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486517100
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,7 +4832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Tables
+      value: TablesPlacementMode
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -5175,6 +5174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ~Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8584186661708686079, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+      propertyPath: playerStats
+      value: 
+      objectReference: {fileID: 11400000, guid: a47d991c460069843b59836324522e44, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
 --- !u!1 &1801985559
@@ -5744,6 +5747,8 @@ MonoBehaviour:
   timerScript: {fileID: 222928300}
   grindTime: 2
   msgSR: {fileID: 1801985560}
+  msgPrefab: {fileID: 8778111947548427597, guid: d45ab09ec29f1214589ad538d9add7c9, type: 3}
+  msgObject: {fileID: 0}
 --- !u!61 &1934200632
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6233,7 +6238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabs:
-  - {fileID: 3992892185172449260, guid: f9be65bf8b36286428d99022122b6722, type: 3}
+  - {fileID: 767172121}
   dragEvent: {fileID: 11400000, guid: d8110d1ac5d5cc341b4e5c888efb51a9, type: 2}
   tablesParent: {fileID: 437064608}
   originalFloorColor: {r: 1, g: 1, b: 1, a: 1}

@@ -88,11 +88,13 @@ public class Player_Interaction : MonoBehaviour {
         }
 
         else if (tableRange) {
-
+            Debug.Log("In range of table to give dish");
+            Debug.Log(PickupSystem.inst.isHoldingDish());
             // ERROR: NullReferenceException on if line -- doesn't affect gameplay as far as I know
             // Checks if there is a foodie ordering at the table, if the player is holding a dish, and if the dish is correct
             if (tableScript.foodie != null && tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish()) //&& PickupSystem.inst.GetItem() == tableScript.foodie.order)
             {
+                Debug.Log("Should be giving dish");
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
                 if (TakeAction("[F] Give Dish", KeyCode.F)) {
                     // Make dish pop up on table, 

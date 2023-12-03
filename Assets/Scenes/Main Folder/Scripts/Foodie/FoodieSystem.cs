@@ -59,6 +59,7 @@ public class FoodieSystem : MonoBehaviour
     {
         seats.Clear();
         availableSeats.Clear();
+        tables.Clear();
         foreach (Transform transform in tableChairParent.transform)
         {
             tables.Add(transform.gameObject.GetComponent<Table>());

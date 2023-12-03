@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using ScriptableObjects;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// When enabling and disabling this system utilize the isEnabled variable
@@ -100,8 +101,11 @@ public class PlacementSystem : MonoBehaviour
                 {
                     ChangeFloorColorTo(originalFloorColor);
                     Upgrades.inst.upgradesScreen.SetActive(true);
-                    
                 }
+
+                selectedItem.transform.position = new Vector3(Mathf.RoundToInt(selectedItem.transform.position.x) + 0.5f,
+                    Mathf.RoundToInt(selectedItem.transform.position.y) + 0.5f, 0f );
+                FoodieSystem.inst.GetCurrentSeats();
             }
         }
         

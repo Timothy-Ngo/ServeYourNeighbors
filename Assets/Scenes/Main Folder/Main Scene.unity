@@ -1273,7 +1273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   day: 1
   payDescription: {fileID: 1059016764}
-  dailyOperationCost: 50
+  dailyOperationCost: 15
   foodiesParentObj: {fileID: 1379203399}
   foodieSpawner: {fileID: 1674618507}
   wavesPerDay: 2

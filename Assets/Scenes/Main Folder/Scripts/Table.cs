@@ -11,7 +11,7 @@ public class Table : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dish.SetActive(false);
+        //dish.SetActive(false);
     }
 
     // Update is called once per frame

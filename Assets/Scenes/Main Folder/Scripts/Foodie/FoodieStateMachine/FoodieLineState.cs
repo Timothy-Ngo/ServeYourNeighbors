@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[System.Serializable]
 public class FoodieLineState : FoodieState
 {
     int placeInLine = 0;

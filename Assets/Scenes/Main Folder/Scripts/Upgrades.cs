@@ -123,6 +123,7 @@ public class Upgrades : MonoBehaviour
     public void UpdateTablesList()
     {
         tables.Clear();
+        Debug.Log("cleared tables");
         foreach (Table table in tablesParent.GetComponentsInChildren<Table>())
         {
             tables.Add(table.gameObject);
@@ -150,10 +151,25 @@ public class Upgrades : MonoBehaviour
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
             Currency.inst.Withdraw(tablesUpgradeCost);
-            //tables[numOfActiveTables].SetActive(true);
-            placementSystem.isEnabled = true;
+            tables[GetNumOfActiveTables()].SetActive(true);
             NotifyObservers();
+            CustomerPayments.inst.standardPayment += 10;
+            Debug.Log("Bought a table upgrade");
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for table upgrade");
+        }
+    }
+
+    public void TablesPlacementMode()
+    {
+        if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
+        {
+            Currency.inst.Withdraw(tablesUpgradeCost);
+            placementSystem.isEnabled = true;
             UpdateTablesList();
+            NotifyObservers();
             CustomerPayments.inst.standardPayment += 10;
             Debug.Log("Bought a table upgrade");
         }

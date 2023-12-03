@@ -67,6 +67,7 @@ public class FoodieOrderState : FoodieState
             tablePosition = FoodieSystem.inst.availableSeats.Dequeue();
 
             // moves foodie to table
+            Debug.Log(tablePosition);
             foodie.foodieMovement.SetTargetPosition(tablePosition, FoodieSystem.inst.pathfinding);
             foodie.tablePosition = tablePosition;
             
