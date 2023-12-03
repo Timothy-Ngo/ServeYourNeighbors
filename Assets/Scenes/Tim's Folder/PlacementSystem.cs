@@ -168,6 +168,7 @@ public class PlacementSystem : MonoBehaviour
             {
                 selectedItem = Instantiate(prefabs[2], worldMousePosition, Quaternion.identity);
                 selectedItem.transform.parent = distractionParent.transform;
+                DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }
             
         }
