@@ -4,7 +4,7 @@ using System.Data;
 using UnityEngine;
 
 // tutorial: https://youtu.be/alU04hvz6L4?si=Uak7a_jyl9cQwB0X
-public class Pathfinding : MonoBehaviour
+public class Pathfinding
 {
   
     private const int MOVE_STRAIGHT_COST = 10; // 1 times 10

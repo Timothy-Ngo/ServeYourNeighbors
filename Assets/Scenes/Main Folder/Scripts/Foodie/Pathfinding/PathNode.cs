@@ -14,14 +14,14 @@ public class PathNode
     public int hCost;
     public int fCost;
 
-    public bool isWalkable;
+    public bool isWalkable = true;
     public bool isPlaceable = true;
+
     public PathNode cameFromNode; // reference to previous node
     public PathNode(int x, int y)
     {
         this.x = x;
         this.y = y;
-        isWalkable = true;
     }
 
     public void CalculateFCost()
@@ -39,8 +39,7 @@ public class PathNode
     {
         this.isPlaceable = isPlaceable;
     }
-    
-    
+
     public override string ToString()
     {
         return x + "," + y;
