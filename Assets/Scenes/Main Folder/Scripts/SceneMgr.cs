@@ -23,4 +23,10 @@ public class SceneMgr : MonoBehaviour
         #endif
         Application.Quit();
     }
+
+    public void ReloadScene()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
 }

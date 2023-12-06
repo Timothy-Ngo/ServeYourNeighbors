@@ -67,6 +67,7 @@ public class Obstacle : MonoBehaviour
         }
         else if (gameObject.CompareTag("Counter"))
         {
+            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
             FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(false);
         }

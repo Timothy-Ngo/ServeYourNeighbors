@@ -174,7 +174,7 @@ public class Upgrades : MonoBehaviour
             tablePlacementMode = true; // Must be set true before enabling placement system
             placementSystem.isEnabled = true;
             UpdateTablesList();
-            NotifyObservers();
+            //NotifyObservers();
             CustomerPayments.inst.standardPayment += 10;
             Debug.Log("Bought a table upgrade");
         }
@@ -197,7 +197,7 @@ public class Upgrades : MonoBehaviour
         {
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStations[numOfActiveCookStations].SetActive(true);
-            NotifyObservers();
+            //NotifyObservers();
             Debug.Log("Bought a cook stations upgrade");
         }
         else
@@ -214,7 +214,7 @@ public class Upgrades : MonoBehaviour
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStationPlacementMode = true;
             placementSystem.isEnabled = true;
-            NotifyObservers();
+            //NotifyObservers();
             Debug.Log("Bought a cook stations upgrade");
         }
         else
@@ -267,7 +267,7 @@ public class Upgrades : MonoBehaviour
              Currency.inst.Withdraw(animatronicUpgradeCost);
              animatronicPlacementMode = true; 
              placementSystem.isEnabled = true;
-             NotifyObservers(); // Make sure distraction system has reference to animatronic
+             //NotifyObservers(); // Make sure distraction system has reference to animatronic
         }
         else
         {

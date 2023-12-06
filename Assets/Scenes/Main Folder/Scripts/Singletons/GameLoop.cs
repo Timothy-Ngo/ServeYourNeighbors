@@ -45,14 +45,18 @@ public class GameLoop : MonoBehaviour
     [Header("-----END GAME-----")] 
     [SerializeField] private GameObject playerUI;
     [SerializeField] private GameObject endGameScreen;
-    
-    
+
+    [Header("-----PAUSE GAME-----")]
+    [SerializeField] private GameObject pauseGameScreen;
+    bool pauseScreenOpened = false;
+
     // Start is called before the first frame update
     void Start()
     {
         // Initialize UI
         upgradeScreenObj.SetActive(false);
         endGameScreen.SetActive(false);
+        pauseGameScreen.SetActive(false);
         playerUI.SetActive(true);
         
         // Display current day's operation cost goal for the player to reach
@@ -107,6 +111,16 @@ public class GameLoop : MonoBehaviour
             }
         }
         
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            // toggles pause screen open/close
+            pauseGameScreen.SetActive(!pauseScreenOpened);
+            pauseScreenOpened = !pauseScreenOpened;
+            if (pauseScreenOpened)
+                Time.timeScale = 0; // freezes gameplay
+            else
+                Time.timeScale = 1;
+        }
 
     }
 

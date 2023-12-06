@@ -122,6 +122,7 @@ public class PlacementSystem : MonoBehaviour
                 //selectedItem.transform.position = newPosition;
                 if (Upgrades.inst.tablePlacementMode)
                 {
+                    FoodieSystem.inst.GetCurrentSeats();
                     Upgrades.inst.tablePlacementMode = false;
                     selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
                 }
