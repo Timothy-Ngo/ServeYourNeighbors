@@ -70,6 +70,8 @@ public class GameLoop : MonoBehaviour
         numFoodiesPerWave = numFoodiesAtStart;
         waveTimer = 0;
         finishedWaves = false;
+        
+        
     }
 
     // Update is called once per frame
@@ -165,7 +167,7 @@ public class GameLoop : MonoBehaviour
         finishedWaves = false;
         
         UpdateObserver();
-        
+        Player.inst.Activate();
 
     }
     public void UpdateObserver()
@@ -194,5 +196,6 @@ public class GameLoop : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         upgradeScreenObj.SetActive(true);
+        Player.inst.Deactivate();
     }
 }
