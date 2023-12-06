@@ -28,7 +28,7 @@ public class Food : MonoBehaviour {
     }
 
     public void SetDish(string name) {
-        Debug.Log("New sprite!");
+        //Debug.Log("New sprite!");
         dishName = name;
         if (name == "tomatoSoup") {
             sr.sprite = tomatoSoup;
@@ -41,7 +41,7 @@ public class Food : MonoBehaviour {
 
     public void SetDish(Sprite ingredient)
     {
-        Debug.Log("New sprite!");
+        //Debug.Log("New sprite!");
 
         if (ingredient == tomatoIngredient)
         {
@@ -57,12 +57,12 @@ public class Food : MonoBehaviour {
 
     public GameObject SetDish(Sprite ingredient, Transform cookingStation)
     {
-        Debug.Log("New sprite!");
+        //Debug.Log("New sprite!");
 
         GameObject finishedDish = gameObject;
 
-        Debug.Log("ingredient name: " + ingredient.name);
-        Debug.Log("tomato ingredient: " + tomatoIngredient.name);
+        //Debug.Log("ingredient name: " + ingredient.name);
+        //Debug.Log("tomato ingredient: " + tomatoIngredient.name);
 
 
         if (ingredient == tomatoIngredient)
@@ -94,7 +94,7 @@ public class Food : MonoBehaviour {
     public void AddMSG()
     {
         hasMSG = true;
-        Debug.Log("Added MSG");
+        //Debug.Log("Added MSG");
     }
     
 }

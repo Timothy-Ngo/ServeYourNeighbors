@@ -88,18 +88,18 @@ public class Player_Interaction : MonoBehaviour {
         }
 
         else if (tableRange) {
-            Debug.Log("In range of table to give dish");
-            Debug.Log(PickupSystem.inst.isHoldingDish());
+            //Debug.Log("In range of table to give dish");
+            //Debug.Log(PickupSystem.inst.isHoldingDish());
             // ERROR: NullReferenceException on if line -- doesn't affect gameplay as far as I know
             // Checks if there is a foodie ordering at the table, if the player is holding a dish, and if the dish is correct
             if (tableScript.foodie != null && tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish()) //&& PickupSystem.inst.GetItem() == tableScript.foodie.order)
             {
-                Debug.Log("Should be giving dish");
+                //Debug.Log("Should be giving dish");
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
                 if (TakeAction("[R] Give Dish", KeyCode.R)) {
                     // Make dish pop up on table, 
                     // change foodie to eating state
-                    Debug.Log($"current table object: {tableScript.gameObject}");
+                    //Debug.Log($"current table object: {tableScript.gameObject}");
 
                     // set dish
                     tableScript.dish = PickupSystem.inst.GetItemInHands();
@@ -224,7 +224,7 @@ public class Player_Interaction : MonoBehaviour {
                 if (!counterScript.Full()) 
                 {
                     if (TakeAction("[F] Place Item", KeyCode.F)) {
-                        Debug.Log("Placed item on counter");
+                        //Debug.Log("Placed item on counter");
                         // set dish
                         counterScript.item = PickupSystem.inst.GetItemInHands();
 
@@ -245,7 +245,7 @@ public class Player_Interaction : MonoBehaviour {
             {
                 if (TakeAction("[F] Pick Up", KeyCode.F)) 
                 {
-                    Debug.Log("Picked up item from counter");
+                    //Debug.Log("Picked up item from counter");
                     PickupSystem.inst.PickUpItem(counterScript.item);
                     counterScript.SetFull(false);
                     SetInteraction(false);
@@ -261,7 +261,7 @@ public class Player_Interaction : MonoBehaviour {
                 if (!foodieReleased)
                 {
                     foodieReleased = true;
-                    Debug.Log("Caught kidnapping");
+                    //Debug.Log("Caught kidnapping");
                     PickupSystem.inst.ReleaseFoodie();
                 }
                     
@@ -277,57 +277,57 @@ public class Player_Interaction : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         // to create new interactions, add a tag to the collision object in question
         if(collision.tag == "Cooktop") { //&& !cooktopScript.IsCooking()) {
-            Debug.Log("Within range of cooktop");
+            //Debug.Log("Within range of cooktop");
             cooktopRange = true;
             cooktopScript = collision.gameObject.transform.GetComponent<Cooking>();
         }
         else if (collision.CompareTag("Table"))
         {
-            Debug.Log("Within range of table");
+            //Debug.Log("Within range of table");
             tableRange = true;
             tableScript = collision.gameObject.transform.parent.GetComponent<Table>();
-            Debug.Log($"table: {tableScript}");
+            //Debug.Log($"table: {tableScript}");
 
         }
         else if (collision.CompareTag("IngredientBox"))
         {
-            Debug.Log("Within range of ingredient box");
+            //Debug.Log("Within range of ingredient box");
             ingredientBoxRange = true;
             ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
-            Debug.Log("ingredientBox: " + collision.gameObject.name);
+            //Debug.Log("ingredientBox: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("TrashCan"))
         {
-            Debug.Log("Within range of trash can");
+            //Debug.Log("Within range of trash can");
             trashCanRange = true;
         }
         else if (collision.CompareTag("Distraction"))
         {
-            Debug.Log("Within range of distraction");
+            //Debug.Log("Within range of distraction");
             distractionRange = true;
             distractionScript = collision.GetComponent<Distraction>();
-            Debug.Log("distraction: " + collision.gameObject.name);
+            //Debug.Log("distraction: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("Foodie"))
         {
-            Debug.Log("Within range of foodie");
+            //Debug.Log("Within range of foodie");
             foodieRange = true;
             foodieScript = collision.GetComponentInParent<Foodie>();
         }
         else if (collision.CompareTag("Grinder"))
         {
-            Debug.Log("Within range of grinder");
+            //Debug.Log("Within range of grinder");
             grinderRange = true;
             grinderScript = collision.GetComponent<Grinder>();
         }
         else if (collision.CompareTag("FoodieSight"))
         {
-            Debug.Log("Within range of foodie sight");
+            //Debug.Log("Within range of foodie sight");
             foodieSightRange = true;
         } 
         else if (collision.CompareTag("Counter")) 
         {
-            Debug.Log("Within range of counter");
+            //Debug.Log("Within range of counter");
             counterRange = true;
             counterScript = collision.GetComponent<Counter>();
         }
@@ -337,52 +337,52 @@ public class Player_Interaction : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision) {
         if(collision.tag == "Cooktop") {
             cooktopRange = false;
-            Debug.Log("Out of range of cooktop");
+            //Debug.Log("Out of range of cooktop");
         }
         else if (collision.CompareTag("Table"))
         {
             tableRange = false;
             tableScript = null;
-            Debug.Log("Out of range of table");
+            //Debug.Log("Out of range of table");
         }
         else if (collision.CompareTag("IngredientBox"))
         {
             ingredientBoxRange = false;
             ingredientBoxScript = null;
-            Debug.Log("Out of range of ingredient box");
+            //Debug.Log("Out of range of ingredient box");
         }
         else if (collision.CompareTag("TrashCan"))
         {
             trashCanRange = false;
-            Debug.Log("Out of range of trash can");
+            //Debug.Log("Out of range of trash can");
         }
         else if (collision.CompareTag("Distraction"))
         {
             distractionRange = false;
             distractionScript = null;
-            Debug.Log("Out of range of distraction");
+            //Debug.Log("Out of range of distraction");
         }
         else if (collision.CompareTag("Foodie"))
         {
             foodieRange = false;
             foodieScript = null;
-            Debug.Log("Out of range of foodie");
+            //Debug.Log("Out of range of foodie");
         }
         else if (collision.CompareTag("Grinder"))
         {
             grinderRange = false;
             grinderScript = null;
-            Debug.Log("Out of range of grinder");
+            //Debug.Log("Out of range of grinder");
         }
         else if (collision.CompareTag("FoodieSight"))
         {
             foodieSightRange = false;
-            Debug.Log("Out of range of foodie sight");
+            //Debug.Log("Out of range of foodie sight");
         }
         else if (collision.CompareTag("Counter"))
         {
             counterRange = false;
-            Debug.Log("Out of range of counter");
+            //Debug.Log("Out of range of counter");
         }
 
         interactionMessage.SetActive(false);

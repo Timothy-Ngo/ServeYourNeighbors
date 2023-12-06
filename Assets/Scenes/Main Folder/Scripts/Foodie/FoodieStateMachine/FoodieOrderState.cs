@@ -60,15 +60,15 @@ public class FoodieOrderState : FoodieState
 
         if (!AtTable() && !atTable) // puts foodie at a table
         {
-            Debug.Log("at table");
+            //Debug.Log("at table");
             atTable = true;
 
             // finds available table from tables            
             tablePosition = FoodieSystem.inst.availableSeats.Dequeue();
 
             // moves foodie to table
-            Debug.Log(tablePosition);
-            Debug.Log("OrderState: SetTargetPosition");
+            //Debug.Log(tablePosition);
+            //Debug.Log("OrderState: SetTargetPosition");
             foodie.foodieMovement.SetTargetPosition(tablePosition, FoodieSystem.inst.pathfinding);
             foodie.tablePosition = tablePosition;
             
@@ -82,7 +82,7 @@ public class FoodieOrderState : FoodieState
         {
 
             isOrdering = true;
-            Debug.Log("in FoodieOrderState");
+            //Debug.Log("in FoodieOrderState");
 
             // set a timer for their order and they order
             foodie.orderBubble.SetActive(true);
@@ -111,7 +111,7 @@ public class FoodieOrderState : FoodieState
             if (Mathf.Approximately(foodie.tablePosition.x, table.gameObject.transform.position.x) &&
                 Mathf.Approximately(foodie.tablePosition.y, table.gameObject.transform.position.y))
             {
-                Debug.Log("Table initialize");
+                //Debug.Log("Table initialize");
                 foodie.table = table;
                 foodie.tablePosition = table.gameObject.transform.position;
                 foodie.table.SetFoodie(foodie);

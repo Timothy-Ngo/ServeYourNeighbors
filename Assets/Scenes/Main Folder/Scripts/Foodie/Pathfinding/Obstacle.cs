@@ -28,7 +28,7 @@ public class Obstacle : MonoBehaviour
 
     public void PlaceObstacle()
     {
-        Debug.Log("PLACING OBSTACLE");
+        //Debug.Log("PLACING OBSTACLE");
         position = transform.position;
         int x = 0;
         int y = 0;

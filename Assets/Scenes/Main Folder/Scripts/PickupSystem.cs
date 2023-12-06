@@ -65,7 +65,7 @@ public class PickupSystem : MonoBehaviour
 
         // gets Sprite to check what the item is
         Sprite itemSprite = item.GetComponent<SpriteRenderer>().sprite;
-        Debug.Log(itemSprite.name);
+        //Debug.Log(itemSprite.name);
 
         // sets flags
         if (ingredients.Contains(itemSprite))

@@ -23,8 +23,15 @@ public class PlacementSystem : MonoBehaviour
 
     public GameObject floorsParent;
     List<SpriteRenderer> floors;
-    
+    public GameObject instructions;
     private Vector3 newPosition;
+    
+    
+    //Boundaries
+    public GameObject topLeftCornerObj;
+    public GameObject bottomRightCornerObj;
+    public Vector2 topLeftCorner;
+    public Vector2 bottomRightCorner;
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
     /// </summary>
@@ -62,7 +69,10 @@ public class PlacementSystem : MonoBehaviour
         newPosition = new Vector3();
         isEnabled = false;
         isDragging = false;
-        
+        instructions.SetActive(false);
+
+        topLeftCorner = topLeftCornerObj.transform.position;
+        bottomRightCorner = bottomRightCornerObj.transform.position;
     }
 
     // Update is called once per frame
@@ -87,31 +97,29 @@ public class PlacementSystem : MonoBehaviour
             if (isDragging)
             {
                 Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                
-                /*
-                selectedItem.transform.position = Vector3.Lerp(
-                    selectedItem.transform.position,
-                    worldMousePosition + new Vector3(0, 0, 10),
-                    interpolationFramesCount
-                );
-                */
-                newPosition = new Vector3(Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).x) - 0.5f,
-                    Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f );
-                if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                if (topLeftCorner.x < worldMousePosition.x && worldMousePosition.x < bottomRightCorner.x && bottomRightCorner.y < worldMousePosition.y && worldMousePosition.y < topLeftCorner.y)
                 {
-                    selectedItem.transform.position = newPosition;
+                    newPosition = new Vector3(Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).x) - 0.5f,
+                        Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f );
+                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    {
+                        selectedItem.transform.position = newPosition;
+                    }
+                    
                 }
+                
             }
             if (Input.GetKey(KeyCode.Space))
             {
+                
                 isEnabled = false;
                 if (!Upgrades.inst.upgradesScreen.activeSelf)
                 {
                     ChangeFloorColorTo(originalFloorColor);
                     Upgrades.inst.upgradesScreen.SetActive(true);
                 }
-                Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                selectedItem.transform.position = newPosition;
+                //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                //selectedItem.transform.position = newPosition;
                 if (Upgrades.inst.tablePlacementMode)
                 {
                     Upgrades.inst.tablePlacementMode = false;
@@ -170,10 +178,12 @@ public class PlacementSystem : MonoBehaviour
                 selectedItem.transform.parent = distractionParent.transform;
                 DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }
-            
+
+            instructions.SetActive(true);
         }
         else
         {
+            instructions.SetActive(false);
             //Destroy(selectedItem);            
         }
 

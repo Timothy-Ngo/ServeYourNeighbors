@@ -39,7 +39,7 @@ public class QT_Event : MonoBehaviour {
             }
 
             if (fillAmount >= 1) {
-                Debug.Log("QT Event complete");
+                //Debug.Log("QT Event complete");
                 prompt.SetActive(false);
                 active = false;
                 complete = true;
@@ -50,7 +50,7 @@ public class QT_Event : MonoBehaviour {
     }
 
     public void resetEvent() {
-        Debug.Log("*********Reset!");
+        //Debug.Log("*********Reset!");
         fillAmount = 0f;
         prompt.SetActive(true);
         active = true;

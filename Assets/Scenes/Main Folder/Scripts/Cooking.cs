@@ -52,7 +52,7 @@ public class Cooking : MonoBehaviour {
     }
 
     public void StartPrep() {
-        Debug.Log("Starting prep");
+        //Debug.Log("Starting prep");
         prepping = true;
         qt_script.resetEvent();
     }
@@ -88,7 +88,7 @@ public class Cooking : MonoBehaviour {
         yield return new WaitForSeconds(sec);
         sr.sprite = std;
         dish = dish.GetComponent<Food>().SetDish(ingredientSprite, gameObject.transform); // https://forum.unity.com/threads/calling-function-from-other-scripts-c.57072/
-        Debug.Log("You have cooked something!");
+        //Debug.Log("You have cooked something!");
         cooking = false;
         foodReady = true;
     }

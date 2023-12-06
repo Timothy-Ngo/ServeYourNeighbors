@@ -47,7 +47,7 @@ public class CustomerPayments : MonoBehaviour
     public void RandomPayment() // This is actually dumb I don't like it, will change in the future
     {
         float probability = Random.value;
-        Debug.Log($"Random value: {probability}");
+        //Debug.Log($"Random value: {probability}");
         if (0 <= probability && probability  <= cheapProbability)
         {
             CollectPayment(cheapPayment);
@@ -67,7 +67,7 @@ public class CustomerPayments : MonoBehaviour
         // Tip percentage is used to calculate how much of a 50% tip should be paid by the customer
         float payment = (float)(standardPayment + ((standardPayment*0.5) * tipPercentage));
         CollectPayment(Mathf.RoundToInt(payment));
-        Debug.Log($"payment (before rounding): {payment}");
+        //Debug.Log($"payment (before rounding): {payment}");
 
     }
 

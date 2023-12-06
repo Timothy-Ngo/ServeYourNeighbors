@@ -36,7 +36,7 @@ public class PlayerStats : ScriptableObject {
 
     public void incDishesMade() {
         dishesMade++;
-        Debug.Log("dishesMade is now " + dishesMade.ToString());
+        //Debug.Log("dishesMade is now " + dishesMade.ToString());
     }
 
     public int getItemsThrown() {
@@ -49,7 +49,7 @@ public class PlayerStats : ScriptableObject {
 
     public void incItemsThrown() {
         itemsThrown++;
-        Debug.Log("itemsThrown is now " + itemsThrown.ToString());
+        //Debug.Log("itemsThrown is now " + itemsThrown.ToString());
     }
 
     public int getFoodiesServed() {
@@ -62,7 +62,7 @@ public class PlayerStats : ScriptableObject {
 
     public void incFoodiesServed() {
         foodiesServed++;
-        Debug.Log("foodiesServed is now " + foodiesServed.ToString());
+        //Debug.Log("foodiesServed is now " + foodiesServed.ToString());
     }
 
     public int getMSGAdded() {
@@ -75,7 +75,7 @@ public class PlayerStats : ScriptableObject {
 
     public void incMSGAdded() {
         msgAdded++;
-        Debug.Log("msgAdded is now " + msgAdded.ToString());
+        //Debug.Log("msgAdded is now " + msgAdded.ToString());
     }
 
     public int getFoodiesKidnapped() {
@@ -88,7 +88,7 @@ public class PlayerStats : ScriptableObject {
 
     public void incFoodiesKidnapped() {
         foodiesKidnapped++;
-    Debug.Log("foodiesKidnapped is now " + foodiesKidnapped.ToString());
+        //Debug.Log("foodiesKidnapped is now " + foodiesKidnapped.ToString());
     }
 
     public int getTimesDistracted() {
@@ -101,6 +101,6 @@ public class PlayerStats : ScriptableObject {
 
     public void incTimesDistracted() {
         timesDistracted++;
-        Debug.Log("timesDistracted is now " + timesDistracted.ToString());
+        //Debug.Log("timesDistracted is now " + timesDistracted.ToString());
     }
 }

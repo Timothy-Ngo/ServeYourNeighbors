@@ -22,7 +22,7 @@ public class GameLoop : MonoBehaviour
 
     public TextMeshProUGUI payDescription;
     [SerializeField] int dailyOperationCost = 50;
-    
+    public float endDayDelay = 1.5f;
     
     [Header("-----FOODIE WAVE SETTINGS-----")]
     [SerializeField] private GameObject foodiesParentObj;
@@ -59,7 +59,7 @@ public class GameLoop : MonoBehaviour
         operationCostText.text = $"Goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         // Display price of operations cost to text
-        payDescription.text += $" ({dailyOperationCost}g)";
+        payDescription.text = $"You have paid ({dailyOperationCost}g) towards your operations cost.";
         
         // Set up the day game loop
         currentWaveCount = wavesPerDay;
@@ -75,13 +75,13 @@ public class GameLoop : MonoBehaviour
         if (currentWaveCount == 0)
         {
             // if day cycle is done
-            if (!finishedWaves && foodiesParentObj.transform.childCount <= 1)
+            if (!finishedWaves && foodiesParentObj.transform.childCount <= 1 && Player.inst.gameObject.GetComponentInChildren<Foodie>() == null)
             {
                 if (Currency.inst.AbleToWithdraw(dailyOperationCost))
                 {
-                    upgradeScreenObj.SetActive(true);
-                    Upgrades.inst.DisableUpgradeButtons();
-                    finishedWaves = true;
+                    PayOperationsCost();
+                    finishedWaves = true;  
+                    StartCoroutine(DelayedUpgradeMenu(endDayDelay));
                 }
                 else
                 {
@@ -125,7 +125,6 @@ public class GameLoop : MonoBehaviour
         {
             wavesPerDay++;
             dailyOperationCost += 10;
-            UpdateObserver();
         }
         else if (day % 2 == 1)
         {
@@ -136,7 +135,10 @@ public class GameLoop : MonoBehaviour
         operationCostText.color = opCostsNotAchievedColor;
         
         // Reset distraction 
-        DistractionSystem.inst.animatronicDistraction.ResetCharges();
+        if (DistractionSystem.inst.animatronicDistraction != null)
+        {
+            DistractionSystem.inst.animatronicDistraction.ResetCharges();
+        }
         // Close upgrade screen
         upgradeScreenObj.SetActive(false);
         // Reset wave count
@@ -148,6 +150,8 @@ public class GameLoop : MonoBehaviour
         // Reset finished Waves
         finishedWaves = false;
         
+        UpdateObserver();
+        
 
     }
     public void UpdateObserver()
@@ -156,6 +160,7 @@ public class GameLoop : MonoBehaviour
         {
             operationCostText.color = opCostsAchievedColor;
         }
+        payDescription.text = $"You have paid ({dailyOperationCost}g) towards your operations cost.";
     }
 
     public void PlayAgain()
@@ -168,6 +173,12 @@ public class GameLoop : MonoBehaviour
     {
         Debug.Assert(Currency.inst.AbleToWithdraw(dailyOperationCost));
         Currency.inst.Withdraw(dailyOperationCost);
-        Upgrades.inst.EnableUpgradeButtons();
+        //Upgrades.inst.EnableUpgradeButtons();
+    }
+
+    IEnumerator DelayedUpgradeMenu(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        upgradeScreenObj.SetActive(true);
     }
 }

@@ -39,7 +39,7 @@ public class Table : MonoBehaviour
         dish.SetActive(true); // Temp Dish, should be replaced later by getting a specific dish from player
         Debug.Log(PickupSystemObjects.inst.GetItemInHands());
         //dishSR.sprite = PickupSystemObjects.inst.GetItemInHands().GetComponent<SpriteRenderer>().sprite;
-        Debug.Log("Set Dish called");
+        //Debug.Log("Set Dish called");
     }
 
     public void RemoveDish()
@@ -48,12 +48,12 @@ public class Table : MonoBehaviour
             
         if (dish.GetComponent<FoodObjects>().hasMSG)
         {
-            Debug.Log("MSGPayment");
+            //Debug.Log("MSGPayment");
             CustomerPayments.inst.MSGPayment();
         }
         else
         {
-            Debug.Log("Timebased    Payment");
+            //Debug.Log("Timebased    Payment");
             CustomerPayments.inst.TimeBasedPayment(foodie.timeAtOrderTaken / foodie.orderTime);
         }
 

@@ -54,7 +54,7 @@ public class FoodieLineState : FoodieState
 
             inLine = true;
             FoodieSystem.inst.line.Add(foodie.foodieMovement); // adds foodie to line
-            Debug.Log("num of foodies in line: " + FoodieSystem.inst.line.Count);
+            //Debug.Log("num of foodies in line: " + FoodieSystem.inst.line.Count);
             // gets foodie's place in line 
             placeInLine = FoodieSystem.inst.line.IndexOf(foodie.foodieMovement);
             if (placeInLine == 0)
@@ -66,7 +66,7 @@ public class FoodieLineState : FoodieState
             //Debug.Log("targetPosition: " + targetPosition);
 
             // moves foodie 
-            Debug.Log("LineState: SetTargetPosition");
+            //Debug.Log("LineState: SetTargetPosition");
             foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             
             
@@ -83,7 +83,7 @@ public class FoodieLineState : FoodieState
             //Debug.Log("targetPosition: " + targetPosition);
             if (!atFrontOfLine)
             {
-                Debug.Log("OrderState2: SetTargetPosition");
+                //Debug.Log("OrderState2: SetTargetPosition");
 
                 foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             }

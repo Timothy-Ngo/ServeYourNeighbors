@@ -97,7 +97,7 @@ public class FoodObjects : MonoBehaviour {
     public void AddMSG()
     {
         hasMSG = true;
-        Debug.Log("Added MSG");
+        //Debug.Log("Added MSG");
     }
     
 }
