@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_Movement : MonoBehaviour {
+public class PlayerMovement : MonoBehaviour {
     // movement
     private Rigidbody2D rb;
     private SpriteRenderer sr;

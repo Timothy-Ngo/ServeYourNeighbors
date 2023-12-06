@@ -60,7 +60,7 @@ public class Upgrades : MonoBehaviour
     public bool cookStationPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
-    [SerializeField] private Player_Movement playerMovement;
+    [SerializeField] private PlayerMovement playerMovement;
     public bool isGMO = false;
     public int speedBoostUpgradeCost = 100;
     public TextMeshProUGUI speedBoostDescription;

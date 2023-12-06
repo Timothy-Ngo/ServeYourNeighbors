@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SYN_Meter : MonoBehaviour {
+public class SYNMeter : MonoBehaviour {
     public bool full = false;
     Image bar;
 

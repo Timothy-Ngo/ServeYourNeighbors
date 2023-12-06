@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Player_Interaction : MonoBehaviour {
+public class PlayerInteraction : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
 
@@ -195,7 +195,7 @@ public class Player_Interaction : MonoBehaviour {
 
         else if (grinderRange)
         {
-            if (PickupSystem.inst.isHoldingFoodie())
+            if (PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone())
             {
                 if (TakeAction("[F] Grind", KeyCode.F))
                 {

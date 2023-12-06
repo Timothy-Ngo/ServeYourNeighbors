@@ -17,7 +17,7 @@ public class CookingObjects : MonoBehaviour {
     private GameObject ingredient;
     private Sprite ingredientSprite;
     [SerializeField] Timer timer_script;
-    [SerializeField] QT_Event qt_script;
+    [SerializeField] QTEvent qt_script;
 
     [Header("-----STATE-----")]
     bool prepping = false;

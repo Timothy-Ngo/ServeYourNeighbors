@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QT_Event : MonoBehaviour {
+public class QTEvent : MonoBehaviour {
     public float fillAmount;
     public float timeThreshold = 0;
     public KeyCode keycode;
