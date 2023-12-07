@@ -26,7 +26,7 @@ public class Foodie : MonoBehaviour
     bool sightToggleEnabled = false;
 
     [Header("-----ORDERING SETTINGS-----")]
-    public int orderTime = 10;
+    public int orderTime = 28;
 
     public float timeAtOrderTaken;
     public Sprite order;
