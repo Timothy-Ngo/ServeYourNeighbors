@@ -48,6 +48,7 @@ public class FoodieLineState : FoodieState
         
         if (!inLine && !hasBeenInLine) 
         {
+            Debug.Log("Should be called one time");
             hasBeenInLine = true; // put in bc there was a bug with it running all this again bc the foodie was no longer in line in the if statement above
 
             foodie.orderBubble.SetActive(false);
@@ -77,16 +78,15 @@ public class FoodieLineState : FoodieState
             // foodie moves up in line if there is an available space (if a foodie left the line)
             placeInLine = FoodieSystem.inst.line.IndexOf(foodie.foodieMovement);
             //Debug.Log("placeInLine: " + placeInLine);
-            if (placeInLine == 0)
-                atFrontOfLine = true;
-            Vector3 targetPosition = new Vector3(FoodieSystem.inst.startOfLine.x + placeInLine, FoodieSystem.inst.startOfLine.y);
             //Debug.Log("targetPosition: " + targetPosition);
             if (!atFrontOfLine)
             {
+                Vector3 targetPosition = new Vector3(FoodieSystem.inst.startOfLine.x + placeInLine, FoodieSystem.inst.startOfLine.y);
                 //Debug.Log("OrderState2: SetTargetPosition");
-
                 foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             }
+            if (placeInLine == 0)
+                atFrontOfLine = true;
         }
 
     }

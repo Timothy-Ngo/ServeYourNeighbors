@@ -2852,7 +2852,7 @@ MonoBehaviour:
   foodiesParentObj: {fileID: 1379203399}
   foodieSpawner: {fileID: 1674618507}
   wavesPerDay: 2
-  numFoodiesAtStart: 1
+  numFoodiesPerWave: 1
   waveInterval: 3
   upgradeScreenObj: {fileID: 1206986926}
   operationCostText: {fileID: 1873691564}

@@ -29,8 +29,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private FoodieSpawner foodieSpawner;
     [SerializeField] private int wavesPerDay = 2;
     private int currentWaveCount;
-    [SerializeField] private int numFoodiesAtStart = 3;
-    private int numFoodiesPerWave;
+    [SerializeField] private int numFoodiesPerWave = 3;
+    private int currentNumFoodiesPerWave;
     [Tooltip("Seconds between each wave of foodies")] public float waveInterval = 10;
     private float waveTimer;
     private bool finishedWaves = false;
@@ -67,13 +67,19 @@ public class GameLoop : MonoBehaviour
         
         // Set up the day game loop
         currentWaveCount = wavesPerDay;
-        numFoodiesPerWave = numFoodiesAtStart;
+        currentNumFoodiesPerWave = numFoodiesPerWave;
         waveTimer = 0;
         finishedWaves = false;
         
-        
+
     }
 
+    // DEBUGGING
+    void PrintData()
+    {
+        Debug.Log($"currentWaveCount: {currentWaveCount}");
+        Debug.Log($"currentNumFoodiesPerWave: {currentNumFoodiesPerWave}"); 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -107,7 +113,7 @@ public class GameLoop : MonoBehaviour
             // else spawn new wave, reset waveTimer, and decrease currentWaveCount
             else 
             {
-                foodieSpawner.SpawnWaveOf(numFoodiesPerWave);
+                foodieSpawner.SpawnWaveOf(currentNumFoodiesPerWave);
                 waveTimer = waveInterval;
                 currentWaveCount--;
             }
@@ -137,14 +143,14 @@ public class GameLoop : MonoBehaviour
     public void StartNewDay() // Starts a new day after player is done with their upgrades menu 
     {
         day++;
-        if (day % 2 == 0)
+        if (day % 3 == 0) // Every 3rd day, increase amount of waves and operations cost
         {
             wavesPerDay++;
             dailyOperationCost += 10;
         }
-        else if (day % 2 == 1)
+        else if (day % 5 == 1) // Every 5th day, increase number of foodies 
         {
-            numFoodiesAtStart++;
+            currentNumFoodiesPerWave++;
         }
         // Display current day's operation cost goal for the player to reach
         operationCostText.text = $"Reach goal:\n{dailyOperationCost.ToString()}";
@@ -168,6 +174,7 @@ public class GameLoop : MonoBehaviour
         
         UpdateObserver();
         Player.inst.Activate();
+        
 
     }
     public void UpdateObserver()
