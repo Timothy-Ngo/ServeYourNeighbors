@@ -14,6 +14,7 @@ public class DistractionSystem : MonoBehaviour
 
     public Distraction animatronicDistraction;
     public bool showDebug = false;
+    public int distractedTime = 2;
     
 
     void Start()
@@ -31,6 +32,11 @@ public class DistractionSystem : MonoBehaviour
                 StartDistraction();
             }
         }
+
+        if (animatronicDistraction != null && animatronicDistraction.timerScript.timeLeft <= 0 )
+        {
+            ResetDistraction();
+        }
     }
 
     public void StartDistraction()
@@ -40,6 +46,8 @@ public class DistractionSystem : MonoBehaviour
         // ON text
         animatronicDistraction.statusText.enabled = true;
         animatronicDistraction.statusText.text = "ON";
+
+        animatronicDistraction.timerScript.SetMaxTime(distractedTime);
     }
 
     public void ResetDistraction()

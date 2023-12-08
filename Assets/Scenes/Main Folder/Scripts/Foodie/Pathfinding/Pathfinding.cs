@@ -40,7 +40,7 @@ public class Pathfinding
     }
     public List<PathNode> FindPath(int startX, int startY, int endX, int endY)
     {
-        Debug.Log($"Find Path Called");
+        //Debug.Log($"Find Path Called");
         PathNode startNode = grid.GetGridObject(startX, startY);
         PathNode endNode = grid.GetGridObject(endX, endY);
 

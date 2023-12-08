@@ -100,7 +100,10 @@ public class Foodie : MonoBehaviour
     {
         // if foodies are in distraction radius --> become distracted
         if (collision.gameObject.tag == "DistractionCircle" && stateMachine.currentFoodieState != distractedState)
+        {
+            Debug.Log("in range of distraction circle");
             stateMachine.ChangeState(distractedState);
+        }
     }
 
     private void OnMouseOver()

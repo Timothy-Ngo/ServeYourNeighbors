@@ -10,6 +10,8 @@ public class Distraction : MonoBehaviour
     public TextMeshProUGUI statusText;
     [SerializeField] TextMeshProUGUI chargesText;
 
+    public Timer timerScript;
+
     [SerializeField] int maxCharges = 2;
     int currentCharges;
 

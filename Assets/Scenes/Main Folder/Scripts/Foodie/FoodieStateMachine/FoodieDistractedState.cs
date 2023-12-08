@@ -70,7 +70,7 @@ public class FoodieDistractedState : FoodieState
             foodie.foodieSight.SetActive(true);
 
             // turns distraction off when distraction duration is finished
-            DistractionSystem.inst.ResetDistraction();
+            //DistractionSystem.inst.ResetDistraction();
 
             foodie.stateMachine.ChangeState(pausedState);
             
