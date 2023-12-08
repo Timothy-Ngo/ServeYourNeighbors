@@ -1,9 +1,7 @@
 # ServeYourNeighbors
 
 ## Contributors (Team 03 - Om Nom Nom Studios)
-Kirin Hardinger
-Helen Truong
-Timothy Ngo
+Kirin Hardinger, Helen Truong, and Timothy Ngo
 
 ## Instructors
 Sara Davis, Vinh Le, and Devrin Lee
