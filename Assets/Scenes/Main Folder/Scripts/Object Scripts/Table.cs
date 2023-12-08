@@ -44,6 +44,7 @@ public class Table : MonoBehaviour
 
     public void RemoveDish()
     {
+        Debug.Assert(dish.gameObject != null);
         dish.SetActive(false);
             
         if (dish.GetComponent<FoodObjects>().hasMSG)

@@ -26,7 +26,8 @@ public class FoodieEatState : FoodieState
     {
         base.ExitState();
         Debug.Assert(foodie.table != null);
-        foodie.table.RemoveDish();
+        if (foodie.table.dish != null)
+            foodie.table.RemoveDish();
     }
 
     public override void Update()
