@@ -4541,7 +4541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGoldText: {fileID: 340328198}
-  startingGold: 1000
+  startingGold: 100
   gold: 0
 --- !u!4 &976856198
 Transform:
