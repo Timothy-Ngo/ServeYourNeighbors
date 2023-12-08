@@ -37,7 +37,6 @@ public class Table : MonoBehaviour
     public void SetDish()
     {
         dish.SetActive(true); // Temp Dish, should be replaced later by getting a specific dish from player
-        Debug.Log(PickupSystemObjects.inst.GetItemInHands());
         //dishSR.sprite = PickupSystemObjects.inst.GetItemInHands().GetComponent<SpriteRenderer>().sprite;
         //Debug.Log("Set Dish called");
     }
