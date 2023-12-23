@@ -45,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void Update() {
-        if(cooktopRange) {
+        if (cooktopRange) {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
                 if (TakeAction("[C] Cook", KeyCode.C)) {
@@ -238,7 +238,20 @@ public class PlayerInteraction : MonoBehaviour {
                 }
                 else 
                 {
-                    Prompt("Counter full");
+                    // see class type of item on counter
+                    // https://www.reddit.com/r/Unity3D/comments/16q46ei/is_there_a_way_to_check_if_an_object_is_an/
+                    // if item on counter is a dish and player is holding MSG
+                    // Debug.Log("Item type is " + counterScript.item.GetType());
+                    FoodObjects test = counterScript.item.GetComponent<FoodObjects>();
+                    if(test != null && PickupSystem.inst.isHoldingTopping()) {
+                        if (TakeAction("[F] Add MSG", KeyCode.F)) {
+                            PickupSystem.inst.DestroyItem();
+                            playerStats.incMSGAdded();
+                            counterScript.item.GetComponent<FoodObjects>().AddMSG();
+                        }
+                    } else {
+                        Prompt("Counter full");
+                    }
                 }
             }
             else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full()) 
