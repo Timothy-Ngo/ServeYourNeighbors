@@ -238,7 +238,19 @@ public class PlayerInteraction : MonoBehaviour {
                 }
                 else 
                 {
-                    Prompt("Counter full");
+                    if (TakeAction("[F] Swap Items", KeyCode.F)) 
+                    {
+                        GameObject temp = counterScript.item;
+
+                        counterScript.item = PickupSystem.inst.GetItemInHands();
+                        Vector3 offset = new Vector3(0f, 0.3f, 0);
+                        PickupSystem.inst.PlaceItem(counterScript.transform, offset);
+                        counterScript.SetFull(true);
+
+                        PickupSystem.inst.PickUpItem(temp);
+
+                        SetInteraction(false);
+                    }
                 }
             }
             else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full()) 
