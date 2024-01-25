@@ -1,7 +1,7 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class DistractionSystem : MonoBehaviour
 {
     public static DistractionSystem inst;

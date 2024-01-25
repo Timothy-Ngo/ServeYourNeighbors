@@ -1,9 +1,9 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 // Takes in a spawnAmount and spawns that many in intervals at the spawnPoint
-
 public class FoodieSpawner : MonoBehaviour
 {
     public static FoodieSpawner inst;

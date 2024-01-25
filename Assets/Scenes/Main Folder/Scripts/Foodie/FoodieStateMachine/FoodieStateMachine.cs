@@ -1,8 +1,8 @@
+// Author: Helen Truong
+// tutorial for FSM: https://youtu.be/RQd44qSaqww?si=udxdALY2aHQrMB00
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-// tutorial for FSM: https://youtu.be/RQd44qSaqww?si=udxdALY2aHQrMB00
 public class FoodieStateMachine
 {
     public FoodieState currentFoodieState { get; set; }

@@ -1,3 +1,4 @@
+// Author: Timothy Ngo, Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

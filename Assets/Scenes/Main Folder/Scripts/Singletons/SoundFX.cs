@@ -1,3 +1,5 @@
+// Author: Timothy Ngo
+// https://www.youtube.com/watch?v=DU7cgVsU2rM&list=PLozZlrFOnyHKhwZWf9YozS3xowq494s2W&index=5
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,5 +1,5 @@
-// Timothy Ngo 10/21
-
+// Author: Timothy Ngo 
+        
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -70,7 +70,6 @@ public class GameLoop : MonoBehaviour
         currentNumFoodiesPerWave = numFoodiesPerWave;
         waveTimer = 0;
         finishedWaves = false;
-        
 
     }
 

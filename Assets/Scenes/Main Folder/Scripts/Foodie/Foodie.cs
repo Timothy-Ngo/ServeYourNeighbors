@@ -1,3 +1,4 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,6 @@ using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class Foodie : MonoBehaviour
 {
 

@@ -1,10 +1,10 @@
+// Author: Timothy Ngo
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Upgrades : MonoBehaviour
 {
     public static Upgrades inst;

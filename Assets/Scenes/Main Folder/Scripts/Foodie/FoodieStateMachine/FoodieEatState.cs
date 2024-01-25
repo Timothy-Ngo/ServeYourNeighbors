@@ -1,7 +1,7 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class FoodieEatState : FoodieState
 {
     bool eating;
