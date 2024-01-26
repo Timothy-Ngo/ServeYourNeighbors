@@ -33,7 +33,11 @@ public class Upgrades : MonoBehaviour
         {
             cookStations[i].SetActive(false);
         }
-        
+
+        foreach (Transform transform in counterParent.transform)
+        {
+            counterObjs.Add(transform.gameObject);
+        }
     }
     [Header("-----UPGRADES UI-----")]
     public GameObject upgradesScreen;
@@ -54,7 +58,7 @@ public class Upgrades : MonoBehaviour
     
     [Header("-----COOK STATIONS UPGRADE-----")]
     public GameObject cookStationsParent;
-    [SerializeField] private List<GameObject> cookStations;
+    [SerializeField] public List<GameObject> cookStations;
     public int cookStationsUpgradeCost = 50;
     public TextMeshProUGUI cookStationsDescription;
     public bool cookStationPlacementMode = false;
@@ -80,6 +84,11 @@ public class Upgrades : MonoBehaviour
     [Header("-----MAIN LAYOUT UPGRADES-----")]
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
+    public GameObject counterParent;
+
+    public List<GameObject> counterObjs;
+
+    public GameObject grinder;
     // Start is called before the first frame update
     void Start()
     {

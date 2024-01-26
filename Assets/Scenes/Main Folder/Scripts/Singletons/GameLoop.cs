@@ -155,6 +155,8 @@ public class GameLoop : MonoBehaviour
         operationCostText.text = $"Reach goal:\n{dailyOperationCost.ToString()}";
         operationCostText.color = opCostsNotAchievedColor;
         
+        // Reset items in scene
+        ResetItemsInScene();
         // Reset distraction 
         if (DistractionSystem.inst.animatronicDistraction != null)
         {
@@ -203,5 +205,35 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(delay);
         upgradeScreenObj.SetActive(true);
         Player.inst.Deactivate();
+    }
+
+    void ResetItemsInScene()
+    {
+        if (PickupSystem.inst.isHoldingItem())
+        {
+            PickupSystem.inst.DestroyItem();
+        }
+
+        foreach (GameObject cookStation in Upgrades.inst.cookStations)
+        {
+            GameObject dish = cookStation.GetComponent<Cooking>().dish;
+            if (dish)
+            {
+                Destroy(dish);
+                cookStation.GetComponent<Cooking>().ResetCooktop();
+            }
+        }
+
+        foreach (GameObject counter in Upgrades.inst.counterObjs)
+        {
+            GameObject item = counter.GetComponent<Counter>().item;
+            if (item)
+            {
+                Destroy(item);
+            }
+        }
+
+        GameObject msgItem = Upgrades.inst.grinder;
+        Destroy(msgItem.GetComponent<Grinder>().msgObject);
     }
 }

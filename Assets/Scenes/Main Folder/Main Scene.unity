@@ -6893,6 +6893,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de68d699f203644da793eefbe6f42a3, type: 3}
+--- !u!1 &1479765209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4959636247554662155, guid: 4e40bdba16f526843a91cced3f2f1c6a, type: 3}
+  m_PrefabInstance: {fileID: 993100257}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486517100
 GameObject:
   m_ObjectHideFlags: 0
@@ -7903,6 +7908,9 @@ MonoBehaviour:
   animatronicUpgradeCost: 100
   animatronicPlacementMode: 0
   currentLayout: 0
+  counterParent: {fileID: 1746688265}
+  counterObjs: []
+  grinder: {fileID: 1479765209}
 --- !u!4 &1597758871
 Transform:
   m_ObjectHideFlags: 0
@@ -8670,7 +8678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8584186661138810985, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
       propertyPath: m_SortingLayerID
-      value: -970624513
+      value: -482501693
       objectReference: {fileID: 0}
     - target: {fileID: 8584186661708686052, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
       propertyPath: m_RootOrder
