@@ -15,6 +15,11 @@ public class SceneMgr : MonoBehaviour
         SceneManager.LoadScene("Intro Scene");
     }
 
+    public void ChangeSceneToHowToPlay()
+    {
+        SceneManager.LoadScene("How To Play");
+    }
+
     public void ChangeSceneToMainMenu()
     {
         SceneManager.LoadScene("Main Menu");
