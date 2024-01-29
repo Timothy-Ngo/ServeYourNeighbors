@@ -14,10 +14,15 @@ public class Grinder : MonoBehaviour
     [SerializeField] GameObject msgPrefab;
     public GameObject msgObject;
 
+    // msg placement when grinder is done
+    public GameObject offsetGameObject;
+    Vector3 offset;
+
     private void Start()
     {
         msg = msgSR.sprite;
         msgSR.enabled = false;
+        offset  = offsetGameObject.transform.localPosition;
     }
 
     private void Update()
@@ -44,7 +49,7 @@ public class Grinder : MonoBehaviour
 
     private GameObject SpawnMSG()
     {
-        Vector3 offset = new Vector3(0, 0.22f, 0);
+        //Vector3 offset = new Vector3(0, 0.22f, 0);
         Vector3 spawnPosition = gameObject.transform.position + offset;
         GameObject msg = Instantiate(msgPrefab, spawnPosition, Quaternion.identity, gameObject.transform);
 
