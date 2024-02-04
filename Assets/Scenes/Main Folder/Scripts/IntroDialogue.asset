@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcae1d60e48ebd48a0802f7121296bd, type: 3}
+  m_Name: IntroDialogue
+  m_EditorClassIdentifier: 
+  dialogue:
+  - Wow! Today is the day...
+  - The day I open my restaurant.
+  - Oh, how I wish Grandma could be here...
+  - No one else but her understood the value of quality ingredients.
+  - Ingredients you were... familiar with.
+  - Ingredients you were neighbors with.
+  - I will have to be careful of my reputation... be careful to manage my "SYN".
+  - I'll never forget Grandma's last words.
+  - If it is the last thing I do...

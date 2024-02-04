@@ -1,10 +1,10 @@
+// Author: Helen Truong
+// tutorial: https://youtu.be/waEsGu--9P8?si=rO_SICX_V1nrJX1j
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-
-// tutorial: https://youtu.be/waEsGu--9P8?si=rO_SICX_V1nrJX1j
 
 public class Grid<TGridObject>
 {

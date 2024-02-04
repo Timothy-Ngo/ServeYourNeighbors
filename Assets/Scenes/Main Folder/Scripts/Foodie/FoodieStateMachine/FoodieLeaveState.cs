@@ -1,8 +1,8 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 public class FoodieLeaveState : FoodieState
 {
     bool atDespawnPoint = false;

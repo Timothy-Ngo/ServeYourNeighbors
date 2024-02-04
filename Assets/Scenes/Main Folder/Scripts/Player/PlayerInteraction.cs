@@ -45,7 +45,7 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void Update() {
-        if(cooktopRange) {
+        if (cooktopRange) {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
                 if (TakeAction("[C] Cook", KeyCode.C)) {

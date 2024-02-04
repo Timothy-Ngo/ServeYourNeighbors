@@ -1,3 +1,4 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,7 +6,6 @@ using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
-
 public class Foodie : MonoBehaviour
 {
 
@@ -23,7 +23,7 @@ public class Foodie : MonoBehaviour
     [Header("-----FOODIE SIGHT-----")]
     public GameObject foodieSight;
     public SpriteRenderer sightSR;
-    bool sightToggleEnabled = false;
+    
 
     [Header("-----ORDERING SETTINGS-----")]
     public int orderTime = 28;
@@ -70,10 +70,9 @@ public class Foodie : MonoBehaviour
     {
         stateMachine.currentFoodieState.Update();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (sightSR.enabled != FoodieSystem.inst.sightToggleEnabled)
         {
-            sightToggleEnabled = !sightToggleEnabled;
-            sightSR.enabled = sightToggleEnabled;
+            sightSR.enabled = FoodieSystem.inst.sightToggleEnabled;
         }
         
     }
@@ -113,7 +112,7 @@ public class Foodie : MonoBehaviour
 
     private void OnMouseExit()
     {
-        if (!sightToggleEnabled)
+        if (!FoodieSystem.inst.sightToggleEnabled)
             sightSR.enabled = false;
     }
 

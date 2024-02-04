@@ -1,7 +1,7 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class FoodieSystem : MonoBehaviour
 {
     public static FoodieSystem inst;
@@ -22,25 +22,28 @@ public class FoodieSystem : MonoBehaviour
     
     public Pathfinding pathfinding;
     
-    [Header("Debugging")]
+    [Header("-----DEBUGGING-----")]
     public bool showDebug = false;
     public FoodieMovement[] foodieMove;
     public GameObject foodiesParent;
 
-    [Header("Line State")]
+    [Header("-----LINE STATE-----")]
     public List<FoodieMovement> line;
     public Vector3 startOfLine;
     public GameObject startOfLineObject;
 
-    [Header("Order State")]
+    [Header("-----ORDER STATE-----")]
     public List<Vector3> seats;
     public Queue<Vector3> availableSeats;
     public GameObject tableChairParent;
     public List<Table> tables;
 
-    [Header("Leave State")]
+    [Header("-----LEAVE STATE-----")]
     public Vector3 despawnPoint;
     public GameObject despawnPointObject;
+
+    [Header("-----FOODIE SIGHT-----")]
+    public bool sightToggleEnabled = false;
 
     void Start()
     {
@@ -79,6 +82,11 @@ public class FoodieSystem : MonoBehaviour
     
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            sightToggleEnabled = !sightToggleEnabled;
+        }
+
         if (showDebug)
         {
             if (Input.GetMouseButtonDown(0))

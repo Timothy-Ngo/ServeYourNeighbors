@@ -133,6 +133,12 @@ public class PlacementSystem : MonoBehaviour
                     selectedItem.GetComponent<Obstacle>().PlaceObstacle();
                 }
 
+                if (Upgrades.inst.counterPlacementMode)
+                {
+                    Upgrades.inst.counterPlacementMode = false;
+                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                }
+
                 if (Upgrades.inst.animatronicPlacementMode)
                 {
                     Upgrades.inst.animatronicPlacementMode = false;
@@ -173,9 +179,14 @@ public class PlacementSystem : MonoBehaviour
                 selectedItem = Instantiate(prefabs[1], worldMousePosition, Quaternion.identity);
                 selectedItem.transform.parent = cookStationsParent.transform;
             }
-            else if (Upgrades.inst.animatronicPlacementMode)
+            else if (Upgrades.inst.counterPlacementMode)
             {
                 selectedItem = Instantiate(prefabs[2], worldMousePosition, Quaternion.identity);
+                selectedItem.transform.parent = Upgrades.inst.counterParent.transform;
+            }
+            else if (Upgrades.inst.animatronicPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[3], worldMousePosition, Quaternion.identity);
                 selectedItem.transform.parent = distractionParent.transform;
                 DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }

@@ -1,7 +1,7 @@
+// Author: Timothy Ngo
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class CustomerPayments : MonoBehaviour
 {
     public static CustomerPayments inst;

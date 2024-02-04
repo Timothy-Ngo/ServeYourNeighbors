@@ -1,13 +1,23 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 public class SceneMgr : MonoBehaviour
 {
     public void ChangeSceneToGame()
     {
         SceneManager.LoadScene("Main Scene");
+    }
+
+    public void ChangeSceneToIntro() 
+    {
+        SceneManager.LoadScene("Intro Scene");
+    }
+
+    public void ChangeSceneToHowToPlay()
+    {
+        SceneManager.LoadScene("How To Play");
     }
 
     public void ChangeSceneToMainMenu()

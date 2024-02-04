@@ -1,10 +1,10 @@
+// Author: Timothy Ngo
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Upgrades : MonoBehaviour
 {
     public static Upgrades inst;
@@ -12,7 +12,8 @@ public class Upgrades : MonoBehaviour
     private void Awake()
     {
         inst = this;
-
+        
+        // Initialize table objects
         foreach (Transform transform in tablesParent.transform)
         {
             tables.Add(transform.gameObject);
@@ -23,7 +24,7 @@ public class Upgrades : MonoBehaviour
             tables[i].SetActive(false);
         }
         
-        
+        // Initialize cook station objects
         foreach (Transform transform in cookStationsParent.transform)
         {
             cookStations.Add(transform.gameObject);
@@ -32,6 +33,16 @@ public class Upgrades : MonoBehaviour
         for (int i = 1; i < cookStations.Count; i++)
         {
             cookStations[i].SetActive(false);
+        }
+        // Initialize counter objects
+        foreach (Transform transform in counterParent.transform)
+        {
+            counterObjs.Add(transform.gameObject);
+        }
+        counterObjs[0].SetActive(true);
+        for (int i = 1; i < counterObjs.Count; i++)
+        {
+            counterObjs[i].SetActive(false);
         }
         
     }
@@ -54,10 +65,17 @@ public class Upgrades : MonoBehaviour
     
     [Header("-----COOK STATIONS UPGRADE-----")]
     public GameObject cookStationsParent;
-    [SerializeField] private List<GameObject> cookStations;
+    [SerializeField] public List<GameObject> cookStations;
     public int cookStationsUpgradeCost = 50;
     public TextMeshProUGUI cookStationsDescription;
     public bool cookStationPlacementMode = false;
+
+    [Header("-----COUNTERS UPGRADE-----")]
+    public GameObject counterParent;
+    public List<GameObject> counterObjs;
+    public int countersUpgradeCost = 50;
+    public TextMeshProUGUI countersDescription;
+    public bool counterPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
     [SerializeField] private PlayerMovement playerMovement;
@@ -80,12 +98,15 @@ public class Upgrades : MonoBehaviour
     [Header("-----MAIN LAYOUT UPGRADES-----")]
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
+
+    public GameObject grinder;
     // Start is called before the first frame update
     void Start()
     {
         tablesDescription.text += $" ({tablesUpgradeCost}g)";
         speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)";
         cookStationsDescription.text += $" ({cookStationsUpgradeCost}g)";
+        countersDescription.text += $"({countersUpgradeCost}g)";
 
         buttons = upgradeButtons.GetComponentsInChildren<Button>();
     }
@@ -124,6 +145,19 @@ public class Upgrades : MonoBehaviour
         return numOfActiveCookStations;
     }
 
+    public int GetNumOfActiveCounters()
+    {
+        int numOfActiveCounters = 0;
+        foreach (GameObject gameObject in counterObjs)
+        {
+            if (gameObject.activeSelf)
+            {
+                numOfActiveCounters++;
+            }
+        }
+
+        return numOfActiveCounters;
+    }
     public void UpdateTablesList()
     {
         tables.Clear();
@@ -166,7 +200,7 @@ public class Upgrades : MonoBehaviour
         }
     }
 
-    public void TablesPlacementMode()
+    public void TablesPlacementMode() // Initializes placement mode for tables
     {
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
@@ -184,7 +218,7 @@ public class Upgrades : MonoBehaviour
         }
     }
     
-    public void CookStations() // Increase the amount of tables
+    public void CookStations() // Increase the amount of cook stations
     {
         int numOfActiveCookStations = GetNumOfActiveCookStations();
         if (numOfActiveCookStations == cookStations.Count)
@@ -205,8 +239,9 @@ public class Upgrades : MonoBehaviour
             Debug.Log("Insufficient funds for cook stations upgrade");
         }
     }
+
     
-    public void CookStationsPlacementMode() // Increase the amount of tables
+    public void CookStationsPlacementMode()  // Initializes placement mode for cook stations
     {
 
         if (Currency.inst.AbleToWithdraw(cookStationsUpgradeCost))
@@ -223,6 +258,32 @@ public class Upgrades : MonoBehaviour
         }
     }
 
+
+    public void Counters() // Increases the amount of counters
+    {
+        if (Currency.inst.AbleToWithdraw(countersUpgradeCost))
+        {
+            Currency.inst.Withdraw(countersUpgradeCost);
+            counterObjs[GetNumOfActiveCounters()].SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for counter upgrade");
+        }
+    }
+    public void CountersPlacementMode() // Initializes placement mode for counters
+    {
+        if (Currency.inst.AbleToWithdraw(countersUpgradeCost))
+        {
+            Currency.inst.Withdraw(countersUpgradeCost);
+            counterPlacementMode = true;
+            placementSystem.isEnabled = true;
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for counters upgrade");
+        }
+    }
     public void BecomeGMO() // Player Speed boost
     {
         if (isGMO)

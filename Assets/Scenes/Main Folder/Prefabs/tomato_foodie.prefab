@@ -459,7 +459,7 @@ MonoBehaviour:
   foodieCollider: {fileID: 1987003699042778043}
   table: {fileID: 0}
   tablePosition: {x: 0, y: 0, z: 0}
-  foodieSprite: {fileID: 0}
+  foodieSprite: {fileID: 21300000, guid: 6de7dd57f3dab0c47b0d5d49d27b1037, type: 3}
   foodieSight: {fileID: 7488874022026525518}
   sightSR: {fileID: 2157189350706669681}
   orderTime: 28

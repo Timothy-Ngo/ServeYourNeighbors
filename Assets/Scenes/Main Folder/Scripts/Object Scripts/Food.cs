@@ -55,37 +55,7 @@ public class Food : MonoBehaviour {
         Display();
     }
 
-    public GameObject SetDish(Sprite ingredient, Transform cookingStation)
-    {
-        //Debug.Log("New sprite!");
-
-        GameObject finishedDish = gameObject;
-
-        //Debug.Log("ingredient name: " + ingredient.name);
-        //Debug.Log("tomato ingredient: " + tomatoIngredient.name);
-
-
-        if (ingredient == tomatoIngredient)
-        {
-            finishedDish = SpawnDish(tomatoSoupPrefab, cookingStation);
-        }
-        else
-        {
-            Debug.Log("INVALID INGREDIENT");
-        }
-
-        //Display();
-        return finishedDish;
-    }
-
-    public GameObject SpawnDish(GameObject dishPrefab, Transform cookingStation)
-    {
-        Vector3 offset = new Vector3(0.015f, 0.255f, 0);
-        Vector3 spawnPosition = cookingStation.position + offset;
-        GameObject dish = Instantiate(dishPrefab, spawnPosition, Quaternion.identity, cookingStation);
-
-        return dish;
-    }
+    
 
     public void Display() {
         sr.enabled = true;

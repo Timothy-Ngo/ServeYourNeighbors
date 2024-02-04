@@ -1,6 +1,9 @@
+// Author: Helen Truong
+// tutorial: https://youtu.be/alU04hvz6L4?si=Uak7a_jyl9cQwB0X
 using System.Collections;
 using System.Collections.Generic;
 //using UnityEditor.Build;
+
 using UnityEngine;
 
 public class Testing : MonoBehaviour

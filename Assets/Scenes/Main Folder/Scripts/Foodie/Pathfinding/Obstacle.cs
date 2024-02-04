@@ -1,3 +1,4 @@
+// Author: Timothy Ngo, Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,12 +31,13 @@ public class Obstacle : MonoBehaviour
     {
         //Debug.Log("PLACING OBSTACLE");
         position = transform.position;
+        FoodieSystem.inst.pathfinding.obstaclePositions.Add(position);
         int x = 0;
         int y = 0;
         // sets position on pathfinding grid as unwalkable
         FoodieSystem.inst.pathfinding.GetGrid().GetXY(transform.position, out x, out y);
-
         FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(false);
+
         if (gameObject.CompareTag("Table"))
         {
             //Debug.Log("Table object");

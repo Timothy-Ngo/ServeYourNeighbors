@@ -1,7 +1,7 @@
+// Author: Helen Truong
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PickupSystem : MonoBehaviour
 {
     public static PickupSystem inst;
@@ -20,29 +20,9 @@ public class PickupSystem : MonoBehaviour
     private bool holdingDish = false;
     private bool holdingFoodie = false;
 
-    [Header("-----LISTS-----")] // manually add items in the inspector
-    public List<Sprite> ingredients;
-    public List<Sprite> toppings;
-    public List<Sprite> dishes;
-    public List<Sprite> foodies;
-
     [Header("-----DEBUGGING-----")]
     [SerializeField] bool showDebug = false;
     public Sprite spriteTest;
-
-
-    private void Start()
-    {
-
-    }
-
-    private void Update()
-    {
-        if (showDebug)
-        {
-
-        }
-    }
 
 
     public void PickUpIngredient(IngredientBox ingredientBoxScript)
@@ -57,30 +37,27 @@ public class PickupSystem : MonoBehaviour
     {
         // puts item in player's hands
         itemInHands = item;
-        Vector3 offset = new Vector3(0, 1, 0);
+        // item is positioned above player's head
+        Vector3 offset = new Vector3(0, 1, 0); 
         item.transform.parent = Player.inst.gameObject.transform;
         item.transform.localPosition = offset;
 
         holdingItem = true;
 
-        // gets Sprite to check what the item is
-        Sprite itemSprite = item.GetComponent<SpriteRenderer>().sprite;
-        //Debug.Log(itemSprite.name);
-
         // sets flags
-        if (ingredients.Contains(itemSprite))
+        if (item.CompareTag("Ingredient"))
         {
             holdingIngredient = true;
         }
-        else if (toppings.Contains(itemSprite))
+        else if (item.CompareTag("Topping"))
         {
             holdingTopping = true;
         }
-        else if (dishes.Contains(itemSprite))
+        else if (item.CompareTag("Dish"))
         {
             holdingDish = true;
         }
-        else if (foodies.Contains(itemSprite))
+        else if (item.CompareTag("Foodie"))
         {
             holdingFoodie = true;
         }

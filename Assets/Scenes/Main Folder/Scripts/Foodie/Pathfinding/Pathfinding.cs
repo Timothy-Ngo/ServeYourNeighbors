@@ -1,15 +1,17 @@
+// Author: Helen Truong
+// tutorial: https://youtu.be/alU04hvz6L4?si=Uak7a_jyl9cQwB0X
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
-
-// tutorial: https://youtu.be/alU04hvz6L4?si=Uak7a_jyl9cQwB0X
 public class Pathfinding
 {
   
     private const int MOVE_STRAIGHT_COST = 10; // 1 times 10
     private const int MOVE_DIAGONAL_COST = 14; // sqroot(2) = 1.4 -> times 10
 
+
+    public List<Vector3> obstaclePositions = new List<Vector3>();
     private Grid<PathNode> grid;
     private List<PathNode> openList; // used for queueing nodes to search
     private HashSet<PathNode> closedList; // used to store already searched nodes
@@ -227,4 +229,18 @@ public class Pathfinding
         return lowestFCostNode;
     }
     
+
+    // cycles through list of obstacle positions and updates those nodes on the grid to unwalkable
+    public void UpdateObstacles()
+    {
+        foreach(Vector3 position in obstaclePositions)
+        {
+            int x = 0;
+            int y = 0;
+            // sets position on pathfinding grid as unwalkable
+            grid.GetXY(position, out x, out y);
+            GetNode(x, y).SetIsWalkable(false);
+        }
+        
+    }
 }
