@@ -238,19 +238,18 @@ public class PlayerInteraction : MonoBehaviour {
                 }
                 else 
                 {
-                    // see class type of item on counter
-                    // https://www.reddit.com/r/Unity3D/comments/16q46ei/is_there_a_way_to_check_if_an_object_is_an/
-                    // if item on counter is a dish and player is holding MSG
-                    // Debug.Log("Item type is " + counterScript.item.GetType());
-                    FoodObjects test = counterScript.item.GetComponent<FoodObjects>();
-                    if(test != null && PickupSystem.inst.isHoldingTopping()) {
-                        if (TakeAction("[F] Add MSG", KeyCode.F)) {
-                            PickupSystem.inst.DestroyItem();
-                            playerStats.incMSGAdded();
-                            counterScript.item.GetComponent<FoodObjects>().AddMSG();
-                        }
-                    } else {
-                        Prompt("Counter full");
+                    if (TakeAction("[F] Swap Items", KeyCode.F)) 
+                    {
+                        GameObject temp = counterScript.item;
+
+                        counterScript.item = PickupSystem.inst.GetItemInHands();
+                        Vector3 offset = new Vector3(0f, 0.3f, 0);
+                        PickupSystem.inst.PlaceItem(counterScript.transform, offset);
+                        counterScript.SetFull(true);
+
+                        PickupSystem.inst.PickUpItem(temp);
+
+                        SetInteraction(false);
                     }
                 }
             }
