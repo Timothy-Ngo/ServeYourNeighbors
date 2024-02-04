@@ -10,6 +10,8 @@ public class Pathfinding
     private const int MOVE_STRAIGHT_COST = 10; // 1 times 10
     private const int MOVE_DIAGONAL_COST = 14; // sqroot(2) = 1.4 -> times 10
 
+
+    public List<Vector3> obstaclePositions = new List<Vector3>();
     private Grid<PathNode> grid;
     private List<PathNode> openList; // used for queueing nodes to search
     private HashSet<PathNode> closedList; // used to store already searched nodes
@@ -227,4 +229,18 @@ public class Pathfinding
         return lowestFCostNode;
     }
     
+
+    // cycles through list of obstacle positions and updates those nodes on the grid to unwalkable
+    public void UpdateObstacles()
+    {
+        foreach(Vector3 position in obstaclePositions)
+        {
+            int x = 0;
+            int y = 0;
+            // sets position on pathfinding grid as unwalkable
+            grid.GetXY(position, out x, out y);
+            GetNode(x, y).SetIsWalkable(false);
+        }
+        
+    }
 }

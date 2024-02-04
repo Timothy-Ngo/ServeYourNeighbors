@@ -175,8 +175,9 @@ public class GameLoop : MonoBehaviour
         
         UpdateObserver();
         Player.inst.Activate();
-        
 
+        // Reapply obstacles
+        FoodieSystem.inst.pathfinding.UpdateObstacles();
     }
     public void UpdateObserver()
     {

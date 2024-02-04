@@ -15,6 +15,10 @@ TagManager:
   - FoodieSight
   - Counter
   - PlayerSpawn
+  - Tomato
+  - Ingredient
+  - Topping
+  - Dish
   layers:
   - Default
   - TransparentFX

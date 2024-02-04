@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5076665437944734727}
   m_Layer: 0
   m_Name: tomato_ingredient
-  m_TagString: Tomato
+  m_TagString: Ingredient
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

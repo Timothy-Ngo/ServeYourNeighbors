@@ -27,6 +27,9 @@ public class FoodieSpawner : MonoBehaviour
 
     [SerializeField] GameObject player;
 
+    [Header("-----FOODIE PREFABS-----")]
+    public GameObject[] foodiePrefabs; // drag and drop prefabs in the inspector
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +43,7 @@ public class FoodieSpawner : MonoBehaviour
         
     }
 
+    // spawn multiple(s) of one type of foodie
     private IEnumerator spawnFoodie(float interval, GameObject foodie, int spawnAmount)
     {
         for (int i = 0; i < spawnAmount; i++)
@@ -52,15 +56,33 @@ public class FoodieSpawner : MonoBehaviour
         }
     }
 
+    // spawn multiple(s) of random types of foodies
+    private IEnumerator SpawnRandomFoodie(float interval, int spawnAmount)
+    {
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            yield return new WaitForSeconds(interval);
+
+            int index = Random.Range(0, foodiePrefabs.Length); // select a random index
+            GameObject randomFoodiePrefab = foodiePrefabs[index];
+
+            GameObject newFoodie = Instantiate(randomFoodiePrefab, spawnPoint, Quaternion.identity);
+            newFoodie.transform.parent = foodieParent;
+            //Debug.Log("Foodie Instantiated");
+        }
+    }
+
+    // spawns wave of the tomato foodies
     public void SpawnWaveOfFoodies()
     {
         Debug.Log("Spawn wave of foodies");
         StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, spawnAmount));
     }
 
+    // spawns wave of randomly selected foodies
     public void SpawnWaveOf(int amountOfFoodies)
     {
-        StartCoroutine(spawnFoodie(foodieInterval, foodiePrefab, amountOfFoodies));
+        StartCoroutine(SpawnRandomFoodie(foodieInterval, amountOfFoodies));
     }
 
     private IEnumerator SpawnKidnappedFoodie()
