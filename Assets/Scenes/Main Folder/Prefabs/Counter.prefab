@@ -10,13 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 4270018444281292048}
   - component: {fileID: 1934669163863253479}
-  - component: {fileID: 3288301060471988200}
+  - component: {fileID: -6043460071781273049}
   - component: {fileID: 4605725352612182861}
   - component: {fileID: 8267078825980111279}
   - component: {fileID: 1392743163011514602}
   m_Layer: 0
   m_Name: Counter
-  m_TagString: Untagged
+  m_TagString: Counter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -64,7 +64,7 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!61 &3288301060471988200
+--- !u!61 &-6043460071781273049
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,7 +77,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.018836737, y: -0.0062789917}
+  m_Offset: {x: 0.007904768, y: -0.0062789917}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -88,7 +88,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2637172, y: 1.2637177}
+  m_Size: {x: 1.8520303, y: 1.6915817}
   m_EdgeRadius: 0
 --- !u!212 &4605725352612182861
 SpriteRenderer:

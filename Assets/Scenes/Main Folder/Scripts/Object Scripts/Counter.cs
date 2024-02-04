@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Counter : MonoBehaviour {
     public GameObject item;
-    public bool hasItem = false;
+    [SerializeField] private bool hasItem = false;
 
     // need to add functionality to set the sprite renderer of the item on the counter
     // need to add functionality of picking the item back up
@@ -17,5 +17,12 @@ public class Counter : MonoBehaviour {
 
     public bool Full() {
         return hasItem;
+    }
+
+    public void ResetCounter()
+    {
+        hasItem = false;
+        if (item)
+            Destroy(item);
     }
 }

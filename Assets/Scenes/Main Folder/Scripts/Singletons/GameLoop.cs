@@ -226,14 +226,14 @@ public class GameLoop : MonoBehaviour
 
         foreach (GameObject counter in Upgrades.inst.counterObjs)
         {
-            GameObject item = counter.GetComponent<Counter>().item;
-            if (item)
-            {
-                Destroy(item);
-            }
+            counter.GetComponent<Counter>().ResetCounter();
         }
 
         GameObject msgItem = Upgrades.inst.grinder;
-        Destroy(msgItem.GetComponent<Grinder>().msgObject);
+        if (msgItem)
+        {
+            Destroy(msgItem.GetComponent<Grinder>().msgObject);
+            msgItem.GetComponent<Grinder>().TakeMSG();
+        }
     }
 }

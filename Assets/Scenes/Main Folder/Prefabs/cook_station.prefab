@@ -137,6 +137,8 @@ MonoBehaviour:
   dishDefault: {fileID: 2896272356619432122}
   timer_script: {fileID: 2896272356102829511}
   qt_script: {fileID: 8247243701125353631}
+  tomatoIngredient: {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
+  tomatoSoupPrefab: {fileID: 359770938690141132, guid: 288577238c76f484387aae0e5988c035, type: 3}
 --- !u!61 &5271624078764930579
 BoxCollider2D:
   m_ObjectHideFlags: 0
