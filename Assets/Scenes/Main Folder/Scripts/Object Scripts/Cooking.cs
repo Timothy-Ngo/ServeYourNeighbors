@@ -28,6 +28,11 @@ public class Cooking : MonoBehaviour {
     [Header("-----DISHES-----")]
     public Sprite tomatoIngredient;
     public GameObject tomatoSoupPrefab;
+    public Sprite lettuceIngredient;
+    public GameObject saladPrefab;
+    public Sprite flourIngredient;
+    public GameObject sandwichPrefab;
+
     void Start() {
         sr = gameObject.GetComponent<SpriteRenderer>();
 
@@ -99,11 +104,19 @@ public class Cooking : MonoBehaviour {
     public GameObject SetDish(Sprite ingredient, Transform cookingStation)
     {
 
-        GameObject finishedDish = gameObject;
+        GameObject finishedDish = dish;
 
         if (ingredient == tomatoIngredient)
         {
             finishedDish = SpawnDish(tomatoSoupPrefab, cookingStation);
+        }
+        else if (ingredient == lettuceIngredient) 
+        {
+            finishedDish = SpawnDish(saladPrefab, cookingStation);
+        }
+        else if (ingredient == flourIngredient) 
+        {
+            finishedDish = SpawnDish(sandwichPrefab, cookingStation);
         }
         else
         {

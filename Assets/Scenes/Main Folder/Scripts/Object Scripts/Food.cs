@@ -22,6 +22,16 @@ public class Food : MonoBehaviour {
     public GameObject tomatoSoupPrefab;
     public GameObject tomatoIngredientPrefab;
 
+    public Sprite salad;
+    public Sprite lettuceIngredient;
+    public GameObject saladPrefab;
+    public GameObject lettuceIngredientPrefab;
+
+    public Sprite sandwich;
+    public Sprite flourIngredient;
+    public GameObject sandwichPrefab;
+    public GameObject flourIngredientPrefab;
+
     private void Start() {
         //sr = gameObject.GetComponent<SpriteRenderer>();
         //sr.enabled = false;
@@ -46,6 +56,14 @@ public class Food : MonoBehaviour {
         if (ingredient == tomatoIngredient)
         {
             sr.sprite = tomatoSoup;
+        }
+        else if (ingredient == lettuceIngredient) 
+        {
+            sr.sprite = salad;
+        }
+        else if (ingredient == flourIngredient)
+        {
+            sr.sprite = sandwich;
         }
         else
         {

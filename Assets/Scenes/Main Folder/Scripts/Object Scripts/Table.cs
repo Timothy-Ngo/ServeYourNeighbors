@@ -47,7 +47,7 @@ public class Table : MonoBehaviour
         Debug.Assert(dish.gameObject != null);
         dish.SetActive(false);
             
-        if (dish.GetComponent<FoodObjects>().hasMSG)
+        if (dish.GetComponent<Food>().hasMSG)
         {
             //Debug.Log("MSGPayment");
             CustomerPayments.inst.MSGPayment();

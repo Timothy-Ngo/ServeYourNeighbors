@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7993145551595923134}
   - component: {fileID: 7898175027219865139}
-  - component: {fileID: 5654471675473323338}
+  - component: {fileID: 2689737053280911835}
   m_Layer: 0
-  m_Name: tomato_soup
+  m_Name: salad
   m_TagString: Dish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -1908539385
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a713d7c3437658241889b4d1a0fcc0e2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: baa92f1140616da4cb6d287e8ccc7501, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5654471675473323338
+--- !u!114 &2689737053280911835
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,11 +100,11 @@ MonoBehaviour:
   hasMSG: 0
   tomatoSoup: {fileID: 21300000, guid: a713d7c3437658241889b4d1a0fcc0e2, type: 3}
   tomatoIngredient: {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
-  tomatoSoupPrefab: {fileID: 359770938690141132}
+  tomatoSoupPrefab: {fileID: 359770938690141132, guid: 288577238c76f484387aae0e5988c035, type: 3}
   tomatoIngredientPrefab: {fileID: 5099171853773298587, guid: 8c1cd9e69cac21d42bc0ac8575102889, type: 3}
   salad: {fileID: 21300000, guid: baa92f1140616da4cb6d287e8ccc7501, type: 3}
   lettuceIngredient: {fileID: 21300000, guid: 988180b735eb60443869d73a870bea11, type: 3}
-  saladPrefab: {fileID: 359770938690141132, guid: 494a2c4ebbd52a948845b736a5639e48, type: 3}
+  saladPrefab: {fileID: 359770938690141132}
   lettuceIngredientPrefab: {fileID: 3238154307498013831, guid: 8f9e84722185a6a46a2fa4f894ea6f12, type: 3}
   sandwich: {fileID: 21300000, guid: bf3261e6b15e0f5469ea4ffba623929d, type: 3}
   flourIngredient: {fileID: 21300000, guid: 2eccff1a641d5334784760ae2dd9759c, type: 3}

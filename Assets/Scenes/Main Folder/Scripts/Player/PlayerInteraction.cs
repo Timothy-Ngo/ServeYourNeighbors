@@ -66,7 +66,7 @@ public class PlayerInteraction : MonoBehaviour {
                     {
                         PickupSystem.inst.DestroyItem();
                         playerStats.incMSGAdded();
-                        cooktopScript.dish.GetComponent<FoodObjects>().AddMSG();
+                        cooktopScript.dish.GetComponent<Food>().AddMSG();
                     }
                     
                     // add value of MSG to value of dish
