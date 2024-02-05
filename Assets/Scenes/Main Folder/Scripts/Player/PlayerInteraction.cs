@@ -238,7 +238,21 @@ public class PlayerInteraction : MonoBehaviour {
                 }
                 else 
                 {
-                    if (TakeAction("[F] Swap Items", KeyCode.F)) 
+                    // check if item on counter is dish and item in hands is MSG - if so, let them add MSG. if not, let them swap items
+
+                    // see class type of item on counter
+                    // https://www.reddit.com/r/Unity3D/comments/16q46ei/is_there_a_way_to_check_if_an_object_is_an/
+                    // if item on counter is a dish and player is holding MSG
+                    // Debug.Log("Item type is " + counterScript.item.GetType());
+                    Food testItem = counterScript.item.GetComponent<Food>();
+                    if (testItem != null && PickupSystem.inst.isHoldingTopping()) {
+                        if (TakeAction("[F] Add MSG", KeyCode.F)) {
+                            PickupSystem.inst.DestroyItem();
+                            playerStats.incMSGAdded();
+                            counterScript.item.GetComponent<Food>().AddMSG();
+                        }
+                    }
+                    else if (TakeAction("[F] Swap Items", KeyCode.F)) 
                     {
                         GameObject temp = counterScript.item;
 
