@@ -13,6 +13,9 @@ public class FoodieOrderState : FoodieState
     
     public bool orderGiven = false;
 
+    bool eating = false;
+    bool leaving = false;
+
     public FoodieOrderState(Foodie foodie, FoodieStateMachine foodieStateMachine) : base(foodie, foodieStateMachine)
     {
         orderTime = foodie.orderTime;
@@ -45,7 +48,18 @@ public class FoodieOrderState : FoodieState
             foodie.orderBubble.SetActive(false);
             foodie.timeAtOrderTaken = foodie.timerScript.timeLeft;
             foodie.timerScript.timeLeft = 0;
-            foodie.stateMachine.ChangeState(foodie.eatState);
+
+            if (eating)
+            {
+                // switch to eating state
+                foodie.stateMachine.ChangeState(foodie.eatState);
+            }
+            else if (leaving)
+            {
+                // switch to leaving state -- and put table back into available tables
+                FoodieSystem.inst.availableSeats.Enqueue(tablePosition);
+                foodie.stateMachine.ChangeState(foodie.leaveState);
+            }
         }
 
         // if their order isn't taken in time then they leave
@@ -58,7 +72,8 @@ public class FoodieOrderState : FoodieState
             foodie.stateMachine.ChangeState(foodie.leaveState);
         }
 
-        if (!AtTable() && !atTable) // puts foodie at a table
+        // puts foodie at a table
+        if (!AtTable() && !atTable) 
         {
             //Debug.Log("at table");
             atTable = true;
@@ -95,11 +110,23 @@ public class FoodieOrderState : FoodieState
 
     }
 
+    // called in PlayerInteraction.cs when player gives foodie the correct order
     public void ReceivedOrder()
     {
         if (atTable)
         {
             orderGiven = true;
+            eating = true;
+        }
+    }
+
+    // called in PlayerInteraction.cs when player gives foodie the wrong order
+    public void ReceivedWrongOrder()
+    {
+        if (atTable)
+        {
+            orderGiven = true;
+            leaving = true;
         }
     }
 

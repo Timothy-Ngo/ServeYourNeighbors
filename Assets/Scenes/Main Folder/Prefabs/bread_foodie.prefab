@@ -573,7 +573,7 @@ MonoBehaviour:
   sightSR: {fileID: 7077927914245879597}
   orderTime: 28
   timeAtOrderTaken: 0
-  order: {fileID: 21300000, guid: a46e5c93d96a3e447b8bb54a2012d0ad, type: 3}
+  order: {fileID: 21300000, guid: bf3261e6b15e0f5469ea4ffba623929d, type: 3}
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
 --- !u!1 &2958076496324784907
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 28e32795c600da44cbe55b5e43db18da, type: 3}
+  m_Sprite: {fileID: 21300000, guid: edc626316ba03e545b92d2209641d91c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

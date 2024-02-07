@@ -101,15 +101,30 @@ public class PlayerInteraction : MonoBehaviour {
                     // change foodie to eating state
                     //Debug.Log($"current table object: {tableScript.gameObject}");
 
-                    // set dish
-                    tableScript.dish = PickupSystem.inst.GetItemInHands();
+                    GameObject dishInHands = PickupSystem.inst.GetItemInHands();
+                    Sprite dishSprite = dishInHands.GetComponent<SpriteRenderer>().sprite;
+                    Sprite orderSprite = tableScript.foodie.order;
 
-                    // place dish down on table
-                    Vector3 offset = new Vector3(0.75f, 0.3f, 0);
-                    PickupSystem.inst.PlaceItem(tableScript.transform, offset);
+                    if (dishSprite == orderSprite)
+                    {
+                        // set dish
+                        tableScript.dish = dishInHands;
 
-                    tableScript.foodie.orderState.ReceivedOrder();
-                    playerStats.incFoodiesServed();
+                        // place dish down on table
+                        Vector3 offset = new Vector3(0.75f, 0.3f, 0);
+                        PickupSystem.inst.PlaceItem(tableScript.transform, offset);
+
+                        tableScript.foodie.orderState.ReceivedOrder();
+                        playerStats.incFoodiesServed();
+                    }
+                    else
+                    {
+                        Debug.Log("WRONG DISH GIVEN");
+                        PickupSystem.inst.DestroyItem();
+                        tableScript.foodie.orderState.ReceivedWrongOrder();
+                    }
+
+                    
 
                     // when foodie state is in eating state -- table is set
                     //      - table gets dish from what player is holding
