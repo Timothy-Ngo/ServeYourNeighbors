@@ -14,6 +14,9 @@ public class PickupSystem : MonoBehaviour
     [SerializeField] GameObject itemInHands;
     private bool holdingItem = false;
 
+    [Header("-----FOODIE-----")]
+    [SerializeField] Transform foodieParent;
+
     [Header("-----FLAGS-----")] // flags to ensure only ingredients get cooked and only foodies get grinded
     private bool holdingIngredient = false;
     private bool holdingTopping = false;
@@ -67,6 +70,7 @@ public class PickupSystem : MonoBehaviour
     {
         itemInHands.transform.parent = parent;
         itemInHands.transform.position = parent.position + offset;
+        itemInHands = null;
 
         ResetFlags();
     }
@@ -75,8 +79,10 @@ public class PickupSystem : MonoBehaviour
     {
 
         Foodie foodieScript = itemInHands.GetComponent<Foodie>();
+        foodieScript.gameObject.transform.parent = foodieParent;
         foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
-
+        itemInHands = null;
+        
         ResetFlags();
     }
 
@@ -85,12 +91,15 @@ public class PickupSystem : MonoBehaviour
     {
         if (holdingFoodie)
         {
+            // calling DestroyFoodie() will make sure the number of foodies in the UI is decremented
             itemInHands.GetComponent<Foodie>().DestroyFoodie();
         }
         else
         {
             Destroy(itemInHands);
         }
+
+        itemInHands = null;
         ResetFlags();
     }
 
