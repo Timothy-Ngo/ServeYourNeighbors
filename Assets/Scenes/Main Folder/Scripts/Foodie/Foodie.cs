@@ -87,6 +87,7 @@ public class Foodie : MonoBehaviour
 
     public void DestroyFoodie()
     {
+        GameLoop.inst.DecrementFoodieCountText();
         Destroy(gameObject);
     }
     public void HideUI()

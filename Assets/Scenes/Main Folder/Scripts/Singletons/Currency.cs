@@ -57,7 +57,7 @@ public class Currency : MonoBehaviour
 
     public void UpdateTextUI()
     {
-        currentGoldText.text = "Gold:\n" + gold;
+        currentGoldText.text = gold.ToString();
         NotifyObservers();
     }
 

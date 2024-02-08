@@ -83,7 +83,14 @@ public class PickupSystem : MonoBehaviour
     // destroys item
     public void DestroyItem()
     {
-        Destroy(itemInHands);
+        if (holdingFoodie)
+        {
+            itemInHands.GetComponent<Foodie>().DestroyFoodie();
+        }
+        else
+        {
+            Destroy(itemInHands);
+        }
         ResetFlags();
     }
 
