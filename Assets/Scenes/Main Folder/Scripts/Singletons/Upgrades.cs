@@ -76,6 +76,11 @@ public class Upgrades : MonoBehaviour
     public int countersUpgradeCost = 50;
     public TextMeshProUGUI countersDescription;
     public bool counterPlacementMode = false;
+
+    [Header("-----MOVE ITEMS UPGRADE-----")]
+    public int moveItemUpgradeCost = 50;
+
+    public bool moveItemPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
     [SerializeField] private PlayerMovement playerMovement;
@@ -284,6 +289,20 @@ public class Upgrades : MonoBehaviour
             Debug.Log("Insufficient funds for counters upgrade");
         }
     }
+    public void MoveItemPlacementMode()
+    {
+        if (Currency.inst.AbleToWithdraw(moveItemUpgradeCost))
+        {
+            Currency.inst.Withdraw(moveItemUpgradeCost);
+            moveItemPlacementMode = true;
+            placementSystem.isEnabled = true;
+        }
+        else
+        {
+            Debug.Log("Insufficient funds for move item upgrade");
+        }
+    }
+    
     public void BecomeGMO() // Player Speed boost
     {
         if (isGMO)

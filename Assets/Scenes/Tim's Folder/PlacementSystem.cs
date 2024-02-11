@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Net;
 using ScriptableObjects;
 using UnityEngine.UIElements;
 
@@ -85,6 +86,38 @@ public class PlacementSystem : MonoBehaviour
 
         if ( isEnabled )
         {
+            if (Upgrades.inst.moveItemPlacementMode)
+            {
+                if (Input.GetMouseButton(1)) // Chooses an item to start moving
+                {
+                    // Utilize point and click to recognize what placement mode to use
+                    Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Debug.Log($"worldPosition: {worldPosition}");
+                    Collider2D collider = Physics2D.OverlapPoint(worldPosition);
+                    Debug.Log($"Collider2D: {collider.gameObject.name}");
+                    //  Use tags to recognize which one to use
+                    if (collider.gameObject.CompareTag("Table"))
+                    {
+                        Upgrades.inst.tablePlacementMode = true; 
+                        Destroy(collider.transform.parent.gameObject);
+                    }
+                    else if (collider.gameObject.CompareTag("Counter"))
+                    {
+                        Upgrades.inst.counterPlacementMode = true;
+                        Destroy(collider.transform.gameObject);
+                    }
+                    else if (collider.gameObject.CompareTag("Cooktop"))
+                    {
+                        Upgrades.inst.cookStationPlacementMode = true;
+                        Destroy(collider.transform.gameObject);
+                    }
+                    Upgrades.inst.placementSystem.isEnabled = true;
+                    // Need to include Grinder, boxes, and distraction
+                    Upgrades.inst.moveItemPlacementMode = false;
+                }
+
+                return;
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 isDragging = true;
@@ -144,6 +177,8 @@ public class PlacementSystem : MonoBehaviour
                     Upgrades.inst.animatronicPlacementMode = false;
                     selectedItem.GetComponent<Obstacle>().PlaceObstacle();
                 }
+
+                
             }
         }
         
