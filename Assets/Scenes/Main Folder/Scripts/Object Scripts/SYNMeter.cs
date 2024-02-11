@@ -44,10 +44,11 @@ public class SYNMeter : MonoBehaviour {
     public void AdjustSYN(float val)
     {
 
-        if(bar.fillAmount + val > 1)
+        if(bar.fillAmount + val >= 1)
         {
             bar.fillAmount = 1;
             full = true;
+            GameLoop.inst.GameOver();
         } 
         else if (bar.fillAmount + val < 0)
         {
