@@ -16,5 +16,9 @@ MonoBehaviour:
   itemsThrown: 0
   foodiesServed: 0
   msgAdded: 0
+  successfulServings: 0
+  failedServings: 0
   foodiesKidnapped: 0
+  foodiesGround: 0
   timesDistracted: 0
+  kidnappingsCaught: 0

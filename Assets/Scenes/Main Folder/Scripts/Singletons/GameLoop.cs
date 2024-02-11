@@ -46,6 +46,7 @@ public class GameLoop : MonoBehaviour
 
     [Header("-----YELP REVIEWS-----")]
     [SerializeField] private GameObject reviewScreenObj;
+    [SerializeField] private Reviews reviewsScript;
 
     [Header("-----END GAME-----")] 
     [SerializeField] private GameObject playerUI;
@@ -227,6 +228,7 @@ public class GameLoop : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         reviewScreenObj.SetActive(true);
+        reviewsScript.Launch();
         Player.inst.Deactivate();
     }
 
