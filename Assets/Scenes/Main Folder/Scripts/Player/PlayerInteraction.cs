@@ -34,6 +34,7 @@ public class PlayerInteraction : MonoBehaviour {
     Grinder grinderScript;
     Counter counterScript;
     public PlayerStats playerStats;
+    [SerializeField] SYNMeter synMeter;
 
     private void Start() {
         interactionMessage = GameObject.Find("InteractionPrompt");
@@ -307,6 +308,7 @@ public class PlayerInteraction : MonoBehaviour {
                 {
                     playerStats.incKidnappingsCaught();
                     foodieReleased = true;
+                    synMeter.AdjustSYN(synMeter.kidnappingSYNValue);
                     //Debug.Log("Caught kidnapping");
                     PickupSystem.inst.ReleaseFoodie();
                 }

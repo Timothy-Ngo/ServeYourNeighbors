@@ -48,6 +48,9 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private GameObject reviewScreenObj;
     [SerializeField] private Reviews reviewsScript;
 
+    [Header("-----SYN METER-----")]
+    [SerializeField] SYNMeter synMeter;
+
     [Header("-----END GAME-----")] 
     [SerializeField] private GameObject playerUI;
     [SerializeField] private GameObject endGameScreen;
@@ -188,6 +191,9 @@ public class GameLoop : MonoBehaviour
         // reset display and number of foodies for the day
         numFoodiesCount = currentWaveCount * currentNumFoodiesPerWave;
         foodieCountText.text = numFoodiesCount.ToString();
+
+        // decay SYN Meter
+        synMeter.DecaySYN();
 
         UpdateObserver();
         Player.inst.Activate();
