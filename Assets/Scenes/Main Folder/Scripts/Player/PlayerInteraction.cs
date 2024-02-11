@@ -108,6 +108,8 @@ public class PlayerInteraction : MonoBehaviour {
 
                     if (dishSprite == orderSprite)
                     {
+                        playerStats.incSuccessfulServings();
+
                         // set dish
                         tableScript.dish = dishInHands;
 
@@ -120,6 +122,7 @@ public class PlayerInteraction : MonoBehaviour {
                     }
                     else
                     {
+                        playerStats.incFailedServings();
                         Debug.Log("WRONG DISH GIVEN");
                         PickupSystem.inst.DestroyItem();
                         tableScript.foodie.orderState.ReceivedWrongOrder();
@@ -215,6 +218,7 @@ public class PlayerInteraction : MonoBehaviour {
             {
                 if (TakeAction("[F] Grind", KeyCode.F))
                 {
+                    playerStats.incFoodiesGround();
                     grinderScript.StartGrinding();
                     PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
@@ -302,6 +306,7 @@ public class PlayerInteraction : MonoBehaviour {
                 // flag makes sure code inside is only called once per collision
                 if (!foodieReleased)
                 {
+                    playerStats.incKidnappingsCaught();
                     foodieReleased = true;
                     synMeter.AdjustSYN(synMeter.kidnappingSYNValue);
                     //Debug.Log("Caught kidnapping");

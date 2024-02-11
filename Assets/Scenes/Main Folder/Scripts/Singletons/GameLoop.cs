@@ -44,6 +44,10 @@ public class GameLoop : MonoBehaviour
     [SerializeField] private Color opCostsAchievedColor;
     [SerializeField] private Color opCostsNotAchievedColor;
 
+    [Header("-----YELP REVIEWS-----")]
+    [SerializeField] private GameObject reviewScreenObj;
+    [SerializeField] private Reviews reviewsScript;
+
     [Header("-----SYN METER-----")]
     [SerializeField] SYNMeter synMeter;
 
@@ -101,8 +105,8 @@ public class GameLoop : MonoBehaviour
                 if (Currency.inst.AbleToWithdraw(dailyOperationCost))
                 {
                     PayOperationsCost();
-                    finishedWaves = true;  
-                    StartCoroutine(DelayedUpgradeMenu(endDayDelay));
+                    finishedWaves = true;
+                    StartCoroutine(DelayedReviewMenu(endDayDelay));
                 }
                 else
                 {
@@ -219,10 +223,18 @@ public class GameLoop : MonoBehaviour
         //Upgrades.inst.EnableUpgradeButtons();
     }
 
-    IEnumerator DelayedUpgradeMenu(float delay)
+    public void UpgradeMenu()
+    {
+        reviewScreenObj.SetActive(false);
+        upgradeScreenObj.SetActive(true);
+        Player.inst.Deactivate();
+    }
+
+    IEnumerator DelayedReviewMenu(float delay) 
     {
         yield return new WaitForSeconds(delay);
-        upgradeScreenObj.SetActive(true);
+        reviewScreenObj.SetActive(true);
+        reviewsScript.Launch();
         Player.inst.Deactivate();
     }
 
