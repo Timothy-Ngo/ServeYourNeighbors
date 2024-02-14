@@ -27,9 +27,9 @@ public class Food : MonoBehaviour {
     public GameObject saladPrefab;
     public GameObject lettuceIngredientPrefab;
 
-    public Sprite sandwich;
+    public Sprite garlicBread;
     public Sprite flourIngredient;
-    public GameObject sandwichPrefab;
+    public GameObject garlicBreadPrefab;
     public GameObject flourIngredientPrefab;
 
     private void Start() {
@@ -63,7 +63,7 @@ public class Food : MonoBehaviour {
         }
         else if (ingredient == flourIngredient)
         {
-            sr.sprite = sandwich;
+            sr.sprite = garlicBread;
         }
         else
         {

@@ -142,7 +142,7 @@ MonoBehaviour:
   lettuceIngredient: {fileID: 21300000, guid: 988180b735eb60443869d73a870bea11, type: 3}
   saladPrefab: {fileID: 359770938690141132, guid: 494a2c4ebbd52a948845b736a5639e48, type: 3}
   flourIngredient: {fileID: 21300000, guid: 2eccff1a641d5334784760ae2dd9759c, type: 3}
-  sandwichPrefab: {fileID: 359770938690141132, guid: 020555f16c76ab14698dbb25b0ae22dc, type: 3}
+  garlicBreadPrefab: {fileID: 0}
 --- !u!61 &5271624078764930579
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -486,18 +486,18 @@ MonoBehaviour:
   dishName: 
   value: 0
   hasMSG: 0
-  tomatoSoup: {fileID: 21300000, guid: a46e5c93d96a3e447b8bb54a2012d0ad, type: 3}
+  tomatoSoup: {fileID: 21300000, guid: a713d7c3437658241889b4d1a0fcc0e2, type: 3}
   tomatoIngredient: {fileID: 21300000, guid: f288f2561bd6f7a4aba6fced2fa82963, type: 3}
   tomatoSoupPrefab: {fileID: 359770938690141132, guid: 288577238c76f484387aae0e5988c035, type: 3}
   tomatoIngredientPrefab: {fileID: 5099171853773298587, guid: 8c1cd9e69cac21d42bc0ac8575102889, type: 3}
-  salad: {fileID: 0}
-  lettuceIngredient: {fileID: 0}
-  saladPrefab: {fileID: 0}
-  lettuceIngredientPrefab: {fileID: 0}
-  sandwich: {fileID: 0}
-  flourIngredient: {fileID: 0}
-  sandwichPrefab: {fileID: 0}
-  flourIngredientPrefab: {fileID: 0}
+  salad: {fileID: 21300000, guid: baa92f1140616da4cb6d287e8ccc7501, type: 3}
+  lettuceIngredient: {fileID: 21300000, guid: 988180b735eb60443869d73a870bea11, type: 3}
+  saladPrefab: {fileID: 359770938690141132, guid: 494a2c4ebbd52a948845b736a5639e48, type: 3}
+  lettuceIngredientPrefab: {fileID: 3238154307498013831, guid: 8f9e84722185a6a46a2fa4f894ea6f12, type: 3}
+  garlicBread: {fileID: 21300000, guid: c8d879850f079b544804bec312c36dec, type: 3}
+  flourIngredient: {fileID: 21300000, guid: 2eccff1a641d5334784760ae2dd9759c, type: 3}
+  garlicBreadPrefab: {fileID: 359770938690141132, guid: 5cb21b3761c409541ab92603411b98fc, type: 3}
+  flourIngredientPrefab: {fileID: 3238154307498013831, guid: 0588e491251e79246ac7c77b292da97e, type: 3}
 --- !u!1 &4196255377222837273
 GameObject:
   m_ObjectHideFlags: 0

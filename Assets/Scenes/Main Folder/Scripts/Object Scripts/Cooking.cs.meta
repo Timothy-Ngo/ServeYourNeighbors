@@ -3,7 +3,19 @@ guid: 89d2a5c77e2339c4b9c0f7e51bd92617
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - std: {fileID: 21300000, guid: d4b678ab87ee8c040b146483fce706d9, type: 3}
+  - fire: {fileID: 21300000, guid: 62f09bcd0ebf68f4c9c84837cb1dfe82, type: 3}
+  - dish: {instanceID: 0}
+  - dishDefault: {instanceID: 0}
+  - timer_script: {instanceID: 0}
+  - qt_script: {instanceID: 0}
+  - tomatoIngredient: {instanceID: 0}
+  - tomatoSoupPrefab: {instanceID: 0}
+  - lettuceIngredient: {instanceID: 0}
+  - saladPrefab: {instanceID: 0}
+  - flourIngredient: {instanceID: 0}
+  - garlicBreadPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -31,7 +31,7 @@ public class Cooking : MonoBehaviour {
     public Sprite lettuceIngredient;
     public GameObject saladPrefab;
     public Sprite flourIngredient;
-    public GameObject sandwichPrefab;
+    public GameObject garlicBreadPrefab;
 
     void Start() {
         sr = gameObject.GetComponent<SpriteRenderer>();
@@ -116,7 +116,7 @@ public class Cooking : MonoBehaviour {
         }
         else if (ingredient == flourIngredient) 
         {
-            finishedDish = SpawnDish(sandwichPrefab, cookingStation);
+            finishedDish = SpawnDish(garlicBreadPrefab, cookingStation);
         }
         else
         {
