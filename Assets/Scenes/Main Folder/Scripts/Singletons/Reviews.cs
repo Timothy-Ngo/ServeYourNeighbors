@@ -5,18 +5,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Reviews : MonoBehaviour
 {
     [Header("-----REVIEWS UI-----")]
     [SerializeField] public GameObject reviewScreen;
+    [SerializeField] public List<Sprite> foodieSprites;
     [SerializeField] public GameObject review1;
+    [SerializeField] public GameObject foodie1;
     [SerializeField] public GameObject review2;
+    [SerializeField] public GameObject foodie2;
     [SerializeField] public GameObject review3;
+    [SerializeField] public GameObject foodie3;
 
     [Header("-----STATS-----")]
     [SerializeField] public PlayerStats playerStats;
-    [SerializeField] public ArrayList events = new ArrayList(new string[] {});
+    public ArrayList events = new ArrayList(new string[] {});
     [SerializeField] private int dayDishesMade = 0;
     [SerializeField] private int dayItemsThrown = 0;
     [SerializeField] private int dayFoodiesServed = 0;
@@ -86,14 +91,20 @@ public class Reviews : MonoBehaviour
         int randInd = Random.Range(0, events.Count);
         review1.GetComponent<TMP_Text>().text = events[randInd].ToString();
         events.RemoveAt(randInd);
+        randInd = Random.Range(0, 3);
+        foodie1.GetComponent<Image>().sprite = foodieSprites[randInd];
 
         randInd = Random.Range(0, events.Count);
         review2.GetComponent<TMP_Text>().text = events[randInd].ToString();
         events.RemoveAt(randInd);
+        randInd = Random.Range(0, 3);
+        foodie2.GetComponent<Image>().sprite = foodieSprites[randInd];
 
         randInd = Random.Range(0, events.Count);
         review3.GetComponent<TMP_Text>().text = events[randInd].ToString();
         events.RemoveAt(randInd);
+        randInd = Random.Range(0, 3);
+        foodie3.GetComponent<Image>().sprite = foodieSprites[randInd];
     }
 
     public void UpdateDayStats() 
