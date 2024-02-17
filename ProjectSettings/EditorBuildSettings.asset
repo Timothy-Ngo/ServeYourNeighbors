@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Folder/Main Scene.unity
     guid: 282c2fe50493b9b4e845b423e9d6adae
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Main Folder/How To Play.unity
     guid: db0508561826941408b3cdffa8ead7b9
+  - enabled: 1
+    path: Assets/Scenes/Main Folder/Tutorial.unity
+    guid: 525de46140e9c4c46b034c9f151319f7
   m_configObjects: {}

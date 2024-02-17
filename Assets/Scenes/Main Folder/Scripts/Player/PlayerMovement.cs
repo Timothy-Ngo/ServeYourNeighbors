@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
     float speedLimiter = 0.7f;
     float inputHorizontal, inputVertical;
     bool facingRight = true;
+    bool freeze = false;
 
     // animation
     Animator animator;
@@ -30,22 +31,40 @@ public class PlayerMovement : MonoBehaviour {
         inputVertical = Input.GetAxisRaw("Vertical");
     }
 
+    public void Freeze()
+    {
+        freeze = true;
+    }
+
+    public void Unfreeze()
+    {
+        freeze = false;
+    }
+
     private void FixedUpdate() {
-        // Prevents diagonal movement from being faster than regular movement
-        if(inputHorizontal != 0 && inputVertical != 0) {
-            inputHorizontal *= speedLimiter;
-            inputVertical *= speedLimiter;
-        }
+        if (!freeze)
+        {
+            // Prevents diagonal movement from being faster than regular movement
+            if (inputHorizontal != 0 && inputVertical != 0)
+            {
+                inputHorizontal *= speedLimiter;
+                inputVertical *= speedLimiter;
+            }
 
-        // Flips sprite for right/left movement change
-        // if moving left and still facing right, flip
-        // if moving right and not facing right, flip
-        if (inputHorizontal < 0 && facingRight || (inputHorizontal > 0 && !facingRight)) {
-            Flip();
-        }
+            // Flips sprite for right/left movement change
+            // if moving left and still facing right, flip
+            // if moving right and not facing right, flip
+            if (inputHorizontal < 0 && facingRight || (inputHorizontal > 0 && !facingRight))
+            {
+                Flip();
+            }
 
-        // set velocity and MOVE!!!
-        rb.velocity = new Vector2(inputHorizontal * speed, inputVertical * speed);
+            // set velocity and MOVE!!!
+            rb.velocity = new Vector2(inputHorizontal * speed, inputVertical * speed);
+        } else
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
     }
 
     private void Flip() {

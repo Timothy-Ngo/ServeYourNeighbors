@@ -9,12 +9,14 @@ using TMPro;
 public class PlayerInteraction : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
+    bool canKidnap = true;
 
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
 
     bool foodieReleased = false;
     [Header("-----RANGES----")]
+    bool colliding = false;
     bool cooktopRange = false;
     bool tableRange = false;
     bool ingredientBoxRange = false;
@@ -184,7 +186,7 @@ public class PlayerInteraction : MonoBehaviour {
             // cannot kidnap if holding something or if the foodie is in line outside
             if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
             {
-                if (TakeAction("[E] Kidnap", KeyCode.E))
+                if (canKidnap && TakeAction("[E] Kidnap", KeyCode.E))
                 {
                     foodieReleased = false; // flag for when player is caught kidnapping
 
@@ -318,11 +320,22 @@ public class PlayerInteraction : MonoBehaviour {
 
     }
 
+    public void CanKidnap()
+    {
+        canKidnap = true;
+    }
+
+    public void CannotKidnap()
+    {
+        canKidnap = false;
+    }
+
     public void SetInteraction(bool status) {
         interactionMessage.SetActive(status);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
+        colliding = true;
         // to create new interactions, add a tag to the collision object in question
         if(collision.tag == "Cooktop") { //&& !cooktopScript.IsCooking()) {
             //Debug.Log("Within range of cooktop");
@@ -383,6 +396,7 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
+        colliding = false;
         if(collision.tag == "Cooktop") {
             cooktopRange = false;
             //Debug.Log("Out of range of cooktop");
@@ -436,7 +450,10 @@ public class PlayerInteraction : MonoBehaviour {
         interactionMessage.SetActive(false);
     }
     
-    
+    public bool IsColliding()
+    {
+        return colliding;
+    }
     
     // displays a given prompt and awaits user interaction
     private bool TakeAction(string prompt, KeyCode action_keycode) {

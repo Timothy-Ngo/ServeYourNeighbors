@@ -85,6 +85,11 @@ public class FoodieSpawner : MonoBehaviour
         StartCoroutine(SpawnRandomFoodie(foodieInterval, amountOfFoodies));
     }
 
+    public void SpawnA(GameObject foodiePrefab)
+    {
+        StartCoroutine(spawnFoodie(0, foodiePrefab, 1));
+    }
+
     private IEnumerator SpawnKidnappedFoodie()
     {
         Vector3 spawnPosition = player.transform.position;
