@@ -3125,6 +3125,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423854593}
   m_CullTransparentMesh: 1
+--- !u!1 &430728036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5057046934603470771, guid: 02853b705fae92349b5a13a9c346c9b5, type: 3}
+  m_PrefabInstance: {fileID: 1206478519}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &437064608
 GameObject:
   m_ObjectHideFlags: 0
@@ -7481,6 +7486,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4de68d699f203644da793eefbe6f42a3, type: 3}
+--- !u!1 &1166634348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8294193854943466976, guid: 71d7e87556178064c81c29328541e45a, type: 3}
+  m_PrefabInstance: {fileID: 1722099204}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1168141228
 GameObject:
   m_ObjectHideFlags: 0
@@ -12081,8 +12091,8 @@ MonoBehaviour:
   placementFloorColor: {r: 0, g: 0.4301021, b: 1, a: 1}
   floorsParent: {fileID: 218155904}
   instructions: {fileID: 1951452172}
-  topLeftCornerObj: {fileID: 0}
-  bottomRightCornerObj: {fileID: 0}
+  topLeftCornerObj: {fileID: 430728036}
+  bottomRightCornerObj: {fileID: 1166634348}
   topLeftCorner: {x: 0, y: 0}
   bottomRightCorner: {x: 0, y: 0}
 --- !u!4 &1711253121
@@ -13263,7 +13273,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -13287,7 +13297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920448727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9, y: 8, z: -10}
+  m_LocalPosition: {x: 9, y: 9, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

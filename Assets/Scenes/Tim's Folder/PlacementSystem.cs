@@ -79,22 +79,16 @@ public class PlacementSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            isEnabled = !isEnabled;
-        }
-
         if ( isEnabled )
         {
-            if (Upgrades.inst.moveItemPlacementMode)
+            
+            if (Upgrades.inst.moveItemPlacementMode  && false)
             {
                 if (Input.GetMouseButton(1)) // Chooses an item to start moving
                 {
                     // Utilize point and click to recognize what placement mode to use
                     Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Debug.Log($"worldPosition: {worldPosition}");
                     Collider2D collider = Physics2D.OverlapPoint(worldPosition);
-                    Debug.Log($"Collider2D: {collider.gameObject.name}");
                     //  Use tags to recognize which one to use
                     if (collider.gameObject.CompareTag("Table"))
                     {
@@ -120,6 +114,17 @@ public class PlacementSystem : MonoBehaviour
             }
             if (Input.GetMouseButtonDown(0))
             {
+                if (Upgrades.inst.moveItemPlacementMode)
+                {
+                    Debug.Log("moveItemPlacementMode");
+                    Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Collider2D collider = Physics2D.OverlapPoint(worldPosition);
+                    if (collider.gameObject.CompareTag("Table"))
+                    {
+                        Debug.Log("moving table");
+                        selectedItem = collider.gameObject.transform.parent.gameObject;
+                    }
+                }
                 isDragging = true;
             }
 
@@ -151,8 +156,12 @@ public class PlacementSystem : MonoBehaviour
                     ChangeFloorColorTo(originalFloorColor);
                     Upgrades.inst.upgradesScreen.SetActive(true);
                 }
-                //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //selectedItem.transform.position = newPosition;
+
+                if (Upgrades.inst.moveItemPlacementMode)
+                {
+                    Upgrades.inst.moveItemPlacementMode = false;
+                    return;
+                }
                 if (Upgrades.inst.tablePlacementMode)
                 {
                     FoodieSystem.inst.GetCurrentSeats();
@@ -187,14 +196,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void Enabled(bool enable)
     {
-        /*
-         * - remove player from scene
-         * - show faded colored background
-         * - show grid system, maybe I'll do this later
-         *  
-         * 
-         */
-        //uiGameObject.SetActive(enabled);
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
         if (Upgrades.inst.upgradesScreen.activeSelf)
         {
