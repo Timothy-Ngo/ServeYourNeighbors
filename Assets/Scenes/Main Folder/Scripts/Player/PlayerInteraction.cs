@@ -33,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour {
     Foodie foodieScript;
     Grinder grinderScript;
     Counter counterScript;
-    public PlayerStats playerStats;
+    public PlayerStat playerStats;
     [SerializeField] SYNMeter synMeter;
 
     private void Start() {

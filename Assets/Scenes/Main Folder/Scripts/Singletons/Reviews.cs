@@ -20,7 +20,7 @@ public class Reviews : MonoBehaviour
     [SerializeField] public GameObject foodie3;
 
     [Header("-----STATS-----")]
-    [SerializeField] public PlayerStats playerStats;
+    [SerializeField] public PlayerStat playerStats;
     public ArrayList events = new ArrayList(new string[] {});
     [SerializeField] private int dayDishesMade = 0;
     [SerializeField] private int dayItemsThrown = 0;

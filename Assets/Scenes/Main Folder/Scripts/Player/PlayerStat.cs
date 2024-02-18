@@ -1,12 +1,12 @@
 // Kirin Hardinger
 // November 2023
+// Updated to regular MonoBehaviour script in February 2024
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class PlayerStats : ScriptableObject 
+public class PlayerStat : MonoBehaviour
 {
     // cooking- and serving-related stats
     public int dishesMade = 0;
@@ -22,7 +22,7 @@ public class PlayerStats : ScriptableObject
     public int timesDistracted = 0;
     public int kidnappingsCaught = 0;
 
-    public void reset() 
+    public void reset()
     {
         dishesMade = 0;
         itemsThrown = 0;
@@ -36,161 +36,161 @@ public class PlayerStats : ScriptableObject
         kidnappingsCaught = 0;
     }
 
-    public int getDishesMade() 
+    public int getDishesMade()
     {
         return dishesMade;
     }
 
-    public void setDishesMade(int x) 
+    public void setDishesMade(int x)
     {
         dishesMade = x;
     }
 
-    public void incDishesMade() 
+    public void incDishesMade()
     {
         dishesMade++;
         //Debug.Log("dishesMade is now " + dishesMade.ToString());
     }
 
-    public int getItemsThrown() 
+    public int getItemsThrown()
     {
         return itemsThrown;
     }
 
-    public void setItemsThrown(int x) 
+    public void setItemsThrown(int x)
     {
         itemsThrown = x;
     }
 
-    public void incItemsThrown() 
+    public void incItemsThrown()
     {
         itemsThrown++;
         //Debug.Log("itemsThrown is now " + itemsThrown.ToString());
     }
 
-    public int getFoodiesServed() 
+    public int getFoodiesServed()
     {
         return foodiesServed;
     }
 
-    public void setFoodiesServed(int x) 
+    public void setFoodiesServed(int x)
     {
         foodiesServed = x;
     }
 
-    public void incFoodiesServed() 
+    public void incFoodiesServed()
     {
         foodiesServed++;
         //Debug.Log("foodiesServed is now " + foodiesServed.ToString());
     }
 
-    public int getMSGAdded() 
+    public int getMSGAdded()
     {
         return msgAdded;
     }
 
-    public void setMSGAdded(int x) 
+    public void setMSGAdded(int x)
     {
         msgAdded = x;
     }
 
-    public void incMSGAdded() 
+    public void incMSGAdded()
     {
         msgAdded++;
         //Debug.Log("msgAdded is now " + msgAdded.ToString());
     }
 
-    public int getSuccessfulServings() 
+    public int getSuccessfulServings()
     {
         return successfulServings;
     }
 
-    public void setSuccessfulServings(int x) 
+    public void setSuccessfulServings(int x)
     {
         successfulServings = x;
     }
 
-    public void incSuccessfulServings() 
+    public void incSuccessfulServings()
     {
         successfulServings++;
         //Debug.Log("msgAdded is now " + msgAdded.ToString());
     }
 
-    public int getFailedServings() 
+    public int getFailedServings()
     {
         return failedServings;
     }
 
-    public void setFailedServings(int x) 
+    public void setFailedServings(int x)
     {
         failedServings = x;
     }
 
-    public void incFailedServings() 
+    public void incFailedServings()
     {
         failedServings++;
         //Debug.Log("msgAdded is now " + msgAdded.ToString());
     }
 
-    public int getFoodiesKidnapped() 
+    public int getFoodiesKidnapped()
     {
         return foodiesKidnapped;
     }
 
-    public void setFoodiesKidnapped(int x) 
+    public void setFoodiesKidnapped(int x)
     {
         foodiesKidnapped = x;
     }
 
-    public void incFoodiesKidnapped() 
+    public void incFoodiesKidnapped()
     {
         foodiesKidnapped++;
         //Debug.Log("foodiesKidnapped is now " + foodiesKidnapped.ToString());
     }
 
-    public int getFoodiesGround() 
+    public int getFoodiesGround()
     {
         return successfulServings;
     }
 
-    public void setFoodiesGround(int x) 
+    public void setFoodiesGround(int x)
     {
         successfulServings = x;
     }
 
-    public void incFoodiesGround() 
+    public void incFoodiesGround()
     {
         successfulServings++;
         //Debug.Log("msgAdded is now " + msgAdded.ToString());
     }
 
-    public int getTimesDistracted() 
+    public int getTimesDistracted()
     {
         return timesDistracted;
     }
 
-    public void setTimesDistracted(int x) 
+    public void setTimesDistracted(int x)
     {
         timesDistracted = x;
     }
 
-    public void incTimesDistracted() 
+    public void incTimesDistracted()
     {
         timesDistracted++;
         //Debug.Log("timesDistracted is now " + timesDistracted.ToString());
     }
 
-    public int getKidnappingsCaught() 
+    public int getKidnappingsCaught()
     {
         return kidnappingsCaught;
     }
 
-    public void setKidnappingsCaught(int x) 
+    public void setKidnappingsCaught(int x)
     {
         kidnappingsCaught = x;
     }
 
-    public void incKidnappingsCaught() 
+    public void incKidnappingsCaught()
     {
         kidnappingsCaught++;
         //Debug.Log("msgAdded is now " + msgAdded.ToString());
