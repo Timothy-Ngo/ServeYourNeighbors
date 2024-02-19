@@ -464,7 +464,7 @@ MonoBehaviour:
   sightSR: {fileID: 2157189350706669681}
   orderTime: 28
   timeAtOrderTaken: 0
-  order: {fileID: 21300000, guid: baa92f1140616da4cb6d287e8ccc7501, type: 3}
+  order: {fileID: 21300000, guid: 40c1beb037cfb544ea82d4126a97cf12, type: 3}
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
 --- !u!1 &2958076496324784907
