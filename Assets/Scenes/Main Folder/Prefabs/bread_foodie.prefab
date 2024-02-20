@@ -573,7 +573,7 @@ MonoBehaviour:
   sightSR: {fileID: 7077927914245879597}
   orderTime: 28
   timeAtOrderTaken: 0
-  order: {fileID: 21300000, guid: fc0ab438f9a93e340bffe16b9dde9a29, type: 3}
+  order: {fileID: 21300000, guid: 360e9b45eaaffa64d8338954b6487992, type: 3}
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
 --- !u!1 &2958076496324784907
