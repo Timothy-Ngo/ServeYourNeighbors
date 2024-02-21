@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     // movement
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    public float speed = 7f;
+    private float speed = 7f;
     float speedLimiter = 0.7f;
     float inputHorizontal, inputVertical;
     bool facingRight = true;
@@ -65,5 +65,10 @@ public class PlayerMovement : MonoBehaviour {
         //plays new state and sets current state to new
         animator.Play(newState);
         currentState = newState;
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
     }
 }

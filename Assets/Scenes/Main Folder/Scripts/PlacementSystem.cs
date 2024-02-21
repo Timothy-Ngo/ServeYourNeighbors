@@ -173,6 +173,7 @@ public class PlacementSystem : MonoBehaviour
                 {
                     Upgrades.inst.cookStationPlacementMode = false;
                     selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                    Upgrades.inst.cookStations.Add(selectedItem);
                 }
 
                 if (Upgrades.inst.counterPlacementMode)
