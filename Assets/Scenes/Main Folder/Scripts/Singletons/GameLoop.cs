@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameLoop : MonoBehaviour
+public class GameLoop : MonoBehaviour, IDataPersistence
 {
     public static GameLoop inst;
 
@@ -58,6 +58,26 @@ public class GameLoop : MonoBehaviour
     [Header("-----PAUSE GAME-----")]
     [SerializeField] private GameObject pauseGameScreen;
     bool pauseScreenOpened = false;
+
+
+    public void LoadData(GameData data)
+    {
+        this.day = data.day;
+        this.dailyOperationCost = data.dailyOperationCost;
+
+        this.wavesPerDay = data.wavesPerDay;
+        this.numFoodiesPerWave = data.numFoodiesPerWave;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.day = this.day;
+        data.dailyOperationCost = this.dailyOperationCost;
+
+        data.wavesPerDay = this.wavesPerDay;
+        data.numFoodiesPerWave = this.numFoodiesPerWave;
+    }
+
 
     // Start is called before the first frame update
     void Start()
