@@ -1,3 +1,5 @@
+// Author: Timothy Ngo
+// Date 2/20/24
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +7,11 @@ using UnityEngine;
 public class FasterCookingSkill : Skill
 {
     [SerializeField] int requiredNumCookStations = 3;
-    [SerializeField] int newCookTime = 7; // Base cook time is 5 seconds.
+    [SerializeField] int newCookTime = 4; // Base cook time is 5 seconds.
+
     public override bool CheckRequirements()
     {
-        return Upgrades.inst.numCookStations >= requiredNumCookStations;
+        return Currency.inst.AbleToWithdraw(skillCost) && Upgrades.inst.numCookStations >= requiredNumCookStations;
     }
     public override void MissingRequirements()
     {
@@ -34,6 +37,7 @@ public class FasterCookingSkill : Skill
                 Cooking cooking = obj.GetComponent<Cooking>();
                 cooking.SetCookTime(newCookTime);
             }
+            CompleteSkill();
 
         }
         else
