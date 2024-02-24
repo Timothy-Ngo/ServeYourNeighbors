@@ -82,8 +82,10 @@ public class PlacementSystem : MonoBehaviour
         if ( isEnabled )
         {
             
-            if (Upgrades.inst.moveItemPlacementMode  && false)
+            if (Upgrades.inst.changeLayoutMode  && false)
             {
+                // Detect Item using overlap point
+                // make item the selected item
                 if (Input.GetMouseButton(1)) // Chooses an item to start moving
                 {
                     // Utilize point and click to recognize what placement mode to use
@@ -107,30 +109,41 @@ public class PlacementSystem : MonoBehaviour
                     }
                     Upgrades.inst.placementSystem.isEnabled = true;
                     // Need to include Grinder, boxes, and distraction
-                    Upgrades.inst.moveItemPlacementMode = false;
+                    Upgrades.inst.changeLayoutMode = false;
                 }
 
                 return;
             }
             if (Input.GetMouseButtonDown(0))
             {
-                if (Upgrades.inst.moveItemPlacementMode)
+                if (Upgrades.inst.changeLayoutMode)
                 {
-                    Debug.Log("moveItemPlacementMode");
+                    
                     Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Collider2D collider = Physics2D.OverlapPoint(worldPosition);
                     if (collider.gameObject.CompareTag("Table"))
                     {
-                        Debug.Log("moving table");
                         selectedItem = collider.gameObject.transform.parent.gameObject;
+                    }
+                    else if (collider.gameObject.CompareTag("Counter") ||
+                             collider.gameObject.CompareTag("Cooktop") ||
+                             collider.gameObject.CompareTag("Grinder") ||
+                             collider.gameObject.CompareTag("TrashCan") ||
+                             collider.gameObject.CompareTag("IngredientBox") ||
+                             collider.gameObject.CompareTag("Distraction")
+                             )
+                    {
+                        selectedItem = collider.gameObject.transform.gameObject;
                     }
                 }
                 isDragging = true;
+                selectedItem.GetComponent<Obstacle>().RemoveObstacle();
             }
 
             if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
+                selectedItem.GetComponent<Obstacle>().PlaceObstacle();
             }
             if (isDragging)
             {
@@ -157,9 +170,10 @@ public class PlacementSystem : MonoBehaviour
                     Upgrades.inst.upgradesScreen.SetActive(true);
                 }
 
-                if (Upgrades.inst.moveItemPlacementMode)
+                if (Upgrades.inst.changeLayoutMode)
                 {
-                    Upgrades.inst.moveItemPlacementMode = false;
+                    Upgrades.inst.changeLayoutMode = false;
+                    FoodieSystem.inst.GetCurrentSeats();
                     return;
                 }
                 if (Upgrades.inst.tablePlacementMode)
@@ -206,6 +220,11 @@ public class PlacementSystem : MonoBehaviour
         if (enable)
         {
             ChangeFloorColorTo(placementFloorColor);
+            // Add if statement for change layout mode
+            if (Upgrades.inst.changeLayoutMode)
+            {
+                return;
+            }
             if (Upgrades.inst.tablePlacementMode)
             {
                 selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);

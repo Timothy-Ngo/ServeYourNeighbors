@@ -812,7 +812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGoldText: {fileID: 1891681501}
-  startingGold: 10000
+  startingGold: 1000
   gold: 0
 --- !u!4 &117910912 stripped
 Transform:
@@ -4303,7 +4303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &446775080
 Transform:
   m_ObjectHideFlags: 0
@@ -4465,6 +4465,7 @@ GameObject:
   - component: {fileID: 459843309}
   - component: {fileID: 459843308}
   - component: {fileID: 459843307}
+  - component: {fileID: 459843311}
   m_Layer: 0
   m_Name: flour_box
   m_TagString: IngredientBox
@@ -4608,6 +4609,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &459843311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 459843305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14ea7c589bab6f4b9e0df8dfc10cd15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  startObject: 1
 --- !u!1001 &464492898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4943,7 +4958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &481755430
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6589,8 +6604,6 @@ MonoBehaviour:
   countersUpgradeCost: 50
   countersDescription: {fileID: 1428975211}
   counterPlacementMode: 0
-  moveItemUpgradeCost: 50
-  moveItemPlacementMode: 0
   playerMovement: {fileID: 552789217}
   isGMO: 0
   speedBoostUpgradeCost: 100
@@ -6599,6 +6612,8 @@ MonoBehaviour:
   hasHibachiChef: 0
   animatronicUpgradeCost: 100
   animatronicPlacementMode: 0
+  changeLayoutCost: 50
+  changeLayoutMode: 0
   currentLayout: 0
   grinder: {fileID: 355850344}
 --- !u!4 &649276998
@@ -9174,7 +9189,7 @@ PrefabInstance:
     - target: {fileID: 2896272355097170127, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: flourIngredient
       value: 
-      objectReference: {fileID: 21300000, guid: 2eccff1a641d5334784760ae2dd9759c, type: 3}
+      objectReference: {fileID: 21300000, guid: 6e5183afc0c37ac4bb5c1f4aeae02002, type: 3}
     - target: {fileID: 2896272355097170127, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: garlicBreadPrefab
       value: 
@@ -9182,7 +9197,7 @@ PrefabInstance:
     - target: {fileID: 2896272355097170127, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: lettuceIngredient
       value: 
-      objectReference: {fileID: 21300000, guid: 988180b735eb60443869d73a870bea11, type: 3}
+      objectReference: {fileID: 21300000, guid: cb7134b730a644a46aa196e18270273c, type: 3}
     - target: {fileID: 2896272355482201791, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
       propertyPath: m_Camera
       value: 
@@ -14549,12 +14564,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d4ecf55b725f2745bf13f285908ddd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cheapPayment: 10
+  synMeter: {fileID: 1020737155}
   standardPayment: 20
-  expensivePayment: 30
-  cheapProbability: 0.1
-  standardProbability: 0.75
-  expensiveProbability: 0.05
   msgBonusMultiplier: 2
   collectPaymentSfx: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
 --- !u!4 &1500584763
@@ -15336,7 +15347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MoveItemPlacementMode
+      value: ChangeLayoutMode
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

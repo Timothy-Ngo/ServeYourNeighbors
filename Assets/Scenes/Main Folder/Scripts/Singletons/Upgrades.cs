@@ -80,11 +80,6 @@ public class Upgrades : MonoBehaviour
     public int countersUpgradeCost = 50;
     public TextMeshProUGUI countersDescription;
     public bool counterPlacementMode = false;
-
-    [Header("-----MOVE ITEMS UPGRADE-----")]
-    public int moveItemUpgradeCost = 50;
-
-    public bool moveItemPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
     [SerializeField] private PlayerMovement playerMovement;
@@ -105,6 +100,8 @@ public class Upgrades : MonoBehaviour
         Restaurant = 2
     }
     [Header("-----MAIN LAYOUT UPGRADES-----")]
+    public int changeLayoutCost = 50;
+    public bool changeLayoutMode = false;
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
 
@@ -294,12 +291,12 @@ public class Upgrades : MonoBehaviour
             Debug.Log("Insufficient funds for counters upgrade");
         }
     }
-    public void MoveItemPlacementMode()
+    public void ChangeLayoutMode()
     {
-        if (Currency.inst.AbleToWithdraw(moveItemUpgradeCost))
+        if (Currency.inst.AbleToWithdraw(changeLayoutCost))
         {
-            Currency.inst.Withdraw(moveItemUpgradeCost);
-            moveItemPlacementMode = true;
+            Currency.inst.Withdraw(changeLayoutCost);
+            changeLayoutMode = true;
             placementSystem.isEnabled = true;
         }
         else
