@@ -471,4 +471,8 @@ public class PlayerInteraction : MonoBehaviour {
         messageText.SetText(prompt);
     }
     
+    public Foodie GetFoodieScript()
+    {
+        return foodieScript;
+    }
 }

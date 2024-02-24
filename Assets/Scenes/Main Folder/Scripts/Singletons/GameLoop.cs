@@ -15,6 +15,9 @@ public class GameLoop : MonoBehaviour
     {
         inst = this;
     }
+
+    [Header("-----TUTORIAL-----")]
+    [SerializeField] public bool isTutorial = false;
     
     
     [Header("-----DAY CYCLE-----")] [SerializeField]
@@ -62,29 +65,31 @@ public class GameLoop : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize UI
-        upgradeScreenObj.SetActive(false);
-        endGameScreen.SetActive(false);
-        pauseGameScreen.SetActive(false);
-        playerUI.SetActive(true);
-        
-        // Display current day's operation cost goal for the player to reach
-        operationCostText.text = dailyOperationCost.ToString();
-        operationCostText.color = opCostsNotAchievedColor;
-        // Display price of operations cost to text
-        payDescription.text = $"You have paid ({dailyOperationCost}g) towards your operations cost.";
-        
-        // Set up the day game loop
-        dayText.text = day.ToString();
-        currentWaveCount = wavesPerDay;
-        currentNumFoodiesPerWave = numFoodiesPerWave;
-        waveTimer = 0;
-        finishedWaves = false;
+        if(!isTutorial)
+        {
+            // Initialize UI
+            upgradeScreenObj.SetActive(false);
+            endGameScreen.SetActive(false);
+            pauseGameScreen.SetActive(false);
+            playerUI.SetActive(true);
 
-        // display number of foodies for the day
-        numFoodiesCount = currentWaveCount * currentNumFoodiesPerWave;
-        foodieCountText.text = numFoodiesCount.ToString();
+            // Display current day's operation cost goal for the player to reach
+            operationCostText.text = dailyOperationCost.ToString();
+            operationCostText.color = opCostsNotAchievedColor;
+            // Display price of operations cost to text
+            payDescription.text = $"You have paid ({dailyOperationCost}g) towards your operations cost.";
 
+            // Set up the day game loop
+            dayText.text = day.ToString();
+            currentWaveCount = wavesPerDay;
+            currentNumFoodiesPerWave = numFoodiesPerWave;
+            waveTimer = 0;
+            finishedWaves = false;
+
+            // display number of foodies for the day
+            numFoodiesCount = currentWaveCount * currentNumFoodiesPerWave;
+            foodieCountText.text = numFoodiesCount.ToString();
+        }
     }
 
     // DEBUGGING
@@ -96,53 +101,55 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if all waves are finished
-        if (currentWaveCount == 0)
+        if(!isTutorial)
         {
-            // if day cycle is done
-            if (!finishedWaves && foodiesParentObj.transform.childCount <= 1 && Player.inst.gameObject.GetComponentInChildren<Foodie>() == null)
+            // if all waves are finished
+            if (currentWaveCount == 0)
             {
-                if (Currency.inst.AbleToWithdraw(dailyOperationCost))
+                // if day cycle is done
+                if (!finishedWaves && foodiesParentObj.transform.childCount <= 1 && Player.inst.gameObject.GetComponentInChildren<Foodie>() == null)
                 {
-                    PayOperationsCost();
-                    finishedWaves = true;
-                    StartCoroutine(DelayedReviewMenu(endDayDelay));
+                    if (Currency.inst.AbleToWithdraw(dailyOperationCost))
+                    {
+                        PayOperationsCost();
+                        finishedWaves = true;
+                        StartCoroutine(DelayedReviewMenu(endDayDelay));
+                    }
+                    else
+                    {
+                        GameOver();
+                    }
                 }
+            }
+            else
+            {
+                Debug.Assert(currentWaveCount > 0, $"Current wave is : {currentWaveCount}!");
+
+                // if waveTimer is still ongoing, decrease timer
+                if (waveTimer > 0)
+                {
+                    waveTimer -= Time.deltaTime;
+                }
+                // else spawn new wave, reset waveTimer, and decrease currentWaveCount
                 else
                 {
-                    GameOver();
+                    foodieSpawner.SpawnWaveOf(currentNumFoodiesPerWave);
+                    waveTimer = waveInterval;
+                    currentWaveCount--;
                 }
             }
-        }
-        else
-        {
-            Debug.Assert(currentWaveCount > 0, $"Current wave is : {currentWaveCount}!");
-            
-            // if waveTimer is still ongoing, decrease timer
-            if (waveTimer > 0)
-            {
-                waveTimer -= Time.deltaTime;
-            }
-            // else spawn new wave, reset waveTimer, and decrease currentWaveCount
-            else 
-            {
-                foodieSpawner.SpawnWaveOf(currentNumFoodiesPerWave);
-                waveTimer = waveInterval;
-                currentWaveCount--;
-            }
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            // toggles pause screen open/close
-            pauseGameScreen.SetActive(!pauseScreenOpened);
-            pauseScreenOpened = !pauseScreenOpened;
-            if (pauseScreenOpened)
-                Time.timeScale = 0; // freezes gameplay
-            else
-                Time.timeScale = 1;
-        }
 
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                // toggles pause screen open/close
+                pauseGameScreen.SetActive(!pauseScreenOpened);
+                pauseScreenOpened = !pauseScreenOpened;
+                if (pauseScreenOpened)
+                    Time.timeScale = 0; // freezes gameplay
+                else
+                    Time.timeScale = 1;
+            }
+        }
     }
 
 
@@ -272,5 +279,15 @@ public class GameLoop : MonoBehaviour
     {
         numFoodiesCount--;
         foodieCountText.text = numFoodiesCount.ToString();
+    }
+
+    public void ActivateTutorial()
+    {
+        isTutorial = true;
+    }
+
+    public void DeactivateTutorial()
+    {
+        isTutorial = false;
     }
 }
