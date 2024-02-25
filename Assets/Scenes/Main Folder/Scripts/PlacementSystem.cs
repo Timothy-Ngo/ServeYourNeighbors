@@ -79,22 +79,18 @@ public class PlacementSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            isEnabled = !isEnabled;
-        }
-
         if ( isEnabled )
         {
-            if (Upgrades.inst.moveItemPlacementMode)
+            
+            if (Upgrades.inst.changeLayoutMode  && false)
             {
+                // Detect Item using overlap point
+                // make item the selected item
                 if (Input.GetMouseButton(1)) // Chooses an item to start moving
                 {
                     // Utilize point and click to recognize what placement mode to use
                     Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Debug.Log($"worldPosition: {worldPosition}");
                     Collider2D collider = Physics2D.OverlapPoint(worldPosition);
-                    Debug.Log($"Collider2D: {collider.gameObject.name}");
                     //  Use tags to recognize which one to use
                     if (collider.gameObject.CompareTag("Table"))
                     {
@@ -113,19 +109,41 @@ public class PlacementSystem : MonoBehaviour
                     }
                     Upgrades.inst.placementSystem.isEnabled = true;
                     // Need to include Grinder, boxes, and distraction
-                    Upgrades.inst.moveItemPlacementMode = false;
+                    Upgrades.inst.changeLayoutMode = false;
                 }
 
                 return;
             }
             if (Input.GetMouseButtonDown(0))
             {
+                if (Upgrades.inst.changeLayoutMode)
+                {
+                    
+                    Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    Collider2D collider = Physics2D.OverlapPoint(worldPosition);
+                    if (collider.gameObject.CompareTag("Table"))
+                    {
+                        selectedItem = collider.gameObject.transform.parent.gameObject;
+                    }
+                    else if (collider.gameObject.CompareTag("Counter") ||
+                             collider.gameObject.CompareTag("Cooktop") ||
+                             collider.gameObject.CompareTag("Grinder") ||
+                             collider.gameObject.CompareTag("TrashCan") ||
+                             collider.gameObject.CompareTag("IngredientBox") ||
+                             collider.gameObject.CompareTag("Distraction")
+                             )
+                    {
+                        selectedItem = collider.gameObject.transform.gameObject;
+                    }
+                }
                 isDragging = true;
+                selectedItem.GetComponent<Obstacle>().RemoveObstacle();
             }
 
             if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
+                selectedItem.GetComponent<Obstacle>().PlaceObstacle();
             }
             if (isDragging)
             {
@@ -151,8 +169,13 @@ public class PlacementSystem : MonoBehaviour
                     ChangeFloorColorTo(originalFloorColor);
                     Upgrades.inst.upgradesScreen.SetActive(true);
                 }
-                //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                //selectedItem.transform.position = newPosition;
+
+                if (Upgrades.inst.changeLayoutMode)
+                {
+                    Upgrades.inst.changeLayoutMode = false;
+                    FoodieSystem.inst.GetCurrentSeats();
+                    return;
+                }
                 if (Upgrades.inst.tablePlacementMode)
                 {
                     FoodieSystem.inst.GetCurrentSeats();
@@ -164,6 +187,7 @@ public class PlacementSystem : MonoBehaviour
                 {
                     Upgrades.inst.cookStationPlacementMode = false;
                     selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                    Upgrades.inst.cookStations.Add(selectedItem);
                 }
 
                 if (Upgrades.inst.counterPlacementMode)
@@ -187,14 +211,6 @@ public class PlacementSystem : MonoBehaviour
 
     private void Enabled(bool enable)
     {
-        /*
-         * - remove player from scene
-         * - show faded colored background
-         * - show grid system, maybe I'll do this later
-         *  
-         * 
-         */
-        //uiGameObject.SetActive(enabled);
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
         if (Upgrades.inst.upgradesScreen.activeSelf)
         {
@@ -204,6 +220,11 @@ public class PlacementSystem : MonoBehaviour
         if (enable)
         {
             ChangeFloorColorTo(placementFloorColor);
+            // Add if statement for change layout mode
+            if (Upgrades.inst.changeLayoutMode)
+            {
+                return;
+            }
             if (Upgrades.inst.tablePlacementMode)
             {
                 selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);

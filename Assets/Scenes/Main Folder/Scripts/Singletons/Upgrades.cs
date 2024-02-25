@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Android;
 using UnityEngine.UI;
 public class Upgrades : MonoBehaviour
 {
@@ -59,6 +60,7 @@ public class Upgrades : MonoBehaviour
     [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
     [SerializeField] private List<GameObject> tables;
+    public int numTables { get{return tables.Count;} }
     public int tablesUpgradeCost = 50;
     public TextMeshProUGUI tablesDescription;
     public bool tablePlacementMode = false;
@@ -70,17 +72,14 @@ public class Upgrades : MonoBehaviour
     public TextMeshProUGUI cookStationsDescription;
     public bool cookStationPlacementMode = false;
 
+    public int numCookStations {get{return cookStations.Count;}}
+
     [Header("-----COUNTERS UPGRADE-----")]
     public GameObject counterParent;
     public List<GameObject> counterObjs;
     public int countersUpgradeCost = 50;
     public TextMeshProUGUI countersDescription;
     public bool counterPlacementMode = false;
-
-    [Header("-----MOVE ITEMS UPGRADE-----")]
-    public int moveItemUpgradeCost = 50;
-
-    public bool moveItemPlacementMode = false;
     
     [Header("-----SPEED BOOST UPGRADE-----")] 
     [SerializeField] private PlayerMovement playerMovement;
@@ -101,6 +100,8 @@ public class Upgrades : MonoBehaviour
         Restaurant = 2
     }
     [Header("-----MAIN LAYOUT UPGRADES-----")]
+    public int changeLayoutCost = 50;
+    public bool changeLayoutMode = false;
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
 
@@ -150,6 +151,7 @@ public class Upgrades : MonoBehaviour
         return numOfActiveCookStations;
     }
 
+    
     public int GetNumOfActiveCounters()
     {
         int numOfActiveCounters = 0;
@@ -289,12 +291,12 @@ public class Upgrades : MonoBehaviour
             Debug.Log("Insufficient funds for counters upgrade");
         }
     }
-    public void MoveItemPlacementMode()
+    public void ChangeLayoutMode()
     {
-        if (Currency.inst.AbleToWithdraw(moveItemUpgradeCost))
+        if (Currency.inst.AbleToWithdraw(changeLayoutCost))
         {
-            Currency.inst.Withdraw(moveItemUpgradeCost);
-            moveItemPlacementMode = true;
+            Currency.inst.Withdraw(changeLayoutCost);
+            changeLayoutMode = true;
             placementSystem.isEnabled = true;
         }
         else
@@ -303,7 +305,7 @@ public class Upgrades : MonoBehaviour
         }
     }
     
-    public void BecomeGMO() // Player Speed boost
+    public void BecomeGMO() // Player Speed boost. This has been deprecated!
     {
         if (isGMO)
         {
@@ -314,7 +316,7 @@ public class Upgrades : MonoBehaviour
         if (Currency.inst.AbleToWithdraw(speedBoostUpgradeCost))
         {
             Currency.inst.Withdraw(speedBoostUpgradeCost);
-            playerMovement.speed += playerMovement.speed / 2; 
+            //playerMovement.speed += playerMovement.speed / 2; 
             isGMO = true;
             Debug.Log("dRUgS ArE goOd, iTs nOT LiKE itS gOinG to KiLl yA");
         }

@@ -27,6 +27,68 @@ public class Obstacle : MonoBehaviour
         
     }
 
+    public void RemoveObstacle()
+    {
+        position = transform.position;
+        FoodieSystem.inst.pathfinding.obstaclePositions.Add(position);
+        int x = 0;
+        int y = 0;
+        // sets position on pathfinding grid as walkable
+        FoodieSystem.inst.pathfinding.GetGrid().GetXY(transform.position, out x, out y);
+        FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(true);
+
+        if (gameObject.CompareTag("Table"))
+        {
+            //Debug.Log("Table object");
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x - 2, y).SetIsPlaceable(true);
+        }
+        else if (gameObject.CompareTag("Distraction"))
+        {
+            //Debug.Log("Distraction object");
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(true);
+                }
+            }
+        }
+        else if (gameObject.CompareTag("Cooktop"))
+        {
+            //Debug.Log("Cooktop object");
+            for (int i = -1; i < 1; i++)
+            {
+                for (int j = -1; j < 1; j++)
+                {
+                    FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(true);
+                }
+            }
+        }
+        else if (gameObject.CompareTag("Counter"))
+        {
+            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(true);
+        }
+        else if (gameObject.CompareTag("PlayerSpawn"))
+        {
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
+        }
+        else
+        {
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
+        }
+
+        // for debugging
+        if (FoodieSystem.inst.showDebug)
+            FoodieSystem.inst.pathfinding.GetGrid().GetDebugTextArray()[x, y].color = Color.red;
+    }
+
+
+
     public void PlaceObstacle()
     {
         //Debug.Log("PLACING OBSTACLE");
