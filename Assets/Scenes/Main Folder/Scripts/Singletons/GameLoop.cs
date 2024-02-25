@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-public class GameLoop : MonoBehaviour
+public class GameLoop : MonoBehaviour, IDataPersistence
 {
     public static GameLoop inst;
 
@@ -58,6 +58,24 @@ public class GameLoop : MonoBehaviour
     [Header("-----PAUSE GAME-----")]
     [SerializeField] private GameObject pauseGameScreen;
     bool pauseScreenOpened = false;
+
+    public void LoadData(GameData data)
+    {
+        day = data.day;
+        dailyOperationCost = data.dailyOperationCost;
+
+        wavesPerDay = data.wavesPerDay;
+        numFoodiesPerWave = data.numFoodiesPerWave;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.day = day;
+        data.dailyOperationCost = dailyOperationCost;
+
+        data.wavesPerDay = wavesPerDay;
+        data.numFoodiesPerWave = numFoodiesPerWave;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -200,6 +218,9 @@ public class GameLoop : MonoBehaviour
 
         // Reapply obstacles
         FoodieSystem.inst.pathfinding.UpdateObstacles();
+
+        // Save game data
+        SaveSystem.inst.SaveGame();
     }
     public void UpdateObserver()
     {

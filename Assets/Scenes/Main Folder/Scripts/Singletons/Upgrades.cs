@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.UI;
-public class Upgrades : MonoBehaviour
+public class Upgrades : MonoBehaviour, IDataPersistence
 {
     public static Upgrades inst;
 
@@ -47,6 +47,15 @@ public class Upgrades : MonoBehaviour
         }
         
     }
+
+    // used for loading upgrades from save data
+    [Header("-----PREFABS-----")]
+    public GameObject tablePrefab;
+    public GameObject cookStationPrefab;
+    public GameObject counterPrefab;
+    public GameObject animatronicPrefab;
+    
+
     [Header("-----UPGRADES UI-----")]
     public GameObject upgradesScreen;
 
@@ -86,12 +95,14 @@ public class Upgrades : MonoBehaviour
     public bool isGMO = false;
     public int speedBoostUpgradeCost = 100;
     public TextMeshProUGUI speedBoostDescription;
-    
+
     [Header("-----DISTRACTION UPGRADES-----")]
+    public Transform distractionParent;
     public bool hasAnimatronic = false;
     public bool hasHibachiChef = false;
     public int animatronicUpgradeCost = 100;
     public bool animatronicPlacementMode = false;
+    public Vector3 animatronicPosition;
 
     public enum LayoutLevel
     {
@@ -106,6 +117,77 @@ public class Upgrades : MonoBehaviour
 
 
     public GameObject grinder;
+
+    // using saved positions, object upgrades are instantiated and placed in the world
+    public void LoadData(GameData data)
+    {
+        // tables
+        for (int i = 1; i < data.tablePositions.Count; i++)
+        {
+            GameObject table = Instantiate(tablePrefab, data.tablePositions[i], Quaternion.identity, tablesParent.transform);
+            tables.Add(table);
+        }
+
+        // cook stations
+        for (int i = 1; i < data.cookStationPositions.Count; i++)
+        {
+            GameObject cookStation = Instantiate(cookStationPrefab, data.cookStationPositions[i], Quaternion.identity, cookStationsParent.transform);
+            cookStations.Add(cookStation);
+        }
+
+        // counters
+        for (int i = 1; i < data.counterPositions.Count; i++)
+        {
+            GameObject counter = Instantiate(counterPrefab, data.counterPositions[i], Quaternion.identity, cookStationsParent.transform);
+            counterObjs.Add(counter);
+        }
+
+        // distraction
+
+            // if there is a saved animatronic -- instantiate and place in world
+        hasAnimatronic = data.hasAnimatronic;
+        if (hasAnimatronic)
+        {
+            animatronicPosition = data.animatronicPosition;
+            GameObject animatronic = Instantiate(animatronicPrefab, animatronicPosition, Quaternion.identity, distractionParent);
+            DistractionSystem.inst.animatronicDistraction = animatronic.GetComponent<Distraction>();
+        }
+    }
+
+    // the positions of the objects are saved to the file
+    public void SaveData(GameData data)
+    {
+        // tables
+        data.tablePositions.Clear();
+        for (int i = 0; i < tables.Count; i++)
+        {
+            data.tablePositions.Add(tables[i].transform.position);
+        }
+
+        // cook stations
+        data.cookStationPositions.Clear();
+        for (int i = 0; i < cookStations.Count; i++)
+        {
+            data.cookStationPositions.Add(cookStations[i].transform.position);
+        }
+
+        // counters
+        data.counterPositions.Clear();
+        for (int i = 0; i < counterObjs.Count; i++)
+        {
+            data.counterPositions.Add(counterObjs[i].transform.position);
+        }
+
+        // distraction
+            // if there is an animatronic -- save the bool and its position
+        if (hasAnimatronic)
+        {
+            data.hasAnimatronic = hasAnimatronic;
+            data.animatronicPosition = animatronicPosition;
+        }
+    }
+    
+
     // Start is called before the first frame update
     void Start()
     {

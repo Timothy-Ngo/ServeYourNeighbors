@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : MonoBehaviour, IDataPersistence
 {
     // cooking- and serving-related stats
     public int dishesMade = 0;
@@ -21,6 +21,36 @@ public class PlayerStat : MonoBehaviour
     public int foodiesGround = 0;
     public int timesDistracted = 0;
     public int kidnappingsCaught = 0;
+
+    public void LoadData(GameData data)
+    {
+        dishesMade = data.dishesMade;
+        itemsThrown = data.itemsThrown;
+        foodiesServed = data.foodiesServed;
+        msgAdded = data.msgAdded;
+        successfulServings = data.successfulServings;
+        failedServings = data.failedServings;
+
+        foodiesKidnapped = data.foodiesKidnapped;
+        foodiesGround = data.foodiesGround;
+        timesDistracted = data.timesDistracted;
+        kidnappingsCaught += data.kidnappingsCaught;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.dishesMade = dishesMade;
+        data.itemsThrown = itemsThrown;
+        data.foodiesServed = foodiesServed;
+        data.msgAdded = msgAdded;
+        data.successfulServings = successfulServings;
+        data.failedServings = failedServings;
+
+        data.foodiesKidnapped = foodiesKidnapped;
+        data.foodiesGround = foodiesGround;
+        data.timesDistracted = timesDistracted;
+        data.kidnappingsCaught = kidnappingsCaught;
+    }
 
     public void reset()
     {
