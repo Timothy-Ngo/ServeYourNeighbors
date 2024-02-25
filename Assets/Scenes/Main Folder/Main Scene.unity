@@ -1469,7 +1469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &91747037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30306,6 +30306,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
+      propertyPath: synMeterScript
+      value: 
+      objectReference: {fileID: 584663805}
     - target: {fileID: 3209608964455893142, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
       propertyPath: m_Name
       value: ~Save System

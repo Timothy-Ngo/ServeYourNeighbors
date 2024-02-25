@@ -49,6 +49,9 @@ public class GameData
     public bool hasAnimatronic;
     public Vector3 animatronicPosition;
 
+    // ----- SYN Meter ----- //
+    public float fillAmount;
+
     // default constructor: sets variables to default values
     // is used when there is no data to load
     public GameData()
@@ -80,5 +83,8 @@ public class GameData
         counterPositions = new List<Vector3>();
         hasAnimatronic = false;
         animatronicPosition = new Vector3();
+
+        // SYN Meter
+        fillAmount = 0f;
     }
 }

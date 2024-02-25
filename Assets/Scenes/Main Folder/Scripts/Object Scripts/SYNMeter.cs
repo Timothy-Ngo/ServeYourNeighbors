@@ -10,15 +10,26 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class SYNMeter : MonoBehaviour {
+public class SYNMeter : MonoBehaviour, IDataPersistence
+{
     public bool full = false;
     [SerializeField] Image bar; // drag and drop image in inspector
     float decayValue = 0.05f;
     public float kidnappingSYNValue = .1f;
 
+    public void LoadData(GameData data)
+    {
+        bar.fillAmount = data.fillAmount;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.fillAmount = bar.fillAmount;
+    }
+
     void Start()
     {
-        bar.fillAmount = 0; // start with 0 SYN
+        //bar.fillAmount = 0; // start with 0 SYN
     }
 
     // for setting a specific, constant value
