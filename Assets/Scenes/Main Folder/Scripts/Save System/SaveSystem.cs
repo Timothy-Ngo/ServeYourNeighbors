@@ -4,15 +4,21 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.SceneManagement;
 
-// Adapted from https://youtu.be/aUi9aijvpgs?si=zdMlarwm4Kh3JwqL
+// Adapted from https://youtu.be/aUi9aijvpgs?si=zdMlarwm4Kh3JwqL and https://youtu.be/ijVA5Z-Mbh8?si=Lc4XusD21Mvc_tiT
 // - used my own method for creating a singleton
 // - named class SaveSystem instead of DataPersistenceManager
+// - added if statements to OnSceneLoaded() and OnSceneUnloaded() to check for scene names
+//      - this change prevents a NullReferenceError that comes up when the player tries to go to extra scenes (Tutorial, Credits) with no save data -- error would happen bc code tries to save data when unloading the Main Menu but there is no current save file to save to
+// - instead of checking a bool to initialize data if it was null, data will always be initialized if null if the scene is the Main Scene
+//      - this change prevents a NullReferenceError that comes up when the game tries to save the game data -- error would happen bc was not initializing the new game for some reason
+// - added bool newGameOnLoad for debugging/development purposes -- when set to true, save data is reset every time the game is loaded
+
 
 
 public class SaveSystem : MonoBehaviour
 {
-    [Header("Debugging")]
-    [SerializeField] private bool initializeDataIfNull = false;
+    [Header("Debugging/Developing")]
+    [SerializeField] private bool newGameOnLoad = false;
 
     [Header("File Storage Configuration")]
     [SerializeField] private string fileName;
@@ -38,8 +44,7 @@ public class SaveSystem : MonoBehaviour
         inst = this;
         DontDestroyOnLoad(this.gameObject);
 
-        // moved this code from Start() to Awake() so data is loaded before other scripts Start() functions are called
-            // there was an issue where the day text wasn't updating to the loaded day value because the GameLoop.cs Start() was called before this Start()
+
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
         
     }
@@ -63,16 +68,23 @@ public class SaveSystem : MonoBehaviour
     // will load game data when a scene is loaded
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene")
+        {
+            this.dataPersistenceObjects = FindAllDataPersistenceObjects();
 
-        // loads data when game is started up
-        LoadGame();
+            // loads data when game is started up
+            LoadGame();
+        }
     }
 
     // will save the game data when switching scenes
     public void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
+        if (SceneManager.GetActiveScene().name == "Main Scene")
+        {
+
+            SaveGame();
+        }
     }
 
 
@@ -86,8 +98,8 @@ public class SaveSystem : MonoBehaviour
         // load any saved data from a file using the data handler
         this.gameData = dataHandler.Load(); // if save data doesn't exist, then gameData will be null
 
-        // start a new game if the data is null and we're configured to initialize data for debugging purposes
-        if (this.gameData == null && initializeDataIfNull)
+        // start a new game if the data is null and player is on Main Scene OR if debug configuration newGameOnLoad is turned on
+        if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" || newGameOnLoad)
         {
             NewGame();
         } 
@@ -142,6 +154,7 @@ public class SaveSystem : MonoBehaviour
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
+    // used in SceneMgr to check if there is existing game data 
     public bool HasGameData()
     {
         return gameData != null;

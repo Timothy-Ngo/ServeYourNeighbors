@@ -220,6 +220,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
         // Reapply obstacles
         FoodieSystem.inst.pathfinding.UpdateObstacles();
+
+        SaveSystem.inst.SaveGame();
     }
     public void UpdateObserver()
     {

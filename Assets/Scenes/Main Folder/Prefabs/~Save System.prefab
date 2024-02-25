@@ -43,6 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f40c03a7585f34188703c796263317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initializeDataIfNull: 1
+  newGameOnLoad: 1
   fileName: data.syn
   useEncryption: 0
