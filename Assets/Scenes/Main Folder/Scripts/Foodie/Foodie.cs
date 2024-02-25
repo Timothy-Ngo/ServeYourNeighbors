@@ -35,7 +35,7 @@ public class Foodie : MonoBehaviour
     public int distractedTime = 2;
     public Timer distractionTimerScript;
 
-    private bool isTutorial = false;
+    public bool isTutorial = false;
 
     private void Awake()
     {
@@ -116,6 +116,16 @@ public class Foodie : MonoBehaviour
     {
         if (!FoodieSystem.inst.sightToggleEnabled)
             sightSR.enabled = false;
+    }
+
+    public void ActivateTutorial()
+    {
+        isTutorial = true;
+    }
+
+    public void DeactivateTutorial()
+    {
+        isTutorial = false;
     }
 
     // ---------------------------------------  OLD CODE  -------------------------------------------- //

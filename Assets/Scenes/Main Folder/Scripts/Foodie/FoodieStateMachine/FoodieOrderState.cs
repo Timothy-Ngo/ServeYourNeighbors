@@ -95,15 +95,14 @@ public class FoodieOrderState : FoodieState
         // if foodie is at the table and hasn't ordered yet
         if (AtTable() && !isOrdering)
         {
-
-            isOrdering = true;
-            //Debug.Log("in FoodieOrderState");
-
-            // set a timer for their order and they order
-            foodie.orderBubble.SetActive(true);
-            foodie.timerScript.SetMaxTime(orderTime);
-            
-            
+            if(!foodie.isTutorial)
+            {
+                isOrdering = true;
+                //Debug.Log("in FoodieOrderState");
+                // set a timer for their order and they order
+                foodie.orderBubble.SetActive(true);
+                foodie.timerScript.SetMaxTime(orderTime);
+            }
         }
 
         
