@@ -34,7 +34,7 @@ public class PlayerStat : MonoBehaviour, IDataPersistence
         foodiesKidnapped = data.foodiesKidnapped;
         foodiesGround = data.foodiesGround;
         timesDistracted = data.timesDistracted;
-        kidnappingsCaught += data.kidnappingsCaught;
+        kidnappingsCaught = data.kidnappingsCaught;
     }
 
     public void SaveData(GameData data)

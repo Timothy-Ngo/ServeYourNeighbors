@@ -7460,6 +7460,7 @@ MonoBehaviour:
   full: 0
   bar: {fileID: 608733554}
   kidnappingSYNValue: 0.1
+  fillAmount: 0
 --- !u!1001 &590727626
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7914,7 +7915,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

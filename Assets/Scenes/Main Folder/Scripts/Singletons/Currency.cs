@@ -23,7 +23,8 @@ public class Currency : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        startingGold = data.gold;
+        gold = data.gold;
+        UpdateTextUI();
     }
 
     public void SaveData(GameData data)
@@ -34,7 +35,8 @@ public class Currency : MonoBehaviour, IDataPersistence
 
     void Start()
     {
-        Deposit(startingGold);
+        //Deposit(startingGold);
+        UpdateTextUI();
     }
 
 

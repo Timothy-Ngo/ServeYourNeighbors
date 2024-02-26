@@ -107,9 +107,7 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("New game initialized");
         this.gameData = new GameData();
 
-        // Save game data after setting game data to default values
-            // this fixes an issue where the New Game button wasn't working bc the default values weren't being saved before the file's original contents were loaded
-        SaveSystem.inst.SaveGame();
+        
     }
 
     public void LoadGame()

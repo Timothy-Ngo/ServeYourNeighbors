@@ -38,6 +38,10 @@ public class SceneMgr : MonoBehaviour
         // create a new game -- will initialize the game data
         SaveSystem.inst.NewGame();
 
+        // Save game data after setting game data to default values
+        // this fixes an issue where the New Game button wasn't working bc the default values weren't being saved before the file's original contents were loaded
+        SaveSystem.inst.SaveGame();
+
 
         // load the main scene -- will save the game because of OnSceneUnloaded() in the SaveSystem
         SceneManager.LoadScene("Intro Scene");
