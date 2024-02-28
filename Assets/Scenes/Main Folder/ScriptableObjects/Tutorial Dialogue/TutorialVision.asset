@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fcae1d60e48ebd48a0802f7121296bd, type: 3}
-  m_Name: TutorialVision3
+  m_Name: TutorialVision
   m_EditorClassIdentifier: 
   dialogue:
-  - Customers pay close attention to anything within this area
-  - Be sure that they don't catch you!
+  - That was fun, wasn't it?
+  - Don't get too ahead of yourself
+  - You must not get caught by other customers!
+  - Press shift to view the customer's vision

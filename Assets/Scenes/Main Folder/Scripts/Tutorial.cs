@@ -43,6 +43,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameLoop gameLoop;
     [SerializeField] GameObject foodiesParent;
     [SerializeField] GameObject tableAndChair;
+    [SerializeField] GameObject tableAndChar2;
+    [SerializeField] FoodieSystem foodieSystem;
 
     [Header("-----PAUSE GAME-----")]
     [SerializeField] GameObject pauseGameScreen;
@@ -52,6 +54,7 @@ public class Tutorial : MonoBehaviour
     public bool typing = false;
     float charsPerSec = 25;
     private Foodie foodieScript;
+    private Foodie foodieScript2;
     public int startServings = 0;
 
     void Start()
@@ -192,12 +195,24 @@ public class Tutorial : MonoBehaviour
         promptText.text = "";
 
         // tutorial on foodie vision
-        //yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[7]));
-        //foodieSpawner.SpawnA(tomatoFoodiePrefab);
-        //yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[8]));
-        //promptText.text = "Press shift to see customer vision";
-        //yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.LeftShift));
-        //promptText.text = "";
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[14]));
+        promptText.text = "Press shift to see customer vision";
+        foodieSpawner.SpawnA(tomatoFoodiePrefab);
+        yield return new WaitForSeconds(0.1f);
+        foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
+        foodieScript.ActivateTutorial();
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.LeftShift));
+        promptText.text = "";
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[15]));
+        promptText.text = "Kidnap a customer";
+        yield return new WaitForSeconds(0.2f);
+        foodieSpawner.SpawnA(tomatoFoodiePrefab);
+        yield return new WaitForSeconds(0.1f);
+        foodieScript2 = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
+        player.GetComponent<PlayerInteraction>().CanKidnap();
+        yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
+        player.GetComponent<PlayerInteraction>().CannotKidnap();
+        promptText.text = "Yes!";
 
         // SceneManager.LoadScene("Main Menu");
     }
@@ -291,7 +306,7 @@ public class Tutorial : MonoBehaviour
         intenseText.fontSize = 50;
         yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[10]));
         grinderObj.SetActive(true);
-        promptText.text = "GRIND THEM...GRIND THEM...";
+        promptText.text = "GRIND THEM UP...GRIND THEM UP...";
         yield return new WaitUntil(() => grinder.IsGrindingDone());
         promptText.text = "";
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[11]));

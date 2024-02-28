@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: TutorialVision2
   m_EditorClassIdentifier: 
   dialogue:
-  - Press shift to view the customer's vision
+  - Customers pay close attention to anything within this area
+  - Try kidnapping a customer in front of another

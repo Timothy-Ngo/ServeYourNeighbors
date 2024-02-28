@@ -155,10 +155,13 @@ public class GameLoop : MonoBehaviour
 
     public void GameOver()
     {
-        endGameScreen.SetActive(true);
-        playerUI.SetActive(false);
-        // TODO: Add sfx
-        // TODO: Stop player movement
+        if(!isTutorial)
+        {
+            endGameScreen.SetActive(true);
+            playerUI.SetActive(false);
+            // TODO: Add sfx
+            // TODO: Stop player movement
+        }
     }
     public void StartNewDay() // Starts a new day after player is done with their upgrades menu 
     {
