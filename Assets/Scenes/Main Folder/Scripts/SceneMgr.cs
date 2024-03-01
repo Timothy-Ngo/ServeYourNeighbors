@@ -64,6 +64,11 @@ public class SceneMgr : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    public void ChangeSceneToCredits()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
     public void QuitGame()
     {
         #if UNITY_EDITOR
