@@ -21,7 +21,6 @@ public class PlayerInteraction : MonoBehaviour {
 
     bool foodieReleased = false;
     [Header("-----RANGES----")]
-    bool colliding = false;
     bool cooktopRange = false;
     bool tableRange = false;
     bool ingredientBoxRange = false;
@@ -390,7 +389,6 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        colliding = true;
         // to create new interactions, add a tag to the collision object in question
         if(collision.tag == "Cooktop") { //&& !cooktopScript.IsCooking()) {
             //Debug.Log("Within range of cooktop");
@@ -451,7 +449,6 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        colliding = false;
         if(collision.tag == "Cooktop") {
             cooktopRange = false;
             //Debug.Log("Out of range of cooktop");
@@ -505,11 +502,6 @@ public class PlayerInteraction : MonoBehaviour {
         interactionMessage.SetActive(false);
     }
     
-    public bool IsColliding()
-    {
-        return colliding;
-    }
-    
     // displays a given prompt and awaits user interaction
     private bool TakeAction(string prompt, KeyCode action_keycode) {
         SetInteraction(true);
@@ -524,10 +516,5 @@ public class PlayerInteraction : MonoBehaviour {
     private void Prompt(string prompt) {
         SetInteraction(true);
         messageText.SetText(prompt);
-    }
-    
-    public Foodie GetFoodieScript()
-    {
-        return foodieScript;
     }
 }

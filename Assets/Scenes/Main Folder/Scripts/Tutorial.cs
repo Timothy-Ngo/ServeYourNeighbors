@@ -45,6 +45,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject tableAndChair;
     [SerializeField] GameObject tableAndChar2;
     [SerializeField] FoodieSystem foodieSystem;
+    [SerializeField] GameObject animatronic;
 
     [Header("-----PAUSE GAME-----")]
     [SerializeField] GameObject pauseGameScreen;
@@ -110,7 +111,7 @@ public class Tutorial : MonoBehaviour
     // https://onewheelstudio.com/blog/2022/8/16/chaining-unity-coroutines-knowing-when-a-coroutine-finishes
     private IEnumerator WrapperTutorialCoroutine()
     {
-        // tutorial on movement
+        /*// tutorial on movement
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[0]));
         // https://stackoverflow.com/questions/35701012/disabling-a-script-attached-to-a-game-object-in-unity-c-sharp
         player.GetComponent<PlayerInteraction>().enabled = false; // only allow movement - do not let player grab items, throw away, etc.
@@ -188,31 +189,44 @@ public class Tutorial : MonoBehaviour
         {
             // good outcome
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[6]));
-        }
+        }*/
 
         // tutorial on kidnapping and MSG
         yield return StartCoroutine(KidnapMSGLoop());
         promptText.text = "";
 
         // tutorial on foodie vision
-        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[14]));
-        promptText.text = "Press shift to see customer vision";
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
-        foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
+        foodieScript = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
         foodieScript.ActivateTutorial();
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[14]));
+        promptText.text = "Press shift to see customer vision";
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.LeftShift));
         promptText.text = "";
-        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[15]));
-        promptText.text = "Kidnap a customer";
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(3);
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
         foodieScript2 = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
+        foodieScript2.ActivateTutorial();
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[15]));
+        promptText.text = "Kidnap a customer";
+        yield return new WaitForSeconds(3);
         player.GetComponent<PlayerInteraction>().CanKidnap();
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
+        pickup.DestroyItem();
+        for (int i = 0; i < foodiesParent.transform.GetChildCount(); i++)
+        {
+            Destroy(foodiesParent.transform.GetChild(i).gameObject);
+        }
         player.GetComponent<PlayerInteraction>().CannotKidnap();
-        promptText.text = "Yes!";
+        promptText.text = "";
+
+        // tutorial on SYN meter and distraction
+        yield return StartCoroutine(DistractionLoop());
+
+        // tutorial on new foodies
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[20]));
 
         // SceneManager.LoadScene("Main Menu");
     }
@@ -348,6 +362,47 @@ public class Tutorial : MonoBehaviour
             promptText.text = "";
             yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[13]));
             yield return StartCoroutine(KidnapMSGLoop());
+        }
+    }
+
+    private IEnumerator DistractionLoop()
+    {
+        synMeter.SetActive(true);
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[16]));
+        yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[17]));
+        animatronic.SetActive(true);
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[18]));
+        promptText.text = "Distract your customers, then kidnap";
+        foodieSpawner.SpawnA(tomatoFoodiePrefab);
+        yield return new WaitForSeconds(0.1f);
+        foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
+        foodieScript.ActivateTutorial();
+        foodieSpawner.SpawnA(tomatoFoodiePrefab);
+        yield return new WaitForSeconds(0.1f);
+        foodieScript2 = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
+        foodieScript2.ActivateTutorial();
+        yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.distractedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.distractedState);
+        player.GetComponent<PlayerInteraction>().CanKidnap();
+        yield return new WaitForSeconds(2);
+        if(foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState)
+        {
+            if (pickup.isHoldingFoodie())
+            {
+                pickup.ReleaseFoodie();
+            }
+            foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
+            foodieScript2.stateMachine.ChangeState(foodieScript.leaveState);
+            promptText.text = "";
+        } else
+        {
+            if(pickup.isHoldingFoodie())
+            {
+                pickup.ReleaseFoodie();
+            }
+            foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
+            foodieScript2.stateMachine.ChangeState(foodieScript.leaveState);
+            yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[19]));
+            yield return StartCoroutine(DistractionLoop());
         }
     }
 }
