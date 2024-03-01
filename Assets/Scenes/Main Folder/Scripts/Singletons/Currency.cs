@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
-public class Currency : MonoBehaviour
+public class Currency : MonoBehaviour, IDataPersistence
 {
     /// <summary>
     /// When utilizing currency, use this (singleton) instance.
@@ -21,9 +21,22 @@ public class Currency : MonoBehaviour
     public int startingGold;
     public int gold;
 
+    public void LoadData(GameData data)
+    {
+        gold = data.gold;
+        UpdateTextUI();
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.gold = gold;
+    }
+
+
     void Start()
     {
-        Deposit(startingGold);
+        //Deposit(startingGold);
+        UpdateTextUI();
     }
 
 

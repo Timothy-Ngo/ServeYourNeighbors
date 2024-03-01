@@ -24,7 +24,7 @@ public class QTEvent : MonoBehaviour {
     private void Update() {
         if(active && !complete) {
             if (Input.GetKeyDown(keycode)) {
-                fillAmount += .2f;
+                fillAmount += .3f;
             }
 
             timeThreshold += Time.deltaTime;
@@ -33,7 +33,7 @@ public class QTEvent : MonoBehaviour {
                 fillAmount = 0;
             }
 
-            if (timeThreshold > .1f) {
+            if (timeThreshold > .5f) {
                 timeThreshold = 0;
                 fillAmount -= .02f;
             }

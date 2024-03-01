@@ -200,6 +200,9 @@ public class PlacementSystem : MonoBehaviour
                 {
                     Upgrades.inst.animatronicPlacementMode = false;
                     selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                    Upgrades.inst.animatronicPosition = selectedItem.transform.position;
+                    Upgrades.inst.hasAnimatronic = true;
+                    DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
                 }
 
                 
