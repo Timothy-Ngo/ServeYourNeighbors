@@ -46,6 +46,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject tableAndChar2;
     [SerializeField] FoodieSystem foodieSystem;
     [SerializeField] GameObject animatronic;
+    [SerializeField] Distraction distraction;
 
     [Header("-----PAUSE GAME-----")]
     [SerializeField] GameObject pauseGameScreen;
@@ -111,7 +112,7 @@ public class Tutorial : MonoBehaviour
     // https://onewheelstudio.com/blog/2022/8/16/chaining-unity-coroutines-knowing-when-a-coroutine-finishes
     private IEnumerator WrapperTutorialCoroutine()
     {
-        /*// tutorial on movement
+        // tutorial on movement
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[0]));
         // https://stackoverflow.com/questions/35701012/disabling-a-script-attached-to-a-game-object-in-unity-c-sharp
         player.GetComponent<PlayerInteraction>().enabled = false; // only allow movement - do not let player grab items, throw away, etc.
@@ -169,7 +170,7 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerInteraction>().enabled = true; // resume player interaction
         promptText.text = "Serve the dish";
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.eatState || foodieScript.stateMachine.currentFoodieState == foodieScript.leaveState);
-        if(pickup.isHoldingDish())
+        if (pickup.isHoldingDish())
         {
             pickup.DestroyItem();
         }
@@ -189,7 +190,7 @@ public class Tutorial : MonoBehaviour
         {
             // good outcome
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[6]));
-        }*/
+        }
 
         // tutorial on kidnapping and MSG
         yield return StartCoroutine(KidnapMSGLoop());
@@ -215,10 +216,11 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerInteraction>().CanKidnap();
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
         pickup.DestroyItem();
-        for (int i = 0; i < foodiesParent.transform.GetChildCount(); i++)
+        for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
         {
             Destroy(foodiesParent.transform.GetChild(i).gameObject);
         }
+        foodieSystem.GetCurrentSeats();
         player.GetComponent<PlayerInteraction>().CannotKidnap();
         promptText.text = "";
 
@@ -386,23 +388,26 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(2);
         if(foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState)
         {
-            if (pickup.isHoldingFoodie())
+            pickup.DestroyItem();
+            for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
             {
-                pickup.ReleaseFoodie();
+                Destroy(foodiesParent.transform.GetChild(i).gameObject);
             }
-            foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
-            foodieScript2.stateMachine.ChangeState(foodieScript.leaveState);
+            foodieSystem.GetCurrentSeats();
             promptText.text = "";
-        } else
+        } 
+        else
         {
-            if(pickup.isHoldingFoodie())
+            pickup.DestroyItem();
+            for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
             {
-                pickup.ReleaseFoodie();
+                Destroy(foodiesParent.transform.GetChild(i).gameObject);
             }
-            foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
-            foodieScript2.stateMachine.ChangeState(foodieScript.leaveState);
+            distraction.ResetCharges();
+            foodieSystem.GetCurrentSeats();
+            promptText.text = "";
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[19]));
             yield return StartCoroutine(DistractionLoop());
-        }
+        }//
     }
 }
