@@ -10,9 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fcae1d60e48ebd48a0802f7121296bd, type: 3}
-  m_Name: TutorialGoodDistraction
+  m_Name: TutorialUseDistractions
   m_EditorClassIdentifier: 
   dialogue:
-  - Let's spice things up with some new customers!
-  - Every customer type has a unique dish and unique vision areas.
-  - Let's serve up some bread!
+  - Perfect! Use distractions to your advantage.
