@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fcae1d60e48ebd48a0802f7121296bd, type: 3}
+  m_Name: TutorialVision
+  m_EditorClassIdentifier: 
+  dialogue:
+  - That was fun, wasn't it?
+  - Don't get too ahead of yourself
+  - You must not get caught by other customers!
+  - Press shift to view the customer's vision

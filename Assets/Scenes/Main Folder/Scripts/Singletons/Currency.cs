@@ -83,5 +83,4 @@ public class Currency : MonoBehaviour, IDataPersistence
     {
         GameLoop.inst.UpdateObserver();
     }
-
 }

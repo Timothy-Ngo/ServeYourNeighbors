@@ -9,6 +9,12 @@ using TMPro;
 public class PlayerInteraction : MonoBehaviour {
     GameObject interactionMessage;
     TMP_Text messageText;
+    bool canKidnap = true;
+    bool canCook = true;
+    bool canGetIngredient = true;
+    bool canGetMSG = true;
+    bool canGetDish = true;
+    bool canThrowAway = true;
 
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
@@ -33,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour {
     Foodie foodieScript;
     Grinder grinderScript;
     Counter counterScript;
-    public PlayerStat playerStats;
+    [SerializeField] public PlayerStat playerStats;
     [SerializeField] SYNMeter synMeter;
 
     private void Start() {
@@ -46,7 +52,7 @@ public class PlayerInteraction : MonoBehaviour {
     }
 
     private void Update() {
-        if (cooktopRange) {
+        if (canCook && cooktopRange) {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
                 if (TakeAction("[C] Cook", KeyCode.C)) {
@@ -61,7 +67,7 @@ public class PlayerInteraction : MonoBehaviour {
                 Prompt("[C] Cook!!!");
             }
             // if food is ready
-            else if (cooktopScript.IsFoodReady()) {
+            else if (canGetDish && cooktopScript.IsFoodReady()) {
                 if (PickupSystem.inst.isHoldingTopping()) {
                     if(TakeAction("[F] Add MSG", KeyCode.F)) 
                     {
@@ -142,7 +148,7 @@ public class PlayerInteraction : MonoBehaviour {
         else if (ingredientBoxRange)
         {
             // if player isn't holding anything
-            if (!PickupSystem.inst.isHoldingItem())
+            if (canGetIngredient && !PickupSystem.inst.isHoldingItem())
             {
                 if (TakeAction("[F] Get Ingredient", KeyCode.F))
                 {
@@ -152,7 +158,7 @@ public class PlayerInteraction : MonoBehaviour {
             }
         }
 
-        else if (trashCanRange) {
+        else if (canThrowAway && trashCanRange) {
             // if player is holding something
             if (PickupSystem.inst.isHoldingItem())
             {
@@ -184,7 +190,7 @@ public class PlayerInteraction : MonoBehaviour {
             // cannot kidnap if holding something or if the foodie is in line outside
             if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
             {
-                if (TakeAction("[E] Kidnap", KeyCode.E))
+                if (canKidnap && TakeAction("[E] Kidnap", KeyCode.E))
                 {
                     foodieReleased = false; // flag for when player is caught kidnapping
 
@@ -224,7 +230,7 @@ public class PlayerInteraction : MonoBehaviour {
                     SetInteraction(false);
                 }
             }
-            else if (grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()) 
+            else if (canGetMSG && grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()) 
             {
                 if (TakeAction("[F] Take MSG", KeyCode.F))
                 {
@@ -316,6 +322,66 @@ public class PlayerInteraction : MonoBehaviour {
             }
         }
 
+    }
+
+    public void CanKidnap()
+    {
+        canKidnap = true;
+    }
+
+    public void CannotKidnap()
+    {
+        canKidnap = false;
+    }
+
+    public void CanCook()
+    {
+        canCook = true;
+    }
+
+    public void CannotCook()
+    {
+        canCook = false;
+    }
+
+    public void CanGetIngredient()
+    {
+        canGetIngredient = true;
+    }
+
+    public void CannotGetIngredient()
+    {
+        canGetIngredient = false;
+    }
+
+    public void CanGetMSG()
+    {
+        canGetMSG = true;
+    }
+
+    public void CannotGetMSG()
+    {
+        canGetMSG = false;
+    }
+
+    public void CanGetDish()
+    {
+        canGetDish = true;
+    }
+
+    public void CannotGetDish()
+    {
+        canGetDish = false;
+    }
+
+    public void CanThrowAway()
+    {
+        canThrowAway = true;
+    }
+
+    public void CannotThrowAway()
+    {
+        canThrowAway = false;
     }
 
     public void SetInteraction(bool status) {
@@ -436,8 +502,6 @@ public class PlayerInteraction : MonoBehaviour {
         interactionMessage.SetActive(false);
     }
     
-    
-    
     // displays a given prompt and awaits user interaction
     private bool TakeAction(string prompt, KeyCode action_keycode) {
         SetInteraction(true);
@@ -453,5 +517,4 @@ public class PlayerInteraction : MonoBehaviour {
         SetInteraction(true);
         messageText.SetText(prompt);
     }
-    
 }

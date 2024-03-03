@@ -35,6 +35,8 @@ public class Foodie : MonoBehaviour
     public int distractedTime = 2;
     public Timer distractionTimerScript;
 
+    public bool isTutorial = false;
+
     private void Awake()
     {
         stateMachine = new FoodieStateMachine();
@@ -47,7 +49,6 @@ public class Foodie : MonoBehaviour
 
         orderBubble.SetActive(false);
         orderBubble.GetComponentInChildren<SpriteRenderer>().sprite = order;
-
     }
 
     public void Start()
@@ -115,6 +116,16 @@ public class Foodie : MonoBehaviour
     {
         if (!FoodieSystem.inst.sightToggleEnabled)
             sightSR.enabled = false;
+    }
+
+    public void ActivateTutorial()
+    {
+        isTutorial = true;
+    }
+
+    public void DeactivateTutorial()
+    {
+        isTutorial = false;
     }
 
     // ---------------------------------------  OLD CODE  -------------------------------------------- //
