@@ -23,7 +23,7 @@ public class QTEvent : MonoBehaviour {
 
     private void Update() {
         if(active && !complete) {
-            if (Input.GetKeyDown(keycode)) {
+            if (Input.GetKeyDown(InputSystem.inst.cookKey)) {
                 fillAmount += .3f;
             }
 

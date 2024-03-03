@@ -119,6 +119,8 @@ public class SaveSystem : MonoBehaviour
         if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" || newGameOnLoad)
         {
             NewGame();
+            InputSystem.inst.SetDefaultKeybinding(); // completely new game will have default keybinds
+            SaveGame();
         }
 
         // if no data can be loaded, initialize to a new game
@@ -167,6 +169,12 @@ public class SaveSystem : MonoBehaviour
         SaveGame();
     }
     */
+
+    public void SaveSettings()
+    {
+        InputSystem.inst.SaveData(gameData);
+        dataHandler.Save(gameData);
+    }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {

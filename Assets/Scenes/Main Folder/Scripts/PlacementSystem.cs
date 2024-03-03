@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using ScriptableObjects;
 using UnityEngine.UIElements;
+using TMPro;
 
 /// <summary>
 /// When enabling and disabling this system utilize the isEnabled variable
@@ -25,6 +26,7 @@ public class PlacementSystem : MonoBehaviour
     public GameObject floorsParent;
     List<SpriteRenderer> floors;
     public GameObject instructions;
+    public TextMeshProUGUI instructionsTextMesh;
     private Vector3 newPosition;
     
     
@@ -160,7 +162,7 @@ public class PlacementSystem : MonoBehaviour
                 }
                 
             }
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(InputSystem.inst.finishPlacementKey))
             {
                 
                 isEnabled = false;
@@ -251,6 +253,7 @@ public class PlacementSystem : MonoBehaviour
             }
 
             instructions.SetActive(true);
+            instructionsTextMesh.text = "Hold left click to move object.\r\nPress " + InputSystem.inst.finishPlacementKey.ToString() + " to confirm placement";
         }
         else
         {

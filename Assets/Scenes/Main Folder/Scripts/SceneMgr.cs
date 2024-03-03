@@ -14,6 +14,7 @@ using UnityEngine.UI;
 public class SceneMgr : MonoBehaviour
 {
     [SerializeField] private Button continueGameButton;
+    [SerializeField] private GameObject settingsScreen;
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "Main Menu")
@@ -24,6 +25,18 @@ public class SceneMgr : MonoBehaviour
                 continueGameButton.interactable = false;
             }
         }
+    }
+
+    public void EnableSettingsScreen()
+    {
+        settingsScreen.SetActive(true);
+        InputSystem.inst.SetLabels();
+    }
+
+    public void DisableSettingsScreen()
+    {
+        settingsScreen.SetActive(false);
+        SaveSystem.inst.SaveSettings();
     }
 
     public void ChangeSceneToGame()
@@ -62,6 +75,11 @@ public class SceneMgr : MonoBehaviour
     {
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;
+    }
+
+    public void ChangeSceneToSettings()
+    {
+        SceneManager.LoadScene("Settings");
     }
 
     public void ChangeSceneToCredits()

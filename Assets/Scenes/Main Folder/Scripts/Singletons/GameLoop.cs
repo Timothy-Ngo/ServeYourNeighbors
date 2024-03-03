@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -62,6 +63,9 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject pauseGameScreen;
     bool pauseScreenOpened = false;
 
+    [Header("-----SETTINGS-----")]
+    [SerializeField] private GameObject settingsScreen;
+
     public void LoadData(GameData data)
     {
         day = data.day;
@@ -90,6 +94,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             endGameScreen.SetActive(false);
             pauseGameScreen.SetActive(false);
             playerUI.SetActive(true);
+            settingsScreen.SetActive(false);
 
             // Display current day's operation cost goal for the player to reach
             operationCostText.text = dailyOperationCost.ToString();
@@ -157,8 +162,17 @@ public class GameLoop : MonoBehaviour, IDataPersistence
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (Input.GetKeyDown(InputSystem.inst.pauseKey))
             {
+                if(pauseScreenOpened)
+                {
+                    DisablePauseScreen();
+                }
+                else
+                {
+                    EnablePauseScreen();
+                }
+                /*
                 // toggles pause screen open/close
                 pauseGameScreen.SetActive(!pauseScreenOpened);
                 pauseScreenOpened = !pauseScreenOpened;
@@ -166,10 +180,24 @@ public class GameLoop : MonoBehaviour, IDataPersistence
                     Time.timeScale = 0; // freezes gameplay
                 else
                     Time.timeScale = 1;
+                */
             }
         }
     }
 
+    public void EnablePauseScreen()
+    {
+        pauseGameScreen.SetActive(true);
+        pauseScreenOpened = true;
+        Time.timeScale = 0; // freezes gameplay
+    }
+
+    public void DisablePauseScreen()
+    {
+        pauseGameScreen.SetActive(false);
+        pauseScreenOpened = false;
+        Time.timeScale = 1;
+    }
 
     public void GameOver()
     {
@@ -244,7 +272,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     public void PlayAgain()
     {
         // TODO: This method should maybe? take the player back to the menu in the future 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
+        SceneManager.LoadScene("Main Menu");
     }
 
     public void PayOperationsCost()

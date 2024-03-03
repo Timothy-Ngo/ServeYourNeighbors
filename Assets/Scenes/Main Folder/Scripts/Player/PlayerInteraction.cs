@@ -55,7 +55,8 @@ public class PlayerInteraction : MonoBehaviour {
         if (canCook && cooktopRange) {
             if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
                 // use TakeAction function to display a prompt and await user interaction
-                if (TakeAction("[C] Cook", KeyCode.C)) {
+                string action = "[" + InputSystem.inst.cookKey.ToString() + "] Cook";
+                if (TakeAction(action, InputSystem.inst.cookKey)) {
                     cooktopScript.SetIngredient(PickupSystem.inst.GetItemInHands());
                     cooktopScript.StartPrep();
                     PickupSystem.inst.DestroyItem();
@@ -64,12 +65,15 @@ public class PlayerInteraction : MonoBehaviour {
                 }
             } 
             else if (cooktopScript.IsPrepping()) {
-                Prompt("[C] Cook!!!");
+                string prompt = "[" + InputSystem.inst.cookKey + "] Cook!!!";
+                Prompt(prompt);
             }
             // if food is ready
             else if (canGetDish && cooktopScript.IsFoodReady()) {
+                string actionMSG = "[" + InputSystem.inst.interactKey.ToString() + "] Add MSG";
+                string actionDish = "[" + InputSystem.inst.interactKey.ToString() + "] Get Dish";
                 if (PickupSystem.inst.isHoldingTopping()) {
-                    if(TakeAction("[F] Add MSG", KeyCode.F)) 
+                    if(TakeAction(actionMSG, InputSystem.inst.interactKey)) 
                     {
                         PickupSystem.inst.DestroyItem();
                         playerStats.incMSGAdded();
@@ -82,7 +86,7 @@ public class PlayerInteraction : MonoBehaviour {
                 else if (PickupSystem.inst.isHoldingItem()) {
                     Prompt("Hands Are Full");
                 }
-                else if (TakeAction("[F] Get Dish", KeyCode.F)) {
+                else if (TakeAction(actionDish, InputSystem.inst.interactKey)) {
                     PickupSystem.inst.PickUpItem(cooktopScript.dish);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
@@ -103,7 +107,8 @@ public class PlayerInteraction : MonoBehaviour {
             {
                 //Debug.Log("Should be giving dish");
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
-                if (TakeAction("[R] Give Dish", KeyCode.R)) {
+                string action = "[" + InputSystem.inst.serveKey.ToString() + "] Give Dish";
+                if (TakeAction(action, InputSystem.inst.serveKey)) {
                     // Make dish pop up on table, 
                     // change foodie to eating state
                     //Debug.Log($"current table object: {tableScript.gameObject}");
@@ -150,7 +155,8 @@ public class PlayerInteraction : MonoBehaviour {
             // if player isn't holding anything
             if (canGetIngredient && !PickupSystem.inst.isHoldingItem())
             {
-                if (TakeAction("[F] Get Ingredient", KeyCode.F))
+                string action = "[" + InputSystem.inst.interactKey.ToString() + "] Get Ingredient";
+                if (TakeAction(action, InputSystem.inst.interactKey))
                 {
                     PickupSystem.inst.PickUpIngredient(ingredientBoxScript);
                     SetInteraction(false);
@@ -162,7 +168,8 @@ public class PlayerInteraction : MonoBehaviour {
             // if player is holding something
             if (PickupSystem.inst.isHoldingItem())
             {
-                if (TakeAction("[F] Throw Away", KeyCode.F))
+                string action = "[" + InputSystem.inst.interactKey.ToString() + "] Throw Away";
+                if (TakeAction(action, InputSystem.inst.interactKey))
                 {
                     PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
@@ -175,7 +182,8 @@ public class PlayerInteraction : MonoBehaviour {
         {
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
             {
-                if (TakeAction("[E] Turn On", KeyCode.E))
+                string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Turn On";
+                if (TakeAction(action, InputSystem.inst.kidnapKey))
                 {
                     playerStats.incTimesDistracted();
                     distractionScript.DecrementCharges();
@@ -190,7 +198,8 @@ public class PlayerInteraction : MonoBehaviour {
             // cannot kidnap if holding something or if the foodie is in line outside
             if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
             {
-                if (canKidnap && TakeAction("[E] Kidnap", KeyCode.E))
+                string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Kidnap";
+                if (canKidnap && TakeAction(action, InputSystem.inst.kidnapKey))
                 {
                     foodieReleased = false; // flag for when player is caught kidnapping
 
@@ -232,7 +241,8 @@ public class PlayerInteraction : MonoBehaviour {
             }
             else if (canGetMSG && grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()) 
             {
-                if (TakeAction("[F] Take MSG", KeyCode.F))
+                string action = "[" + InputSystem.inst.interactKey.ToString() + "] Take MSG";
+                if (TakeAction(action, InputSystem.inst.interactKey))
                 {
                     grinderScript.TakeMSG();
 
@@ -249,7 +259,9 @@ public class PlayerInteraction : MonoBehaviour {
             {
                 if (!counterScript.Full()) 
                 {
-                    if (TakeAction("[F] Place Item", KeyCode.F)) {
+                    string action = "[" + InputSystem.inst.interactKey.ToString() + "] Place Item";
+                    if (TakeAction(action, InputSystem.inst.interactKey))
+                    {
                         //Debug.Log("Placed item on counter");
                         // set dish
                         counterScript.item = PickupSystem.inst.GetItemInHands();
@@ -271,14 +283,18 @@ public class PlayerInteraction : MonoBehaviour {
                     // if item on counter is a dish and player is holding MSG
                     // Debug.Log("Item type is " + counterScript.item.GetType());
                     Food testItem = counterScript.item.GetComponent<Food>();
+
+                    string actionMSG = "[" + InputSystem.inst.interactKey.ToString() + "] Add MSG";
+                    string actionSwap = "[" + InputSystem.inst.interactKey.ToString() + "] Swap Items";
                     if (testItem != null && PickupSystem.inst.isHoldingTopping()) {
-                        if (TakeAction("[F] Add MSG", KeyCode.F)) {
+                        if (TakeAction(actionMSG, InputSystem.inst.interactKey))
+                        {
                             PickupSystem.inst.DestroyItem();
                             playerStats.incMSGAdded();
                             counterScript.item.GetComponent<Food>().AddMSG();
                         }
                     }
-                    else if (TakeAction("[F] Swap Items", KeyCode.F)) 
+                    else if (TakeAction(actionSwap, InputSystem.inst.interactKey)) 
                     {
                         GameObject temp = counterScript.item;
 
@@ -295,7 +311,8 @@ public class PlayerInteraction : MonoBehaviour {
             }
             else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full()) 
             {
-                if (TakeAction("[F] Pick Up", KeyCode.F)) 
+                string action = "[" + InputSystem.inst.interactKey.ToString() + "] Pick up";
+                if (TakeAction(action, InputSystem.inst.interactKey))
                 {
                     //Debug.Log("Picked up item from counter");
                     PickupSystem.inst.PickUpItem(counterScript.item);
