@@ -224,7 +224,7 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerInteraction>().CanKidnap();
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
         pickup.DestroyItem();
-        for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
+        for (int i = 1; i < foodiesParent.transform.childCount; i++)
         {
             Destroy(foodiesParent.transform.GetChild(i).gameObject);
         }
@@ -341,7 +341,7 @@ public class Tutorial : MonoBehaviour
         foodieSpawner.SpawnA(breadFoodiePrefab);
         yield return new WaitForSeconds(0.3f);
         foodieScript = foodiesParent.transform.GetChild(6).gameObject.GetComponent<Foodie>();
-        yield return new WaitUntil(() => foodiesParent.transform.GetChildCount() == 1);
+        yield return new WaitUntil(() => foodiesParent.transform.childCount == 1);
         if (playerStat.successfulServings == 6)
         {
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[28]));
@@ -518,7 +518,7 @@ public class Tutorial : MonoBehaviour
         if(foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState)
         {
             pickup.DestroyItem();
-            for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
+            for (int i = 1; i < foodiesParent.transform.childCount; i++)
             {
                 Destroy(foodiesParent.transform.GetChild(i).gameObject);
             }
@@ -529,7 +529,7 @@ public class Tutorial : MonoBehaviour
         else
         {
             pickup.DestroyItem();
-            for (int i = 1; i < foodiesParent.transform.GetChildCount(); i++)
+            for (int i = 1; i < foodiesParent.transform.childCount; i++)
             {
                 Destroy(foodiesParent.transform.GetChild(i).gameObject);
             }

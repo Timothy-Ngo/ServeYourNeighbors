@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
@@ -37,6 +38,11 @@ public abstract class Skill : MonoBehaviour
         SkillInformation.inst.skillNameText.text = skillName;
         SkillInformation.inst.skillDescText.text = skillDesc;
         SkillInformation.inst.skillCostText.text = $"{skillCost}";
+        if (isAcquired)
+        {
+            CompleteSkill();
+            return;
+        }
         if (CheckRequirements())
         {
             SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(false);
@@ -47,6 +53,7 @@ public abstract class Skill : MonoBehaviour
         {
             SkillInformation.inst.confirmButton.gameObject.SetActive(false);
             SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(true);
+            SkillInformation.inst.missingRequirementsText.text = "";
             MissingRequirements();
         }
     }

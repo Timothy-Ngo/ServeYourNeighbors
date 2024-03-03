@@ -14,7 +14,7 @@ public class PlacementSystem : MonoBehaviour
     
     [Tooltip("Prefabs of objects that can be dynamically placed in the scene")]
     [SerializeField] List<GameObject> prefabs;
-    public GameEvent dragEvent;
+    //public GameEvent dragEvent;
     public GameObject tablesParent;
     public GameObject cookStationsParent;
     public GameObject distractionParent;

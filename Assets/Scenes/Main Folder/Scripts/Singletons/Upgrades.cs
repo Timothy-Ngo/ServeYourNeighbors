@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 public class Upgrades : MonoBehaviour, IDataPersistence
 {
@@ -13,7 +14,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     private void Awake()
     {
         inst = this;
-        
+
         // Initialize table objects
         foreach (Transform transform in tablesParent.transform)
         {
@@ -24,7 +25,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             tables[i].SetActive(false);
         }
-        
+
         // Initialize cook station objects
         foreach (Transform transform in cookStationsParent.transform)
         {
@@ -45,7 +46,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             counterObjs[i].SetActive(false);
         }
-        
+
     }
 
     // used for loading upgrades from save data
@@ -54,7 +55,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public GameObject cookStationPrefab;
     public GameObject counterPrefab;
     public GameObject animatronicPrefab;
-    
+
 
     [Header("-----UPGRADES UI-----")]
     public GameObject upgradesScreen;
@@ -63,34 +64,39 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     [SerializeField] private Button[] buttons;
     [SerializeField] private Color greyedOutColor;
     [SerializeField] private Color normalColor;
-    
+
     public PlacementSystem placementSystem;
 
     [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
     [SerializeField] private List<GameObject> tables;
-    public int numTables { get{return tables.Count;} }
+    public int numTables { get { return tables.Count; } }
+    public const int maxTables = 4;
     public int tablesUpgradeCost = 50;
     public TextMeshProUGUI tablesDescription;
     public bool tablePlacementMode = false;
-    
+
     [Header("-----COOK STATIONS UPGRADE-----")]
     public GameObject cookStationsParent;
     [SerializeField] public List<GameObject> cookStations;
+    public int numCookStations { get { return cookStations.Count; } }
+    public const int maxCookStations = 4;
+
     public int cookStationsUpgradeCost = 50;
     public TextMeshProUGUI cookStationsDescription;
     public bool cookStationPlacementMode = false;
 
-    public int numCookStations {get{return cookStations.Count;}}
 
     [Header("-----COUNTERS UPGRADE-----")]
     public GameObject counterParent;
     public List<GameObject> counterObjs;
+    public int numCounters { get { return counterObjs.Count; } }
+    public const int maxCounters = 5;
     public int countersUpgradeCost = 50;
     public TextMeshProUGUI countersDescription;
     public bool counterPlacementMode = false;
-    
-    [Header("-----SPEED BOOST UPGRADE-----")] 
+
+    [Header("-----SPEED BOOST UPGRADE-----")]
     [SerializeField] private PlayerMovement playerMovement;
     public bool isGMO = false;
     public int speedBoostUpgradeCost = 100;
@@ -99,8 +105,10 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     [Header("-----DISTRACTION UPGRADES-----")]
     public Transform distractionParent;
     public bool hasAnimatronic = false;
+
     public bool hasHibachiChef = false;
     public int animatronicUpgradeCost = 100;
+    [SerializeField] TextMeshProUGUI animatronicDescription;
     public bool animatronicPlacementMode = false;
     public Vector3 animatronicPosition;
 
@@ -113,6 +121,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     [Header("-----MAIN LAYOUT UPGRADES-----")]
     public int changeLayoutCost = 50;
     public bool changeLayoutMode = false;
+    [SerializeField] TextMeshProUGUI changeLayoutDescription;
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
 
@@ -144,7 +153,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
         // distraction
 
-            // if there is a saved animatronic -- instantiate and place in world
+        // if there is a saved animatronic -- instantiate and place in world
         hasAnimatronic = data.hasAnimatronic;
         if (hasAnimatronic)
         {
@@ -179,29 +188,31 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         }
 
         // distraction
-            // if there is an animatronic -- save the bool and its position
+        // if there is an animatronic -- save the bool and its position
         if (hasAnimatronic)
         {
             data.hasAnimatronic = hasAnimatronic;
             data.animatronicPosition = animatronicPosition;
         }
     }
-    
+
 
     // Start is called before the first frame update
     void Start()
     {
         tablesDescription.text += $" ({tablesUpgradeCost}g)";
-        speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)";
         cookStationsDescription.text += $" ({cookStationsUpgradeCost}g)";
         countersDescription.text += $"({countersUpgradeCost}g)";
+        animatronicDescription.text += $"({animatronicUpgradeCost}g)";
+        changeLayoutDescription.text += $"({changeLayoutCost}g)";
+        speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)"; // Deprecated
 
         buttons = upgradeButtons.GetComponentsInChildren<Button>();
     }
 
     private void Update()
     {
-        
+
     }
 
     // -----HELPER METHODS-----
@@ -218,7 +229,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
         return numOfActiveTables;
     }
-    
+
     public int GetNumOfActiveCookStations()
     {
         int numOfActiveCookStations = 0;
@@ -233,7 +244,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         return numOfActiveCookStations;
     }
 
-    
+
     public int GetNumOfActiveCounters()
     {
         int numOfActiveCounters = 0;
@@ -273,7 +284,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         upgradesScreen.SetActive(!upgradesScreen.activeSelf);
     }
-    public void Tables() // Increase the amount of tables
+    public void Tables() // Deprecated
     {
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
@@ -293,21 +304,26 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         if (Currency.inst.AbleToWithdraw(tablesUpgradeCost))
         {
+            Debug.Assert(numTables <= maxTables, "# of tables is over the max amount.");
             Currency.inst.Withdraw(tablesUpgradeCost);
             tablePlacementMode = true; // Must be set true before enabling placement system
             placementSystem.isEnabled = true;
             UpdateTablesList();
             //NotifyObservers();
             CustomerPayments.inst.standardPayment += 10;
-            Debug.Log("Bought a table upgrade");
+            if (numTables == maxTables - 1)
+            {
+                tablesDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
+            }
+            Debug.Log("In table placement mode");
         }
         else
         {
             Debug.Log("Insufficient funds for table upgrade");
         }
     }
-    
-    public void CookStations() // Increase the amount of cook stations
+
+    public void CookStations() // Deprecated
     {
         int numOfActiveCookStations = GetNumOfActiveCookStations();
         if (numOfActiveCookStations == cookStations.Count)
@@ -329,17 +345,22 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         }
     }
 
-    
+
     public void CookStationsPlacementMode()  // Initializes placement mode for cook stations
     {
 
         if (Currency.inst.AbleToWithdraw(cookStationsUpgradeCost))
         {
+            Debug.Assert(numCookStations <= maxCookStations, "# of cook stations is over the max amount.");
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStationPlacementMode = true;
             placementSystem.isEnabled = true;
             //NotifyObservers();
-            Debug.Log("Bought a cook stations upgrade");
+            if (numCookStations == maxCookStations - 1)
+            {
+                cookStationsDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
+                cookStationsDescription.text = "Max number of cook stations reached.";
+            }
         }
         else
         {
@@ -348,7 +369,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     }
 
 
-    public void Counters() // Increases the amount of counters
+    public void Counters() // Deprecated
     {
         if (Currency.inst.AbleToWithdraw(countersUpgradeCost))
         {
@@ -364,9 +385,15 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         if (Currency.inst.AbleToWithdraw(countersUpgradeCost))
         {
+            Debug.Assert(numCounters <= maxCounters, "# of counters is over the max amount.");
             Currency.inst.Withdraw(countersUpgradeCost);
             counterPlacementMode = true;
             placementSystem.isEnabled = true;
+            if (numCounters == maxCounters)
+            {
+                countersDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
+                countersDescription.text = "Max number of counters reached.";
+            }
         }
         else
         {
@@ -386,8 +413,8 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Debug.Log("Insufficient funds for move item upgrade");
         }
     }
-    
-    public void BecomeGMO() // Player Speed boost. This has been deprecated!
+
+    public void BecomeGMO() // Deprecated
     {
         if (isGMO)
         {
@@ -408,7 +435,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         }
     }
 
-    public void AnimatronicStand(int cost) // Animatronic Distraction
+    public void AnimatronicStand(int cost) // Deprecated
     {
         if (hasAnimatronic)
         {
@@ -426,12 +453,16 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
     public void AnimatronicPlacementMode()
     {
+
         if (Currency.inst.AbleToWithdraw(animatronicUpgradeCost))
         {
-             Currency.inst.Withdraw(animatronicUpgradeCost);
-             animatronicPlacementMode = true; 
-             placementSystem.isEnabled = true;
-             //NotifyObservers(); // Make sure distraction system has reference to animatronic
+            Debug.Assert(!hasAnimatronic, "# of animatronics is over the max amount.");
+            Currency.inst.Withdraw(animatronicUpgradeCost);
+            animatronicPlacementMode = true;
+            placementSystem.isEnabled = true;
+            animatronicDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
+            animatronicDescription.text = "Max number of animatronics reached.";
+
         }
         else
         {
@@ -442,7 +473,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public void ImproveLayout(int cost) // Uprades main layout 
     {
         int scaledCost = cost + (100 * ((int)currentLayout));
-        switch(currentLayout)
+        switch (currentLayout)
         {
             case LayoutLevel.Shack:
                 if (Currency.inst.AbleToWithdraw(cost))
@@ -465,7 +496,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                     currentLayout = LayoutLevel.Tavern;
                     Debug.Log("Layout Upgraded to Tavern");
                 }
-                else 
+                else
                 {
                     Debug.Log("Insufficient funds for layout upgrade");
                 }

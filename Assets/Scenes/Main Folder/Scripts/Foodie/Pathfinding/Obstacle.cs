@@ -47,13 +47,11 @@ public class Obstacle : MonoBehaviour
         else if (gameObject.CompareTag("Distraction"))
         {
             //Debug.Log("Distraction object");
-            for (int i = -1; i < 2; i++)
+            for (int j = 0; j < 1; j++)
             {
-                for (int j = -1; j < 2; j++)
-                {
-                    FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(true);
-                }
+                FoodieSystem.inst.pathfinding.GetNode(x , y + j).SetIsPlaceable(true);
             }
+            
         }
         else if (gameObject.CompareTag("Cooktop"))
         {

@@ -105,6 +105,11 @@ public class FoodieSpawner : MonoBehaviour
         
     }
 
+    public Transform GetFoodieParent()
+    {
+        return foodieParent;
+    }
+
     public void ReleaseFoodie()
     {
         StartCoroutine(SpawnKidnappedFoodie());
