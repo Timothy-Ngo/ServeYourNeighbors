@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Net;
-using ScriptableObjects;
 using UnityEngine.UIElements;
 using TMPro;
 

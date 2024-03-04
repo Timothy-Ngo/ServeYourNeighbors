@@ -17,7 +17,8 @@ namespace Tests
         [UnityTest]
         public IEnumerator FoodieReachesTable()
         {
-             /*
+            /*
+             
             // Assign, Omitted because of use of singletons
             List<Foodie> foodies = FoodieSpawner.inst.GetFoodieParent().gameObject.GetComponentsInChildren<Foodie>().ToList();
             foreach (Foodie foodie in foodies)
@@ -33,6 +34,7 @@ namespace Tests
             */
             yield return new WaitForSeconds(5);
         }
+
     }
 
 }
