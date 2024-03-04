@@ -35,11 +35,11 @@ public class UnitTests : MonoBehaviour
             tipPercentage += 0.1f;
             if (Currency.inst.gold == gold)
             {
-                Debug.Log($"Test #{i} passed");
+                Debug.Log($"Time Based Payment Test #{i} passed");
             }
             else
             {
-                Debug.Log($"Test #{i} failed");
+                Debug.Log($"Time Based Payment Test #{i} failed");
             }
 
         }
