@@ -37,7 +37,9 @@ public class FoodieMovement : MonoBehaviour
         if (pathVectorList != null)
         {
             FoodieSystem.inst.pathfinding.GetGrid().GetXY(transform.position, out int x, out int y);
-            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(true);
+
+            // commented out to try to fix foodies walking through walls
+            //FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsWalkable(true);
 
             Vector3 targetPosition = pathVectorList[currentPathIndex];
 
@@ -86,6 +88,7 @@ public class FoodieMovement : MonoBehaviour
     {
         currentPathIndex = 0;
 
+        // find a path
         pathVectorList = pathfinding.FindPath(GetPosition(), targetPosition);
         if (pathVectorList != null && pathVectorList.Count > 1)
         {

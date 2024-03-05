@@ -196,7 +196,7 @@ public class PlayerInteraction : MonoBehaviour {
         else if (foodieRange)
         {
             // cannot kidnap if holding something or if the foodie is in line outside
-            if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState)
+            if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState && foodieScript.stateMachine.currentFoodieState != foodieScript.leaveState)
             {
                 string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Kidnap";
                 if (canKidnap && TakeAction(action, InputSystem.inst.kidnapKey))
