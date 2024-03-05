@@ -343,4 +343,9 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     {
         isTutorial = false;
     }
+
+    public bool IsEndScreenActive()
+    {
+        return endGameScreen.activeSelf;
+    }
 }

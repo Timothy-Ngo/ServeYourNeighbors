@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UnitTests : MonoBehaviour
 {
+    [SerializeField] SYNMeter synMeter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +18,10 @@ public class UnitTests : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             testTimeBasedPayment();
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            testFullSYNMeter();
         }
 
     }
@@ -45,5 +51,40 @@ public class UnitTests : MonoBehaviour
         }
     }
 
+    public void testFullSYNMeter()
+    {
+        // SYN Meter is not full -- end game screen should not be active
+            // will check SYN Meter when filled in increments of 10%
 
+        // set SYN Meter to empty
+        synMeter.AdjustSYN(-1); 
+        for (int i = 0; !synMeter.IsFull(); i++)
+        {
+            if (!GameLoop.inst.IsEndScreenActive())
+            {
+                Debug.Log("Full SYN Meter: Test #" + (i+1) + " passed");
+            }
+            else
+            {
+                Debug.Log("Full SYN Meter: Test #" + (i+1) + " failed");
+            }
+
+            // fill SYN Meter by 10%
+            synMeter.AdjustSYN(.1f);
+        }
+
+        // SYN Meter is full -- end game screen should be active
+
+        // set SYN Meter to full
+        synMeter.AdjustSYN(1);
+        if (GameLoop.inst.IsEndScreenActive())
+        {
+            Debug.Log("Full SYN Meter: Test #11 passed");
+        }
+        else
+        {
+            Debug.Log("Full SYN Meter: Test #11 failed");
+        }
+
+    }
 }

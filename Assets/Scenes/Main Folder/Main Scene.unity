@@ -6250,6 +6250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd5b3f480cff8b748b3ed1bbd7f11d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  synMeter: {fileID: 584663805}
 --- !u!4 &336303413
 Transform:
   m_ObjectHideFlags: 0

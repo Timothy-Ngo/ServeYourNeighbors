@@ -56,7 +56,7 @@ public class SYNMeter : MonoBehaviour, IDataPersistence
         bar.fillAmount = fillAmount;
     }
 
-    // for adjusting + or - by a set amount -- input a float between 0 and 1 -- think of input as a percentage of the bar
+    // for adjusting + or - by a set amount -- input a float between -1 and 1 -- think of input as a percentage of the bar
     public void AdjustSYN(float val)
     {
 
