@@ -6251,6 +6251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   synMeter: {fileID: 584663805}
+  cooking: {fileID: 1070590697}
+  qtEvent: {fileID: 949403113}
 --- !u!4 &336303413
 Transform:
   m_ObjectHideFlags: 0
@@ -16183,6 +16185,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1070590697 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2896272355097170127, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
+  m_PrefabInstance: {fileID: 2896272355368165357}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89d2a5c77e2339c4b9c0f7e51bd92617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1070647325
 PrefabInstance:
   m_ObjectHideFlags: 0

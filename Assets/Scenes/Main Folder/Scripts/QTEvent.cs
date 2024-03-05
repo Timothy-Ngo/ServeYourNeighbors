@@ -24,7 +24,7 @@ public class QTEvent : MonoBehaviour {
     private void Update() {
         if(active && !complete) {
             if (Input.GetKeyDown(InputSystem.inst.cookKey)) {
-                fillAmount += .3f;
+                AdjustFillAmount(.3f);
             }
 
             timeThreshold += Time.deltaTime;
@@ -35,11 +35,11 @@ public class QTEvent : MonoBehaviour {
 
             if (timeThreshold > .5f) {
                 timeThreshold = 0;
-                fillAmount -= .02f;
+                AdjustFillAmount(-.02f);
             }
 
             if (fillAmount >= 1) {
-                //Debug.Log("QT Event complete");
+                Debug.Log("QT Event complete");
                 prompt.SetActive(false);
                 active = false;
                 complete = true;
@@ -56,6 +56,12 @@ public class QTEvent : MonoBehaviour {
         active = true;
         complete = false;
     }
+
+    public void AdjustFillAmount(float amount)
+    {
+        fillAmount += amount;
+    }
+
 
     public bool isComplete() {
         if(complete) {
