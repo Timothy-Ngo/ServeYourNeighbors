@@ -793,7 +793,7 @@ MonoBehaviour:
   skillDesc: 'Requires 3 tables. Improves player speed '
   skillCost: 100
   isAcquired: 0
-  pm: {fileID: 0}
+  pm: {fileID: 527837170}
   requiredNumTables: 3
   newSpeed: 10
 --- !u!1001 &17907354
@@ -6543,7 +6543,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Increase the amount of tables
+  m_text: Increase the amount of tables and amount paid by customers.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4512fb8981829854587d5ed83f39097f, type: 2}
   m_sharedMaterial: {fileID: -9073348629807019847, guid: 4512fb8981829854587d5ed83f39097f, type: 2}
@@ -20583,7 +20583,7 @@ MonoBehaviour:
   skillCost: 100
   isAcquired: 0
   preReqSkill: {fileID: 1182718968}
-  grinder: {fileID: 0}
+  grinder: {fileID: 1479765211}
   newGrindTime: 1
 --- !u!114 &1267607447
 MonoBehaviour:
@@ -24297,6 +24297,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4959636247554662155, guid: 4e40bdba16f526843a91cced3f2f1c6a, type: 3}
   m_PrefabInstance: {fileID: 993100257}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1479765211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4959636247554662154, guid: 4e40bdba16f526843a91cced3f2f1c6a, type: 3}
+  m_PrefabInstance: {fileID: 993100257}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479765209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62ba179673683a243a6ebc8b24e43acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1485110208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35292,6 +35303,10 @@ PrefabInstance:
     - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
+      propertyPath: newGameOnLoad
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
       propertyPath: synMeterScript

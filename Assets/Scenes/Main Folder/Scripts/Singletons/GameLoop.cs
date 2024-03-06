@@ -1,9 +1,7 @@
 // Author: Timothy Ngo 
         
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

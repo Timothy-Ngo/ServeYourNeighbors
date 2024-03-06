@@ -1,11 +1,6 @@
 // Author: Timothy Ngo
 // Date: 2/20/24
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
 
 public abstract class Skill : MonoBehaviour

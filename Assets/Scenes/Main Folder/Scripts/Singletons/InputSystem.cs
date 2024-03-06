@@ -1,9 +1,6 @@
 // Author: Helen Truong
 
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 // currently, keys can be rebound to the same key -- may change later so that each key has to be unique

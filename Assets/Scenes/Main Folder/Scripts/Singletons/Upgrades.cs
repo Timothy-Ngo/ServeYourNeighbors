@@ -314,6 +314,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             if (numTables == maxTables - 1)
             {
                 tablesDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
+                tablesDescription.text = "Max number of tables reached.";
             }
             Debug.Log("In table placement mode");
         }
