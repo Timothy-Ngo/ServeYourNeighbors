@@ -23,6 +23,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] PickupSystem pickup;
     [SerializeField] PlayerStat playerStat;
+    [SerializeField] InputSystem inputSystem;
 
     [Header("-----PLAYER UI-----")]
     [SerializeField] GameObject playerInterface;
@@ -140,7 +141,7 @@ public class Tutorial : MonoBehaviour
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[2]));
         promptText.text = "Cook at the blue cook station";
         yield return new WaitUntil(() => !pickup.isHoldingItem()); // wait for player to cook
-        promptText.text = "Quickly press C to fill the bar";
+        promptText.text = "Quickly press " + InputSystem.inst.cookKey.ToString() + " to cook";
         yield return new WaitUntil(() => cookStation.IsCooking());
         promptText.text = "Wait to finish cooking";
         player.GetComponent<PlayerInteraction>().enabled = false; // only allow movement - do not let player grab items, throw away, etc.
@@ -170,7 +171,7 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerInteraction>().CannotGetIngredient();
         promptText.text = "Cook at the blue cook station";
         yield return new WaitUntil(() => !pickup.isHoldingItem()); // wait for player to cook
-        promptText.text = "Quickly press C to fill the bar";
+        promptText.text = "Quickly press " + InputSystem.inst.cookKey.ToString() + " to cook";
         yield return new WaitUntil(() => cookStation.IsCooking());
         promptText.text = "Wait to finish cooking";
         player.GetComponent<PlayerInteraction>().enabled = false; // only allow movement - do not let player grab items, throw away, etc.
@@ -210,7 +211,7 @@ public class Tutorial : MonoBehaviour
         foodieScript = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
         foodieScript.ActivateTutorial();
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[14]));
-        promptText.text = "Press shift to see customer vision";
+        promptText.text = "Press " + InputSystem.inst.foodieSightKey.ToString() + " to see customer vision";
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.LeftShift));
         promptText.text = "";
         yield return new WaitForSeconds(3);
