@@ -1836,6 +1836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   continueGameButton: {fileID: 0}
   settingsScreen: {fileID: 1789378608}
+  player: {fileID: 940067781}
 --- !u!4 &68259359
 Transform:
   m_ObjectHideFlags: 0
@@ -18495,6 +18496,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8584186661708686078, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
   m_PrefabInstance: {fileID: 1775829407}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &940067781 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7681427229920770045, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+  m_PrefabInstance: {fileID: 1775829407}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940067780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd229fbae801eb644b78db0b61511cea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &940655233
 PrefabInstance:
   m_ObjectHideFlags: 0

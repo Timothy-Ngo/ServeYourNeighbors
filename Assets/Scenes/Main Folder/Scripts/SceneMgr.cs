@@ -15,6 +15,7 @@ public class SceneMgr : MonoBehaviour
 {
     [SerializeField] private Button continueGameButton;
     [SerializeField] private GameObject settingsScreen;
+    [SerializeField] Player player;
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "Main Menu")
@@ -31,12 +32,24 @@ public class SceneMgr : MonoBehaviour
     {
         settingsScreen.SetActive(true);
         InputSystem.inst.SetLabels();
+
+        if(!(player is null))
+        {
+            player.GetComponent<PlayerInteraction>().enabled = false;
+            player.GetComponent<PlayerMovement>().enabled = false;
+        }
     }
 
     public void DisableSettingsScreen()
     {
         settingsScreen.SetActive(false);
         SaveSystem.inst.SaveSettings();
+
+        if (!(player is null))
+        {
+            player.GetComponent<PlayerInteraction>().enabled = true;
+            player.GetComponent<PlayerMovement>().enabled = true;
+        }
     }
 
     public void ChangeSceneToGame()
