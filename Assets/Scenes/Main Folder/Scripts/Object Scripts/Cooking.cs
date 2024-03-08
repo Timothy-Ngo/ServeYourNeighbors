@@ -42,7 +42,8 @@ public class Cooking : MonoBehaviour {
         //timer_script = FindObjectOfType<Timer>();
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (prepping && qt_script.isComplete()) {
             prepping = false;
             StartCooking();

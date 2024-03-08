@@ -22,11 +22,11 @@ public class QTKidnap : MonoBehaviour
     {
         GetComponent<Image>().fillAmount = 0;
         prompt.SetActive(false);
-        prompt.GetComponent<TextMeshProUGUI>().text = InputSystem.inst.kidnapKey.ToString();
     }
 
     private void Update()
     {
+        prompt.GetComponent<TextMeshProUGUI>().text = InputSystem.inst.kidnapKey.ToString();
         if (active && !complete)
         {
             if (Input.GetKeyDown(InputSystem.inst.kidnapKey))
