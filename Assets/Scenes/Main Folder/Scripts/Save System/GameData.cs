@@ -59,6 +59,8 @@ public class GameData
     public KeyCode leftKey;
     public KeyCode rightKey;
     */
+
+    /*
     public KeyCode interactKey;
     public KeyCode cookKey;
     public KeyCode kidnapKey;
@@ -66,6 +68,7 @@ public class GameData
     public KeyCode finishPlacementKey;
     public KeyCode pauseKey;
     public KeyCode foodieSightKey;
+    */
 
     // default constructor: sets variables to default values
     // is used when there is no data to load

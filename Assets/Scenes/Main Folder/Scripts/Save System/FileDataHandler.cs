@@ -13,13 +13,16 @@ public class FileDataHandler
 
     private string dataDirPath = "";
     private string dataFileName = "";
+    private string settingsDataFileName = "";
+
     private bool useEncryption = false;
     private readonly string encryptionCodeWord = "neighbor";
 
-    public FileDataHandler(string dataDirPath, string dataFileName, bool useEncryption)
+    public FileDataHandler(string dataDirPath, string dataFileName, string settingsDataFileName, bool useEncryption)
     {
         this.dataDirPath = dataDirPath;
         this.dataFileName = dataFileName;
+        this.settingsDataFileName = settingsDataFileName;
         this.useEncryption = useEncryption;
     }
 
@@ -91,6 +94,77 @@ public class FileDataHandler
         catch (Exception e)
         {
             Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+        }
+    }
+
+    public SettingsData LoadSettings()
+    {
+        // use Path.Combine to account for different OS's having different path separators
+        // not really necessary for this project as the game will only be made available for Windows
+        string fullPath = Path.Combine(dataDirPath, settingsDataFileName);
+        SettingsData loadedData = null;
+        if (File.Exists(fullPath))
+        {
+            try
+            {
+                // load the serialized data from the file
+                string dataToLoad = "";
+                using (FileStream stream = new FileStream(fullPath, FileMode.Open))
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+                        dataToLoad = reader.ReadToEnd();
+                    }
+                }
+
+                // optionally decrypt the data
+                if (useEncryption)
+                {
+                    dataToLoad = EncryptDecrypt(dataToLoad);
+                }
+
+                // deserialize the data from Json back into the C# object
+                loadedData = JsonUtility.FromJson<SettingsData>(dataToLoad);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error occured when trying to load settings data from file: " + fullPath + "\n" + e);
+            }
+        }
+        return loadedData;
+    }
+
+    public void SaveSettings(SettingsData data)
+    {
+        // use Path.Combine to account for different OS's having different path separators
+        // not really necessary for this project as the game will only be made available for Windows
+        string fullPath = Path.Combine(dataDirPath, settingsDataFileName);
+        try
+        {
+            // create the directory the file will be written to if it doesn't already exist
+            Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
+
+            // serialize the C# game data ovject into Json
+            string dataToStore = JsonUtility.ToJson(data, true);
+
+            // optionally encrypt the data
+            if (useEncryption)
+            {
+                dataToStore = EncryptDecrypt(dataToStore);
+            }
+
+            // write the serialized data to the file
+            using (FileStream stream = new FileStream(fullPath, FileMode.Create))
+            {
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.Write(dataToStore);
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError("Error occured when trying to save settings data to file: " + fullPath + "\n" + e);
         }
     }
 

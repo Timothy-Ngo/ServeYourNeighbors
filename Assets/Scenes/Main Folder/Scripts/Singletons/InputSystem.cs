@@ -5,7 +5,7 @@ using UnityEngine;
 
 // currently, keys can be rebound to the same key -- may change later so that each key has to be unique
 
-public class InputSystem : MonoBehaviour, IDataPersistence
+public class InputSystem : MonoBehaviour, ISettingsDataPersistence
 {
 
     public static InputSystem inst;
@@ -15,12 +15,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
     }
 
     [Header("-----KEY TEXT LABELS-----")]
-    /*
-    public TextMeshProUGUI upKeyLabel;
-    public TextMeshProUGUI downKeyLabel;
-    public TextMeshProUGUI leftKeyLabel;
-    public TextMeshProUGUI rightKeyLabel;
-    */
     public TextMeshProUGUI interactKeyLabel;
     public TextMeshProUGUI cookKeyLabel;
     public TextMeshProUGUI kidnapKeyLabel;
@@ -30,12 +24,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
     public TextMeshProUGUI foodieSightKeyLabel;
 
     [Header("-----KEYCODES-----")]
-    /*
-    public KeyCode upKey;
-    public KeyCode downKey;
-    public KeyCode leftKey;
-    public KeyCode rightKey;
-    */
     public KeyCode interactKey;
     public KeyCode cookKey;
     public KeyCode kidnapKey;
@@ -46,10 +34,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
 
     [Header("-----FLAGS-----")]
     bool rebinding = false;
-    bool rebindingUpKey = false;
-    bool rebindingDownKey = false;
-    bool rebindingLeftKey = false;
-    bool rebindingRightKey = false;
     bool rebindingInteractKey = false;
     bool rebindingCookKey = false;
     bool rebindingKidnapKey = false;
@@ -58,31 +42,23 @@ public class InputSystem : MonoBehaviour, IDataPersistence
     bool rebindingPauseKey = false;
     bool rebindingFoodieSightKey = false;
 
-    public void LoadData(GameData data)
+    public void LoadData(SettingsData data)
     {
-        /*
-        upKey = data.upKey;
-        downKey = data.downKey;
-        leftKey = data.leftKey;
-        rightKey = data.rightKey;
-        */
+        Debug.Log("loading data in input system script");
         interactKey = data.interactKey;
+        Debug.Log(data.interactKey.ToString());
         cookKey = data.cookKey;
         kidnapKey = data.kidnapKey;
         serveKey = data.serveKey;
         finishPlacementKey = data.finishPlacementKey;
         pauseKey = data.pauseKey;
         foodieSightKey = data.foodieSightKey;
+
+        SetLabels();
     }
 
-    public void SaveData(GameData data)
+    public void SaveData(SettingsData data)
     {
-        /*
-        data.upKey = upKey;
-        data.downKey = downKey;
-        data.leftKey = leftKey;
-        data.rightKey = rightKey;
-        */
         data.interactKey = interactKey;
         data.cookKey = cookKey;
         data.kidnapKey = kidnapKey;
@@ -94,12 +70,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
 
     public void SetLabels()
     {
-        /*
-        upKeyLabel.text = upKey.ToString();
-        downKeyLabel.text = downKey.ToString();
-        leftKeyLabel.text = leftKey.ToString();
-        rightKeyLabel.text = rightKey.ToString();
-        */
         interactKeyLabel.text = interactKey.ToString();
         cookKeyLabel.text = cookKey.ToString();
         kidnapKeyLabel.text = kidnapKey.ToString();
@@ -119,37 +89,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
             
             if (rebinding)
             {
-                /*
-                if (rebindingUpKey)
-                {
-                    upKeyLabel.text = e.keyCode.ToString();
-                    upKey = e.keyCode;
-                    InputManager.alt
-                    rebindingUpKey = false;
-                    rebinding = false;
-                }
-                else if (rebindingDownKey)
-                {
-                    downKeyLabel.text = e.keyCode.ToString();
-                    downKey = e.keyCode;
-                    rebindingDownKey = false;
-                    rebinding = false;
-                }
-                else if (rebindingLeftKey)
-                {
-                    leftKeyLabel.text = e.keyCode.ToString();
-                    leftKey = e.keyCode;
-                    rebindingLeftKey = false;
-                    rebinding = false;
-                }
-                else if (rebindingRightKey)
-                {
-                    rightKeyLabel.text = e.keyCode.ToString();
-                    rightKey = e.keyCode;
-                    rebindingRightKey = false;
-                    rebinding = false;
-                }
-                */
                 if (rebindingInteractKey)
                 {
                     interactKeyLabel.text = e.keyCode.ToString();
@@ -202,43 +141,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
             }
         }
     }
-
-    /*
-    public void RebindUpKey()
-    {
-        rebinding = true;
-
-        upKeyLabel.text = "[Press Key]";
-
-        rebindingUpKey = true;
-    }
-
-    public void RebindDownKey()
-    {
-        rebinding = true;
-
-        downKeyLabel.text = "[Press Key]";
-
-        rebindingDownKey = true;
-    }
-    public void RebindLeftKey()
-    {
-        rebinding = true;
-
-        leftKeyLabel.text = "[Press Key]";
-
-        rebindingLeftKey = true;
-    }
-
-    public void RebindRightKey()
-    {
-        rebinding = true;
-
-        rightKeyLabel.text = "[Press Key]";
-
-        rebindingRightKey = true;
-    }
-    */
 
     public void RebindInteractKey()
     {
@@ -305,12 +207,6 @@ public class InputSystem : MonoBehaviour, IDataPersistence
 
     public void SetDefaultKeybinding()
     {
-        /*
-        upKey = KeyCode.W;
-        downKey = KeyCode.S;
-        leftKey = KeyCode.A;
-        rightKey = KeyCode.D;
-        */
         interactKey = KeyCode.F;
         cookKey = KeyCode.C;
         kidnapKey = KeyCode.E;

@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   newGameOnLoad: 0
   fileName: data.syn
+  settingsFileName: settings.syn
   useEncryption: 0

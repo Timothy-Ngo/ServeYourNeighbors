@@ -23,6 +23,7 @@ using UnityEngine.SceneManagement;
         * could've been used as an exploit to generate money without progressing the game
     * similarly to previous change, removed functionality of saving data when the scene changes
         * could'be been used as an exploit to generate money without progressing the game
+    * duplicated code to save Settings data
 */
 
 
@@ -34,11 +35,14 @@ public class SaveSystem : MonoBehaviour
 
     [Header("File Storage Configuration")]
     [SerializeField] private string fileName;
+    [SerializeField] private string settingsFileName;
     [SerializeField] private bool useEncryption;
 
     private GameData gameData;
+    private SettingsData settingsData;
 
     private List<IDataPersistence> dataPersistenceObjects;
+    private List<ISettingsDataPersistence> settingsDataPersistenceObjects;
     private FileDataHandler dataHandler;
 
 
@@ -57,7 +61,7 @@ public class SaveSystem : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
 
-        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName, settingsFileName, useEncryption);
 
     }
 
@@ -83,9 +87,12 @@ public class SaveSystem : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene")
         {
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+            this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
+            Debug.Log(settingsDataPersistenceObjects.Count);
 
             // loads data when game is started up
             LoadGame();
+            LoadSettings();
         }
     }
 
@@ -106,8 +113,13 @@ public class SaveSystem : MonoBehaviour
     {
         Debug.Log("New game initialized");
         this.gameData = new GameData();
-
         
+    }
+
+    public void NewSettings()
+    {
+        Debug.Log("New settings initialized");
+        this.settingsData = new SettingsData();
     }
 
     public void LoadGame()
@@ -118,10 +130,11 @@ public class SaveSystem : MonoBehaviour
         // start a new game if the data is null and player is on Main Scene OR if debug configuration newGameOnLoad is turned on
         if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" || newGameOnLoad)
         {
+            Debug.Log("No data was found. A New Game and default settings are being initialized.");
             NewGame();
-            InputSystem.inst.SetDefaultKeybinding(); // completely new game will have default keybinds
             SaveGame();
         }
+
 
         // if no data can be loaded, initialize to a new game
         if (this.gameData == null)
@@ -136,8 +149,31 @@ public class SaveSystem : MonoBehaviour
             dataPersistenceObj.LoadData(gameData);
         }
 
+
         Debug.Log("Loaded day: " + gameData.day);
     }
+
+    public void LoadSettings()
+    {
+        // load any saved data from a file using the data handler
+        this.settingsData = dataHandler.LoadSettings(); // if settings data doesn't exist, then settingsData will be null
+
+        if (this.settingsData == null && SceneManager.GetActiveScene().name == "Main Menu" || newGameOnLoad)
+        {
+            Debug.Log("No settings data was found. Default settings are being initialized.");
+            NewSettings();
+            InputSystem.inst.SetDefaultKeybinding();
+            SaveSettings();
+        }
+
+        // push the loaded settings data to all other scripts that need it
+        foreach (ISettingsDataPersistence dataPersistenceObj in settingsDataPersistenceObjects)
+        {
+            dataPersistenceObj.LoadData(settingsData);
+        }
+
+    }
+
 
 
     // is called at the start of each new game day and when leaving the Main Scene
@@ -170,11 +206,28 @@ public class SaveSystem : MonoBehaviour
     }
     */
 
+    
     public void SaveSettings()
     {
-        InputSystem.inst.SaveData(gameData);
-        dataHandler.Save(gameData);
+
+        // if there is no data to save, log a warning here
+        if (this.settingsData == null)
+        {
+            Debug.LogWarning("No settings data was found.");
+        }
+
+        // pass the data to other scripts so they can update it
+        foreach (ISettingsDataPersistence dataPersistenceObj in settingsDataPersistenceObjects)
+        {
+            dataPersistenceObj.SaveData(settingsData);
+        }
+
+        // save that data to a file using the data handler
+        dataHandler.SaveSettings(settingsData);
+
+        Debug.Log("Saved settings");
     }
+    
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
@@ -182,6 +235,14 @@ public class SaveSystem : MonoBehaviour
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>();
 
         return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+
+    private List<ISettingsDataPersistence> FindAllSettingsDataPersistenceObjects()
+    {
+        // find all scripts that implement the interface IDataPersistence
+        IEnumerable<ISettingsDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>().OfType<ISettingsDataPersistence>();
+
+        return new List<ISettingsDataPersistence>(dataPersistenceObjects);
     }
 
     // used in SceneMgr to check if there is existing game data 
