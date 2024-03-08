@@ -64,6 +64,10 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [Header("-----SETTINGS-----")]
     [SerializeField] private GameObject settingsScreen;
 
+    [Header("-----LAYOUT SELECTION-----")]
+    [SerializeField] private GameObject layoutScreen;
+    private bool layoutSelected = false;
+
     public void LoadData(GameData data)
     {
         day = data.day;
@@ -71,6 +75,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
         wavesPerDay = data.wavesPerDay;
         numFoodiesPerWave = data.numFoodiesPerWave;
+
+        layoutSelected = data.layoutSelected;
     }
 
     public void SaveData(GameData data)
@@ -80,6 +86,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
         data.wavesPerDay = wavesPerDay;
         data.numFoodiesPerWave = numFoodiesPerWave;
+
+        data.layoutSelected = layoutSelected;
     }
 
     // Start is called before the first frame update
@@ -93,6 +101,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             pauseGameScreen.SetActive(false);
             playerUI.SetActive(true);
             settingsScreen.SetActive(false);
+            layoutScreen.SetActive(false);
 
             // Display current day's operation cost goal for the player to reach
             operationCostText.text = dailyOperationCost.ToString();
@@ -170,18 +179,29 @@ public class GameLoop : MonoBehaviour, IDataPersistence
                 {
                     EnablePauseScreen();
                 }
-                /*
-                // toggles pause screen open/close
-                pauseGameScreen.SetActive(!pauseScreenOpened);
-                pauseScreenOpened = !pauseScreenOpened;
-                if (pauseScreenOpened)
-                    Time.timeScale = 0; // freezes gameplay
-                else
-                    Time.timeScale = 1;
-                */
+                
             }
+
+            /*
+            // if a layout hasn't been selected, show the layout screen and pause time
+            if (!layoutSelected)
+            {
+                Time.timeScale = 0;
+                layoutScreen.SetActive(true);
+
+            }
+            */
         }
     }
+    /*
+    // set bool flag to true and unpause time
+    public void SetLayoutSelectedTrue()
+    {
+        layoutSelected = true;
+        Time.timeScale = 1;
+        layoutScreen.SetActive(false);
+    }
+    */
 
     public void EnablePauseScreen()
     {

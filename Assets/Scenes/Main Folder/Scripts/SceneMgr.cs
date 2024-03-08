@@ -56,9 +56,13 @@ public class SceneMgr : MonoBehaviour
         SaveSystem.inst.SaveGame();
 
 
-        // load the main scene -- will save the game because of OnSceneUnloaded() in the SaveSystem
-        SceneManager.LoadScene("Intro Scene");
+        ChangeSceneToIntro();
 
+    }
+
+    public void ChangeSceneToLayouts()
+    {
+        SceneManager.LoadScene("Layouts");
     }
 
     public void ChangeSceneToIntro() 

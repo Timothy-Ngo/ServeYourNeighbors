@@ -69,7 +69,7 @@ public class FoodieMovement : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         transform.Rotate(new Vector3(0, 180, 0));
     }

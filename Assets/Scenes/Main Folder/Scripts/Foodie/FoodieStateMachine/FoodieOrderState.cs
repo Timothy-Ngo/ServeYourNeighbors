@@ -40,6 +40,7 @@ public class FoodieOrderState : FoodieState
     public override void Update()
     {
         base.Update();
+
         
 
         // order given --> goes into eating
@@ -102,6 +103,13 @@ public class FoodieOrderState : FoodieState
                 // set a timer for their order and they order
                 foodie.orderBubble.SetActive(true);
                 foodie.timerScript.SetMaxTime(orderTime);
+
+                // makes sure the foodie is facing right when seated at a table
+                if (!foodie.foodieMovement.facingRight)
+                {
+                    foodie.foodieMovement.Flip();
+                    foodie.foodieMovement.facingRight = true;
+                }
             }
         }
 

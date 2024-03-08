@@ -892,6 +892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63b2f141f903161488545efb16366820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueGameButton: {fileID: 0}
+  settingsScreen: {fileID: 0}
 --- !u!4 &1188742911
 Transform:
   m_ObjectHideFlags: 0
@@ -1355,8 +1357,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1188742910}
-        m_TargetAssemblyTypeName: SceneMgr, Assembly-CSharp
-        m_MethodName: ChangeSceneToGame
+        m_TargetAssemblyTypeName: SceneMgr, Scripts
+        m_MethodName: ChangeSceneToLayouts
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

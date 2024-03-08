@@ -65,7 +65,6 @@ public class SaveSystem : MonoBehaviour
 
     }
 
-
     // use OnEnable and OnDisable to subscribe and unsubscribe scenes to the Scene Manager
     // this is required to do in order to keep track when scenes are loaded and unloaded
     private void OnEnable()
@@ -84,11 +83,15 @@ public class SaveSystem : MonoBehaviour
     // will load game data when a scene is loaded
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (SceneManager.GetActiveScene().name == "Layouts")
+        {
+            this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+        }
+
         if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene")
         {
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
             this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
-            Debug.Log(settingsDataPersistenceObjects.Count);
 
             // loads data when game is started up
             LoadGame();
@@ -224,8 +227,6 @@ public class SaveSystem : MonoBehaviour
 
         // save that data to a file using the data handler
         dataHandler.SaveSettings(settingsData);
-
-        Debug.Log("Saved settings");
     }
     
 

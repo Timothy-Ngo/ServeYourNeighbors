@@ -44,9 +44,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
 
     public void LoadData(SettingsData data)
     {
-        Debug.Log("loading data in input system script");
         interactKey = data.interactKey;
-        Debug.Log(data.interactKey.ToString());
         cookKey = data.cookKey;
         kidnapKey = data.kidnapKey;
         serveKey = data.serveKey;

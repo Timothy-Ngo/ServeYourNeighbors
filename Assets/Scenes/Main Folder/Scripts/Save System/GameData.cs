@@ -20,6 +20,9 @@ public class GameData
     public int wavesPerDay;
     public int numFoodiesPerWave;
 
+    // layout
+    public bool layoutSelected;
+
     // ----- Currency Data ----- //
 
     public int gold;
@@ -44,31 +47,24 @@ public class GameData
 
     public List<Vector3> tablePositions;
     public List<Vector3> cookStationPositions;
-    public List<Vector3> counterPositions;
 
     public bool hasAnimatronic;
     public Vector3 animatronicPosition;
 
+    // ----- Layout Data ----- //
+    public int layout;
+    public bool newLayout;
+    public Vector3 trashcanPosition;
+    public Vector3 tomatoBoxPosition;
+    public Vector3 flourBoxPosition;
+    public Vector3 lettuceBoxPosition;
+    public Vector3 cookStationPosition;
+    public Vector3 grinderPosition;
+    public Vector3 tablePosition;
+
     // ----- SYN Meter ----- //
     public float fillAmount;
-
-    // ----- Input System ----- //
-    /*
-    public KeyCode upKey;
-    public KeyCode downKey;
-    public KeyCode leftKey;
-    public KeyCode rightKey;
-    */
-
-    /*
-    public KeyCode interactKey;
-    public KeyCode cookKey;
-    public KeyCode kidnapKey;
-    public KeyCode serveKey;
-    public KeyCode finishPlacementKey;
-    public KeyCode pauseKey;
-    public KeyCode foodieSightKey;
-    */
+ 
 
     // default constructor: sets variables to default values
     // is used when there is no data to load
@@ -79,6 +75,7 @@ public class GameData
         dailyOperationCost = 15;
         wavesPerDay = 2;
         numFoodiesPerWave = 1;
+        layoutSelected = false;
 
         // Currency Data
         gold = 50;
@@ -98,11 +95,14 @@ public class GameData
         // Upgrades Data
         tablePositions = new List<Vector3>();
         cookStationPositions = new List<Vector3>();
-        counterPositions = new List<Vector3>();
         hasAnimatronic = false;
         animatronicPosition = new Vector3();
 
         // SYN Meter
         fillAmount = 0f;
+
+        // Layout
+        layout = 1;
+        newLayout = true;
     }
 }

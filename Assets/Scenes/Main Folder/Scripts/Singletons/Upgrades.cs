@@ -15,12 +15,14 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         inst = this;
 
+        /*
         // Initialize table objects
         foreach (Transform transform in tablesParent.transform)
         {
             tables.Add(transform.gameObject);
         }
         tables[0].SetActive(true);
+
         for (int i = 1; i < tables.Count; i++)
         {
             tables[i].SetActive(false);
@@ -46,6 +48,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             counterObjs[i].SetActive(false);
         }
+         */
 
     }
 
@@ -144,13 +147,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             cookStations.Add(cookStation);
         }
 
-        // counters
-        for (int i = 1; i < data.counterPositions.Count; i++)
-        {
-            GameObject counter = Instantiate(counterPrefab, data.counterPositions[i], Quaternion.identity, cookStationsParent.transform);
-            counterObjs.Add(counter);
-        }
-
         // distraction
 
         // if there is a saved animatronic -- instantiate and place in world
@@ -180,12 +176,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             data.cookStationPositions.Add(cookStations[i].transform.position);
         }
 
-        // counters
-        data.counterPositions.Clear();
-        for (int i = 0; i < counterObjs.Count; i++)
-        {
-            data.counterPositions.Add(counterObjs[i].transform.position);
-        }
 
         // distraction
         // if there is an animatronic -- save the bool and its position
