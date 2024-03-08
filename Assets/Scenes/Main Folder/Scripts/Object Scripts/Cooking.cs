@@ -135,4 +135,10 @@ public class Cooking : MonoBehaviour {
 
         return dish;
     }
+
+    public void StopPrep()
+    {
+        prepping = false;
+        qt_script.ForceStop();
+    }
 }

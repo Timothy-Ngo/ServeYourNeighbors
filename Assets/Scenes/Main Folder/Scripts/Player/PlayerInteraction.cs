@@ -20,6 +20,7 @@ public class PlayerInteraction : MonoBehaviour {
     //GameObject cooktop;
 
     bool foodieReleased = false;
+    bool currentlyKidnapping = false;
     [Header("-----RANGES----")]
     bool cooktopRange = false;
     bool tableRange = false;
@@ -41,6 +42,7 @@ public class PlayerInteraction : MonoBehaviour {
     Counter counterScript;
     [SerializeField] public PlayerStat playerStats;
     [SerializeField] SYNMeter synMeter;
+    [SerializeField] QTKidnap qtKidnap;
 
     private void Start() {
         interactionMessage = GameObject.Find("InteractionPrompt");
@@ -199,13 +201,20 @@ public class PlayerInteraction : MonoBehaviour {
             if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState && foodieScript.stateMachine.currentFoodieState != foodieScript.leaveState)
             {
                 string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Kidnap";
-                if (canKidnap && TakeAction(action, InputSystem.inst.kidnapKey))
+                if (!currentlyKidnapping && canKidnap && TakeAction(action, InputSystem.inst.kidnapKey))
                 {
+                    currentlyKidnapping = true;
+                    qtKidnap.resetEvent();
+                }
+                if(currentlyKidnapping && qtKidnap.isComplete())
+                {
+                    currentlyKidnapping = false;
+
                     foodieReleased = false; // flag for when player is caught kidnapping
 
                     foodieScript.foodieSight.SetActive(false);
                     playerStats.incFoodiesKidnapped();
-                    
+
                     // if foodie was at a table --> put table back into available tables
                     if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState || foodieScript.stateMachine.currentFoodieState == foodieScript.eatState)
                     {
@@ -468,6 +477,7 @@ public class PlayerInteraction : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D collision) {
         if(collision.tag == "Cooktop") {
             cooktopRange = false;
+            cooktopScript.StopPrep();
             //Debug.Log("Out of range of cooktop");
         }
         else if (collision.CompareTag("Table"))
@@ -497,6 +507,11 @@ public class PlayerInteraction : MonoBehaviour {
         {
             foodieRange = false;
             foodieScript = null;
+            if(currentlyKidnapping)
+            {
+                currentlyKidnapping = false;
+                qtKidnap.ForceStop();
+            }
             //Debug.Log("Out of range of foodie");
         }
         else if (collision.CompareTag("Grinder"))

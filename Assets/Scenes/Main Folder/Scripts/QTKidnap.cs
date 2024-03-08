@@ -1,13 +1,15 @@
 // Kirin Hardinger
-// October 2023
+// March 2024
 // Adapted from https://www.youtube.com/watch?v=rE8RKdenkf4
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class QTEvent : MonoBehaviour {
+public class QTKidnap : MonoBehaviour
+{
     public float fillAmount;
     public float timeThreshold = 0;
     public KeyCode keycode;
@@ -16,29 +18,37 @@ public class QTEvent : MonoBehaviour {
 
     [SerializeField] public GameObject prompt;
 
-    private void Start() {
+    private void Start()
+    {
         GetComponent<Image>().fillAmount = 0;
         prompt.SetActive(false);
+        prompt.GetComponent<TextMeshProUGUI>().text = InputSystem.inst.kidnapKey.ToString();
     }
 
-    private void Update() {
-        if(active && !complete) {
-            if (Input.GetKeyDown(InputSystem.inst.cookKey)) {
+    private void Update()
+    {
+        if (active && !complete)
+        {
+            if (Input.GetKeyDown(InputSystem.inst.kidnapKey))
+            {
                 AdjustFillAmount(.3f);
             }
 
             timeThreshold += Time.deltaTime;
 
-            if (fillAmount < 0) {
+            if (fillAmount < 0)
+            {
                 fillAmount = 0;
             }
 
-            if (timeThreshold > .5f) {
+            if (timeThreshold > .5f)
+            {
                 timeThreshold = 0;
                 AdjustFillAmount(-.02f);
             }
 
-            if (fillAmount >= 1) {
+            if (fillAmount >= 1)
+            {
                 Debug.Log("QT Event complete");
                 prompt.SetActive(false);
                 active = false;
@@ -49,7 +59,8 @@ public class QTEvent : MonoBehaviour {
         }
     }
 
-    public void resetEvent() {
+    public void resetEvent()
+    {
         //Debug.Log("*********Reset!");
         fillAmount = 0f;
         prompt.SetActive(true);
@@ -63,9 +74,12 @@ public class QTEvent : MonoBehaviour {
     }
 
 
-    public bool isComplete() {
-        if(complete) {
+    public bool isComplete()
+    {
+        if (complete)
+        {
             GetComponent<Image>().fillAmount = 0;
+            prompt.SetActive(false);
         }
         return complete;
     }
