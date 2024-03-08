@@ -88,7 +88,7 @@ public class SaveSystem : MonoBehaviour
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         }
 
-        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene")
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene" || SceneManager.GetActiveScene().name == "Tutorial")
         {
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
             this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
@@ -161,7 +161,7 @@ public class SaveSystem : MonoBehaviour
         // load any saved data from a file using the data handler
         this.settingsData = dataHandler.LoadSettings(); // if settings data doesn't exist, then settingsData will be null
 
-        if (this.settingsData == null && SceneManager.GetActiveScene().name == "Main Menu" || newGameOnLoad)
+        if (this.settingsData == null && SceneManager.GetActiveScene().name == "Main Menu" || newGameOnLoad || this.settingsData == null && SceneManager.GetActiveScene().name == "Tutorial")
         {
             Debug.Log("No settings data was found. Default settings are being initialized.");
             NewSettings();

@@ -15,9 +15,10 @@ public class Intro : MonoBehaviour
     [SerializeField] TextMeshProUGUI dialogueText;
     [SerializeField] GameObject SYN;
     [SerializeField] GameObject enterPrompt;
+    [SerializeField] TextMeshProUGUI continueText;
     public bool skip = false;
     public bool typing = false;
-
+    //
     float charsPerSec = 25;
 
     void Start()
@@ -25,13 +26,18 @@ public class Intro : MonoBehaviour
         StartCoroutine(MoveThroughDialogue(dialogueAsset));
         SYN.SetActive(false);
         enterPrompt.SetActive(false);
+        continueText.text = InputSystem.inst.interactKey.ToString();
     }
 
     private void Update() 
     {
-        if(Input.GetKeyDown(KeyCode.Return) && typing)
+        if(Input.GetKeyDown(InputSystem.inst.interactKey) && typing)
         {
             skip = true;
+        }
+
+        if(Input.GetKeyDown(InputSystem.inst.pauseKey)) {
+            SceneManager.LoadScene("Layouts");
         }
     }
 
@@ -55,15 +61,15 @@ public class Intro : MonoBehaviour
             skip = false;
             typing = false;
 
-            //The following line of code makes it so that the for loop is paused until the user presses the Enter key
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            //The following line of code makes it so that the for loop is paused until the user presses the interact key
+            yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.interactKey));
             //The following line of codes make the coroutine wait for a frame so as the next WaitUntil is not skipped
             yield return null;
         }
         dialogueText.text = "";
         SYN.SetActive(true);
         enterPrompt.SetActive(false);
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
-        SceneManager.LoadScene("Main Scene");
+        yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.interactKey));
+        SceneManager.LoadScene("Layouts");
     }
 }

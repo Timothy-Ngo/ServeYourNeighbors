@@ -18,12 +18,12 @@ public class Tutorial : MonoBehaviour
     [SerializeField] TextMeshProUGUI promptText;
     [SerializeField] GameObject enterPrompt;
     [SerializeField] GameObject textBox;
+    [SerializeField] TextMeshProUGUI continueText;
 
     [Header("-----PLAYER----")]
     [SerializeField] Player player;
     [SerializeField] PickupSystem pickup;
     [SerializeField] PlayerStat playerStat;
-    [SerializeField] InputSystem inputSystem;
 
     [Header("-----PLAYER UI-----")]
     [SerializeField] GameObject playerInterface;
@@ -79,12 +79,14 @@ public class Tutorial : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && typing)
+        continueText.text = InputSystem.inst.interactKey.ToString();
+
+        if (Input.GetKeyDown(InputSystem.inst.interactKey) && typing)
         {
             skip = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey))
         {
             // toggles pause screen open/close
             pauseGameScreen.SetActive(!pauseScreenOpened);
@@ -97,7 +99,7 @@ public class Tutorial : MonoBehaviour
 
         // shake the intense text
         // taken from Kirin Hardinger's Shake_Script.cs from a previous Unity project
-        intenseTextObj.transform.localPosition += Random.insideUnitSphere * 1.0f;//
+        intenseTextObj.transform.localPosition += Random.insideUnitSphere * 1.0f;
 
         if (intenseTextObj.transform.localPosition.x < -7)
         {
@@ -212,7 +214,7 @@ public class Tutorial : MonoBehaviour
         foodieScript.ActivateTutorial();
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[14]));
         promptText.text = "Press " + InputSystem.inst.foodieSightKey.ToString() + " to see customer vision";
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.LeftShift));
+        yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.foodieSightKey));
         promptText.text = "";
         yield return new WaitForSeconds(3);
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
@@ -222,7 +224,7 @@ public class Tutorial : MonoBehaviour
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[15]));
         promptText.text = "Kidnap a customer";
         yield return new WaitForSeconds(3);
-        player.GetComponent<PlayerInteraction>().CanKidnap();
+        player.GetComponent<PlayerInteraction>().CanKidnap();//
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
         pickup.DestroyItem();
         for (int i = 1; i < foodiesParent.transform.childCount; i++)
@@ -386,7 +388,7 @@ public class Tutorial : MonoBehaviour
             typing = false;
 
             //The following line of code makes it so that the for loop is paused until the user presses the Enter key
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.interactKey));
             //The following line of codes make the coroutine wait for a frame so as the next WaitUntil is not skipped
             yield return null;
         }
@@ -420,7 +422,7 @@ public class Tutorial : MonoBehaviour
             typing = false;
 
             //The following line of code makes it so that the for loop is paused until the user presses the Enter key
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
+            yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.interactKey));
             //The following line of codes make the coroutine wait for a frame so as the next WaitUntil is not skipped
             yield return null;
         }
