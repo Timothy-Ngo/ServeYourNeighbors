@@ -48,7 +48,7 @@ public class FoodieLineState : FoodieState
         
         if (!inLine && !hasBeenInLine) 
         {
-            Debug.Log("Should be called one time");
+            //Debug.Log("Should be called one time");
             hasBeenInLine = true; // put in bc there was a bug with it running all this again bc the foodie was no longer in line in the if statement above
 
             foodie.orderBubble.SetActive(false);

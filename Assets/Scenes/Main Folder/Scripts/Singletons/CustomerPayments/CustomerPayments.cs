@@ -14,11 +14,11 @@ public class CustomerPayments : MonoBehaviour
 
     [Header("Price Categories")]
 
-    public int standardPayment = 20;
+    public int standardPayment = 10;
 
 
     [Header("MSG")]
-    public int msgBonusMultiplier = 100;
+    public float msgBonusMultiplier = 2.5f;
 
     [Header("Sound FX")]
     public AudioClip collectPaymentSfx;

@@ -1,20 +1,25 @@
-// Author: Timothy Ngo
-// Date: 2/21/24
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FasterGrindingSkill : Skill
+public class BluetoothAnimatronic : Skill
 {
     // Needs to be assigned in the inspector-------------
     [SerializeField] Skill preReqSkill;
-    [SerializeField] Grinder grinder;
+    [SerializeField] PlayerInteraction playerInteraction;
     //---------------------------------------------------
-    [SerializeField] int newGrindTime = 1; // Base time is 2 seconds
+
+    public void Update()
+    {
+        
+    }
+    
     public override bool CheckRequirements()
     {
-        return preReqSkill.isAcquired && 
-            Currency.inst.AbleToWithdraw(skillCost);  
+        return preReqSkill.isAcquired &&
+            DistractionSystem.inst.animatronicDistraction != null &&
+            Currency.inst.AbleToWithdraw(skillCost);
+            
     }
 
     public override void MissingRequirements()
@@ -24,19 +29,24 @@ public class FasterGrindingSkill : Skill
         {
             SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill.skillName} skill.";
         }
+        if (DistractionSystem.inst.animatronicDistraction == null)
+        {
+            SkillInformation.inst.missingRequirementsText.text += $"Missing animatronic.";
+        }
         if (missingGold > 0)
         {
             SkillInformation.inst.missingRequirementsText.text += $"Missing {missingGold} gold.";
         }
     }
 
+
+    
     public override void Confirm()
     {
-         if (CheckRequirements())
+        if (CheckRequirements())
         {
-            Debug.Log("Making grinding go vroom vroom");
             Currency.inst.Withdraw(skillCost);
-            grinder.grindTime = newGrindTime;
+            playerInteraction.bluetoothSkill = true;
             CompleteSkill();
         }
         else
@@ -44,5 +54,4 @@ public class FasterGrindingSkill : Skill
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
         }
     }
-
 }

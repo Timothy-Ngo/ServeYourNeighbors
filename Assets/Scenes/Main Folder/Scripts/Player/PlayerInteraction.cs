@@ -6,7 +6,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerInteraction : MonoBehaviour {
+public class PlayerInteraction : MonoBehaviour
+{
     GameObject interactionMessage;
     TMP_Text messageText;
     bool canKidnap = true;
@@ -32,7 +33,7 @@ public class PlayerInteraction : MonoBehaviour {
     bool foodieSightRange = false;
     bool counterRange = false;
 
-    [Header("-----SCRIPTS----")] 
+    [Header("-----SCRIPTS----")]
     Cooking cooktopScript;
     [SerializeField] private Table tableScript;
     IngredientBox ingredientBoxScript;
@@ -44,7 +45,11 @@ public class PlayerInteraction : MonoBehaviour {
     [SerializeField] SYNMeter synMeter;
     [SerializeField] QTKidnap qtKidnap;
 
-    private void Start() {
+    [Header("-----OTHERS----")]
+    public bool bluetoothSkill = false;
+
+    private void Start()
+    {
         interactionMessage = GameObject.Find("InteractionPrompt");
         messageText = interactionMessage.GetComponent<TextMeshProUGUI>();
         SetInteraction(false);
@@ -53,54 +58,65 @@ public class PlayerInteraction : MonoBehaviour {
         //cooktopScript = cooktop.GetComponent<Cooking>();
     }
 
-    private void Update() {
-        if (canCook && cooktopRange) {
-            if(!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) {
+    private void Update()
+    {
+        if (canCook && cooktopRange)
+        {
+            if (!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady())
+            {
                 // use TakeAction function to display a prompt and await user interaction
                 string action = "[" + InputSystem.inst.cookKey.ToString() + "] Cook";
-                if (TakeAction(action, InputSystem.inst.cookKey)) {
+                if (TakeAction(action, InputSystem.inst.cookKey))
+                {
                     cooktopScript.SetIngredient(PickupSystem.inst.GetItemInHands());
                     cooktopScript.StartPrep();
                     PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
-                    
+
                 }
-            } 
-            else if (cooktopScript.IsPrepping()) {
+            }
+            else if (cooktopScript.IsPrepping())
+            {
                 string prompt = "[" + InputSystem.inst.cookKey + "] Cook!!!";
                 Prompt(prompt);
             }
             // if food is ready
-            else if (canGetDish && cooktopScript.IsFoodReady()) {
+            else if (canGetDish && cooktopScript.IsFoodReady())
+            {
                 string actionMSG = "[" + InputSystem.inst.interactKey.ToString() + "] Add MSG";
                 string actionDish = "[" + InputSystem.inst.interactKey.ToString() + "] Get Dish";
-                if (PickupSystem.inst.isHoldingTopping()) {
-                    if(TakeAction(actionMSG, InputSystem.inst.interactKey)) 
+                if (PickupSystem.inst.isHoldingTopping())
+                {
+                    if (TakeAction(actionMSG, InputSystem.inst.interactKey))
                     {
                         PickupSystem.inst.DestroyItem();
                         playerStats.incMSGAdded();
                         cooktopScript.dish.GetComponent<Food>().AddMSG();
                     }
-                    
+
                     // add value of MSG to value of dish
                     // update bool hasMSG to dish
                 }
-                else if (PickupSystem.inst.isHoldingItem()) {
+                else if (PickupSystem.inst.isHoldingItem())
+                {
                     Prompt("Hands Are Full");
                 }
-                else if (TakeAction(actionDish, InputSystem.inst.interactKey)) {
+                else if (TakeAction(actionDish, InputSystem.inst.interactKey))
+                {
                     PickupSystem.inst.PickUpItem(cooktopScript.dish);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
                     playerStats.incDishesMade();
                 }
             }
-            else if (!cooktopScript.IsPrepping()) {
+            else if (!cooktopScript.IsPrepping())
+            {
                 SetInteraction(false);
-            } 
+            }
         }
 
-        else if (tableRange) {
+        else if (tableRange)
+        {
             //Debug.Log("In range of table to give dish");
             //Debug.Log(PickupSystem.inst.isHoldingDish());
             // ERROR: NullReferenceException on if line -- doesn't affect gameplay as far as I know
@@ -110,7 +126,8 @@ public class PlayerInteraction : MonoBehaviour {
                 //Debug.Log("Should be giving dish");
                 // need to add a check for if food is already on the table -- don't need to do this bc checks if foodie is ordering
                 string action = "[" + InputSystem.inst.serveKey.ToString() + "] Give Dish";
-                if (TakeAction(action, InputSystem.inst.serveKey)) {
+                if (TakeAction(action, InputSystem.inst.serveKey))
+                {
                     // Make dish pop up on table, 
                     // change foodie to eating state
                     //Debug.Log($"current table object: {tableScript.gameObject}");
@@ -141,7 +158,7 @@ public class PlayerInteraction : MonoBehaviour {
                         tableScript.foodie.orderState.ReceivedWrongOrder();
                     }
 
-                    
+
 
                     // when foodie state is in eating state -- table is set
                     //      - table gets dish from what player is holding
@@ -166,7 +183,8 @@ public class PlayerInteraction : MonoBehaviour {
             }
         }
 
-        else if (canThrowAway && trashCanRange) {
+        else if (canThrowAway && trashCanRange)
+        {
             // if player is holding something
             if (PickupSystem.inst.isHoldingItem())
             {
@@ -180,12 +198,13 @@ public class PlayerInteraction : MonoBehaviour {
             }
         }
 
-        else if (distractionRange)
+        else if (distractionRange || bluetoothSkill)
         {
+            Debug.Log("Distraction Range");
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
             {
                 string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Turn On";
-                if (TakeAction(action, InputSystem.inst.kidnapKey))
+                if (TakeAction(action, InputSystem.inst.kidnapKey) || (bluetoothSkill && Input.GetKey(InputSystem.inst.kidnapKey)))
                 {
                     playerStats.incTimesDistracted();
                     distractionScript.DecrementCharges();
@@ -206,7 +225,7 @@ public class PlayerInteraction : MonoBehaviour {
                     currentlyKidnapping = true;
                     qtKidnap.resetEvent();
                 }
-                if(currentlyKidnapping && qtKidnap.isComplete())
+                if (currentlyKidnapping && qtKidnap.isComplete())
                 {
                     currentlyKidnapping = false;
 
@@ -248,7 +267,7 @@ public class PlayerInteraction : MonoBehaviour {
                     SetInteraction(false);
                 }
             }
-            else if (canGetMSG && grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()) 
+            else if (canGetMSG && grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem())
             {
                 string action = "[" + InputSystem.inst.interactKey.ToString() + "] Take MSG";
                 if (TakeAction(action, InputSystem.inst.interactKey))
@@ -262,11 +281,11 @@ public class PlayerInteraction : MonoBehaviour {
             }
         }
 
-        else if (counterRange) 
+        else if (counterRange)
         {
-            if (PickupSystem.inst.isHoldingDish() || PickupSystem.inst.isHoldingIngredient() || PickupSystem.inst.isHoldingTopping()) 
+            if (PickupSystem.inst.isHoldingDish() || PickupSystem.inst.isHoldingIngredient() || PickupSystem.inst.isHoldingTopping())
             {
-                if (!counterScript.Full()) 
+                if (!counterScript.Full())
                 {
                     string action = "[" + InputSystem.inst.interactKey.ToString() + "] Place Item";
                     if (TakeAction(action, InputSystem.inst.interactKey))
@@ -283,7 +302,7 @@ public class PlayerInteraction : MonoBehaviour {
                         SetInteraction(false);
                     }
                 }
-                else 
+                else
                 {
                     // check if item on counter is dish and item in hands is MSG - if so, let them add MSG. if not, let them swap items
 
@@ -295,7 +314,8 @@ public class PlayerInteraction : MonoBehaviour {
 
                     string actionMSG = "[" + InputSystem.inst.interactKey.ToString() + "] Add MSG";
                     string actionSwap = "[" + InputSystem.inst.interactKey.ToString() + "] Swap Items";
-                    if (testItem != null && PickupSystem.inst.isHoldingTopping()) {
+                    if (testItem != null && PickupSystem.inst.isHoldingTopping())
+                    {
                         if (TakeAction(actionMSG, InputSystem.inst.interactKey))
                         {
                             PickupSystem.inst.DestroyItem();
@@ -303,7 +323,7 @@ public class PlayerInteraction : MonoBehaviour {
                             counterScript.item.GetComponent<Food>().AddMSG();
                         }
                     }
-                    else if (TakeAction(actionSwap, InputSystem.inst.interactKey)) 
+                    else if (TakeAction(actionSwap, InputSystem.inst.interactKey))
                     {
                         GameObject temp = counterScript.item;
 
@@ -318,7 +338,7 @@ public class PlayerInteraction : MonoBehaviour {
                     }
                 }
             }
-            else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full()) 
+            else if (!PickupSystem.inst.isHoldingItem() && counterScript.Full())
             {
                 string action = "[" + InputSystem.inst.interactKey.ToString() + "] Pick up";
                 if (TakeAction(action, InputSystem.inst.interactKey))
@@ -344,7 +364,7 @@ public class PlayerInteraction : MonoBehaviour {
                     //Debug.Log("Caught kidnapping");
                     PickupSystem.inst.ReleaseFoodie();
                 }
-                    
+
             }
         }
 
@@ -410,13 +430,16 @@ public class PlayerInteraction : MonoBehaviour {
         canThrowAway = false;
     }
 
-    public void SetInteraction(bool status) {
+    public void SetInteraction(bool status)
+    {
         interactionMessage.SetActive(status);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         // to create new interactions, add a tag to the collision object in question
-        if(collision.tag == "Cooktop") { //&& !cooktopScript.IsCooking()) {
+        if (collision.tag == "Cooktop")
+        { //&& !cooktopScript.IsCooking()) {
             //Debug.Log("Within range of cooktop");
             cooktopRange = true;
             cooktopScript = collision.gameObject.transform.GetComponent<Cooking>();
@@ -464,18 +487,20 @@ public class PlayerInteraction : MonoBehaviour {
         {
             //Debug.Log("Within range of foodie sight");
             foodieSightRange = true;
-        } 
-        else if (collision.CompareTag("Counter")) 
+        }
+        else if (collision.CompareTag("Counter"))
         {
             //Debug.Log("Within range of counter");
             counterRange = true;
             counterScript = collision.GetComponent<Counter>();
         }
-        
+
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
-        if(collision.tag == "Cooktop") {
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Cooktop")
+        {
             cooktopRange = false;
             cooktopScript.StopPrep();
             //Debug.Log("Out of range of cooktop");
@@ -507,7 +532,7 @@ public class PlayerInteraction : MonoBehaviour {
         {
             foodieRange = false;
             foodieScript = null;
-            if(currentlyKidnapping)
+            if (currentlyKidnapping)
             {
                 currentlyKidnapping = false;
                 qtKidnap.ForceStop();
@@ -533,19 +558,24 @@ public class PlayerInteraction : MonoBehaviour {
 
         interactionMessage.SetActive(false);
     }
-    
+
     // displays a given prompt and awaits user interaction
-    private bool TakeAction(string prompt, KeyCode action_keycode) {
+    private bool TakeAction(string prompt, KeyCode action_keycode)
+    {
         SetInteraction(true);
         messageText.SetText(prompt);
-        if(Input.GetKeyDown(action_keycode)) {
+        if (Input.GetKeyDown(action_keycode))
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
-    private void Prompt(string prompt) {
+    private void Prompt(string prompt)
+    {
         SetInteraction(true);
         messageText.SetText(prompt);
     }

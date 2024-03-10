@@ -14,12 +14,12 @@ public class DistractionSystem : MonoBehaviour
 
     public Distraction animatronicDistraction;
     public bool showDebug = false;
-    public int distractedTime = 2;
-    
+    public float distractedTime = 2;
+
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -33,7 +33,7 @@ public class DistractionSystem : MonoBehaviour
             }
         }
 
-        if (animatronicDistraction != null && animatronicDistraction.timerScript.timeLeft <= 0 )
+        if (animatronicDistraction != null && animatronicDistraction.timerScript.timeLeft <= 0)
         {
             ResetDistraction();
         }

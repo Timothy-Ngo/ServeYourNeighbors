@@ -7,7 +7,7 @@ public class FoodieOrderState : FoodieState
     public Vector3 tablePosition;
     public Table tableScript;
     bool atTable = false;
-    int orderTime = 5;
+    float orderTime = 5;
     bool isOrdering = false;
     
     

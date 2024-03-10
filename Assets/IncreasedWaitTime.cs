@@ -1,20 +1,21 @@
 // Author: Timothy Ngo
-// Date: 2/21/24
+// Date: 3/9/24
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FasterGrindingSkill : Skill
+public class IncreasedWaitTime : Skill
 {
     // Needs to be assigned in the inspector-------------
     [SerializeField] Skill preReqSkill;
-    [SerializeField] Grinder grinder;
+    [Tooltip("Value is a percentage from 0-1")]
+    [SerializeField] float timeIncreasePercentage = .15f;
     //---------------------------------------------------
-    [SerializeField] int newGrindTime = 1; // Base time is 2 seconds
     public override bool CheckRequirements()
     {
-        return preReqSkill.isAcquired && 
-            Currency.inst.AbleToWithdraw(skillCost);  
+        return preReqSkill.isAcquired &&
+            Currency.inst.AbleToWithdraw(skillCost);
+            
     }
 
     public override void MissingRequirements()
@@ -32,11 +33,13 @@ public class FasterGrindingSkill : Skill
 
     public override void Confirm()
     {
-         if (CheckRequirements())
+        if (CheckRequirements())
         {
-            Debug.Log("Making grinding go vroom vroom");
             Currency.inst.Withdraw(skillCost);
-            grinder.grindTime = newGrindTime;
+            foreach (GameObject go in FoodieSpawner.inst.foodiePrefabs)
+            {
+                go.GetComponent<Foodie>().orderTime *= (1 + timeIncreasePercentage);
+            }
             CompleteSkill();
         }
         else
@@ -44,5 +47,4 @@ public class FasterGrindingSkill : Skill
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
         }
     }
-
 }

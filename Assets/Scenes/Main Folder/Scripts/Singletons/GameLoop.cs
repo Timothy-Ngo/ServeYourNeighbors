@@ -234,7 +234,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         if (day % 3 == 0) // Every 3rd day, increase amount of waves and operations cost
         {
             wavesPerDay++;
-            dailyOperationCost += 10;
+            dailyOperationCost += 15;
         }
         else if (day % 5 == 1) // Every 5th day, increase number of foodies 
         {

@@ -15,7 +15,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         inst = this;
 
-        /*
+
         // Initialize table objects
         foreach (Transform transform in tablesParent.transform)
         {
@@ -48,7 +48,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             counterObjs[i].SetActive(false);
         }
-         */
+
 
     }
 

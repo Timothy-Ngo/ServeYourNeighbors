@@ -26,7 +26,7 @@ public class Foodie : MonoBehaviour
     
 
     [Header("-----ORDERING SETTINGS-----")]
-    public int orderTime = 28;
+    public float orderTime = 28;
 
     public float timeAtOrderTaken;
     public Sprite order;

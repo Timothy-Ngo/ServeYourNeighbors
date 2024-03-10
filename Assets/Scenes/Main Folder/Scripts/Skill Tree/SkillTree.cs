@@ -5,14 +5,12 @@ using UnityEngine;
 public class SkillTree : MonoBehaviour
 {
     [SerializeField] List<Skill> skills;
-    public void Start()
-    {
-        ExitUI();
-    }
+
     public void EnterUI()
     {
+        Debug.Log("EnterUI() pressed");
         gameObject.SetActive(true);
-        foreach(Skill skill in skills)
+        foreach (Skill skill in skills)
         {
             skill.Select();
         }

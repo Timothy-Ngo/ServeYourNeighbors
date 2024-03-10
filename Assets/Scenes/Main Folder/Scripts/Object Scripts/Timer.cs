@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour {
         timerBar.enabled = false; // https://discussions.unity.com/t/how-to-make-a-ui-image-appear-disappear/163474
     }
 
-    public void SetMaxTime(int sec) {
+    public void SetMaxTime(float sec) {
         maxTime = sec;
         timeLeft = sec;
         timerBar.enabled = true; // https://discussions.unity.com/t/how-to-make-a-ui-image-appear-disappear/163474

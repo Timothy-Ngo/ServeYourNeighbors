@@ -3,11 +3,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundFX : MonoBehaviour
 {
 
-    [SerializeField] private AudioSource soundFXObject;
+    [SerializeField] AudioSource soundFXObject;
+    [SerializeField] AudioMixerGroup soundFXAudioMixerGroup;
 
     public static SoundFX inst;
     // Start is called before the first frame update
@@ -23,8 +25,8 @@ public class SoundFX : MonoBehaviour
 
     public void PlaySoundFXClip(AudioClip audioClip, Transform spawnTransform, float volume)
     {
-        AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position , Quaternion.identity);
-
+        AudioSource audioSource = Instantiate(soundFXObject, spawnTransform.position, Quaternion.identity);
+        audioSource.outputAudioMixerGroup = soundFXAudioMixerGroup;
         audioSource.clip = audioClip;
 
         Debug.Assert(0 <= volume && volume <= 1, "Out of range volume value!");

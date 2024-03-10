@@ -5,7 +5,12 @@ using UnityEngine;
 
 public abstract class Skill : MonoBehaviour
 {
-    [SerializeField] protected string skillName; // Keep at 19 characters max
+    [SerializeField] string _skillName; // Keep at 19 characters max
+
+    public string skillName
+    {
+        get { return _skillName;}   
+    }
     [SerializeField] protected string skillDesc;
     [SerializeField] protected int skillCost;
 
