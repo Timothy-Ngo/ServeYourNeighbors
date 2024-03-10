@@ -51,6 +51,9 @@ public class GameData
     public bool hasAnimatronic;
     public Vector3 animatronicPosition;
 
+    public bool tavernAchieved;
+    public bool restaurantAchieved;
+
     // ----- Layout Data ----- //
     public int layout;
     public bool newLayout;
@@ -97,6 +100,8 @@ public class GameData
         cookStationPositions = new List<Vector3>();
         hasAnimatronic = false;
         animatronicPosition = new Vector3();
+        tavernAchieved = false;
+        restaurantAchieved = false;
 
         // SYN Meter
         fillAmount = 0f;

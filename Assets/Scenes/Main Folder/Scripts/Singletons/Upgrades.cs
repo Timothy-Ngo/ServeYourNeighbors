@@ -38,6 +38,8 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             cookStations[i].SetActive(false);
         }
+
+        /*
         // Initialize counter objects
         foreach (Transform transform in counterParent.transform)
         {
@@ -48,7 +50,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             counterObjs[i].SetActive(false);
         }
-
+        */
 
     }
 
@@ -115,6 +117,21 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public bool animatronicPlacementMode = false;
     public Vector3 animatronicPosition;
 
+    [Header("-----VISUAL UPGRADES-----")]
+    public bool full = false;
+    [SerializeField] Image visualBar; // drag and drop image in inspector
+    public TextMeshProUGUI barDescription;
+    public float fillAmount = 0f;
+    public float tavernThreshold = 4; // number of upgrades needed to get tavern design
+    public float restaurantThreshold = 8; // number of upgrades needed to get restaurant design
+    private float upgradesCount = 0;
+    public GameObject shackDesign;
+    public GameObject tavernDesign;
+    public GameObject restaurantDesign;
+    private bool tavernAchieved = false;
+    private bool restaurantAchieved = false;
+    public SkillTree skillTreeScript;
+
     public enum LayoutLevel
     {
         Shack = 0,
@@ -157,6 +174,28 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             GameObject animatronic = Instantiate(animatronicPrefab, animatronicPosition, Quaternion.identity, distractionParent);
             DistractionSystem.inst.animatronicDistraction = animatronic.GetComponent<Distraction>();
         }
+
+
+        // visual upgrades
+            // number of upgrades is calculated when upgrade screen is open, so we don't need to save it
+
+        tavernAchieved = data.tavernAchieved;
+        restaurantAchieved = data.restaurantAchieved;
+
+        if (tavernAchieved)
+        {
+            shackDesign.SetActive(false);
+            tavernDesign.SetActive(true);
+            restaurantDesign.SetActive(false);
+        }
+        
+        if (restaurantAchieved)
+        {
+            shackDesign.SetActive(false);
+            tavernDesign.SetActive(false);
+            restaurantDesign.SetActive(true);
+        }
+
     }
 
     // the positions of the objects are saved to the file
@@ -184,6 +223,10 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             data.hasAnimatronic = hasAnimatronic;
             data.animatronicPosition = animatronicPosition;
         }
+
+        // visual upgrades
+        data.tavernAchieved = tavernAchieved;
+        data.restaurantAchieved = restaurantAchieved;
     }
 
 
@@ -202,7 +245,55 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
     private void Update()
     {
+        if (upgradesScreen.activeSelf)
+        {
+            upgradesCount = CalculateUpgradesNum();
 
+            if (shackDesign.activeSelf)
+            {
+                barDescription.text = "Tavern Upgrade Progress: " + upgradesCount.ToString() + "/" + tavernThreshold.ToString();
+
+                fillAmount = upgradesCount / tavernThreshold;
+                Debug.Log(upgradesCount / tavernThreshold);
+
+                if (fillAmount >= 1)
+                {
+                    shackDesign.SetActive(false);
+                    tavernDesign.SetActive(true);
+                    tavernAchieved = true;
+                }
+                else
+                {
+                    Debug.Log(fillAmount);
+                    visualBar.fillAmount = fillAmount;
+                }
+
+            }
+            else if (tavernDesign.activeSelf)
+            {
+                barDescription.text = "Restaurant Upgrade Progress: " + upgradesCount.ToString() + "/" + restaurantThreshold.ToString();
+
+                fillAmount = upgradesCount / restaurantThreshold;
+
+                if (fillAmount >= 1)
+                {
+                    tavernDesign.SetActive(false);
+                    restaurantDesign.SetActive(true);
+                    visualBar.fillAmount = 1;
+                    restaurantAchieved = true;
+                }
+                else
+                {
+                    visualBar.fillAmount = fillAmount;
+                }
+            }
+            else
+            {
+                barDescription.text = "Restaurant Design Achieved!";
+            }
+
+            
+        }
     }
 
     // -----HELPER METHODS-----
@@ -256,6 +347,30 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             tables.Add(table.gameObject);
         }
+    }
+
+    public float CalculateUpgradesNum()
+    {
+        float upgradesNum = 0;
+
+        upgradesNum += GetNumOfActiveTables() - 1;
+        upgradesNum += GetNumOfActiveCookStations() - 1;
+        
+        if (hasAnimatronic)
+        {
+            upgradesNum++;
+        }
+
+        if (isGMO)
+        {
+            upgradesNum++;
+        }
+
+        int skillTreeUpgrades = skillTreeScript.GetNumActive();
+
+        upgradesNum += skillTreeUpgrades;
+
+        return upgradesNum;
     }
 
     // ------------------------

@@ -19,4 +19,20 @@ public class SkillTree : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+    // return number of active skills
+    public int GetNumActive()
+    {
+        int numActive = 0;
+
+        foreach (Skill skill in skills)
+        {
+            if (skill.isAcquired)
+            {
+                numActive++;
+            }
+        }
+
+        return numActive;
+    }
 }

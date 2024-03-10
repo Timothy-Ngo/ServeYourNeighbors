@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitTests : MonoBehaviour
 {
+    [SerializeField] bool allowUnitTests = false;
     [SerializeField] SYNMeter synMeter;
     [SerializeField] Cooking cooking;
     [SerializeField] QTEvent qtEvent;
@@ -17,18 +18,22 @@ public class UnitTests : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (allowUnitTests)
         {
-            testTimeBasedPayment();
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                testTimeBasedPayment();
+            }
+            if (Input.GetKeyDown(KeyCode.Y))
+            {
+                testFullSYNMeter();
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                StartCoroutine(testCookingKeysmash());
+            }
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            testFullSYNMeter();
-        }
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            StartCoroutine(testCookingKeysmash());
-        }
+        
     }
 
     public void testTimeBasedPayment() // Using varying tipPercentages to compare and see if the player gold is correct
