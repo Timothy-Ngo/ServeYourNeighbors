@@ -4,7 +4,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameLoop : MonoBehaviour, IDataPersistence
 {
@@ -59,6 +60,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
     [Header("-----PAUSE GAME-----")]
     [SerializeField] private GameObject pauseGameScreen;
+    [SerializeField] private Button resumeButton;
     bool pauseScreenOpened = false;
 
     [Header("-----SETTINGS-----")]
@@ -169,19 +171,6 @@ public class GameLoop : MonoBehaviour, IDataPersistence
                 }
             }
 
-            if (Input.GetKeyDown(InputSystem.inst.pauseKey))
-            {
-                if(pauseScreenOpened)
-                {
-                    DisablePauseScreen();
-                }
-                else
-                {
-                    EnablePauseScreen();
-                }
-                
-            }
-
             /*
             // if a layout hasn't been selected, show the layout screen and pause time
             if (!layoutSelected)
@@ -191,6 +180,19 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
             }
             */
+        }
+
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey))
+        {
+            if (pauseScreenOpened)
+            {
+                DisablePauseScreen();
+            }
+            else
+            {
+                EnablePauseScreen();
+            }
+
         }
     }
     /*
@@ -208,6 +210,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         pauseGameScreen.SetActive(true);
         pauseScreenOpened = true;
         Time.timeScale = 0; // freezes gameplay
+        resumeButton.Select();
     }
 
     public void DisablePauseScreen()

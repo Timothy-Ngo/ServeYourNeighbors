@@ -81,7 +81,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
     void OnGUI()
     {
         Event e = Event.current;
-        if (e.isKey)
+        if (e.isKey && e.keyCode != KeyCode.Return)//
         {
             //Debug.Log("Detected key code: " + e.keyCode);
             

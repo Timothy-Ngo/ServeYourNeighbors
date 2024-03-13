@@ -58,8 +58,6 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject breadFoodiePrefab;
 
     [Header("-----PAUSE GAME-----")]
-    [SerializeField] GameObject pauseGameScreen;
-    bool pauseScreenOpened = false;
 
     public bool skip = false;
     public bool typing = false;
@@ -84,17 +82,6 @@ public class Tutorial : MonoBehaviour
         if (Input.GetKeyDown(InputSystem.inst.interactKey) && typing)
         {
             skip = true;
-        }
-
-        if (Input.GetKeyDown(InputSystem.inst.pauseKey))
-        {
-            // toggles pause screen open/close
-            pauseGameScreen.SetActive(!pauseScreenOpened);
-            pauseScreenOpened = !pauseScreenOpened;
-            if (pauseScreenOpened)
-                Time.timeScale = 0; // freezes gameplay
-            else
-                Time.timeScale = 1;
         }
 
         // shake the intense text
