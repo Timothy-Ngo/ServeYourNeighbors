@@ -50,6 +50,10 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [Header("-----YELP REVIEWS-----")]
     [SerializeField] private GameObject reviewScreenObj;
     [SerializeField] private Reviews reviewsScript;
+    [SerializeField] private Button continueReviewButton;
+
+    [Header("-----UPGRADES SCREEN-----")]
+    [SerializeField] private Button tablesUpgradeButton;
 
     [Header("-----SYN METER-----")]
     [SerializeField] SYNMeter synMeter;
@@ -308,6 +312,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     {
         reviewScreenObj.SetActive(false);
         upgradeScreenObj.SetActive(true);
+        EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
+        EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
         Player.inst.Deactivate();
     }
 
@@ -316,6 +322,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         yield return new WaitForSeconds(delay);
         reviewScreenObj.SetActive(true);
         reviewsScript.Launch();
+        EventSystem.current.firstSelectedGameObject = continueReviewButton.gameObject;
+        EventSystem.current.SetSelectedGameObject(continueReviewButton.gameObject);
         Player.inst.Deactivate();
     }
 

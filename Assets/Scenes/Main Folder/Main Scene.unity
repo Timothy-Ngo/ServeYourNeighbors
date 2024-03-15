@@ -12078,6 +12078,8 @@ MonoBehaviour:
   opCostsNotAchievedColor: {r: 1, g: 0.078431375, b: 0, a: 1}
   reviewScreenObj: {fileID: 1952010999}
   reviewsScript: {fileID: 648400169}
+  continueReviewButton: {fileID: 4766183069804671131}
+  tablesUpgradeButton: {fileID: 1180128179}
   synMeter: {fileID: 584663805}
   playerUI: {fileID: 91747036}
   endGameScreen: {fileID: 1555204348}
@@ -25219,15 +25221,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.63008773
+      value: 0.15686275
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.63008773
+      value: 0.42745098
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.6320754
+      value: 0.007843138
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -25384,6 +25386,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6671339492838857313, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
   m_PrefabInstance: {fileID: 1180128177}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1180128179 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+  m_PrefabInstance: {fileID: 1180128177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1180147258
 GameObject:
   m_ObjectHideFlags: 0
@@ -47661,9 +47674,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
+    m_HighlightedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.3679245, g: 0.35635453, b: 0.35635453, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
