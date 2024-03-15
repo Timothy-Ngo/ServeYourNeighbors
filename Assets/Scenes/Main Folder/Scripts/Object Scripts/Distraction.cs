@@ -81,4 +81,14 @@ public class Distraction : MonoBehaviour
     {
         currentCharges = maxCharges;
     }
+
+    public void Animate()
+    {
+        gameObject.GetComponent<Animator>().enabled = true;
+    }
+
+    public void StopAnimate()
+    {
+        gameObject.GetComponent<Animator>().enabled = false;
+    }
 }

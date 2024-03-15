@@ -48,6 +48,8 @@ public class DistractionSystem : MonoBehaviour
         animatronicDistraction.statusText.text = "ON";
 
         animatronicDistraction.timerScript.SetMaxTime(distractedTime);
+
+        animatronicDistraction.Animate();
     }
 
     public void ResetDistraction()
@@ -55,5 +57,7 @@ public class DistractionSystem : MonoBehaviour
         animatronicDistraction.distractionTrigger.enabled = false;
         animatronicDistraction.statusText.text = "OFF";
         animatronicDistraction.statusText.enabled = false;
+
+        animatronicDistraction.StopAnimate();
     }
 }
