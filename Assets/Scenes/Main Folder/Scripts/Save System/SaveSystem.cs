@@ -39,7 +39,7 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] private bool useEncryption;
 
     public GameData gameData;
-    private SettingsData settingsData;
+    public SettingsData settingsData;
 
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ISettingsDataPersistence> settingsDataPersistenceObjects;

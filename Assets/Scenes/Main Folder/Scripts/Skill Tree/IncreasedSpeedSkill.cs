@@ -37,14 +37,18 @@ public class IncreasedSpeedSkill : Skill
     {
         if (CheckRequirements())
         {
-            Debug.Log("Making player go vroom vroom");
+            //Debug.Log("Making player go vroom vroom");
             Currency.inst.Withdraw(skillCost);
-            pm.SetSpeed(newSpeed);
             CompleteSkill();
         }
         else
         {
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
         }
+    }
+
+    public override void ActivateMechanic()
+    {
+        pm.SetSpeed(newSpeed);
     }
 }

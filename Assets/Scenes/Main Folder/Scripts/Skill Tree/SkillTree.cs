@@ -46,7 +46,7 @@ public class SkillTree : MonoBehaviour, IDataPersistence
             skills[i].isAcquired = data.skills[i];
             if (skills[i].isAcquired)
             {
-                skills[i].Confirm();
+                skills[i].CompleteSkill();
             }
         }
         

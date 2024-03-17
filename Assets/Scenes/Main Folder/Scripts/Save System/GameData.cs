@@ -64,6 +64,8 @@ public class GameData
     public Vector3 cookStationPosition;
     public Vector3 grinderPosition;
     public Vector3 tablePosition;
+    public Vector3 topLeftKitchenBoundaryPosition;
+    public Vector3 bottomRightKitchenBoundaryPosition;
 
     // ----- SYN Meter ----- //
     public float fillAmount;

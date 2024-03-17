@@ -1,22 +1,25 @@
-// Author: Timothy Ngo
-// Date: 3/9/24
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IncreasedDistractionTime : Skill
+public class BluetoothAnimatronicSkill : Skill
 {
     // Needs to be assigned in the inspector-------------
     [SerializeField] Skill preReqSkill;
-    [Tooltip("Value is a percentage from 0-1")]
-    [SerializeField] float timeIncreasePercentage = .5f;
+    [SerializeField] PlayerInteraction playerInteraction;
     //---------------------------------------------------
 
+    public void Update()
+    {
+        
+    }
+    
     public override bool CheckRequirements()
     {
         return preReqSkill.isAcquired &&
             DistractionSystem.inst.animatronicDistraction != null &&
-            Currency.inst.AbleToWithdraw(skillCost);  
+            Currency.inst.AbleToWithdraw(skillCost);
+            
     }
 
     public override void MissingRequirements()
@@ -36,18 +39,23 @@ public class IncreasedDistractionTime : Skill
         }
     }
 
+
+    
     public override void Confirm()
     {
         if (CheckRequirements())
         {
             Currency.inst.Withdraw(skillCost);
-            // Change distraction time here
-            DistractionSystem.inst.distractedTime  *= (1 + timeIncreasePercentage);
             CompleteSkill();
         }
         else
         {
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
         }
+    }
+
+    public override void ActivateMechanic()
+    {
+        playerInteraction.bluetoothSkill = true;
     }
 }

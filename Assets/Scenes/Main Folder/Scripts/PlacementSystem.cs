@@ -38,7 +38,6 @@ public class PlacementSystem : MonoBehaviour
     public Vector2 topLeftCorner;
     public Vector2 bottomRightCorner;
 
-    [Header("Kitchen Boundary")]
 
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
@@ -204,48 +203,56 @@ public class PlacementSystem : MonoBehaviour
             if (Input.GetKey(InputSystem.inst.finishPlacementKey))
             {
 
-                isEnabled = false;
-                if (!Upgrades.inst.upgradesScreen.activeSelf)
+                if (selectedItem.transform.position == startingPositionObject.transform.position)
                 {
-                    ChangeFloorColorTo(originalFloorColor);
-                    Upgrades.inst.upgradesScreen.SetActive(true);
+                    Debug.Log("Item must be placed in restaurant.");
                 }
+                else
+                {
 
-                if (Upgrades.inst.changeLayoutMode)
-                {
-                    Upgrades.inst.changeLayoutMode = false;
-                    FoodieSystem.inst.GetCurrentSeats();
-                    return;
-                }
-                if (Upgrades.inst.tablePlacementMode)
-                {
-                    FoodieSystem.inst.GetCurrentSeats();
-                    Upgrades.inst.tablePlacementMode = false;
-                    selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
-                }
+                    isEnabled = false;
+                    if (!Upgrades.inst.upgradesScreen.activeSelf)
+                    {
+                        ChangeFloorColorTo(originalFloorColor);
+                        Upgrades.inst.upgradesScreen.SetActive(true);
+                    }
 
-                if (Upgrades.inst.cookStationPlacementMode)
-                {
-                    Upgrades.inst.cookStationPlacementMode = false;
-                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                    Upgrades.inst.cookStations.Add(selectedItem);
-                }
+                    if (Upgrades.inst.changeLayoutMode)
+                    {
+                        Upgrades.inst.changeLayoutMode = false;
+                        FoodieSystem.inst.GetCurrentSeats();
+                        return;
+                    }
+                    if (Upgrades.inst.tablePlacementMode)
+                    {
+                        FoodieSystem.inst.GetCurrentSeats();
+                        Upgrades.inst.tablePlacementMode = false;
+                        selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
+                    }
 
-                if (Upgrades.inst.counterPlacementMode)
-                {
-                    Upgrades.inst.counterPlacementMode = false;
-                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                }
+                    if (Upgrades.inst.cookStationPlacementMode)
+                    {
+                        Upgrades.inst.cookStationPlacementMode = false;
+                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        Upgrades.inst.cookStations.Add(selectedItem);
+                    }
 
-                if (Upgrades.inst.animatronicPlacementMode)
-                {
-                    Upgrades.inst.animatronicPlacementMode = false;
-                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                    Upgrades.inst.animatronicPosition = selectedItem.transform.position;
-                    Upgrades.inst.hasAnimatronic = true;
-                    DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
-                }
+                    if (Upgrades.inst.counterPlacementMode)
+                    {
+                        Upgrades.inst.counterPlacementMode = false;
+                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                    }
 
+                    if (Upgrades.inst.animatronicPlacementMode)
+                    {
+                        Upgrades.inst.animatronicPlacementMode = false;
+                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        Upgrades.inst.animatronicPosition = selectedItem.transform.position;
+                        Upgrades.inst.hasAnimatronic = true;
+                        DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
+                    }
+
+                }
 
             }
         }

@@ -47,3 +47,38 @@ MonoBehaviour:
   fileName: data.syn
   settingsFileName: settings.syn
   useEncryption: 0
+  gameData:
+    day: 1
+    dailyOperationCost: 15
+    wavesPerDay: 2
+    numFoodiesPerWave: 1
+    layoutSelected: 0
+    gold: 50
+    dishesMade: 0
+    itemsThrown: 0
+    foodiesServed: 0
+    msgAdded: 0
+    successfulServings: 0
+    failedServings: 0
+    foodiesKidnapped: 0
+    foodiesGround: 0
+    timesDistracted: 0
+    kidnappingsCaught: 0
+    tablePositions: []
+    cookStationPositions: []
+    hasAnimatronic: 0
+    animatronicPosition: {x: 0, y: 0, z: 0}
+    tavernAchieved: 0
+    restaurantAchieved: 0
+    layout: 1
+    newLayout: 1
+    trashcanPosition: {x: 0, y: 0, z: 0}
+    tomatoBoxPosition: {x: 0, y: 0, z: 0}
+    flourBoxPosition: {x: 0, y: 0, z: 0}
+    lettuceBoxPosition: {x: 0, y: 0, z: 0}
+    cookStationPosition: {x: 0, y: 0, z: 0}
+    grinderPosition: {x: 0, y: 0, z: 0}
+    tablePosition: {x: 0, y: 0, z: 0}
+    fillAmount: 0
+    skills: 000000000000
+  skillTree: {fileID: 0}

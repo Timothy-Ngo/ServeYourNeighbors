@@ -9,7 +9,7 @@ public abstract class Skill : MonoBehaviour
 
     public string skillName
     {
-        get { return _skillName;}   
+        get { return _skillName; }
     }
     [SerializeField] protected string skillDesc;
     [SerializeField] protected int skillCost;
@@ -20,7 +20,7 @@ public abstract class Skill : MonoBehaviour
     public abstract void MissingRequirements(); // Determines what requirements are missing
     public abstract void Confirm();
 
-
+    public abstract void ActivateMechanic();
     public void AchievedRequirements()
     {
         SkillInformation.inst.confirmButton.onClick.RemoveAllListeners();
@@ -28,6 +28,7 @@ public abstract class Skill : MonoBehaviour
     }
     public void CompleteSkill()
     {
+        ActivateMechanic();
         isAcquired = true;
         SkillInformation.inst.confirmButton.gameObject.SetActive(false);
         SkillInformation.inst.skillCostText.text = "Skill Acquired";

@@ -30,19 +30,22 @@ public class FasterCookingSkill : Skill
     {
         if (CheckRequirements())
         {
-            Debug.Log("Faster cooking skill activated");
+            //Debug.Log("Faster cooking skill activated");
             Currency.inst.Withdraw(skillCost);
-            foreach (GameObject obj in Upgrades.inst.cookStations)
-            {
-                Cooking cooking = obj.GetComponent<Cooking>();
-                cooking.SetCookTime(newCookTime);
-            }
             CompleteSkill();
-
         }
         else
         {
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
+        }
+    }
+
+    public override void ActivateMechanic()
+    {
+        foreach (GameObject obj in Upgrades.inst.cookStations)
+        {
+            Cooking cooking = obj.GetComponent<Cooking>();
+            cooking.SetCookTime(newCookTime);
         }
     }
 }

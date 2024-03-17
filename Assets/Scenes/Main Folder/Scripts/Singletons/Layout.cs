@@ -141,7 +141,8 @@ public class Layout : MonoBehaviour, IDataPersistence
             cookStationPosition = data.cookStationPosition;
             grinderPosition = data.grinderPosition;
             tablePosition = data.tablePosition;
-
+            _topLeftKitchenBoundaryPosition = data.topLeftKitchenBoundaryPosition;
+            _bottomRightKitchenBoundaryPosition = data.bottomRightKitchenBoundaryPosition;
             // move the objects to designated positions
             SetPositions();
         }
@@ -168,6 +169,8 @@ public class Layout : MonoBehaviour, IDataPersistence
             data.cookStationPosition = cookStationPosition;
             data.grinderPosition = grinderPosition;
             data.tablePosition = tablePosition;
+            data.topLeftKitchenBoundaryPosition = topLeftKitchenBoundaryPosition;
+            data.bottomRightKitchenBoundaryPosition = bottomRightKitchenBoundaryPosition;
         }
 
 

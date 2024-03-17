@@ -34,15 +34,19 @@ public class FasterGrindingSkill : Skill
     {
          if (CheckRequirements())
         {
-            Debug.Log("Making grinding go vroom vroom");
+            //Debug.Log("Making grinding go vroom vroom");
             Currency.inst.Withdraw(skillCost);
-            grinder.grindTime = newGrindTime;
             CompleteSkill();
         }
         else
         {
             Debug.LogError("There is absolutely no way this should be displayed in the console. The player has pressed confirm without achieving the requirements");
         }
+    }
+
+    public override void ActivateMechanic()
+    {
+       grinder.grindTime = newGrindTime;
     }
 
 }

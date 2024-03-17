@@ -4251,6 +4251,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3483388917230398874, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1927012108}
+    - target: {fileID: 3483388917230398874, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3906296908930804878, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1927012108}
+    - target: {fileID: 3906296908930804878, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetMaster
+      objectReference: {fileID: 0}
     - target: {fileID: 5479738235822360160, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4482,6 +4498,14 @@ PrefabInstance:
     - target: {fileID: 5479738237727958934, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261759943112751172, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1927012108}
+    - target: {fileID: 7261759943112751172, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetSoundFX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
