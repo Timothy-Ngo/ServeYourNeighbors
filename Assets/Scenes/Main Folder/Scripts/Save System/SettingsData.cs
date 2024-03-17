@@ -6,6 +6,8 @@ using UnityEngine;
 [System.Serializable]
 public class SettingsData
 {
+
+    // key rebinding
     public KeyCode interactKey;
     public KeyCode cookKey;
     public KeyCode kidnapKey;
@@ -13,6 +15,11 @@ public class SettingsData
     public KeyCode finishPlacementKey;
     public KeyCode pauseKey;
     public KeyCode foodieSightKey;
+
+    // audio settings
+    public float masterValue;
+    public float musicValue;
+    public float audioFXValue;
 
     public SettingsData()
     {
@@ -23,5 +30,9 @@ public class SettingsData
         finishPlacementKey = KeyCode.Space;
         pauseKey = KeyCode.Escape;
         foodieSightKey = KeyCode.LeftShift;
+
+        masterValue = 1f;
+        musicValue = 1f;
+        audioFXValue = 1f;
     }
 }
