@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7344922938511101848}
   - component: {fileID: 7344922938511101847}
   - component: {fileID: 7344922938511101846}
+  - component: {fileID: 7804822182777677460}
   m_Layer: 0
   m_Name: flour_box
   m_TagString: IngredientBox
@@ -156,3 +157,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.3030176}
   m_EdgeRadius: 0
+--- !u!114 &7804822182777677460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7344922938511101844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14ea7c589bab6f4b9e0df8dfc10cd15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  startObject: 1

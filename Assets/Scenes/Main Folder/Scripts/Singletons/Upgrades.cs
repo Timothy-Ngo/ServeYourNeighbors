@@ -76,7 +76,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public GameObject tablesParent;
     [SerializeField] private List<GameObject> tables;
     public int numTables { get { return tables.Count; } }
-    public const int maxTables = 4;
+    [SerializeField] int maxTables = 4;
     public int tablesUpgradeCost = 50;
     public TextMeshProUGUI tablesDescription;
     public bool tablePlacementMode = false;
@@ -85,7 +85,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public GameObject cookStationsParent;
     [SerializeField] public List<GameObject> cookStations;
     public int numCookStations { get { return cookStations.Count; } }
-    public const int maxCookStations = 4;
+    [SerializeField] int maxCookStations = 4;
 
     public int cookStationsUpgradeCost = 50;
     public TextMeshProUGUI cookStationsDescription;
@@ -96,7 +96,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     public GameObject counterParent;
     public List<GameObject> counterObjs;
     public int numCounters { get { return counterObjs.Count; } }
-    public const int maxCounters = 5;
+    [SerializeField] int maxCounters = 5;
     public int countersUpgradeCost = 50;
     public TextMeshProUGUI countersDescription;
     public bool counterPlacementMode = false;

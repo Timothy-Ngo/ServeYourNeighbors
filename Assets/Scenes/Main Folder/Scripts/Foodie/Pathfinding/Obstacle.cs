@@ -24,7 +24,7 @@ public class Obstacle : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void RemoveObstacle()
@@ -49,13 +49,14 @@ public class Obstacle : MonoBehaviour
             //Debug.Log("Distraction object");
             for (int j = 0; j < 1; j++)
             {
-                FoodieSystem.inst.pathfinding.GetNode(x , y + j).SetIsPlaceable(true);
+                FoodieSystem.inst.pathfinding.GetNode(x, y + j).SetIsPlaceable(true);
             }
-            
+
         }
         else if (gameObject.CompareTag("Cooktop"))
         {
             //Debug.Log("Cooktop object");
+            /*
             for (int i = -1; i < 1; i++)
             {
                 for (int j = -1; j < 1; j++)
@@ -63,12 +64,14 @@ public class Obstacle : MonoBehaviour
                     FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(true);
                 }
             }
+            */
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
         }
         else if (gameObject.CompareTag("Counter"))
         {
             FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
-            FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(true);
+            //FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(true);
         }
         else if (gameObject.CompareTag("PlayerSpawn"))
         {
@@ -77,7 +80,7 @@ public class Obstacle : MonoBehaviour
         else
         {
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
-            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
+            //FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
         }
 
         // for debugging
@@ -119,6 +122,7 @@ public class Obstacle : MonoBehaviour
         else if (gameObject.CompareTag("Cooktop"))
         {
             //Debug.Log("Cooktop object");
+            /*
             for (int i = -1; i < 1; i++)
             {
                 for (int j = -1; j < 1; j++)
@@ -126,12 +130,14 @@ public class Obstacle : MonoBehaviour
                     FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(false);
                 }
             }
+            */
+            FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
         }
         else if (gameObject.CompareTag("Counter"))
         {
             FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
-            FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(false);
+            //FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(false);
         }
         else if (gameObject.CompareTag("PlayerSpawn"))
         {
@@ -140,7 +146,7 @@ public class Obstacle : MonoBehaviour
         else
         {
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
-            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
+            //FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
         }
 
         // for debugging

@@ -26,9 +26,20 @@ public class Layout : MonoBehaviour, IDataPersistence
     Vector3 cookStationPosition;
     Vector3 grinderPosition;
     Vector3 tablePosition;
+    Vector3 _topLeftKitchenBoundaryPosition;
+    Vector3 _bottomRightKitchenBoundaryPosition;
+    public Vector3 topLeftKitchenBoundaryPosition
+    {
+        get { return _topLeftKitchenBoundaryPosition; }
+    }
+
+    public Vector3 bottomRightKitchenBoundaryPosition
+    {
+        get { return _bottomRightKitchenBoundaryPosition; }
+    }
 
     [Header("-----LAYOUT 1-----")]
-    [SerializeField] GameObject layout1;
+    [SerializeField] GameObject layout1 ;
     [SerializeField] GameObject trashcan1;
     [SerializeField] GameObject tomatoBox1;
     [SerializeField] GameObject flourBox1;
@@ -36,6 +47,9 @@ public class Layout : MonoBehaviour, IDataPersistence
     [SerializeField] GameObject cookStation1;
     [SerializeField] GameObject grinder1;
     [SerializeField] GameObject table1;
+    [SerializeField] GameObject topLeftKitchenBoundary1;
+    [SerializeField] GameObject bottomRightKitchenBoundary1;
+
 
     [Header("-----LAYOUT 2-----")]
     [SerializeField] GameObject layout2;
@@ -46,6 +60,8 @@ public class Layout : MonoBehaviour, IDataPersistence
     [SerializeField] GameObject cookStation2;
     [SerializeField] GameObject grinder2;
     [SerializeField] GameObject table2;
+    [SerializeField] GameObject topLeftKitchenBoundary2;
+    [SerializeField] GameObject bottomRightKitchenBoundary2;
 
     [Header("-----LAYOUT 3-----")]
     [SerializeField] GameObject layout3;
@@ -56,6 +72,8 @@ public class Layout : MonoBehaviour, IDataPersistence
     [SerializeField] GameObject cookStation3;
     [SerializeField] GameObject grinder3;
     [SerializeField] GameObject table3;
+    [SerializeField] GameObject topLeftKitchenBoundary3;
+    [SerializeField] GameObject bottomRightKitchenBoundary3;
 
     [Header("-----OBJECT PARENTS-----")]
     [SerializeField] Transform trashcanParent;
@@ -127,9 +145,9 @@ public class Layout : MonoBehaviour, IDataPersistence
             // move the objects to designated positions
             SetPositions();
         }
-        
-        
-        
+
+
+
     }
 
     public void SaveData(GameData data)
@@ -152,15 +170,15 @@ public class Layout : MonoBehaviour, IDataPersistence
             data.tablePosition = tablePosition;
         }
 
-        
-        
+
+
     }
 
     public void ShowLayout1()
     {
         layout1.SetActive(true);
     }
-    
+
     public void ShowLayout2()
     {
         layout2.SetActive(true);
@@ -192,7 +210,7 @@ public class Layout : MonoBehaviour, IDataPersistence
 
             SaveSystem.inst.SaveGame();
 
-            
+
         }
     }
 
@@ -208,6 +226,8 @@ public class Layout : MonoBehaviour, IDataPersistence
             cookStationPosition = cookStation1.transform.position;
             grinderPosition = grinder1.transform.position;
             tablePosition = table1.transform.position;
+            _topLeftKitchenBoundaryPosition = topLeftKitchenBoundary1.transform.position;
+            _bottomRightKitchenBoundaryPosition = bottomRightKitchenBoundary1.transform.position; 
         }
         else if (layout == 2)
         {
@@ -218,6 +238,8 @@ public class Layout : MonoBehaviour, IDataPersistence
             cookStationPosition = cookStation2.transform.position;
             grinderPosition = grinder2.transform.position;
             tablePosition = table2.transform.position;
+            _topLeftKitchenBoundaryPosition = topLeftKitchenBoundary2.transform.position;
+            _bottomRightKitchenBoundaryPosition = bottomRightKitchenBoundary2.transform.position; 
         }
         else if (layout == 3)
         {
@@ -228,6 +250,8 @@ public class Layout : MonoBehaviour, IDataPersistence
             cookStationPosition = cookStation3.transform.position;
             grinderPosition = grinder3.transform.position;
             tablePosition = table3.transform.position;
+            _topLeftKitchenBoundaryPosition = topLeftKitchenBoundary3.transform.position;
+            _bottomRightKitchenBoundaryPosition = bottomRightKitchenBoundary3.transform.position; 
         }
         else
         {
@@ -258,6 +282,7 @@ public class Layout : MonoBehaviour, IDataPersistence
         cookStation.transform.position = cookStationPosition;
         grinder.transform.position = grinderPosition;
         table.transform.position = tablePosition;
+        
     }
 
     // get positions of the objects in the scene and store in variables

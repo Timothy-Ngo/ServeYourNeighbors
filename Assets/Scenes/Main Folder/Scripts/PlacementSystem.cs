@@ -2,16 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System.Net;
-using UnityEngine.UIElements;
 using TMPro;
+
 
 /// <summary>
 /// When enabling and disabling this system utilize the isEnabled variable
 /// </summary>
 public class PlacementSystem : MonoBehaviour
 {
-    
+
     [Tooltip("Prefabs of objects that can be dynamically placed in the scene")]
     [SerializeField] List<GameObject> prefabs;
     //public GameEvent dragEvent;
@@ -27,13 +26,20 @@ public class PlacementSystem : MonoBehaviour
     public GameObject instructions;
     public TextMeshProUGUI instructionsTextMesh;
     private Vector3 newPosition;
-    
-    
+
+    [SerializeField] GameObject startingPositionObject;
+    [SerializeField] GameObject uiObject;
+
+
     //Boundaries
+    [Header("Whole Map Boundary")]
     public GameObject topLeftCornerObj;
     public GameObject bottomRightCornerObj;
     public Vector2 topLeftCorner;
     public Vector2 bottomRightCorner;
+
+    [Header("Kitchen Boundary")]
+
     /// <summary>
     /// Number of frames to completely interpolate between item position and mouse position
     /// </summary>
@@ -48,7 +54,7 @@ public class PlacementSystem : MonoBehaviour
             _isDragging = value;
         }
     }
-     
+
     bool _isEnabled;
     /// <summary>
     /// Will enable and disable the system
@@ -80,10 +86,10 @@ public class PlacementSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ( isEnabled )
+        if (isEnabled)
         {
-            
-            if (Upgrades.inst.changeLayoutMode  && false)
+
+            if (Upgrades.inst.changeLayoutMode && false)
             {
                 // Detect Item using overlap point
                 // make item the selected item
@@ -95,7 +101,7 @@ public class PlacementSystem : MonoBehaviour
                     //  Use tags to recognize which one to use
                     if (collider.gameObject.CompareTag("Table"))
                     {
-                        Upgrades.inst.tablePlacementMode = true; 
+                        Upgrades.inst.tablePlacementMode = true;
                         Destroy(collider.transform.parent.gameObject);
                     }
                     else if (collider.gameObject.CompareTag("Counter"))
@@ -119,15 +125,14 @@ public class PlacementSystem : MonoBehaviour
             {
                 if (Upgrades.inst.changeLayoutMode)
                 {
-                    
+
                     Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     Collider2D collider = Physics2D.OverlapPoint(worldPosition);
                     if (collider.gameObject.CompareTag("Table"))
                     {
                         selectedItem = collider.gameObject.transform.parent.gameObject;
                     }
-                    else if (collider.gameObject.CompareTag("Counter") ||
-                             collider.gameObject.CompareTag("Cooktop") ||
+                    else if (collider.gameObject.CompareTag("Cooktop") ||
                              collider.gameObject.CompareTag("Grinder") ||
                              collider.gameObject.CompareTag("TrashCan") ||
                              collider.gameObject.CompareTag("IngredientBox") ||
@@ -138,13 +143,28 @@ public class PlacementSystem : MonoBehaviour
                     }
                 }
                 isDragging = true;
-                selectedItem.GetComponent<Obstacle>().RemoveObstacle();
+                if (selectedItem.CompareTag("Table"))
+                {
+                    selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
+                }
+                else
+                {
+                    selectedItem.GetComponent<Obstacle>().RemoveObstacle();
+                }
             }
 
             if (Input.GetMouseButtonUp(0))
             {
                 isDragging = false;
-                selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                if (selectedItem.CompareTag("Table"))
+                {
+                    selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
+                }
+                else
+                {
+                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                }
+
             }
             if (isDragging)
             {
@@ -152,18 +172,38 @@ public class PlacementSystem : MonoBehaviour
                 if (topLeftCorner.x < worldMousePosition.x && worldMousePosition.x < bottomRightCorner.x && bottomRightCorner.y < worldMousePosition.y && worldMousePosition.y < topLeftCorner.y)
                 {
                     newPosition = new Vector3(Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).x) - 0.5f,
-                        Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f );
+                        Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f);
                     if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
                     {
-                        selectedItem.transform.position = newPosition;
+                        if (selectedItem.CompareTag("Cooktop") ||
+                            selectedItem.CompareTag("Grinder") ||
+                            selectedItem.CompareTag("TrashCan") ||
+                            selectedItem.CompareTag("IngredientBox")
+                            )
+                        {
+                            // check if item is in kitchen
+                            if (InKitchenBoundary(newPosition))
+                            {
+                                selectedItem.transform.position = newPosition;
+                            }
+
+
+                        }
+                        else
+                        {
+                            if (!InKitchenBoundary(newPosition))
+                            {
+                                selectedItem.transform.position = newPosition;
+                            }
+                        }
                     }
-                    
+
                 }
-                
+
             }
             if (Input.GetKey(InputSystem.inst.finishPlacementKey))
             {
-                
+
                 isEnabled = false;
                 if (!Upgrades.inst.upgradesScreen.activeSelf)
                 {
@@ -206,24 +246,26 @@ public class PlacementSystem : MonoBehaviour
                     DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
                 }
 
-                
+
             }
         }
-        
+
     }
-    
+
 
     private void Enabled(bool enable)
     {
-        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0,0,10);
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
         if (Upgrades.inst.upgradesScreen.activeSelf)
         {
             Upgrades.inst.upgradesScreen.SetActive(false);
-            
+
         }
         if (enable)
         {
             ChangeFloorColorTo(placementFloorColor);
+            // TODO: Enable bottom of screen upgrade holder UI
+            uiObject.SetActive(true);
             // Add if statement for change layout mode
             if (Upgrades.inst.changeLayoutMode)
             {
@@ -231,22 +273,22 @@ public class PlacementSystem : MonoBehaviour
             }
             if (Upgrades.inst.tablePlacementMode)
             {
-                selectedItem = Instantiate(prefabs[0], worldMousePosition, Quaternion.identity);
+                selectedItem = Instantiate(prefabs[0], startingPositionObject.transform.position, Quaternion.identity);
                 selectedItem.transform.parent = tablesParent.transform;
             }
             else if (Upgrades.inst.cookStationPlacementMode)
             {
-                selectedItem = Instantiate(prefabs[1], worldMousePosition, Quaternion.identity);
+                selectedItem = Instantiate(prefabs[1], startingPositionObject.transform.position, Quaternion.identity);
                 selectedItem.transform.parent = cookStationsParent.transform;
             }
             else if (Upgrades.inst.counterPlacementMode)
             {
-                selectedItem = Instantiate(prefabs[2], worldMousePosition, Quaternion.identity);
+                selectedItem = Instantiate(prefabs[2], startingPositionObject.transform.position, Quaternion.identity);
                 selectedItem.transform.parent = Upgrades.inst.counterParent.transform;
             }
             else if (Upgrades.inst.animatronicPlacementMode)
             {
-                selectedItem = Instantiate(prefabs[3], worldMousePosition, Quaternion.identity);
+                selectedItem = Instantiate(prefabs[3], startingPositionObject.transform.position, Quaternion.identity);
                 selectedItem.transform.parent = distractionParent.transform;
                 DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }
@@ -257,10 +299,23 @@ public class PlacementSystem : MonoBehaviour
         else
         {
             instructions.SetActive(false);
+            uiObject.SetActive(false);
             //Destroy(selectedItem);            
         }
 
 
+    }
+
+    bool InKitchenBoundary(Vector3 position)
+    {
+        Vector3 topLeft = Layout.inst.topLeftKitchenBoundaryPosition;
+        Vector3 bottomRight = Layout.inst.bottomRightKitchenBoundaryPosition;
+        bool withinXRange = topLeft.x <= position.x && position.x <= bottomRight.x;
+        bool withinYRange = bottomRight.y <= position.y && position.y <= topLeft.y;
+        Debug.Log(topLeft);
+        Debug.Log(bottomRight);
+
+        return withinXRange && withinYRange;
     }
 
 
@@ -271,8 +326,8 @@ public class PlacementSystem : MonoBehaviour
             rend.color = color;
         }
     }
-    
-    
-    
-    
+
+
+
+
 }
