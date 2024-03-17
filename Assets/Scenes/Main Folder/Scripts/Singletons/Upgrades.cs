@@ -254,7 +254,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                 barDescription.text = "Tavern Upgrade Progress: " + upgradesCount.ToString() + "/" + tavernThreshold.ToString();
 
                 fillAmount = upgradesCount / tavernThreshold;
-                Debug.Log(upgradesCount / tavernThreshold);
 
                 if (fillAmount >= 1)
                 {
@@ -264,7 +263,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                 }
                 else
                 {
-                    Debug.Log(fillAmount);
                     visualBar.fillAmount = fillAmount;
                 }
 

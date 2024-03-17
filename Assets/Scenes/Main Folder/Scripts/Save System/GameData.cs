@@ -67,7 +67,9 @@ public class GameData
 
     // ----- SYN Meter ----- //
     public float fillAmount;
- 
+
+    // ----- Skill Tree ----- //
+    public List<bool> skills = new List<bool>();
 
     // default constructor: sets variables to default values
     // is used when there is no data to load
@@ -109,5 +111,11 @@ public class GameData
         // Layout
         layout = 1;
         newLayout = true;
+
+        // Skill Tree
+        for (int i = 0; i < 6; i++) // hardcoded 6 -- change if needed
+        {
+            skills.Add(false);
+        }
     }
 }

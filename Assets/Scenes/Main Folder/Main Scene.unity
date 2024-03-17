@@ -17762,7 +17762,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &843552518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17779,6 +17779,9 @@ MonoBehaviour:
   - {fileID: 15058231}
   - {fileID: 1182718968}
   - {fileID: 1267607446}
+  - {fileID: 1017267100526258008}
+  - {fileID: 1710027156}
+  - {fileID: 443881658}
 --- !u!4 &843552519
 Transform:
   m_ObjectHideFlags: 0
@@ -34072,7 +34075,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1518371699
 Transform:
   m_ObjectHideFlags: 0
@@ -48772,8 +48775,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
+      propertyPath: skillTree
+      value: 
+      objectReference: {fileID: 843552518}
+    - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
       propertyPath: newGameOnLoad
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 449761014385929771, guid: 7636312c12c4f1540acadfb44410b3dc, type: 3}
       propertyPath: synMeterScript

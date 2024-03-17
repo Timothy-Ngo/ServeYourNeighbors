@@ -38,12 +38,14 @@ public class SaveSystem : MonoBehaviour
     [SerializeField] private string settingsFileName;
     [SerializeField] private bool useEncryption;
 
-    private GameData gameData;
+    public GameData gameData;
     private SettingsData settingsData;
 
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ISettingsDataPersistence> settingsDataPersistenceObjects;
     private FileDataHandler dataHandler;
+
+    [SerializeField] SkillTree skillTree;
 
 
     public static SaveSystem inst;
@@ -88,7 +90,20 @@ public class SaveSystem : MonoBehaviour
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
         }
 
-        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Main Scene" || SceneManager.GetActiveScene().name == "Tutorial")
+        if (SceneManager.GetActiveScene().name == "Main Scene")
+        {
+            skillTree = FindObjectOfType<SkillTree>();
+            skillTree.gameObject.SetActive(true);
+            this.dataPersistenceObjects = FindAllDataPersistenceObjects();
+            this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
+            skillTree.gameObject.SetActive(false);
+
+            // loads data when game is started up
+            LoadGame();
+            LoadSettings();
+        }
+
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Tutorial")
         {
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
             this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
@@ -229,6 +244,16 @@ public class SaveSystem : MonoBehaviour
         dataHandler.SaveSettings(settingsData);
     }
     
+
+    public void SaveSkillTree(SkillTree script)
+    {
+        script.SaveData(gameData);
+    }
+
+    public void LoadSkillTree(SkillTree script)
+    {
+        script.LoadData(gameData);
+    }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects()
     {
