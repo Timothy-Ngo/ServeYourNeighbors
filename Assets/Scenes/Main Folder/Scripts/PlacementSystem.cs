@@ -28,7 +28,8 @@ public class PlacementSystem : MonoBehaviour
     private Vector3 newPosition;
 
     [SerializeField] GameObject startingPositionObject;
-    [SerializeField] GameObject uiObject;
+    [SerializeField] GameObject bottomUIObject;
+    [SerializeField] GameObject topUIObject;
 
 
     //Boundaries
@@ -271,8 +272,9 @@ public class PlacementSystem : MonoBehaviour
         if (enable)
         {
             ChangeFloorColorTo(placementFloorColor);
-            // TODO: Enable bottom of screen upgrade holder UI
-            uiObject.SetActive(true);
+            instructions.SetActive(true);
+            topUIObject.SetActive(true);
+            bottomUIObject.SetActive(true);
             // Add if statement for change layout mode
             if (Upgrades.inst.changeLayoutMode)
             {
@@ -300,13 +302,13 @@ public class PlacementSystem : MonoBehaviour
                 DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }
 
-            instructions.SetActive(true);
             instructionsTextMesh.text = "Hold left click to move object.\r\nPress " + InputSystem.inst.finishPlacementKey.ToString() + " to confirm placement";
         }
         else
         {
             instructions.SetActive(false);
-            uiObject.SetActive(false);
+            topUIObject.SetActive(false);
+            bottomUIObject.SetActive(false);
             //Destroy(selectedItem);            
         }
 
