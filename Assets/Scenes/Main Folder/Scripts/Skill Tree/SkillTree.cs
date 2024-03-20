@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class SkillTree : MonoBehaviour, IDataPersistence
 {
     [SerializeField] List<Skill> skills;
+    [SerializeField] GameObject upgradesScreenObj;
+    [SerializeField] Button exitButton;
+    [SerializeField] Button tablesUpgradeButton;
 
     public void EnterUI()
     {
@@ -15,11 +20,17 @@ public class SkillTree : MonoBehaviour, IDataPersistence
         {
             skill.Select();
         }
+        EventSystem.current.firstSelectedGameObject = exitButton.gameObject;
+        EventSystem.current.SetSelectedGameObject(exitButton.gameObject);
+        upgradesScreenObj.SetActive(false);
     }
     public void ExitUI()
     {
         SaveSystem.inst.SaveSkillTree(this);
         gameObject.SetActive(false);
+        EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
+        EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
+        upgradesScreenObj.SetActive(true);
     }
 
     // return number of active skills

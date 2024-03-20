@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 
 /// <summary>
@@ -38,6 +40,9 @@ public class PlacementSystem : MonoBehaviour
     public GameObject bottomRightCornerObj;
     public Vector2 topLeftCorner;
     public Vector2 bottomRightCorner;
+
+
+    [SerializeField] Button tablesUpgradeButton;
 
 
     /// <summary>
@@ -252,7 +257,8 @@ public class PlacementSystem : MonoBehaviour
                         Upgrades.inst.hasAnimatronic = true;
                         DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
                     }
-
+                    EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
+                    EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
                 }
 
             }

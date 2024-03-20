@@ -193,7 +193,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             */
         }
 
-        if (Input.GetKeyDown(InputSystem.inst.pauseKey))
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey) && !upgradeScreenObj.activeInHierarchy && !reviewScreenObj.activeInHierarchy)
         {
             if (pauseScreenOpened)
             {

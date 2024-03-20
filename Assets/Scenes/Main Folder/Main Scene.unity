@@ -739,7 +739,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.3679245, g: 0.35635453, b: 0.35635453, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5731,7 +5731,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.6313726, g: 0.6313726, b: 0.6313726, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.3679245, g: 0.35635453, b: 0.35635453, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -5751,9 +5751,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameLoop, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 843552518}
+        m_TargetAssemblyTypeName: SkillTree, Scripts
+        m_MethodName: EnterUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9955,6 +9955,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1017267100526258006}
     m_Modifications:
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.007843138
+      objectReference: {fileID: 0}
     - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -17943,6 +17955,9 @@ MonoBehaviour:
   - {fileID: 1017267100526258008}
   - {fileID: 1710027156}
   - {fileID: 443881658}
+  upgradesScreenObj: {fileID: 1206986926}
+  exitButton: {fileID: 427272440}
+  tablesUpgradeButton: {fileID: 1180128179}
 --- !u!4 &843552519
 Transform:
   m_ObjectHideFlags: 0
@@ -25963,7 +25978,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.3679245, g: 0.35635453, b: 0.35635453, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -28659,7 +28674,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.3679245, g: 0.35635453, b: 0.35635453, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -35211,9 +35226,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.007843138, g: 0.42745098, b: 0.15686275, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -38964,6 +38979,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 1017267100526258006}
     m_Modifications:
     - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.007843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1710027156}
@@ -39142,6 +39169,7 @@ MonoBehaviour:
   bottomRightCornerObj: {fileID: 1166634348}
   topLeftCorner: {x: 0, y: 0}
   bottomRightCorner: {x: 0, y: 0}
+  tablesUpgradeButton: {fileID: 1180128179}
 --- !u!4 &1711253121
 Transform:
   m_ObjectHideFlags: 0
@@ -48138,6 +48166,18 @@ PrefabInstance:
     - target: {fileID: 3167779712768049621, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.007843138
       objectReference: {fileID: 0}
     - target: {fileID: 6283638513969923471, guid: 127216b76a422cc4eae0a785b7574373, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
