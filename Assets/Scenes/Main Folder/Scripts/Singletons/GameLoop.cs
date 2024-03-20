@@ -137,7 +137,14 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     // Update is called once per frame
     void Update()
     {
-        if(!isTutorial)
+        if (upgradeScreenObj.activeInHierarchy)
+        {
+            if (!(EventSystem.current.currentSelectedGameObject is null))
+            {
+                Debug.Log(EventSystem.current.currentSelectedGameObject.ToString());
+            }
+        }
+        if (!isTutorial)
         {
             // if all waves are finished
             if (currentWaveCount == 0)
