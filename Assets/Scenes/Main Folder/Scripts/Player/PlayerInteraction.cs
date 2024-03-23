@@ -457,6 +457,7 @@ public class PlayerInteraction : MonoBehaviour
             //Debug.Log("Within range of ingredient box");
             ingredientBoxRange = true;
             ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
+            ingredientBoxScript.Animate("Open");
             //Debug.Log("ingredientBox: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("TrashCan"))
@@ -513,6 +514,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (collision.CompareTag("IngredientBox"))
         {
+            ingredientBoxScript.Animate("Close");
             ingredientBoxRange = false;
             ingredientBoxScript = null;
             //Debug.Log("Out of range of ingredient box");

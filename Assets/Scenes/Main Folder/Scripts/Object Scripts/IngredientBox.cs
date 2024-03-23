@@ -27,4 +27,12 @@ public class IngredientBox : MonoBehaviour
 
         return ingredient;
     }
+
+    public void Animate(string state)
+    {
+        if(!(gameObject.GetComponent<Animator>() is null))
+        {
+            gameObject.GetComponent<Animator>().Play(state);
+        }
+    }
 }
