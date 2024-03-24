@@ -23,7 +23,7 @@ public class Foodie : MonoBehaviour
     [Header("-----FOODIE SIGHT-----")]
     public GameObject foodieSight;
     public SpriteRenderer sightSR;
-    
+    public bool isScared;
 
     [Header("-----ORDERING SETTINGS-----")]
     public float orderTime = 28;

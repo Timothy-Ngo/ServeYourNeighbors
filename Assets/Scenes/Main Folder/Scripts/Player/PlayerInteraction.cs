@@ -20,7 +20,8 @@ public class PlayerInteraction : MonoBehaviour
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
 
-    bool foodieReleased = false;
+    bool foodieScared = false;
+    //bool foodieReleased = false;
     bool currentlyKidnapping = false;
     [Header("-----RANGES----")]
     bool cooktopRange = false;
@@ -40,6 +41,7 @@ public class PlayerInteraction : MonoBehaviour
     Distraction distractionScript;
     Foodie foodieScript;
     Grinder grinderScript;
+    Foodie foodieSightScript;
     Counter counterScript;
     [SerializeField] public PlayerStat playerStats;
     [SerializeField] SYNMeter synMeter;
@@ -233,7 +235,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     currentlyKidnapping = false;
 
-                    foodieReleased = false; // flag for when player is caught kidnapping
+                    //foodieScared = false; // flag for when player is caught kidnapping
 
                     foodieScript.foodieSight.SetActive(false);
                     playerStats.incFoodiesKidnapped();
@@ -359,6 +361,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (PickupSystem.inst.isHoldingFoodie())
             {
+                /*
                 // flag makes sure code inside is only called once per collision
                 if (!foodieReleased)
                 {
@@ -367,6 +370,19 @@ public class PlayerInteraction : MonoBehaviour
                     synMeter.AdjustSYN(synMeter.kidnappingSYNValue);
                     //Debug.Log("Caught kidnapping");
                     PickupSystem.inst.ReleaseFoodie();
+                }
+                */
+
+                // flag makes sure code inside is only called once per collision
+                if (!foodieSightScript.isScared)
+                {
+                    playerStats.incKidnappingsCaught();
+                    foodieSightScript.isScared = true;
+                    synMeter.AdjustSYN(synMeter.kidnappingSYNValue);
+                    //Debug.Log("Caught kidnapping");
+                    //PickupSystem.inst.ReleaseFoodie();
+
+                    foodieSightScript.stateMachine.ChangeState(foodieSightScript.leaveState);
                 }
 
             }
@@ -493,6 +509,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             //Debug.Log("Within range of foodie sight");
             foodieSightRange = true;
+            foodieSightScript = collision.GetComponentInParent<Foodie>();
         }
         else if (collision.CompareTag("Counter"))
         {
@@ -558,6 +575,7 @@ public class PlayerInteraction : MonoBehaviour
         else if (collision.CompareTag("FoodieSight"))
         {
             foodieSightRange = false;
+            foodieSightScript = null;
             //Debug.Log("Out of range of foodie sight");
         }
         else if (collision.CompareTag("Counter"))
