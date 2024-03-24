@@ -11,14 +11,19 @@ public class Foodie : MonoBehaviour
 
     [Header("-----FOODIE-----")]
     public FoodieMovement foodieMovement;
+    public Collider2D foodieCollider;
+    private SpriteRenderer sr;
+    public Sprite foodieSprite;
+
+    [Header("-----UI-----")]
     public GameObject orderBubble;
     public Timer timerScript;
     public TextMeshProUGUI distractedText;
-    public Collider2D foodieCollider;
+
+    [Header("-----TABLE-----")]
     public Table table;
     public Vector3 tablePosition;
-    private SpriteRenderer sr;
-    public Sprite foodieSprite;
+
 
     [Header("-----FOODIE SIGHT-----")]
     public GameObject foodieSight;
@@ -32,6 +37,9 @@ public class Foodie : MonoBehaviour
     public Sprite order;
     public GameObject orderPrefab;
     public string orderName;
+
+    [Header("-----ORDERING SETTINGS-----")]
+    public int eatingTime = 12;
 
     [Header("-----DISTRACTION SETTINGS-----")]
     public int distractedTime = 2;
@@ -97,12 +105,13 @@ public class Foodie : MonoBehaviour
     {
         orderBubble.SetActive(false);
         timerScript.gameObject.SetActive(false);
+        distractedText.gameObject.SetActive(false);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // if foodies are in distraction radius --> become distracted
-        if (collision.gameObject.tag == "DistractionCircle" && stateMachine.currentFoodieState != distractedState)
+        if (collision.gameObject.tag == "DistractionCircle" && stateMachine.currentFoodieState != distractedState && stateMachine.currentFoodieState != lineState)
         {
             Debug.Log("in range of distraction circle");
             stateMachine.ChangeState(distractedState);

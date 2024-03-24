@@ -9,6 +9,7 @@ public class FoodieEatState : FoodieState
     
     public FoodieEatState(Foodie foodie, FoodieStateMachine foodieStateMachine) : base(foodie, foodieStateMachine)
     {
+        eatingTime = foodie.eatingTime;
     }
 
     public override void AnimationTriggerEvent()

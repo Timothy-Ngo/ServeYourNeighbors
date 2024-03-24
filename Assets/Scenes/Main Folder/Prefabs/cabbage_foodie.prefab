@@ -462,12 +462,14 @@ MonoBehaviour:
   foodieSprite: {fileID: 21300000, guid: d1507026acfebc141869c3d9e1cc7338, type: 3}
   foodieSight: {fileID: 7488874022026525518}
   sightSR: {fileID: 2157189350706669681}
+  isScared: 0
   orderTime: 28
   timeAtOrderTaken: 0
   order: {fileID: 21300000, guid: 40c1beb037cfb544ea82d4126a97cf12, type: 3}
   orderPrefab: {fileID: 359770938690141132, guid: 494a2c4ebbd52a948845b736a5639e48, type: 3}
   orderName: salad
-  distractedTime: 2
+  eatingTime: 10
+  distractedTime: 12
   distractionTimerScript: {fileID: 3992769590324864495}
   isTutorial: 0
 --- !u!1 &2958076496324784907

@@ -20,7 +20,6 @@ public class PlayerInteraction : MonoBehaviour
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
 
-    bool foodieScared = false;
     //bool foodieReleased = false;
     bool currentlyKidnapping = false;
     [Header("-----RANGES----")]
@@ -235,17 +234,17 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     currentlyKidnapping = false;
 
-                    //foodieScared = false; // flag for when player is caught kidnapping
+                    //foodieReleased = false; // flag for when player is caught kidnapping
 
                     foodieScript.foodieSight.SetActive(false);
                     playerStats.incFoodiesKidnapped();
 
                     // if foodie was at a table --> put table back into available tables
-                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState || foodieScript.stateMachine.currentFoodieState == foodieScript.eatState)
+                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState || foodieScript.stateMachine.currentFoodieState == foodieScript.eatState || foodieScript.stateMachine.currentFoodieState == foodieScript.distractedState)
                     {
                         FoodieSystem.inst.availableSeats.Enqueue(foodieScript.tablePosition);
                     }
-                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState)
+                    if (foodieScript.stateMachine.currentFoodieState == foodieScript.orderState || foodieScript.stateMachine.currentFoodieState == foodieScript.distractedState)
                     {
                         // hide the foodie's order bubble and timer bar
                         foodieScript.HideUI();
@@ -382,6 +381,8 @@ public class PlayerInteraction : MonoBehaviour
                     //Debug.Log("Caught kidnapping");
                     //PickupSystem.inst.ReleaseFoodie();
 
+                    foodieSightScript.HideUI();
+                    FoodieSystem.inst.availableSeats.Enqueue(foodieSightScript.orderState.tablePosition);
                     foodieSightScript.stateMachine.ChangeState(foodieSightScript.leaveState);
                 }
 

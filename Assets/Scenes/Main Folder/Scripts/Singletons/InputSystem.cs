@@ -87,8 +87,6 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         reservedKeyCodes.Add(KeyCode.LeftArrow);
         reservedKeyCodes.Add(KeyCode.RightArrow);
 
-        reservedKeyCodes.Add(KeyCode.Escape);
-
         reservedKeyCodes.Add(KeyCode.Return);
 
         // hide error message

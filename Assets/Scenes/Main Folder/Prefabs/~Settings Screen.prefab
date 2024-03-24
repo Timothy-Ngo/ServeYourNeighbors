@@ -7724,7 +7724,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'These keys are reserved for movement and menu navigation: w/a/s/d, arrow
-    keys, esc, enter'
+    keys, enter'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5c19512e49cbc5448820359e5193932, type: 2}
   m_sharedMaterial: {fileID: -9073348629807019847, guid: e5c19512e49cbc5448820359e5193932, type: 2}
