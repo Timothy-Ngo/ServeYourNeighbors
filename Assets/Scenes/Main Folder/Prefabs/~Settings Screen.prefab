@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 2965570189191603204}
   - component: {fileID: 757946844162229866}
   - component: {fileID: 272902647044714299}
+  - component: {fileID: 3716869868488191444}
   m_Layer: 0
   m_Name: Test SoundFX Button
   m_TagString: Untagged
@@ -596,9 +597,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 3716869868488191444}
         m_TargetAssemblyTypeName: SoundSettings, Assembly-CSharp
-        m_MethodName: TestSoundFX
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -608,6 +609,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3716869868488191444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3698854388971738721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa24b054c3689946a9cc8e40fa08358, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundFXObject: {fileID: 4239381149962088680, guid: 76bba6140ae1c9c48984720bc9bd5e4f, type: 3}
+  soundFXAudioMixerGroup: {fileID: 2481929224754481579, guid: f6876499557ca684e875aa866911b879, type: 2}
+  testSFX: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
 --- !u!1 &4251303160797449528
 GameObject:
   m_ObjectHideFlags: 0

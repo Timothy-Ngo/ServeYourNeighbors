@@ -8,7 +8,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class QTEvent : MonoBehaviour {
+public class QTEvent : MonoBehaviour
+{
     public float fillAmount;
     public float timeThreshold = 0;
     public KeyCode keycode;
@@ -17,7 +18,8 @@ public class QTEvent : MonoBehaviour {
 
     [SerializeField] public GameObject prompt;
 
-    private void Start() {
+    private void Start()
+    {
         GetComponent<Image>().fillAmount = 0;
         prompt.SetActive(false);
     }
@@ -25,23 +27,29 @@ public class QTEvent : MonoBehaviour {
     private void Update()
     {
         prompt.GetComponent<TextMeshProUGUI>().text = InputSystem.inst.cookKey.ToString();
-        if (active && !complete) {
-            if (Input.GetKeyDown(InputSystem.inst.cookKey)) {
+        if (active && !complete)
+        {
+            if (Input.GetKeyDown(InputSystem.inst.cookKey))
+            {
+                SoundFX.inst.QTEventSFX(1f);
                 AdjustFillAmount(.3f);
             }
 
             timeThreshold += Time.deltaTime;
 
-            if (fillAmount < 0) {
+            if (fillAmount < 0)
+            {
                 fillAmount = 0;
             }
 
-            if (timeThreshold > .5f) {
+            if (timeThreshold > .5f)
+            {
                 timeThreshold = 0;
                 AdjustFillAmount(-.02f);
             }
 
-            if (fillAmount >= 1) {
+            if (fillAmount >= 1)
+            {
                 Debug.Log("QT Event complete");
                 prompt.SetActive(false);
                 active = false;
@@ -52,7 +60,8 @@ public class QTEvent : MonoBehaviour {
         }
     }
 
-    public void resetEvent() {
+    public void resetEvent()
+    {
         //Debug.Log("*********Reset!");
         fillAmount = 0f;
         prompt.SetActive(true);
@@ -66,8 +75,10 @@ public class QTEvent : MonoBehaviour {
     }
 
 
-    public bool isComplete() {
-        if(complete) {
+    public bool isComplete()
+    {
+        if (complete)
+        {
             GetComponent<Image>().fillAmount = 0;
         }
         return complete;

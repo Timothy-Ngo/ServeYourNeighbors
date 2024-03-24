@@ -6149,6 +6149,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundFXObject: {fileID: 4239381149962088680, guid: 76bba6140ae1c9c48984720bc9bd5e4f, type: 3}
   soundFXAudioMixerGroup: {fileID: 2481929224754481579, guid: f6876499557ca684e875aa866911b879, type: 2}
+  collectPaymentSFX: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
+  serveDishSFX: {fileID: 8300000, guid: 1ba5d8e6e6ad7304196d2affa82d9e1f, type: 3}
+  pickUpDishSFX: {fileID: 8300000, guid: dc483b9e2a1b7404b8a8b18f5fd8c591, type: 3}
+  pickUpIngredientSFX: {fileID: 8300000, guid: cfdfec74392323b48958a2446308d8bc, type: 3}
+  openIngredientBoxSFX: {fileID: 8300000, guid: 141631485a482bf428b1b7814b0e557c, type: 3}
+  closeIngredientBoxSFX: {fileID: 8300000, guid: b44a9dea768c5554588a3708bec92e60, type: 3}
+  qtEventSFX: {fileID: 8300000, guid: 44173581fe2d833408fc584c778744b8, type: 3}
+  tomatoDishPrepSFX: {fileID: 8300000, guid: 61d408f6190d66249a60935a2b116f56, type: 3}
+  lettuceDishPrepSFX: {fileID: 8300000, guid: 49dcb104a34530140b128a77e8682f43, type: 3}
+  finishedDishSFX: {fileID: 8300000, guid: 8afa8ce6327ed5f4f9a6b40626ad74a9, type: 3}
+  throwAwaySFX: {fileID: 8300000, guid: 1902ca075b00fbb41b5c35f2a84ce535, type: 3}
+  addMSGSFX: {fileID: 8300000, guid: ce054e3a381b8d540a2f5667a660f375, type: 3}
 --- !u!4 &266347535
 Transform:
   m_ObjectHideFlags: 0
@@ -48951,6 +48963,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 272902647044714299, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 272902647044714299, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 266347534}
+    - target: {fileID: 272902647044714299, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CollectPaymentSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 272902647044714299, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SoundFX, Scripts
+      objectReference: {fileID: 0}
+    - target: {fileID: 272902647044714299, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_FloatArgument
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1524094749369286654, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_AnchorMax.x
       value: 1

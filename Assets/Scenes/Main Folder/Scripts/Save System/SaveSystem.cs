@@ -31,7 +31,7 @@ public class SaveSystem : MonoBehaviour
 {
     [Header("Debugging/Developing")]
     [Tooltip("Change in prefab to make sure it's checked/unchecked across all scenes")]
-    [SerializeField] private bool newGameOnLoad = false;
+    
 
     [Header("File Storage Configuration")]
     [SerializeField] private string fileName;
@@ -146,7 +146,7 @@ public class SaveSystem : MonoBehaviour
         this.gameData = dataHandler.Load(); // if save data doesn't exist, then gameData will be null
 
         // start a new game if the data is null and player is on Main Scene OR if debug configuration newGameOnLoad is turned on
-        if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" || newGameOnLoad)
+        if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" )
         {
             Debug.Log("No data was found. A New Game and default settings are being initialized.");
             NewGame();
@@ -176,7 +176,7 @@ public class SaveSystem : MonoBehaviour
         // load any saved data from a file using the data handler
         this.settingsData = dataHandler.LoadSettings(); // if settings data doesn't exist, then settingsData will be null
 
-        if (this.settingsData == null && SceneManager.GetActiveScene().name == "Main Menu" || newGameOnLoad || this.settingsData == null && SceneManager.GetActiveScene().name == "Tutorial")
+        if (this.settingsData == null && SceneManager.GetActiveScene().name == "Main Menu" || this.settingsData == null && SceneManager.GetActiveScene().name == "Tutorial")
         {
             Debug.Log("No settings data was found. Default settings are being initialized.");
             NewSettings();

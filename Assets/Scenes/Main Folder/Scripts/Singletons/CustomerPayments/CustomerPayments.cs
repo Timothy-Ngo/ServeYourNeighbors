@@ -38,7 +38,7 @@ public class CustomerPayments : MonoBehaviour
     private void CollectPayment(int amount)
     {
         Currency.inst.Deposit(amount);
-        SoundFX.inst.PlaySoundFXClip(collectPaymentSfx, transform, 1f);
+        SoundFX.inst.CollectPaymentSFX(1f);
     }
 
     public void TimeBasedPayment(float tipPercentage)

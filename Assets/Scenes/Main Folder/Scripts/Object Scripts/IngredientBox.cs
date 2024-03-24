@@ -33,6 +33,14 @@ public class IngredientBox : MonoBehaviour
         if(!(gameObject.GetComponent<Animator>() is null))
         {
             gameObject.GetComponent<Animator>().Play(state);
+            if (state.ToLower() == "open")
+            {
+                SoundFX.inst.OpenIngredientBoxSFX(1f);
+            }
+            else if (state.ToLower() == "close")
+            {
+                SoundFX.inst.CloseIngredientBoxSFX(1f);
+            }
         }
     }
 }

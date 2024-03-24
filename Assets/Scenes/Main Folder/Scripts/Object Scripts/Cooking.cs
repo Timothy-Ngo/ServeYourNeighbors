@@ -5,7 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Cooking : MonoBehaviour {
+public class Cooking : MonoBehaviour
+{
     [Header("-----SPRITES-----")]
     private SpriteRenderer sr;
     public Sprite std;
@@ -18,13 +19,13 @@ public class Cooking : MonoBehaviour {
     private Sprite ingredientSprite;
     [SerializeField] Timer timer_script;
     [SerializeField] QTEvent qt_script;
-    
+
     [Header("-----STATE-----")]
     bool prepping = false;
     bool cooking = false;
     bool foodReady = false;
     int cookTime = 5; // time in seconds, can be updated by upgrade system
-    
+
     [Header("-----DISHES-----")]
     public Sprite tomatoIngredient;
     public GameObject tomatoSoupPrefab;
@@ -33,7 +34,8 @@ public class Cooking : MonoBehaviour {
     public Sprite flourIngredient;
     public GameObject garlicBreadPrefab;
 
-    void Start() {
+    void Start()
+    {
         sr = gameObject.GetComponent<SpriteRenderer>();
 
         //dish = GameObject.Find("dish");
@@ -44,7 +46,8 @@ public class Cooking : MonoBehaviour {
 
     private void Update()
     {
-        if (prepping && qt_script.isComplete()) {
+        if (prepping && qt_script.isComplete())
+        {
             prepping = false;
             StartCooking();
         }
@@ -56,27 +59,36 @@ public class Cooking : MonoBehaviour {
         ingredientSprite = ingredient.GetComponent<SpriteRenderer>().sprite;
     }
 
-    public void SetCookTime(int newTime) {
+    public void SetCookTime(int newTime)
+    {
         cookTime = newTime;
     }
 
-    public void StartPrep() {
+    public void StartPrep()
+    {
         //Debug.Log("Starting prep");
         prepping = true;
         qt_script.resetEvent();
-        if(ingredientSprite == tomatoIngredient)
+        if (ingredientSprite == tomatoIngredient)
         {
             gameObject.GetComponent<Animator>().Play("Prep Tomato");
-        } else if(ingredientSprite == lettuceIngredient)
+            Debug.Assert(SoundFX.inst.tomatoDishPrepSFX.length >= cookTime, "SFX length is shorter than action length");
+            SoundFX.inst.TomatoDishPrepSFX(1f, cookTime);
+        }
+        else if (ingredientSprite == lettuceIngredient)
         {
             gameObject.GetComponent<Animator>().Play("Prep Lettuce");
-        } else if (ingredientSprite == flourIngredient)
+            Debug.Assert(SoundFX.inst.lettuceDishPrepSFX.length >= cookTime, "SFX length is shorter than action length");
+            SoundFX.inst.LettuceDishPrepSFX(1f, cookTime);
+        }
+        else if (ingredientSprite == flourIngredient)
         {
             gameObject.GetComponent<Animator>().Play("Prep Flour");
         }
     }
 
-    public void StartCooking() {
+    public void StartCooking()
+    {
         prepping = false;
         cooking = true;
         sr.sprite = fire;
@@ -95,19 +107,23 @@ public class Cooking : MonoBehaviour {
         }
     }
 
-    public bool IsCooking() {
+    public bool IsCooking()
+    {
         return cooking;
     }
 
-    public bool IsPrepping() {
+    public bool IsPrepping()
+    {
         return prepping;
     }
 
-    public bool IsFoodReady() {
+    public bool IsFoodReady()
+    {
         return foodReady;
     }
 
-    public void ResetCooktop() {
+    public void ResetCooktop()
+    {
         //dish = dishDefault;
         //dish.GetComponent<Food>().ResetDish();
         foodReady = false;
@@ -115,7 +131,8 @@ public class Cooking : MonoBehaviour {
     }
 
     // https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
-    IEnumerator CookWaiter(int sec) {
+    IEnumerator CookWaiter(int sec)
+    {
         timer_script.SetMaxTime(sec);
         yield return new WaitForSeconds(sec);
         sr.sprite = std;
@@ -125,7 +142,7 @@ public class Cooking : MonoBehaviour {
         foodReady = true;
         gameObject.GetComponent<Animator>().Play("Idle");
     }
-    
+
     public GameObject SetDish(Sprite ingredient, Transform cookingStation)
     {
 
@@ -134,14 +151,17 @@ public class Cooking : MonoBehaviour {
         if (ingredient == tomatoIngredient)
         {
             finishedDish = SpawnDish(tomatoSoupPrefab, cookingStation);
+            SoundFX.inst.FinishedDishSFX(1f);
         }
-        else if (ingredient == lettuceIngredient) 
+        else if (ingredient == lettuceIngredient)
         {
             finishedDish = SpawnDish(saladPrefab, cookingStation);
+            SoundFX.inst.FinishedDishSFX(1f);
         }
-        else if (ingredient == flourIngredient) 
+        else if (ingredient == flourIngredient)
         {
             finishedDish = SpawnDish(garlicBreadPrefab, cookingStation);
+            SoundFX.inst.FinishedDishSFX(1f);
         }
         else
         {

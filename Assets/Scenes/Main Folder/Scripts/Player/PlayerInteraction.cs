@@ -89,13 +89,11 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     if (TakeAction(actionMSG, InputSystem.inst.interactKey))
                     {
+                        SoundFX.inst.AddMSGSFX(1f);
                         PickupSystem.inst.DestroyItem();
                         playerStats.incMSGAdded();
                         cooktopScript.dish.GetComponent<Food>().AddMSG();
                     }
-
-                    // add value of MSG to value of dish
-                    // update bool hasMSG to dish
                 }
                 else if (PickupSystem.inst.isHoldingItem())
                 {
@@ -103,6 +101,7 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 else if (TakeAction(actionDish, InputSystem.inst.interactKey))
                 {
+                    SoundFX.inst.PickUpDishSFX(1f);
                     PickupSystem.inst.PickUpItem(cooktopScript.dish);
                     cooktopScript.ResetCooktop();
                     SetInteraction(false);
@@ -144,6 +143,7 @@ public class PlayerInteraction : MonoBehaviour
                         tableScript.dish = dishInHands;
 
                         // place dish down on table
+                        SoundFX.inst.ServeDishSFX(1f);
                         Vector3 offset = new Vector3(0.75f, 0.3f, 0);
                         PickupSystem.inst.PlaceItem(tableScript.transform, offset);
 
@@ -177,6 +177,7 @@ public class PlayerInteraction : MonoBehaviour
                 string action = "[" + InputSystem.inst.interactKey.ToString() + "] Get Ingredient";
                 if (TakeAction(action, InputSystem.inst.interactKey))
                 {
+                    SoundFX.inst.PickUpIngredientSFX(1f);
                     PickupSystem.inst.PickUpIngredient(ingredientBoxScript);
                     SetInteraction(false);
                 }
@@ -191,6 +192,7 @@ public class PlayerInteraction : MonoBehaviour
                 string action = "[" + InputSystem.inst.interactKey.ToString() + "] Throw Away";
                 if (TakeAction(action, InputSystem.inst.interactKey))
                 {
+                    SoundFX.inst.ThrowAwaySFX(1f);
                     PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
                     playerStats.incItemsThrown();
@@ -458,6 +460,7 @@ public class PlayerInteraction : MonoBehaviour
             ingredientBoxRange = true;
             ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
             ingredientBoxScript.Animate("Open");
+
             //Debug.Log("ingredientBox: " + collision.gameObject.name);
         }
         else if (collision.CompareTag("TrashCan"))
@@ -503,7 +506,7 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.tag == "Cooktop")
         {
             cooktopRange = false;
-            if(cooktopScript.IsPrepping())
+            if (cooktopScript.IsPrepping())
             {
                 cooktopScript.StopPrep();
             }
