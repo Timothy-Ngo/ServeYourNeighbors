@@ -64,6 +64,16 @@ public class Cooking : MonoBehaviour {
         //Debug.Log("Starting prep");
         prepping = true;
         qt_script.resetEvent();
+        if(ingredientSprite == tomatoIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Prep Tomato");
+        } else if(ingredientSprite == lettuceIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Prep Lettuce");
+        } else if (ingredientSprite == flourIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Prep Flour");
+        }
     }
 
     public void StartCooking() {
@@ -71,6 +81,18 @@ public class Cooking : MonoBehaviour {
         cooking = true;
         sr.sprite = fire;
         StartCoroutine(CookWaiter(cookTime)); // when ordering system is combined, this will be a variable passed in to StartCooking() from the oddering system
+        if (ingredientSprite == tomatoIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Cook Tomato");
+        }
+        else if (ingredientSprite == lettuceIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Cook Lettuce");
+        }
+        else if (ingredientSprite == flourIngredient)
+        {
+            gameObject.GetComponent<Animator>().Play("Cook Flour");
+        }
     }
 
     public bool IsCooking() {
@@ -89,6 +111,7 @@ public class Cooking : MonoBehaviour {
         //dish = dishDefault;
         //dish.GetComponent<Food>().ResetDish();
         foodReady = false;
+        gameObject.GetComponent<Animator>().Play("Idle");
     }
 
     // https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
@@ -100,6 +123,7 @@ public class Cooking : MonoBehaviour {
         //Debug.Log("You have cooked something!");
         cooking = false;
         foodReady = true;
+        gameObject.GetComponent<Animator>().Play("Idle");
     }
     
     public GameObject SetDish(Sprite ingredient, Transform cookingStation)
@@ -141,5 +165,6 @@ public class Cooking : MonoBehaviour {
     {
         prepping = false;
         qt_script.ForceStop();
+        gameObject.GetComponent<Animator>().Play("Idle");
     }
 }

@@ -503,7 +503,10 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.tag == "Cooktop")
         {
             cooktopRange = false;
-            cooktopScript.StopPrep();
+            if(cooktopScript.IsPrepping())
+            {
+                cooktopScript.StopPrep();
+            }
             //Debug.Log("Out of range of cooktop");
         }
         else if (collision.CompareTag("Table"))
