@@ -574,8 +574,11 @@ MonoBehaviour:
   orderTime: 28
   timeAtOrderTaken: 0
   order: {fileID: 21300000, guid: 360e9b45eaaffa64d8338954b6487992, type: 3}
+  orderPrefab: {fileID: 359770938690141132, guid: 5cb21b3761c409541ab92603411b98fc, type: 3}
+  orderName: garlicbread
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
+  isTutorial: 0
 --- !u!1 &2958076496324784907
 GameObject:
   m_ObjectHideFlags: 0

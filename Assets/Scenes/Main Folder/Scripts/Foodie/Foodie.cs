@@ -30,6 +30,8 @@ public class Foodie : MonoBehaviour
 
     public float timeAtOrderTaken;
     public Sprite order;
+    public GameObject orderPrefab;
+    public string orderName;
 
     [Header("-----DISTRACTION SETTINGS-----")]
     public int distractedTime = 2;

@@ -132,10 +132,12 @@ public class PlayerInteraction : MonoBehaviour
                     //Debug.Log($"current table object: {tableScript.gameObject}");
 
                     GameObject dishInHands = PickupSystem.inst.GetItemInHands();
-                    Sprite dishSprite = dishInHands.GetComponent<SpriteRenderer>().sprite;
-                    Sprite orderSprite = tableScript.foodie.order;
+                    string dishName = dishInHands.GetComponent<Food>().dishName;
+                    string orderName = tableScript.foodie.orderName;
+                    Debug.Log(dishName);
+                    Debug.Log(orderName);
 
-                    if (dishSprite == orderSprite)
+                    if (dishName == orderName)
                     {
                         playerStats.incSuccessfulServings();
 

@@ -465,8 +465,11 @@ MonoBehaviour:
   orderTime: 28
   timeAtOrderTaken: 0
   order: {fileID: 21300000, guid: 0478969ab196b2b44ba51892d71787cb, type: 3}
+  orderPrefab: {fileID: 359770938690141132, guid: 288577238c76f484387aae0e5988c035, type: 3}
+  orderName: tomatosoup
   distractedTime: 2
   distractionTimerScript: {fileID: 3992769590324864495}
+  isTutorial: 0
 --- !u!1 &2958076496324784907
 GameObject:
   m_ObjectHideFlags: 0
