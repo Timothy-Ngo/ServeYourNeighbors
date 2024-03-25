@@ -84,6 +84,8 @@ public class Cooking : MonoBehaviour
         else if (ingredientSprite == flourIngredient)
         {
             gameObject.GetComponent<Animator>().Play("Prep Flour");
+            Debug.Assert(SoundFX.inst.flourDishPrepSFX.length >= cookTime, "SFX length is shorter than action length");
+            SoundFX.inst.FlourDishPrepSFX(1f, cookTime);
         }
     }
 

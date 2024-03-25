@@ -113,11 +113,18 @@ public class SoundFX : MonoBehaviour
         PlayTimedSoundFXClip(lettuceDishPrepSFX, transform, volume, timedLength);
     }
 
+    public AudioClip flourDishPrepSFX;
+
+    public void FlourDishPrepSFX(float volume, float timedLength)
+    {
+        PlayTimedSoundFXClip(flourDishPrepSFX, transform, volume, timedLength);
+    }
+
 
     public AudioClip finishedDishSFX;
     public void FinishedDishSFX(float volume)
     {
-        PlaySoundFXClip(finishedDishSFX, transform, volume);        
+        PlaySoundFXClip(finishedDishSFX, transform, volume);
     }
 
     public AudioClip throwAwaySFX;
@@ -132,5 +139,19 @@ public class SoundFX : MonoBehaviour
     public void AddMSGSFX(float volume)
     {
         PlaySoundFXClip(addMSGSFX, transform, volume);
+    }
+
+    public AudioClip uiSelectSFX;
+
+    public void UISelectSFX(float volume)
+    {
+        PlaySoundFXClip(uiSelectSFX, transform, volume);
+    }
+
+    public AudioClip uiClickSFX;
+
+    public void UIClickSFX(float volume)
+    {
+        PlaySoundFXClip(uiClickSFX, transform, volume);
     }
 }
