@@ -26912,7 +26912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1206986927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32609,9 +32609,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hold left click to move object.
+  m_text: 'Hold left click or use the arrow keys to move object.
 
-    Press spacebar to confirm placement'
+    Press spacebar
+    to confirm placement'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e5c19512e49cbc5448820359e5193932, type: 2}
   m_sharedMaterial: {fileID: -9073348629807019847, guid: e5c19512e49cbc5448820359e5193932, type: 2}
@@ -43865,7 +43866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1951452173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43905,7 +43906,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1951452175
 Canvas:
   m_ObjectHideFlags: 0

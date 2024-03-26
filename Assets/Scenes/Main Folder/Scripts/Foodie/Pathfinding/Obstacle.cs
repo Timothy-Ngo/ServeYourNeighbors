@@ -55,16 +55,6 @@ public class Obstacle : MonoBehaviour
         }
         else if (gameObject.CompareTag("Cooktop"))
         {
-            //Debug.Log("Cooktop object");
-            /*
-            for (int i = -1; i < 1; i++)
-            {
-                for (int j = -1; j < 1; j++)
-                {
-                    FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(true);
-                }
-            }
-            */
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
         }
         else if (gameObject.CompareTag("Counter"))
@@ -121,16 +111,6 @@ public class Obstacle : MonoBehaviour
         }
         else if (gameObject.CompareTag("Cooktop"))
         {
-            //Debug.Log("Cooktop object");
-            /*
-            for (int i = -1; i < 1; i++)
-            {
-                for (int j = -1; j < 1; j++)
-                {
-                    FoodieSystem.inst.pathfinding.GetNode(x + i, y + j).SetIsPlaceable(false);
-                }
-            }
-            */
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
         }
         else if (gameObject.CompareTag("Counter"))

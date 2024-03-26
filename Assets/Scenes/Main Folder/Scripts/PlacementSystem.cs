@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
+
+
 /// <summary>
 /// When enabling and disabling this system utilize the isEnabled variable
 /// </summary>
@@ -88,44 +90,292 @@ public class PlacementSystem : MonoBehaviour
         bottomRightCorner = bottomRightCornerObj.transform.position;
     }
 
+    private void Enabled(bool enable)
+    {
+        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
+        if (Upgrades.inst.upgradesScreen.activeSelf)
+        {
+            Upgrades.inst.upgradesScreen.SetActive(false);
+
+        }
+        if (enable)
+        {
+            ChangeFloorColorTo(placementFloorColor);
+            instructions.SetActive(true);
+            topUIObject.SetActive(true);
+            bottomUIObject.SetActive(true);
+            // Add if statement for change layout mode
+            if (Upgrades.inst.changeLayoutMode)
+            {
+                return;
+            }
+            if (Upgrades.inst.tablePlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[0], startingPositionObject.transform.position, Quaternion.identity);
+                selectedItem.transform.parent = tablesParent.transform;
+            }
+            else if (Upgrades.inst.cookStationPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[1], startingPositionObject.transform.position, Quaternion.identity);
+                selectedItem.transform.parent = cookStationsParent.transform;
+            }
+            else if (Upgrades.inst.counterPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[2], startingPositionObject.transform.position, Quaternion.identity);
+                selectedItem.transform.parent = Upgrades.inst.counterParent.transform;
+            }
+            else if (Upgrades.inst.animatronicPlacementMode)
+            {
+                selectedItem = Instantiate(prefabs[3], startingPositionObject.transform.position, Quaternion.identity);
+                selectedItem.transform.parent = distractionParent.transform;
+                DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
+            }
+
+            instructionsTextMesh.text = "Hold left click to move object.\r\nPress " + InputSystem.inst.finishPlacementKey.ToString() + " to confirm placement";
+        }
+        else
+        {
+            instructions.SetActive(false);
+            topUIObject.SetActive(false);
+            bottomUIObject.SetActive(false);
+            //Destroy(selectedItem);            
+        }
+
+
+    }
+
     // Update is called once per frame
     void Update()
     {
         if (isEnabled)
         {
 
-            if (Upgrades.inst.changeLayoutMode && false)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                // Detect Item using overlap point
-                // make item the selected item
-                if (Input.GetMouseButton(1)) // Chooses an item to start moving
+                Vector3 newPosition = selectedItem.transform.position;
+                bool foundNewPosition = false;
+                if (!InMapBoundary(newPosition))
                 {
-                    // Utilize point and click to recognize what placement mode to use
-                    Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    Collider2D collider = Physics2D.OverlapPoint(worldPosition);
-                    //  Use tags to recognize which one to use
-                    if (collider.gameObject.CompareTag("Table"))
-                    {
-                        Upgrades.inst.tablePlacementMode = true;
-                        Destroy(collider.transform.parent.gameObject);
-                    }
-                    else if (collider.gameObject.CompareTag("Counter"))
-                    {
-                        Upgrades.inst.counterPlacementMode = true;
-                        Destroy(collider.transform.gameObject);
-                    }
-                    else if (collider.gameObject.CompareTag("Cooktop"))
-                    {
-                        Upgrades.inst.cookStationPlacementMode = true;
-                        Destroy(collider.transform.gameObject);
-                    }
-                    Upgrades.inst.placementSystem.isEnabled = true;
-                    // Need to include Grinder, boxes, and distraction
-                    Upgrades.inst.changeLayoutMode = false;
+                    newPosition = FirstAvailableSpace();
+                    Debug.Assert(newPosition != Vector3.negativeInfinity, "Could not find first available space");
+                    foundNewPosition = true;
                 }
-
-                return;
+                else
+                {
+                    for (float x = selectedItem.transform.position.x + 1; x < bottomRightCorner.x; x++)
+                    {
+                        newPosition = new Vector3(x, newPosition.y, newPosition.z);
+                        if (selectedItem.CompareTag("Table"))
+                        {
+                            if (!InKitchenBoundary(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Cooktop"))
+                        {
+                            if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Distraction"))
+                        {
+                            for (int i = -1; i < 2; i++)
+                            {
+                                for (int j = -1; j < 2; j++)
+                                {
+                                    if(!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            foundNewPosition = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundNewPosition)
+                {
+                    selectedItem.transform.position = newPosition;
+                }
             }
+
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                Vector3 newPosition = selectedItem.transform.position;
+                bool foundNewPosition = false;
+                if (!InMapBoundary(newPosition))
+                {
+                    newPosition = FirstAvailableSpace();
+                    Debug.Assert(newPosition != Vector3.negativeInfinity, "Could not find first available space");
+                    foundNewPosition = true;
+                }
+                else
+                {
+                    for (float x = selectedItem.transform.position.x - 1; x > topLeftCorner.x; x--)
+                    {
+                        newPosition = new Vector3(x, newPosition.y, newPosition.z);
+                        if (selectedItem.CompareTag("Table"))
+                        {
+                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Cooktop"))
+                        {
+                            if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Distraction"))
+                        {
+                            for (int i = -1; i < 2; i++)
+                            {
+                                for (int j = -1; j < 2; j++)
+                                {
+                                    if(!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            foundNewPosition = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundNewPosition)
+                {
+                    selectedItem.transform.position = newPosition;
+                }
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                Vector3 newPosition = selectedItem.transform.position;
+                bool foundNewPosition = false;
+                if (!InMapBoundary(newPosition))
+                {
+                    newPosition = FirstAvailableSpace();
+                    Debug.Assert(newPosition != Vector3.negativeInfinity, "Could not find first available space");
+                    foundNewPosition = true;
+                }
+                else
+                {
+                    for (float y = selectedItem.transform.position.y + 1; y < topLeftCorner.y; y++)
+                    {
+                        newPosition = new Vector3(newPosition.x, y, newPosition.z);
+                        if (selectedItem.CompareTag("Table"))
+                        {
+                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Cooktop"))
+                        {
+                            if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Distraction"))
+                        {
+                            for (int i = -1; i < 2; i++)
+                            {
+                                for (int j = -1; j < 2; j++)
+                                {
+                                    if(!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            foundNewPosition = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundNewPosition)
+                {
+                    selectedItem.transform.position = newPosition;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                Vector3 newPosition = selectedItem.transform.position;
+                bool foundNewPosition = false;
+                if (!InMapBoundary(newPosition))
+                {
+                    newPosition = FirstAvailableSpace();
+                    Debug.Assert(newPosition != Vector3.negativeInfinity, "Could not find first available space");
+                    foundNewPosition = true;
+                }
+                else
+                {
+                    for (float y = selectedItem.transform.position.y - 1; y > bottomRightCorner.y; y--)
+                    {
+                        newPosition = new Vector3(newPosition.x, y, newPosition.z);
+                        if (selectedItem.CompareTag("Table"))
+                        {
+                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Cooktop"))
+                        {
+                            if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                            {
+                                foundNewPosition = true;
+                                break;
+                            }
+                        }
+                        else if (selectedItem.CompareTag("Distraction"))
+                        {
+                            for (int i = -1; i < 2; i++)
+                            {
+                                for (int j = -1; j < 2; j++)
+                                {
+                                    if(!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
+                                    {
+                                        continue;
+                                    }
+                                }
+                            }
+                            foundNewPosition = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundNewPosition)
+                {
+                    selectedItem.transform.position = newPosition;
+                }
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 if (Upgrades.inst.changeLayoutMode)
@@ -157,6 +407,8 @@ public class PlacementSystem : MonoBehaviour
                     selectedItem.GetComponent<Obstacle>().RemoveObstacle();
                 }
             }
+
+
 
             if (Input.GetMouseButtonUp(0))
             {
@@ -266,60 +518,43 @@ public class PlacementSystem : MonoBehaviour
 
     }
 
-
-    private void Enabled(bool enable)
+    Vector3 FirstAvailableSpace()
     {
-        Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
-        if (Upgrades.inst.upgradesScreen.activeSelf)
+        Vector3 newPosition;
+        for (float x = topLeftCorner.x + 1; x < bottomRightCorner.x; x++)
         {
-            Upgrades.inst.upgradesScreen.SetActive(false);
-
+            for (float y = topLeftCorner.y - 1; y > bottomRightCorner.y; y--)
+            {
+                newPosition = new Vector3(x, y, 0);
+                if (selectedItem.CompareTag("Table"))
+                {
+                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
+                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                    {
+                        return newPosition;
+                    }
+                }
+                else if (selectedItem.CompareTag("Cooktop"))
+                {
+                    if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    {
+                        return newPosition;
+                    }
+                }
+                else
+                {
+                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    {
+                        return newPosition;
+                    }
+                }
+            }
         }
-        if (enable)
-        {
-            ChangeFloorColorTo(placementFloorColor);
-            instructions.SetActive(true);
-            topUIObject.SetActive(true);
-            bottomUIObject.SetActive(true);
-            // Add if statement for change layout mode
-            if (Upgrades.inst.changeLayoutMode)
-            {
-                return;
-            }
-            if (Upgrades.inst.tablePlacementMode)
-            {
-                selectedItem = Instantiate(prefabs[0], startingPositionObject.transform.position, Quaternion.identity);
-                selectedItem.transform.parent = tablesParent.transform;
-            }
-            else if (Upgrades.inst.cookStationPlacementMode)
-            {
-                selectedItem = Instantiate(prefabs[1], startingPositionObject.transform.position, Quaternion.identity);
-                selectedItem.transform.parent = cookStationsParent.transform;
-            }
-            else if (Upgrades.inst.counterPlacementMode)
-            {
-                selectedItem = Instantiate(prefabs[2], startingPositionObject.transform.position, Quaternion.identity);
-                selectedItem.transform.parent = Upgrades.inst.counterParent.transform;
-            }
-            else if (Upgrades.inst.animatronicPlacementMode)
-            {
-                selectedItem = Instantiate(prefabs[3], startingPositionObject.transform.position, Quaternion.identity);
-                selectedItem.transform.parent = distractionParent.transform;
-                DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
-            }
-
-            instructionsTextMesh.text = "Hold left click to move object.\r\nPress " + InputSystem.inst.finishPlacementKey.ToString() + " to confirm placement";
-        }
-        else
-        {
-            instructions.SetActive(false);
-            topUIObject.SetActive(false);
-            bottomUIObject.SetActive(false);
-            //Destroy(selectedItem);            
-        }
-
-
+        Debug.Log("could not find an available space");
+        return Vector3.negativeInfinity;
     }
+
 
     bool InKitchenBoundary(Vector3 position)
     {
@@ -333,6 +568,13 @@ public class PlacementSystem : MonoBehaviour
         return withinXRange && withinYRange;
     }
 
+    bool InMapBoundary(Vector3 position)
+    {
+        return topLeftCorner.x < position.x &&
+                position.x < bottomRightCorner.x &&
+                bottomRightCorner.y < position.y &&
+                position.y < topLeftCorner.y;
+    }
 
     void ChangeFloorColorTo(Color color)
     {
