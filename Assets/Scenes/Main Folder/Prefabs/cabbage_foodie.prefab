@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 1987003699042778043}
   - component: {fileID: 1987003699042778042}
   - component: {fileID: 6570177558672555007}
+  - component: {fileID: 1489766860000461769}
   m_Layer: 7
   m_Name: cabbage_foodie
   m_TagString: Foodie
@@ -453,13 +454,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodieMovement: {fileID: 1987003699042778042}
+  foodieCollider: {fileID: 1987003699042778043}
+  foodieSprite: {fileID: 21300000, guid: d1507026acfebc141869c3d9e1cc7338, type: 3}
   orderBubble: {fileID: 2958076496324784907}
   timerScript: {fileID: 722390387455592613}
   distractedText: {fileID: 4745854944033754898}
-  foodieCollider: {fileID: 1987003699042778043}
   table: {fileID: 0}
   tablePosition: {x: 0, y: 0, z: 0}
-  foodieSprite: {fileID: 21300000, guid: d1507026acfebc141869c3d9e1cc7338, type: 3}
   foodieSight: {fileID: 7488874022026525518}
   sightSR: {fileID: 2157189350706669681}
   isScared: 0
@@ -472,6 +473,25 @@ MonoBehaviour:
   distractedTime: 12
   distractionTimerScript: {fileID: 3992769590324864495}
   isTutorial: 0
+--- !u!95 &1489766860000461769
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1987003699042778040}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cf230b68ecf58c44ebaf2af577cdc7f5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2958076496324784907
 GameObject:
   m_ObjectHideFlags: 0

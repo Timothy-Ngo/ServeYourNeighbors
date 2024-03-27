@@ -19,6 +19,7 @@ public class FoodieLineState : FoodieState
     public override void AnimationTriggerEvent()
     {
         base.AnimationTriggerEvent();
+        foodie.gameObject.GetComponent<Animator>().Play("Eating");
     }
 
     public override void EnterState()
@@ -35,13 +36,16 @@ public class FoodieLineState : FoodieState
     {
         base.Update();
 
+        
+
         if (FoodieSystem.inst.availableSeats.Count > 0 && atFrontOfLine && foodie.transform.position.x == FoodieSystem.inst.startOfLine.x)
         {
             atFrontOfLine = false;
             FoodieSystem.inst.line.RemoveAt(0);
             
             inLine = false;
-            
+
+            foodie.gameObject.GetComponent<Animator>().Play("Walk");
             foodie.stateMachine.ChangeState(foodie.orderState);
             //Debug.Log("changing state");
         }
@@ -68,9 +72,11 @@ public class FoodieLineState : FoodieState
 
             // moves foodie 
             //Debug.Log("LineState: SetTargetPosition");
+            
             foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
-            
-            
+
+
+
         }
         else
         {
@@ -83,6 +89,7 @@ public class FoodieLineState : FoodieState
             {
                 Vector3 targetPosition = new Vector3(FoodieSystem.inst.startOfLine.x + placeInLine, FoodieSystem.inst.startOfLine.y);
                 //Debug.Log("OrderState2: SetTargetPosition");
+                
                 foodie.foodieMovement.SetTargetPosition(targetPosition, FoodieSystem.inst.pathfinding);
             }
             if (placeInLine == 0)

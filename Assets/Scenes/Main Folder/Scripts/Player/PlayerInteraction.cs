@@ -383,6 +383,7 @@ public class PlayerInteraction : MonoBehaviour
 
                     foodieSightScript.HideUI();
                     FoodieSystem.inst.availableSeats.Enqueue(foodieSightScript.orderState.tablePosition);
+                    foodieSightScript.gameObject.GetComponent<Animator>().Play("Walk");
                     foodieSightScript.stateMachine.ChangeState(foodieSightScript.leaveState);
                 }
 

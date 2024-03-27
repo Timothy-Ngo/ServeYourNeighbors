@@ -76,6 +76,7 @@ public class FoodieMovement : MonoBehaviour
 
     public void StopMoving()
     {
+        gameObject.GetComponent<Animator>().Play("Idle");
         pathVectorList = null;
     }
 
