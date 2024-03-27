@@ -36271,6 +36271,13 @@ MonoBehaviour:
   tavernDesign: {fileID: 1880094632}
   restaurantDesign: {fileID: 1725258418}
   skillTreeScript: {fileID: 843552518}
+  starterItems:
+  - {fileID: 36546056}
+  - {fileID: 300817860}
+  - {fileID: 1614657720}
+  - {fileID: 287380797}
+  - {fileID: 1270739277}
+  selectableItems: []
   changeLayoutCost: 50
   changeLayoutMode: 0
   changeLayoutDescription: {fileID: 133317940}
@@ -39202,6 +39209,7 @@ MonoBehaviour:
   tablesParent: {fileID: 437064608}
   cookStationsParent: {fileID: 1419573800}
   distractionParent: {fileID: 1908830773}
+  selectedItem: {fileID: 0}
   originalFloorColor: {r: 1, g: 1, b: 1, a: 1}
   placementFloorColor: {r: 0, g: 0.4301021, b: 1, a: 1}
   floorsParent: {fileID: 218155904}

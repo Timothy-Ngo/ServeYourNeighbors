@@ -1,6 +1,7 @@
 // Author: Timothy Ngo
 using System.Collections;
 using System.Collections.Generic;
+using PlasticGui.WorkspaceWindow.PendingChanges;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -139,6 +140,8 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         Restaurant = 2
     }
     [Header("-----MAIN LAYOUT UPGRADES-----")]
+    public List<GameObject> starterItems;
+    public List<GameObject> selectableItems; // Need to add the ingredient boxes, trashcan and grinder in through the inspector
     public int changeLayoutCost = 50;
     public bool changeLayoutMode = false;
     [SerializeField] TextMeshProUGUI changeLayoutDescription;
@@ -177,7 +180,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
 
         // visual upgrades
-            // number of upgrades is calculated when upgrade screen is open, so we don't need to save it
+        // number of upgrades is calculated when upgrade screen is open, so we don't need to save it
 
         tavernAchieved = data.tavernAchieved;
         restaurantAchieved = data.restaurantAchieved;
@@ -188,7 +191,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             tavernDesign.SetActive(true);
             restaurantDesign.SetActive(false);
         }
-        
+
         if (restaurantAchieved)
         {
             shackDesign.SetActive(false);
@@ -290,7 +293,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                 barDescription.text = "Restaurant Design Achieved!";
             }
 
-            
+
         }
     }
 
@@ -353,7 +356,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
         upgradesNum += GetNumOfActiveTables() - 1;
         upgradesNum += GetNumOfActiveCookStations() - 1;
-        
+
         if (hasAnimatronic)
         {
             upgradesNum++;
@@ -508,9 +511,36 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         if (Currency.inst.AbleToWithdraw(changeLayoutCost))
         {
+            selectableItems.Clear();
+            foreach (GameObject obj in starterItems)
+            {
+                selectableItems.Add(obj);
+                obj.GetComponent<Select>().Selected = false;
+            }
             Currency.inst.Withdraw(changeLayoutCost);
             changeLayoutMode = true;
             placementSystem.isEnabled = true;
+            // Find all selectable items for placement mode keyboard input
+            // (i.e. tables, cook stations, animatronics)
+            foreach (Transform cookTransform in cookStationsParent.GetComponentInChildren<Transform>())
+            {
+                selectableItems.Add(cookTransform.gameObject);
+                cookTransform.gameObject.GetComponent<Select>().Selected = false;
+            }
+            foreach (Transform tableTransform in tablesParent.GetComponentInChildren<Transform>())
+            {
+                if (tableTransform.gameObject.GetComponent<Table>())
+                {
+                    selectableItems.Add(tableTransform.gameObject);
+                    tableTransform.gameObject.GetComponent<Select>().Selected = false;
+                }
+            }
+            foreach (Transform distractionTransform in distractionParent.GetComponentInChildren<Transform>())
+            {
+                selectableItems.Add(distractionTransform.gameObject);
+                distractionTransform.gameObject.GetComponent<Select>().Selected = false;
+            }
+
         }
         else
         {
