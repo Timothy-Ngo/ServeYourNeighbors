@@ -487,6 +487,7 @@ public class PlayerInteraction : MonoBehaviour
         else if (collision.CompareTag("TrashCan"))
         {
             //Debug.Log("Within range of trash can");
+            collision.gameObject.GetComponent<Animator>().Play("Open");
             trashCanRange = true;
         }
         else if (collision.CompareTag("Distraction"))
@@ -549,6 +550,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (collision.CompareTag("TrashCan"))
         {
+            collision.gameObject.GetComponent<Animator>().Play("Idle");
             trashCanRange = false;
             //Debug.Log("Out of range of trash can");
         }
