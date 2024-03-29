@@ -35,6 +35,10 @@ public class Food : MonoBehaviour {
     private void Start() {
         //sr = gameObject.GetComponent<SpriteRenderer>();
         //sr.enabled = false;
+        if(!(gameObject.GetComponent<Animator>() is null))
+        {
+            gameObject.GetComponent<Animator>().Play("Idle");
+        }
     }
 
     public void SetDish(string name) {
@@ -85,4 +89,8 @@ public class Food : MonoBehaviour {
         //Debug.Log("Added MSG");
     }
     
+    public void EatAnimation()
+    {
+        gameObject.GetComponent<Animator>().Play("Eating");
+    }
 }

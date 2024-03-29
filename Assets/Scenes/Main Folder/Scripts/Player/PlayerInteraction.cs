@@ -144,6 +144,7 @@ public class PlayerInteraction : MonoBehaviour
 
                         // set dish
                         tableScript.dish = dishInHands;
+                        tableScript.dish.GetComponent<Food>().EatAnimation();
 
                         // place dish down on table
                         SoundFX.inst.ServeDishSFX(1f);
