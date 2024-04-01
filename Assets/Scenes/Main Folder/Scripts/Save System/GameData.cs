@@ -73,6 +73,9 @@ public class GameData
     // ----- Skill Tree ----- //
     public List<bool> skills = new List<bool>();
 
+    // ----- Outfits ----- //
+    public int outfit;
+
     // default constructor: sets variables to default values
     // is used when there is no data to load
     public GameData()
@@ -119,5 +122,8 @@ public class GameData
         {
             skills.Add(false);
         }
+
+        // Outfits
+        outfit = 0;
     }
 }

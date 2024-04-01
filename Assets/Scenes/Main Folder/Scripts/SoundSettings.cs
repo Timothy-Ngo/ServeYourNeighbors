@@ -23,7 +23,7 @@ public class SoundSettings : MonoBehaviour, ISettingsDataPersistence
 
     public void LoadData(SettingsData data)
     {
-        Debug.Log("loading audio data");
+        //Debug.Log("loading audio data");
         masterSlider.value = data.masterValue;
         musicSlider.value = data.musicValue;
         soundFXSlider.value = data.audioFXValue;
@@ -33,17 +33,17 @@ public class SoundSettings : MonoBehaviour, ISettingsDataPersistence
         SetSoundFX(data.audioFXValue);
         
 
-        Debug.Log(masterSlider.value);
-        Debug.Log(musicSlider.value);
-        Debug.Log(soundFXSlider.value);
+        //Debug.Log(masterSlider.value);
+        //Debug.Log(musicSlider.value);
+        //Debug.Log(soundFXSlider.value);
     }
 
     public void SaveData(SettingsData data)
     {
-        Debug.Log("saving audio data");
-        Debug.Log(masterSlider.value);
-        Debug.Log(musicSlider.value);
-        Debug.Log(soundFXSlider.value);
+        //Debug.Log("saving audio data");
+        //Debug.Log(masterSlider.value);
+        //Debug.Log(musicSlider.value);
+        //Debug.Log(soundFXSlider.value);
         data.masterValue = masterSlider.value;
         data.musicValue = musicSlider.value;
         data.audioFXValue = soundFXSlider.value;

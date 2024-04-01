@@ -4,9 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
  
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDataPersistence
 {
     public static Player inst;
+
+    public List<Sprite> outfits;
+    public int outfit = 0;
+    public SpriteRenderer outfitSR;
 
     private void Awake()
     {
@@ -16,6 +20,18 @@ public class Player : MonoBehaviour
     [Tooltip("Needs to be a game object with the obstacle script on it placed on a point for the player to spawn")]
     public GameObject playerSpawnObj;
     public Vector2 playerSpawn;
+
+
+    public void LoadData(GameData data)
+    {
+        outfit = data.outfit;
+        outfitSR.sprite = outfits[outfit];
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.outfit = outfit;
+    }
 
     void Start()
     {
@@ -39,7 +55,8 @@ public class Player : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
+
+
     
 
 }

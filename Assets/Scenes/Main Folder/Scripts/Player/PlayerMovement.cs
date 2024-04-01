@@ -69,8 +69,10 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Flip() {
         if(facingRight) {
+            Player.inst.outfitSR.flipX = true;
             sr.flipX = true;
         } else {
+            Player.inst.outfitSR.flipX = false;
             sr.flipX = false;
         }
         facingRight = !facingRight;
