@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 4959636247554662154}
   - component: {fileID: 9125752106392109212}
   - component: {fileID: 4592746901792250983}
+  - component: {fileID: 3108693685874253139}
   m_Layer: 0
   m_Name: ~Grinder
   m_TagString: Grinder
@@ -465,6 +466,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectionSquare: {fileID: 4512217137078266734}
+--- !u!95 &3108693685874253139
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4959636247554662155}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c71e5922ddb0b249b150c62f76d565f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4959636247686680106
 GameObject:
   m_ObjectHideFlags: 0

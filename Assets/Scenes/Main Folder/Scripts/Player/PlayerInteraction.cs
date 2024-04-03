@@ -267,8 +267,22 @@ public class PlayerInteraction : MonoBehaviour
             {
                 if (TakeAction("[F] Grind", KeyCode.F))
                 {
+                    if (PickupSystem.inst.GetItemInHands().gameObject.name == "cabbage_foodie(Clone)")
+                    {
+                        Debug.Log("Cabbage");
+                        grinderScript.StartGrinding("Cabbage");
+                    }
+                    else if (PickupSystem.inst.GetItemInHands().gameObject.name == "bread_foodie(Clone)")
+                    {
+                        Debug.Log("Bread");
+                        grinderScript.StartGrinding("Bread");
+                    }
+                    else if (PickupSystem.inst.GetItemInHands().gameObject.name == "tomato_foodie(Clone)")
+                    {
+                        Debug.Log("Tomato");
+                        grinderScript.StartGrinding("Tomato");
+                    }
                     playerStats.incFoodiesGround();
-                    grinderScript.StartGrinding();
                     PickupSystem.inst.DestroyItem();
                     SetInteraction(false);
                 }

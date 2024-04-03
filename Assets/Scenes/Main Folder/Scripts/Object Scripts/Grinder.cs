@@ -32,10 +32,11 @@ public class Grinder : MonoBehaviour
             FinishGrinding();
         }
     }
-    public void StartGrinding()
+    public void StartGrinding(string foodieType)
     {
         grinding = true;
         timerScript.SetMaxTime(grindTime);
+        gameObject.GetComponent<Animator>().Play(foodieType);
     }
 
     public void FinishGrinding()
@@ -45,6 +46,8 @@ public class Grinder : MonoBehaviour
 
         grinding = false;
         msgGrindedUp = true;
+
+        gameObject.GetComponent<Animator>().Play("Idle");
     }
 
     private GameObject SpawnMSG()
