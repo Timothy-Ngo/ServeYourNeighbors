@@ -86,7 +86,8 @@ public class Food : MonoBehaviour {
     public void AddMSG()
     {
         hasMSG = true;
-        //Debug.Log("Added MSG");
+        gameObject.GetComponent<SpriteRenderer>().color = new Color(1f, 0.9804f, 0.6863f, 1f);
+        Debug.Log("Added MSG");
     }
     
     public void EatAnimation()
