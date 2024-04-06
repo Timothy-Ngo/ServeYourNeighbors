@@ -24,11 +24,12 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [Header("-----DAY CYCLE-----")] [SerializeField]
     private int day = 1;
     [SerializeField] private TextMeshProUGUI dayText;
-
     public TextMeshProUGUI payDescription;
     [SerializeField] int dailyOperationCost = 50;
     public float endDayDelay = 1.5f;
-    
+    [SerializeField] public bool forceRain = false;
+    [SerializeField] public GameObject rainyDay; // rain tutorial: https://www.youtube.com/watch?v=xkB6yzCBfgw
+
     [Header("-----FOODIE WAVE SETTINGS-----")]
     [SerializeField] private GameObject foodiesParentObj;
     [SerializeField] private FoodieSpawner foodieSpawner;
@@ -100,7 +101,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
-        if(!isTutorial)
+        if (!isTutorial)
         {
             // Initialize UI
             upgradeScreenObj.SetActive(false);
@@ -244,6 +245,22 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     }
     public void StartNewDay() // Starts a new day after player is done with their upgrades menu 
     {
+        // weather
+        if (forceRain)
+        {
+            rainyDay.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Randomizing");
+            int randInt = Random.Range(0, 6);
+            if (randInt == 0)
+            {
+
+                rainyDay.SetActive(true);
+            }
+        }
+
         day++;
         dayText.text = day.ToString();
         if (day % 3 == 0) // Every 3rd day, increase amount of waves and operations cost
