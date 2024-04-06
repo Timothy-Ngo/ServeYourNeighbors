@@ -13,6 +13,14 @@ public class Credits : MonoBehaviour
     [SerializeField] GameObject titles;
     [SerializeField] GameObject names;
 
+    private void Update()
+    {
+        if (Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene("Main Menu");
+        }
+    }
+
     private void FixedUpdate()
     {
         institution.transform.Translate(Vector3.up * 0.02f);
