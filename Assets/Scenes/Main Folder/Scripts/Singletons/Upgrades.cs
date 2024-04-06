@@ -190,15 +190,19 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             shackDesign.SetActive(false);
             tavernDesign.SetActive(true);
             restaurantDesign.SetActive(false);
+            currentLayout = LayoutLevel.Tavern;
         }
-
-        if (restaurantAchieved)
+        else if (restaurantAchieved)
         {
             shackDesign.SetActive(false);
             tavernDesign.SetActive(false);
             restaurantDesign.SetActive(true);
+            currentLayout = LayoutLevel.Restaurant;
         }
-
+        else
+        {
+            currentLayout = LayoutLevel.Shack;
+        }
     }
 
     // the positions of the objects are saved to the file
@@ -263,6 +267,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                     shackDesign.SetActive(false);
                     tavernDesign.SetActive(true);
                     tavernAchieved = true;
+                    currentLayout = LayoutLevel.Tavern;
                 }
                 else
                 {
@@ -282,6 +287,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                     restaurantDesign.SetActive(true);
                     visualBar.fillAmount = 1;
                     restaurantAchieved = true;
+                    currentLayout = LayoutLevel.Restaurant;
                 }
                 else
                 {
