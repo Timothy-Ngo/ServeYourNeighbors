@@ -156,7 +156,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                Vector3 newPosition = selectedItem.transform.position;
+                 Vector3 newPosition = selectedItem.transform.position;
                 bool foundNewPosition = false;
                 if (!InMapBoundary(newPosition))
                 {
@@ -166,19 +166,37 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    for (float x = selectedItem.transform.position.x + 1; x < bottomRightCorner.x; x++)
+                    for (float x = selectedItem.transform.position.x; x < bottomRightCorner.x; x++)
                     {
                         newPosition = new Vector3(x, newPosition.y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (!InKitchenBoundary(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            if (!InKitchenBoundary(newPosition))
                             {
-                                foundNewPosition = true;
-                                break;
+                                if (!InKitchenBoundary(newPosition + Vector3.right))
+                                {
+                                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right))
+                                    {
+                                        if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                                        {
+                                            foundNewPosition = true;
+                                            Debug.Log("new position is not the old pos + 1");
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            if (newPosition == selectedItem.transform.position + Vector3.right)
+                                            {
+                                                foundNewPosition = true;
+                                                Debug.Log("new position is the old pos + 1");
+                                                break;
+                                            }
+                                        }
+
+                                    }
+                                }
                             }
+
                         }
                         else if (selectedItem.CompareTag("Cooktop"))
                         {
@@ -253,9 +271,10 @@ public class PlacementSystem : MonoBehaviour
                         newPosition = new Vector3(x, newPosition.y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            if (!InKitchenBoundary(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right)
+                                )
                             {
                                 foundNewPosition = true;
                                 break;
@@ -335,9 +354,10 @@ public class PlacementSystem : MonoBehaviour
                         newPosition = new Vector3(newPosition.x, y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            if (!InKitchenBoundary(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left)
+                                )
                             {
                                 foundNewPosition = true;
                                 break;
@@ -416,9 +436,10 @@ public class PlacementSystem : MonoBehaviour
                         newPosition = new Vector3(newPosition.x, y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+                            if (!InKitchenBoundary(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left)
+                            )
                             {
                                 foundNewPosition = true;
                                 break;
@@ -685,11 +706,8 @@ public class PlacementSystem : MonoBehaviour
     {
         Vector3 topLeft = Layout.inst.topLeftKitchenBoundaryPosition;
         Vector3 bottomRight = Layout.inst.bottomRightKitchenBoundaryPosition;
-        bool withinXRange = topLeft.x <= position.x && position.x <= bottomRight.x;
-        bool withinYRange = bottomRight.y <= position.y && position.y <= topLeft.y;
-        Debug.Log(topLeft);
-        Debug.Log(bottomRight);
-
+        bool withinXRange = topLeft.x < position.x && position.x < bottomRight.x;
+        bool withinYRange = bottomRight.y < position.y && position.y < topLeft.y;
         return withinXRange && withinYRange;
     }
 

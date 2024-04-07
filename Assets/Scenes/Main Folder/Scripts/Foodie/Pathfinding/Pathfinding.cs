@@ -6,7 +6,7 @@ using System.Data;
 using UnityEngine;
 public class Pathfinding
 {
-  
+
     private const int MOVE_STRAIGHT_COST = 10; // 1 times 10
     private const int MOVE_DIAGONAL_COST = 14; // sqroot(2) = 1.4 -> times 10
 
@@ -56,7 +56,7 @@ public class Pathfinding
             {
                 PathNode pathNode = grid.GetGridObject(x, y);
                 pathNode.gCost = int.MaxValue; // sets gCost to infinity
-                pathNode.CalculateFCost(); 
+                pathNode.CalculateFCost();
                 pathNode.cameFromNode = null; // set to null so won't retain the information from a previous path
 
             }
@@ -70,7 +70,7 @@ public class Pathfinding
         while (openList.Count > 0) // while there are still nodes to search
         {
             PathNode currentNode = GetLowestFCostNode(openList);
-            
+
             // if reached final node
             if (currentNode == endNode)
             {
@@ -86,7 +86,7 @@ public class Pathfinding
                 if (closedList.Contains(neighborNode)) continue; // skips nodes already visited
                 if (!neighborNode.isWalkable)
                 {
-                    closedList.Add(neighborNode); 
+                    closedList.Add(neighborNode);
                     continue;
                 }
 
@@ -153,7 +153,7 @@ public class Pathfinding
         }
 
         // if node that is below current node exists - // down
-        if (currentNode.y - 1 >= 0) 
+        if (currentNode.y - 1 >= 0)
             neighborList.Add(GetNode(currentNode.x, currentNode.y - 1));
 
         // if node that is above current node exists - // up
@@ -182,7 +182,7 @@ public class Pathfinding
         return grid;
     }
 
-    
+
 
     private List<PathNode> CalculatePath(PathNode endNode)
     {
@@ -209,7 +209,7 @@ public class Pathfinding
         int remaining = Mathf.Abs(xDistance - yDistance);
 
         // total diagonal distance + total straight distance
-        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining; 
+        return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, yDistance) + MOVE_STRAIGHT_COST * remaining;
     }
 
     // cycles through list of pathnodes and finds which node has the lowest f cost
@@ -228,12 +228,12 @@ public class Pathfinding
         // returns node with lowest f cost
         return lowestFCostNode;
     }
-    
+
 
     // cycles through list of obstacle positions and updates those nodes on the grid to unwalkable
     public void UpdateObstacles()
     {
-        foreach(Vector3 position in obstaclePositions)
+        foreach (Vector3 position in obstaclePositions)
         {
             int x = 0;
             int y = 0;
@@ -241,6 +241,6 @@ public class Pathfinding
             grid.GetXY(position, out x, out y);
             GetNode(x, y).SetIsWalkable(false);
         }
-        
+
     }
 }

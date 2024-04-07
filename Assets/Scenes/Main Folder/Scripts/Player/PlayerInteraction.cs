@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using JetBrains.Annotations;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -314,12 +315,28 @@ public class PlayerInteraction : MonoBehaviour
                         // set dish
                         counterScript.item = PickupSystem.inst.GetItemInHands();
 
-                        // place dish down on table
-                        Vector3 offset = new Vector3(0f, 0.3f, 0);
+                        // play sfx
+                        GameObject item = counterScript.item;
+                        if (item.CompareTag("Ingredient") || item.CompareTag("Topping"))
+                        {
+                            SoundFX.inst.IngredientCounterPlaceSFX(1f);
+                        }
+                        else if (item.CompareTag("Dish"))
+                        {
+                            SoundFX.inst.DishCounterPlaceSFX(1f);
+                        }
+                        else 
+                        {
+                            Debug.Log($"No sfx for {item.name} of tag type {item.tag}.");
+                        }
+                            // place dish down on table
+                            Vector3 offset = new Vector3(0f, 0.3f, 0);
                         PickupSystem.inst.PlaceItem(counterScript.transform, offset);
                         counterScript.SetFull(true);
 
                         SetInteraction(false);
+
+
                     }
                 }
                 else

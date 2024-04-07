@@ -39,14 +39,11 @@ public class Obstacle : MonoBehaviour
 
         if (gameObject.CompareTag("Table"))
         {
-            //Debug.Log("Table object");
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(true);
-            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(true);
-            FoodieSystem.inst.pathfinding.GetNode(x - 2, y).SetIsPlaceable(true);
+            FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(true);
         }
         else if (gameObject.CompareTag("Distraction"))
         {
-            //Debug.Log("Distraction object");
             for (int j = 0; j < 1; j++)
             {
                 FoodieSystem.inst.pathfinding.GetNode(x, y + j).SetIsPlaceable(true);
@@ -93,14 +90,11 @@ public class Obstacle : MonoBehaviour
 
         if (gameObject.CompareTag("Table"))
         {
-            //Debug.Log("Table object");
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
-            FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
-            FoodieSystem.inst.pathfinding.GetNode(x - 2, y).SetIsPlaceable(false);
+            FoodieSystem.inst.pathfinding.GetNode(x + 1, y).SetIsPlaceable(false);
         }
         else if (gameObject.CompareTag("Distraction"))
         {
-            //Debug.Log("Distraction object");
             for (int i = -1; i < 2; i++)
             {
                 for (int j = -1; j < 2; j++)
@@ -120,7 +114,6 @@ public class Obstacle : MonoBehaviour
         else
         {
             FoodieSystem.inst.pathfinding.GetNode(x, y).SetIsPlaceable(false);
-            //FoodieSystem.inst.pathfinding.GetNode(x - 1, y).SetIsPlaceable(false);
         }
 
         // for debugging

@@ -19,6 +19,10 @@ public class SoundFX : MonoBehaviour
         {
             inst = this;
         }
+        else if (inst != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -153,5 +157,33 @@ public class SoundFX : MonoBehaviour
     public void UIClickSFX(float volume)
     {
         PlaySoundFXClip(uiClickSFX, transform, volume);
+    }
+
+    public AudioClip ingredientCounterPlaceSFX;
+
+    public void IngredientCounterPlaceSFX(float volume)
+    {
+        PlaySoundFXClip(ingredientCounterPlaceSFX, transform, volume);
+    }
+
+    public AudioClip dishCounterPlaceSFX;
+
+    public void DishCounterPlaceSFX(float volume)
+    {
+        PlaySoundFXClip(dishCounterPlaceSFX, transform, volume);
+    }
+
+    public AudioClip grinderSFX;
+
+    public void GrinderSFX(float volume, float length)
+    {
+        PlayTimedSoundFXClip(grinderSFX, transform, volume, length + 0.5f);
+    }
+
+    public AudioClip grinderScreamSFX;
+
+    public void GrinderScreamSFX(float volume, float length)
+    {
+        PlayTimedSoundFXClip(grinderScreamSFX, transform, volume, length + 0.5f);
     }
 }

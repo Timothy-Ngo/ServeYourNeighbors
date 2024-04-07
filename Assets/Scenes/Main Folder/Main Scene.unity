@@ -6628,66 +6628,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 264656303}
   m_CullTransparentMesh: 1
---- !u!1 &266347533
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 266347535}
-  - component: {fileID: 266347534}
-  m_Layer: 0
-  m_Name: ~Sound FX
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &266347534
+--- !u!114 &266347534 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 3201226759116611468, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+  m_PrefabInstance: {fileID: 3201226758896417666}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266347533}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 413e4a699b37cc4428942ba7e7c9d99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundFXObject: {fileID: 4239381149962088680, guid: 76bba6140ae1c9c48984720bc9bd5e4f, type: 3}
-  soundFXAudioMixerGroup: {fileID: 2481929224754481579, guid: f6876499557ca684e875aa866911b879, type: 2}
-  collectPaymentSFX: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
-  serveDishSFX: {fileID: 8300000, guid: 1ba5d8e6e6ad7304196d2affa82d9e1f, type: 3}
-  pickUpDishSFX: {fileID: 8300000, guid: dc483b9e2a1b7404b8a8b18f5fd8c591, type: 3}
-  pickUpIngredientSFX: {fileID: 8300000, guid: cfdfec74392323b48958a2446308d8bc, type: 3}
-  openIngredientBoxSFX: {fileID: 8300000, guid: 141631485a482bf428b1b7814b0e557c, type: 3}
-  closeIngredientBoxSFX: {fileID: 8300000, guid: b44a9dea768c5554588a3708bec92e60, type: 3}
-  qtEventSFX: {fileID: 8300000, guid: 44173581fe2d833408fc584c778744b8, type: 3}
-  tomatoDishPrepSFX: {fileID: 8300000, guid: 61d408f6190d66249a60935a2b116f56, type: 3}
-  lettuceDishPrepSFX: {fileID: 8300000, guid: 49dcb104a34530140b128a77e8682f43, type: 3}
-  flourDishPrepSFX: {fileID: 8300000, guid: 0dea850ae80f2d34fb29754cbc4d67a3, type: 3}
-  finishedDishSFX: {fileID: 8300000, guid: 8afa8ce6327ed5f4f9a6b40626ad74a9, type: 3}
-  throwAwaySFX: {fileID: 8300000, guid: 1902ca075b00fbb41b5c35f2a84ce535, type: 3}
-  addMSGSFX: {fileID: 8300000, guid: ce054e3a381b8d540a2f5667a660f375, type: 3}
-  uiSelectSFX: {fileID: 8300000, guid: 83f52ee155a38f24dafb4d0e0476ae41, type: 3}
-  uiClickSFX: {fileID: 8300000, guid: 9332e727e53bc1940a48f0ab340ed033, type: 3}
---- !u!4 &266347535
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266347533}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &266378533 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9200684427552887212, guid: cd07f210a8b116b41b5d372af5272386, type: 3}
@@ -29451,6 +29402,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5b121075584cd4594b9ff391c7affe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backgroundMusic: []
+  mainMenuBackgroundMusic: {fileID: 0}
+  tutorialBackgroundMusic: {fileID: 0}
 --- !u!4 &1263284345
 Transform:
   m_ObjectHideFlags: 0
@@ -37222,6 +37176,7 @@ MonoBehaviour:
   standardPayment: 10
   msgBonusMultiplier: 3
   collectPaymentSfx: {fileID: 8300000, guid: b3498b9794e40994b8d73d146b1825c9, type: 3}
+  debugMode: 0
 --- !u!4 &1583506793
 Transform:
   m_ObjectHideFlags: 0
@@ -54701,6 +54656,63 @@ PrefabInstance:
       objectReference: {fileID: 831195473}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: acdd36ae518672b49aa7617c4c746321, type: 3}
+--- !u!1001 &3201226758896417666
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611469, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3201226759116611471, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
+      propertyPath: m_Name
+      value: ~Sound FX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a94f5fef4fcb04345b49aa699262a417, type: 3}
 --- !u!114 &3376943728540576838
 MonoBehaviour:
   m_ObjectHideFlags: 0

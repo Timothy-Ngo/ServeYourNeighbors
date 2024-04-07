@@ -22,7 +22,7 @@ public class Grinder : MonoBehaviour
     {
         msg = msgSR.sprite;
         msgSR.enabled = false;
-        offset  = offsetGameObject.transform.localPosition;
+        offset = offsetGameObject.transform.localPosition;
     }
 
     private void Update()
@@ -37,6 +37,9 @@ public class Grinder : MonoBehaviour
         grinding = true;
         timerScript.SetMaxTime(grindTime);
         gameObject.GetComponent<Animator>().Play(foodieType);
+        // Play grinding sfx
+        SoundFX.inst.GrinderSFX(1f, grindTime);
+        SoundFX.inst.GrinderScreamSFX(1f, grindTime);
     }
 
     public void FinishGrinding()
@@ -46,7 +49,7 @@ public class Grinder : MonoBehaviour
 
         grinding = false;
         msgGrindedUp = true;
-
+        SoundFX.inst.FinishedDishSFX(1f);   
         gameObject.GetComponent<Animator>().Play("Idle");
     }
 

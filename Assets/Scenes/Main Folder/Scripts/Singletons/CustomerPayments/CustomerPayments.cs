@@ -23,6 +23,8 @@ public class CustomerPayments : MonoBehaviour
     [Header("Sound FX")]
     public AudioClip collectPaymentSfx;
 
+    [SerializeField] bool debugMode = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,13 @@ public class CustomerPayments : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (debugMode)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                CollectPayment(1000);
+            }
+        }
     }
 
     private void CollectPayment(int amount)
