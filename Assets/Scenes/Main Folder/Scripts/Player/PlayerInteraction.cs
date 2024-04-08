@@ -252,6 +252,7 @@ public class PlayerInteraction : MonoBehaviour
                         foodieScript.HideUI();
                     }
 
+                    foodieScript.gameObject.GetComponent<Animator>().Play("Kidnapped");
                     foodieScript.stateMachine.ChangeState(foodieScript.kidnappedState);
 
                     // pick up the foodie
@@ -390,7 +391,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (foodieSightRange)
         {
-            if (PickupSystem.inst.isHoldingFoodie())
+            if (PickupSystem.inst.isHoldingFoodie() && foodieSightScript.stateMachine.currentFoodieState != foodieSightScript.lineState)
             {
                 /*
                 // flag makes sure code inside is only called once per collision
@@ -415,7 +416,7 @@ public class PlayerInteraction : MonoBehaviour
 
                     foodieSightScript.HideUI();
                     FoodieSystem.inst.availableSeats.Enqueue(foodieSightScript.orderState.tablePosition);
-                    foodieSightScript.gameObject.GetComponent<Animator>().Play("Walk");
+                    foodieSightScript.gameObject.GetComponent<Animator>().Play("Scared Leave");
                     foodieSightScript.stateMachine.ChangeState(foodieSightScript.leaveState);
                 }
 

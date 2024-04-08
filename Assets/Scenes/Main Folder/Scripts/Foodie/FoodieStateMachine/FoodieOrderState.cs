@@ -70,7 +70,7 @@ public class FoodieOrderState : FoodieState
             foodie.orderBubble.SetActive(false);
             FoodieSystem.inst.availableSeats.Enqueue(tablePosition);
 
-            foodie.gameObject.GetComponent<Animator>().Play("Walk");
+            foodie.gameObject.GetComponent<Animator>().Play("Angry Leave");
             foodie.stateMachine.ChangeState(foodie.leaveState);
         }
 

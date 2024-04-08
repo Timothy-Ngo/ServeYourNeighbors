@@ -50,8 +50,21 @@ public class Outfits : MonoBehaviour
 
     public void SetOutift()
     {
+        string outfitName = "outfit" + outfit.ToString();
         Player.inst.outfitSR.sprite = Player.inst.outfits[outfit];
         Player.inst.outfit = outfit;
+        Player.inst.outfitName = outfitName;
+        Player.inst.outfitObject.GetComponent<Animator>().Play(Player.inst.outfitName);
+        Animator playerAnimator = Player.inst.outfitObject.GetComponent<Animator>();
+        AnimatorStateInfo playerAnimatorInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+
+        OnStateEnter(playerAnimator, playerAnimatorInfo, 8);
+
+        //Player.inst.gameObject.GetComponent<Animator>().Play("Idle");
+    }
+    public void OnStateEnter(Animator playerAnimator, AnimatorStateInfo playerAnimatorInfo, int layermask)
+    {
+        Player.inst.outfitObject.GetComponent<Animator>().Play(Player.inst.outfitName);
     }
 
 }

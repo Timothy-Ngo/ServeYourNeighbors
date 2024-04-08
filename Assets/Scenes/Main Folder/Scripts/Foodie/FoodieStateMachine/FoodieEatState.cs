@@ -42,7 +42,7 @@ public class FoodieEatState : FoodieState
         {
 
             FoodieSystem.inst.availableSeats.Enqueue(foodie.orderState.tablePosition);
-            foodie.gameObject.GetComponent<Animator>().Play("Walk");
+            foodie.gameObject.GetComponent<Animator>().Play("Happy Leave");
             foodie.stateMachine.ChangeState(foodie.leaveState);
         }
 

@@ -11,6 +11,8 @@ public class Player : MonoBehaviour, IDataPersistence
     public List<Sprite> outfits;
     public int outfit = 0;
     public SpriteRenderer outfitSR;
+    public string outfitName;
+    public GameObject outfitObject;
 
     private void Awake()
     {
@@ -26,6 +28,11 @@ public class Player : MonoBehaviour, IDataPersistence
     {
         outfit = data.outfit;
         outfitSR.sprite = outfits[outfit];
+
+        // animate outfit
+        outfitName = "outfit" + outfit.ToString();
+        outfitObject.GetComponent<Animator>().Play(outfitName);
+        gameObject.GetComponent<Animator>().Play("Idle");
     }
 
     public void SaveData(GameData data)

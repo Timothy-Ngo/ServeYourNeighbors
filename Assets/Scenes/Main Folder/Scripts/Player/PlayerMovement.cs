@@ -19,11 +19,14 @@ public class PlayerMovement : MonoBehaviour {
     Animator animator;
     string currentState;
 
+    Animator outfitAnimator;
+
     void Start() {
         // set components
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         animator = gameObject.GetComponent<Animator>();
+        outfitAnimator = Player.inst.outfitObject.GetComponent<Animator>();
     }
 
     void Update() {
@@ -44,12 +47,17 @@ public class PlayerMovement : MonoBehaviour {
     private void FixedUpdate() {
         if (!freeze)
         {
+            
             // Prevents diagonal movement from being faster than regular movement
             if (inputHorizontal != 0 && inputVertical != 0)
             {
                 inputHorizontal *= speedLimiter;
                 inputVertical *= speedLimiter;
             }
+
+
+            OnStateEnter(outfitAnimator, outfitAnimator.GetCurrentAnimatorStateInfo(0), 8);
+            
 
             // Flips sprite for right/left movement change
             // if moving left and still facing right, flip
@@ -63,7 +71,20 @@ public class PlayerMovement : MonoBehaviour {
             rb.velocity = new Vector2(inputHorizontal * speed, inputVertical * speed);
         } else
         {
+            
             rb.velocity = new Vector2(0, 0);
+        }
+    }
+
+    public void OnStateEnter(Animator animator, AnimatorStateInfo animatorInfo, int layermask)
+    {
+        if (inputHorizontal == 0 && inputVertical == 0)
+        {
+            ChangeAnimationState("Idle");
+        }
+        else
+        {
+            ChangeAnimationState("Walk");
         }
     }
 
