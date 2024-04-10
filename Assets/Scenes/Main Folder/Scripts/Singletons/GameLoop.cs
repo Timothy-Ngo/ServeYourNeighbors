@@ -127,6 +127,17 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             // display number of foodies for the day
             numFoodiesCount = currentWaveCount * currentNumFoodiesPerWave;
             foodieCountText.text = numFoodiesCount.ToString();
+            if (Upgrades.inst.currentLayout == Upgrades.LayoutLevel.Shack)
+            {
+                CustomerPayments.inst.SetStandardPayment(15);
+            }
+            else if(Upgrades.inst.currentLayout == Upgrades.LayoutLevel.Tavern)
+            {
+                CustomerPayments.inst.SetStandardPayment(20);
+            } else
+            {
+                CustomerPayments.inst.SetStandardPayment(25);
+            }
         }
     }
 
@@ -266,7 +277,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         if (day % 3 == 0) // Every 3rd day, increase amount of waves and operations cost
         {
             wavesPerDay++;
-            dailyOperationCost += 15;
+            dailyOperationCost += 10;
         }
         else if (day % 5 == 1) // Every 5th day, increase number of foodies 
         {
@@ -285,6 +296,19 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         }
         // Close upgrade screen
         upgradeScreenObj.SetActive(false);
+        if (Upgrades.inst.currentLayout == Upgrades.LayoutLevel.Shack)
+        {
+            CustomerPayments.inst.SetStandardPayment(15);
+        }
+        else if (Upgrades.inst.currentLayout == Upgrades.LayoutLevel.Tavern)
+        {
+            CustomerPayments.inst.SetStandardPayment(20);
+        }
+        else
+        {
+            CustomerPayments.inst.SetStandardPayment(25);
+        }
+
         // Reset wave count
         currentWaveCount = wavesPerDay;
         

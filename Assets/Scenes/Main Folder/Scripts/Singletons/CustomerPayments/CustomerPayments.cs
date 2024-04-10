@@ -14,11 +14,11 @@ public class CustomerPayments : MonoBehaviour
 
     [Header("Price Categories")]
 
-    public int standardPayment = 10;
+    public int standardPayment = 15;
 
 
     [Header("MSG")]
-    public float msgBonusMultiplier = 2.5f;
+    public float msgBonusMultiplier = 3f;
 
     [Header("Sound FX")]
     public AudioClip collectPaymentSfx;
@@ -63,5 +63,8 @@ public class CustomerPayments : MonoBehaviour
         CollectPayment(Mathf.RoundToInt(payment));
     }
 
+    public void SetStandardPayment(int newPayment) {
+        standardPayment = newPayment;
+    }
 }
 
