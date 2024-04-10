@@ -16,22 +16,17 @@ using UnityEngine.SceneManagement;
     * instead of checking a bool to initialize data if it was null, data will always be initialized if null if the scene is the Main Scene
         * this change prevents a NullReferenceError that comes up when the game tries to save the game data
             * error would happen bc was not initializing the new game for some reason
-    * added bool newGameOnLoad for debugging/development purposes
-        * when set to true, save data is reset every time the game is loaded
     * game data is saved in NewGame() after gameData is reset to default values
     * removed functionality of saving data when the game closes
         * could've been used as an exploit to generate money without progressing the game
     * similarly to previous change, removed functionality of saving data when the scene changes
-        * could'be been used as an exploit to generate money without progressing the game
+        * could've been used as an exploit to generate money without progressing the game
     * duplicated code to save Settings data
 */
 
 
 public class SaveSystem : MonoBehaviour
 {
-    [Header("Debugging/Developing")]
-    [Tooltip("Change in prefab to make sure it's checked/unchecked across all scenes")]
-    
 
     [Header("File Storage Configuration")]
     [SerializeField] private string fileName;
@@ -145,7 +140,7 @@ public class SaveSystem : MonoBehaviour
         // load any saved data from a file using the data handler
         this.gameData = dataHandler.Load(); // if save data doesn't exist, then gameData will be null
 
-        // start a new game if the data is null and player is on Main Scene OR if debug configuration newGameOnLoad is turned on
+        // start a new game if the data is null and player is on Main Scene
         if (this.gameData == null && SceneManager.GetActiveScene().name == "Main Scene" )
         {
             Debug.Log("No data was found. A New Game and default settings are being initialized.");
@@ -216,7 +211,7 @@ public class SaveSystem : MonoBehaviour
     }
 
     /* saving when the game closes could be used as an exploit
-     * ex: serving one customer, getting the money, then quitting and then start up game         again with that money saved but it's the same day with the customer back
+     * ex: serving one customer, getting the money, then quitting and then start up game again with that money saved but it's the same day with the customer back
     private void OnApplicationQuit()
     {
         // saves data when game is closed
