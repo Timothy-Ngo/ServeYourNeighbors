@@ -27,6 +27,9 @@ public class FoodieSpawner : MonoBehaviour
 
     [SerializeField] GameObject player;
 
+    [SerializeField] private float orderingTime = 28;
+    [SerializeField] private int eatingTime = 12;
+
     [Header("-----FOODIE PREFABS-----")]
     public GameObject[] foodiePrefabs; // drag and drop prefabs in the inspector
 
@@ -52,6 +55,8 @@ public class FoodieSpawner : MonoBehaviour
 
             GameObject newFoodie = Instantiate(foodie, spawnPoint, Quaternion.identity);
             newFoodie.transform.parent = foodieParent;
+            newFoodie.GetComponent<Foodie>().orderTime = orderingTime;
+            newFoodie.GetComponent<Foodie>().eatingTime = eatingTime;
             //Debug.Log("Foodie Instantiated");
         }
     }
@@ -67,6 +72,8 @@ public class FoodieSpawner : MonoBehaviour
             GameObject randomFoodiePrefab = foodiePrefabs[index];
 
             GameObject newFoodie = Instantiate(randomFoodiePrefab, spawnPoint, Quaternion.identity);
+            newFoodie.GetComponent<Foodie>().orderTime = orderingTime;
+            newFoodie.GetComponent<Foodie>().eatingTime = eatingTime;
             newFoodie.transform.parent = foodieParent;
             //Debug.Log("Foodie Instantiated");
         }
@@ -113,5 +120,19 @@ public class FoodieSpawner : MonoBehaviour
     public void ReleaseFoodie()
     {
         StartCoroutine(SpawnKidnappedFoodie());
+    }
+
+    public void IncreaseDifficulty()
+    {
+        // Decrease ordering time and eating time by 10%, but maintain minimum 8 second ordering time and 5 second eating time
+        if(orderingTime * 0.9f > 8)
+        {
+            orderingTime *= 0.9f;
+        }
+
+        if(eatingTime * 0.9f > 5)
+        {
+            eatingTime *= (int)Mathf.Floor(0.9f);
+        }
     }
 }

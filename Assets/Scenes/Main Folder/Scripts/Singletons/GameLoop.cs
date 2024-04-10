@@ -279,9 +279,11 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             wavesPerDay++;
             dailyOperationCost += 10;
         }
-        else if (day % 5 == 1) // Every 5th day, increase number of foodies 
+        else if (day % 5 == 0) // Every 5th day, increase number of foodies and increase difficulty of foodie times
         {
+            Debug.Log("***********INCREASING DAY 5 DIFFICULTY");
             currentNumFoodiesPerWave++;
+            foodieSpawner.IncreaseDifficulty();
         }
         // Display current day's operation cost goal for the player to reach
         operationCostText.text = dailyOperationCost.ToString();
