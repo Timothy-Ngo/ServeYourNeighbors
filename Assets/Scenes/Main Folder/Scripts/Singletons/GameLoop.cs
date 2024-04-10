@@ -65,6 +65,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject endGameScreen;
 
     [Header("-----PAUSE GAME-----")]
+    [SerializeField] private GameObject outfitsScreenObj;
     [SerializeField] private GameObject pauseGameScreen;
     [SerializeField] private Button resumeButton;
     bool pauseScreenOpened = false;
@@ -206,7 +207,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             */
         }
 
-        if (Input.GetKeyDown(InputSystem.inst.pauseKey) && !upgradeScreenObj.activeInHierarchy && !reviewScreenObj.activeInHierarchy)
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey) && !upgradeScreenObj.activeInHierarchy && !reviewScreenObj.activeInHierarchy && !outfitsScreenObj.activeInHierarchy)
         {
             if (pauseScreenOpened)
             {

@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Outfits : MonoBehaviour
 {
-
-    
     public int outfit = 0;
     public Image outfitImage;
+    [SerializeField] private Button nextButton;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,13 @@ public class Outfits : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void Awake()
+    {
+
+        EventSystem.current.firstSelectedGameObject = nextButton.gameObject;
+        EventSystem.current.SetSelectedGameObject(nextButton.gameObject);
     }
 
     public void NextOutfit()
