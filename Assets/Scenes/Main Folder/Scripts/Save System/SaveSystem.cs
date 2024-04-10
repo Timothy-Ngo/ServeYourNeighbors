@@ -148,22 +148,23 @@ public class SaveSystem : MonoBehaviour
             SaveGame();
         }
 
+        if(!(SceneManager.GetActiveScene().name == "Tutorial")) {
+            // if no data can be loaded, initialize to a new game
+            if (this.gameData == null)
+            {
+                Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
+                return;
+            }
 
-        // if no data can be loaded, initialize to a new game
-        if (this.gameData == null)
-        {
-            Debug.Log("No data was found. A New Game needs to be started before data can be loaded.");
-            return;
+            // push the loaded data to all other scripts that need it
+            foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+            {
+                dataPersistenceObj.LoadData(gameData);
+            }
+
+
+            Debug.Log("Loaded day: " + gameData.day);
         }
-
-        // push the loaded data to all other scripts that need it
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
-        {
-            dataPersistenceObj.LoadData(gameData);
-        }
-
-
-        Debug.Log("Loaded day: " + gameData.day);
     }
 
     public void LoadSettings()

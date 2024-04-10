@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: TutorialDialogueOrder
   m_EditorClassIdentifier: 
   dialogue:
-  - Oh look! Here comes a customer now.
-  - Let's serve them!
+  - Let's prepare another dish.

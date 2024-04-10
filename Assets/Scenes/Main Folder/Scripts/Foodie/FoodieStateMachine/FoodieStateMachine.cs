@@ -16,7 +16,7 @@ public class FoodieStateMachine
 
     public void ChangeState(FoodieState newState)
     {
-        //Debug.Log(currentFoodieState + ": changing state to :" + newState);
+        Debug.Log(currentFoodieState + ": changing state to :" + newState);
 
         previousFoodieState = currentFoodieState;
         currentFoodieState.ExitState();

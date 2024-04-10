@@ -17,10 +17,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main Folder/Credits.unity
     guid: ca204ce5fcc84c04d9ea6b93fea21077
-  - enabled: 1
-    path: Assets/Scenes/Main Folder/Tutorial.unity
+  - enabled: 0
+    path: Assets/Scenes/Main Folder/OldTutorial.unity
     guid: 525de46140e9c4c46b034c9f151319f7
   - enabled: 1
     path: Assets/Scenes/Main Folder/Layouts.unity
     guid: 9da89388c3570c544b8a4a63839d32c0
+  - enabled: 0
+    path: Assets/Scenes/Main Folder/NewTutorial.unity
+    guid: f104c5ad605160c459c9174055a546f7
+  - enabled: 1
+    path: Assets/Scenes/Main Folder/Tutorial.unity
+    guid: 3cda2e92c655ff2479f8b1ea249ba3a0
   m_configObjects: {}

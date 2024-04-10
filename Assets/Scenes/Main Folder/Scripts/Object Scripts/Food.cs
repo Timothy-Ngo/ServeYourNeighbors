@@ -35,7 +35,7 @@ public class Food : MonoBehaviour {
     private void Start() {
         //sr = gameObject.GetComponent<SpriteRenderer>();
         //sr.enabled = false;
-        if(!(gameObject.GetComponent<Animator>() is null))
+        if(!(gameObject.GetComponent<Animator>() is null) && gameObject.name != "dish")
         {
             gameObject.GetComponent<Animator>().Play("Idle");
         }
