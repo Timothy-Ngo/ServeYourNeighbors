@@ -38,7 +38,7 @@ public class Foodie : MonoBehaviour
     public GameObject orderPrefab;
     public string orderName;
 
-    [Header("-----ORDERING SETTINGS-----")]
+    [Header("-----EATING SETTINGS-----")]
     public int eatingTime = 12;
 
     [Header("-----DISTRACTION SETTINGS-----")]

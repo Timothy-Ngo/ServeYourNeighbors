@@ -56,6 +56,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
     [Header("-----UPGRADES SCREEN-----")]
     [SerializeField] private Button tablesUpgradeButton;
+    [SerializeField] private GameObject skillTreeScreen;
 
     [Header("-----SYN METER-----")]
     [SerializeField] SYNMeter synMeter;
@@ -111,6 +112,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             playerUI.SetActive(true);
             settingsScreen.SetActive(false);
             layoutScreen.SetActive(false);
+            skillTreeScreen.SetActive(false);   
 
             // Display current day's operation cost goal for the player to reach
             operationCostText.text = dailyOperationCost.ToString();
@@ -428,5 +430,10 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     public bool IsEndScreenActive()
     {
         return endGameScreen.activeSelf;
+    }
+
+    public GameObject GetSkillTreeScreenObject()
+    {
+        return skillTreeScreen;
     }
 }

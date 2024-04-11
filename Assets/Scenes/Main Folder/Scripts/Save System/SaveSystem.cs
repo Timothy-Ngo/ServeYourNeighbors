@@ -87,7 +87,7 @@ public class SaveSystem : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "Main Scene")
         {
-            skillTree = FindObjectOfType<SkillTree>();
+            skillTree = GameLoop.inst.GetSkillTreeScreenObject().GetComponent<SkillTree>();
             skillTree.gameObject.SetActive(true);
             this.dataPersistenceObjects = FindAllDataPersistenceObjects();
             this.settingsDataPersistenceObjects = FindAllSettingsDataPersistenceObjects();
