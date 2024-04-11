@@ -267,7 +267,8 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone())
             {
-                if (TakeAction("[F] Grind", KeyCode.F))
+                string action = "[" + InputSystem.inst.interactKey.ToString() + "] Grind";
+                if (TakeAction(action, InputSystem.inst.interactKey))
                 {
                     if (PickupSystem.inst.GetItemInHands().gameObject.name == "cabbage_foodie(Clone)")
                     {
@@ -393,6 +394,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (PickupSystem.inst.isHoldingFoodie() && foodieSightScript.stateMachine.currentFoodieState != foodieSightScript.lineState)
             {
+                Debug.Log("CAUGHT!!!!!!!!!!!!!");
                 /*
                 // flag makes sure code inside is only called once per collision
                 if (!foodieReleased)

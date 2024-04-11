@@ -32,15 +32,16 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject foodieCount;
     [SerializeField] GameObject operationsFee;
     [SerializeField] GameObject synMeter;
+*/
 
     [Header("-----OBJECTS AND SYSTEMS----")]
-*/
     [SerializeField] Cooking cookStation;
     /*
     [SerializeField] Cooking cookStation2;
     [SerializeField] GameObject trashCan;
-    [SerializeField] GameObject grinderObj;
+    */
     [SerializeField] Grinder grinder;
+    /*
     [SerializeField] GameObject lettuceBox;
     [SerializeField] GameObject flourBox;
     [SerializeField] Currency currency;*/
@@ -48,16 +49,13 @@ public class Tutorial : MonoBehaviour
     [SerializeField] GameObject upgradesObj;
     [SerializeField] GameObject skillTreeObj;
     [SerializeField] List<Counter> counters;
+    [SerializeField] GameObject secondTable;
+    [SerializeField] GameObject animatronic;
+    [SerializeField] DistractionSystem distractionSystem;
 
     [Header("-----FOODIE STUFF-----")]
-        [SerializeField] GameObject foodiesParent;
-    /* 
-        [SerializeField] GameObject tableAndChair;
-        [SerializeField] GameObject tableAndChar2;
-        [SerializeField] FoodieSystem foodieSystem;
-        [SerializeField] GameObject animatronic;
-        [SerializeField] Distraction distraction;
-        */
+    [SerializeField] GameObject foodiesParent;
+    [SerializeField] FoodieSystem foodieSystem;
     [SerializeField] FoodieSpawner foodieSpawner;
     [SerializeField] GameObject tomatoFoodiePrefab;
     /* 
@@ -133,14 +131,14 @@ public class Tutorial : MonoBehaviour
     private IEnumerator WrapperTutorialCoroutine()
     {
         // tutorial on movement
-/*        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[0]));
+        yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[0]));
         // https://stackoverflow.com/questions/35701012/disabling-a-script-attached-to-a-game-object-in-unity-c-sharp
         ResetAbilities();
         promptText.text = "Move around";
         yield return new WaitForSeconds(4);
-        promptText.text = "";*/
+        promptText.text = "";
 
-/*        // tutorial on grabbing ingredients
+        // tutorial on grabbing ingredients
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[1]));
         player.GetComponent<PlayerInteraction>().CanGetIngredient();
         promptText.text = "Grab a tomato";
@@ -171,7 +169,7 @@ public class Tutorial : MonoBehaviour
         promptText.text = "Throw away the dish";
         yield return new WaitUntil(() => !pickup.isHoldingItem());
         promptText.text = "";
-        ResetAbilities();*/
+        ResetAbilities();
 
         // tutorial on serving foodies
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[4]));
@@ -192,26 +190,26 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerInteraction>().CanGetDish();
         promptText.text = "Serve the dish";
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.eatState || foodieScript.stateMachine.currentFoodieState == foodieScript.leaveState);
-        if (pickup.isHoldingItem())
-        {
-            pickup.DestroyItem();
-        }
-        if (cookStation.GetComponent<Cooking>().dish)
-        {
-            Destroy(cookStation.GetComponent<Cooking>().dish);
-            cookStation.GetComponent<Cooking>().ResetCooktop();
-        }
-        foreach(Counter counter in counters)
-        {
-            if(counter.Full())
-            {
-                counter.ResetCounter();
-            }
-        }
         promptText.text = "";
         if (playerStat.foodiesServed <= startServings)
         {
             // bad outcome
+            if (pickup.isHoldingItem())
+            {
+                pickup.DestroyItem();
+            }
+            if (cookStation.GetComponent<Cooking>().dish)
+            {
+                Destroy(cookStation.GetComponent<Cooking>().dish);
+                cookStation.GetComponent<Cooking>().ResetCooktop();
+            }
+            foreach (Counter counter in counters)
+            {
+                if (counter.Full())
+                {
+                    counter.ResetCounter();
+                }
+            }
             yield return new WaitUntil(() => foodieScript == null);
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[5]));
         }
@@ -223,7 +221,6 @@ public class Tutorial : MonoBehaviour
         }
         ResetAbilities();
 
-        /*
         // tutorial on kidnapping and MSG
         yield return StartCoroutine(KidnapMSGLoop());
         promptText.text = "";
@@ -237,30 +234,23 @@ public class Tutorial : MonoBehaviour
         promptText.text = "Press " + InputSystem.inst.foodieSightKey.ToString() + " to see customer vision";
         yield return new WaitUntil(() => Input.GetKeyDown(InputSystem.inst.foodieSightKey));
         promptText.text = "";
-        yield return new WaitForSeconds(3);
+
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
         foodieScript2 = foodiesParent.transform.GetChild(2).gameObject.GetComponent<Foodie>();
         foodieScript2.ActivateTutorial();
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[15]));
         promptText.text = "Kidnap a customer";
-        yield return new WaitForSeconds(3);
-        player.GetComponent<PlayerInteraction>().CanKidnap();//
+        player.GetComponent<PlayerInteraction>().CanKidnap();
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState);
-        pickup.DestroyItem();
-        for (int i = 1; i < foodiesParent.transform.childCount; i++)
-        {
-            Destroy(foodiesParent.transform.GetChild(i).gameObject);
-        }
-        foodieSystem.GetCurrentSeats();
-        player.GetComponent<PlayerInteraction>().CannotKidnap();
         promptText.text = "";
+        ResetAbilities();
 
         // tutorial on SYN meter and distraction
-        player.transform.localPosition = new Vector3(6.5f, 9f, 0f);
+        player.transform.localPosition = new Vector3(6.5f, 5.5f, 0f);
         yield return StartCoroutine(DistractionLoop());
-        player.GetComponent<PlayerInteraction>().CannotKidnap();
 
+        /*
         // tutorial on new foodies
         // bread
         playerStat.reset();
@@ -370,10 +360,10 @@ public class Tutorial : MonoBehaviour
         {
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[28]));
         }
-        else if(playerStat.successfulServings >= 3)
+        else if (playerStat.successfulServings >= 3)
         {
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[29]));
-        } 
+        }
         else
         {
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[30]));
@@ -453,19 +443,18 @@ public class Tutorial : MonoBehaviour
         player.GetComponent<PlayerMovement>().Unfreeze(); // resume player movement//
     }
 
-/*    private IEnumerator KidnapMSGLoop()
+    private IEnumerator KidnapMSGLoop()
     {
+        ResetAbilities();
         player.GetComponent<PlayerInteraction>().CanKidnap();
-        player.GetComponent<PlayerInteraction>().CannotCook();
-        player.GetComponent<PlayerInteraction>().CannotGetIngredient();
-        player.GetComponent<PlayerInteraction>().CannotGetMSG();
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[7]));
         yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[8]));
-        promptText.text = "Kidnap your customer";
+        promptText.text = "Kidnap:\n Approach and press " + InputSystem.inst.kidnapKey.ToString() + " quickly";
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
         foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
         foodieScript.ActivateTutorial();
+
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState);
         intenseText.alignment = TextAlignmentOptions.Center;
         intenseText.fontSize = 100;
@@ -474,32 +463,28 @@ public class Tutorial : MonoBehaviour
         intenseText.fontSize = 50;
         yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[10]));
         intenseText.alignment = TextAlignmentOptions.Left;
-        grinderObj.SetActive(true);
+        grinder.gameObject.SetActive(true);
         promptText.text = "GRIND THEM UP...GRIND THEM UP...";
         yield return new WaitUntil(() => grinder.IsGrindingDone());
         promptText.text = "";
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[11]));
         yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[12]));//
         promptText.text = "Cook a tomato soup";
+        ResetAbilities();
         player.GetComponent<PlayerInteraction>().CanCook();
         player.GetComponent<PlayerInteraction>().CanGetIngredient();
         yield return new WaitUntil(() => pickup.isHoldingIngredient());
-        player.GetComponent<PlayerInteraction>().CannotGetIngredient();
         yield return new WaitUntil(() => cookStation.IsFoodReady());
         promptText.text = "Pick up the MSG";
         player.GetComponent<PlayerInteraction>().CanGetMSG();
-        player.GetComponent<PlayerInteraction>().CannotGetIngredient();
-        player.GetComponent<PlayerInteraction>().CannotGetDish();
         yield return new WaitUntil(() => pickup.isHoldingTopping());
         promptText.text = "Add it to the dish";
         player.GetComponent<PlayerInteraction>().CanGetDish();
         yield return new WaitUntil(() => !pickup.isHoldingItem());
         promptText.text = "SERVE. SERVE. SERVE.";
-        player.GetComponent<PlayerInteraction>().CannotKidnap();
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
         foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
-        foodieScript.DeactivateTutorial();
 
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.eatState || foodieScript.stateMachine.currentFoodieState == foodieScript.leaveState);
 
@@ -516,18 +501,24 @@ public class Tutorial : MonoBehaviour
             }
             promptText.text = "";
             yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[13]));
+            ResetAbilities();
             yield return StartCoroutine(KidnapMSGLoop());
+        } else
+        {
+            yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.leaveState);
         }
+        ResetAbilities();
     }
 
     private IEnumerator DistractionLoop()
     {
-        synMeter.SetActive(true);
+        distractionSystem.distractedTime = 10;
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[16]));
         yield return StartCoroutine(MoveThroughIntenseDialogue(dialogueAssets[17]));
         animatronic.SetActive(true);
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[18]));
-        promptText.text = "Distract your customers, then kidnap";
+        secondTable.SetActive(true);
+        promptText.text = "Distract, then kidnap";
         foodieSpawner.SpawnA(tomatoFoodiePrefab);
         yield return new WaitForSeconds(0.1f);
         foodieScript = foodiesParent.transform.GetChild(1).gameObject.GetComponent<Foodie>();
@@ -538,7 +529,6 @@ public class Tutorial : MonoBehaviour
         foodieScript2.ActivateTutorial();
         yield return new WaitUntil(() => foodieScript.stateMachine.currentFoodieState == foodieScript.distractedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.distractedState);
         player.GetComponent<PlayerInteraction>().CanKidnap();
-        yield return new WaitForSeconds(2);
         if(foodieScript.stateMachine.currentFoodieState == foodieScript.kidnappedState || foodieScript2.stateMachine.currentFoodieState == foodieScript2.kidnappedState)
         {
             pickup.DestroyItem();
@@ -557,7 +547,7 @@ public class Tutorial : MonoBehaviour
             {
                 Destroy(foodiesParent.transform.GetChild(i).gameObject);
             }
-            distraction.ResetCharges();
+            animatronic.GetComponent<Distraction>().ResetCharges();
             foodieSystem.GetCurrentSeats();
             promptText.text = "";
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[19]));
@@ -565,6 +555,7 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+    /*
     private IEnumerator FlourLoop()
     {
         yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[21]));
