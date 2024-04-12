@@ -17,6 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     bool canGetMSG = true;
     bool canGetDish = true;
     bool canThrowAway = true;
+    bool canDistract = true;
 
     // this should become an array in the future for multiple available cooktops to interact with
     //GameObject cooktop;
@@ -205,7 +206,7 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-        else if (distractionRange || bluetoothSkill)
+        else if ((distractionRange || bluetoothSkill) && canDistract)
         {
             Debug.Log("Distraction Range");
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
@@ -485,6 +486,16 @@ public class PlayerInteraction : MonoBehaviour
     public void CannotThrowAway()
     {
         canThrowAway = false;
+    }
+
+    public void CanDistract()
+    {
+        canDistract = true;
+    }
+
+    public void CannotDistract()
+    {
+        canDistract = false;
     }
 
     public void SetInteraction(bool status)

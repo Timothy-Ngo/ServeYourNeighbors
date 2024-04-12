@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: TutorialDialogueCounters
   m_EditorClassIdentifier: 
   dialogue:
-  - With so many types of dishes, it's helpful to have a place to store items.
-  - This is a counter.
-  - You can place anything on it, pick things up, and swap items from it.
+  - You may have noticed the counters.
+  - Counters are used to store any ingredient, dish, or even MSG!
+  - You can swap your held item with an item on a counter.
   - Try serving this line of customers! Use the counters to your advantage.
   - Here's an extra cook station, too.
+  - Good luck! You're on your own.

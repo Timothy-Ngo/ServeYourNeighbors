@@ -80,6 +80,7 @@ public class Distraction : MonoBehaviour
     public void ResetCharges()
     {
         currentCharges = maxCharges;
+        chargesText.text = currentCharges.ToString();
     }
 
     public void Animate()
