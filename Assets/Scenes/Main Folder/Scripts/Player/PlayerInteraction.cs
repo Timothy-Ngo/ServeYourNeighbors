@@ -106,7 +106,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     SoundFX.inst.PickUpDishSFX(1f);
                     PickupSystem.inst.PickUpItem(cooktopScript.dish);
-                    cooktopScript.ResetCooktop();
+                    cooktopScript.Reset();
                     SetInteraction(false);
                     playerStats.incDishesMade();
                 }
@@ -206,13 +206,13 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
 
-        else if ((distractionRange || bluetoothSkill) && canDistract)
+        else if (distractionRange && canDistract)
         {
             Debug.Log("Distraction Range");
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
             {
                 string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Turn On";
-                if (TakeAction(action, InputSystem.inst.kidnapKey) || (bluetoothSkill && Input.GetKey(InputSystem.inst.kidnapKey)))
+                if (TakeAction(action, InputSystem.inst.kidnapKey))
                 {
                     playerStats.incTimesDistracted();
                     distractionScript.DecrementCharges();

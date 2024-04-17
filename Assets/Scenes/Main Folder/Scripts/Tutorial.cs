@@ -192,13 +192,13 @@ public class Tutorial : MonoBehaviour
             if (cookStation.GetComponent<Cooking>().dish)
             {
                 Destroy(cookStation.GetComponent<Cooking>().dish);
-                cookStation.GetComponent<Cooking>().ResetCooktop();
+                cookStation.GetComponent<Cooking>().Reset();
             }
             foreach (Counter counter in counters)
             {
                 if (counter.Full())
                 {
-                    counter.ResetCounter();
+                    counter.Reset();
                 }
             }
             yield return new WaitUntil(() => foodieScript == null);
@@ -290,13 +290,13 @@ public class Tutorial : MonoBehaviour
             if (cookStation.GetComponent<Cooking>().dish)
             {
                 Destroy(cookStation.GetComponent<Cooking>().dish);
-                cookStation.GetComponent<Cooking>().ResetCooktop();
+                cookStation.GetComponent<Cooking>().Reset();
             }
             foreach (Counter counter in counters)
             {
                 if (counter.Full())
                 {
-                    counter.ResetCounter();
+                    counter.Reset();
                 }
             }
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[25]));
@@ -340,13 +340,13 @@ public class Tutorial : MonoBehaviour
             if (cookStation.GetComponent<Cooking>().dish)
             {
                 Destroy(cookStation.GetComponent<Cooking>().dish);
-                cookStation.GetComponent<Cooking>().ResetCooktop();
+                cookStation.GetComponent<Cooking>().Reset();
             }
             foreach (Counter counter in counters)
             {
                 if (counter.Full())
                 {
-                    counter.ResetCounter();
+                    counter.Reset();
                 }
             }
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[25]));
@@ -535,13 +535,13 @@ public class Tutorial : MonoBehaviour
             if (cookStation.GetComponent<Cooking>().dish)
             {
                 Destroy(cookStation.GetComponent<Cooking>().dish);
-                cookStation.GetComponent<Cooking>().ResetCooktop();
+                cookStation.GetComponent<Cooking>().Reset();
             }
             foreach (Counter counter in counters)
             {
                 if (counter.Full())
                 {
-                    counter.ResetCounter();
+                    counter.Reset();
                 }
             }
             promptText.text = "";

@@ -40,18 +40,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             cookStations[i].SetActive(false);
         }
 
-        /*
-        // Initialize counter objects
-        foreach (Transform transform in counterParent.transform)
-        {
-            counterObjs.Add(transform.gameObject);
-        }
-        counterObjs[0].SetActive(true);
-        for (int i = 1; i < counterObjs.Count; i++)
-        {
-            counterObjs[i].SetActive(false);
-        }
-        */
+
 
     }
 
@@ -75,7 +64,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
     [Header("-----TABLES UPGRADE-----")]
     public GameObject tablesParent;
-    [SerializeField] private List<GameObject> tables;
+    public List<GameObject> tables;
     public int numTables { get { return tables.Count; } }
     [SerializeField] int maxTables = 4;
     public int tablesUpgradeCost = 50;
@@ -147,6 +136,103 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     [SerializeField] TextMeshProUGUI changeLayoutDescription;
     public LayoutLevel currentLayout = LayoutLevel.Shack;
 
+    [Header("-----CHANGE LAYOUT ORIGINAL POSITIONS-----")]
+    Vector3 tomatoBoxPos;
+    Vector3 lettuceBoxPos;
+    Vector3 flourBoxPos;
+    Vector3 grinderPos;
+    List<Vector3> cookStationPos;
+    List<Vector3> tablePos;
+    Vector3 animatronicPos;
+    Vector3 trashCanPos;
+
+    public void SaveOldItemPositions()
+    {
+        cookStationPos = new List<Vector3>();
+        tablePos = new List<Vector3>();
+        foreach(GameObject obj in selectableItems)
+        {
+            if (obj.CompareTag("IngredientBox"))
+            {
+                if (obj.name.Contains("tomato"))
+                {
+                    tomatoBoxPos = obj.transform.position;
+                }
+                else if (obj.name.Contains("lettuce"))
+                {
+                    lettuceBoxPos = obj.transform.position;
+                }
+                else if (obj.name.Contains("flour"))
+                {
+                    flourBoxPos = obj.transform.position;
+                }
+            }
+            else if (obj.CompareTag("Grinder"))
+            {
+                grinderPos = obj.transform.position;
+            }
+            else if (obj.CompareTag("Cooktop"))
+            {
+                cookStationPos.Add(obj.transform.position);
+            }
+            else if (obj.CompareTag("Table"))
+            {
+                tablePos.Add(obj.transform.position);
+            }
+            else if (obj.CompareTag("Distraction"))
+            {
+                animatronicPos = obj.transform.position;
+            }
+            else if (obj.CompareTag("TrashCan"))
+            {
+                trashCanPos = obj.transform.position;
+            }
+        }
+    }
+
+    public void RestoreItemPositions() // SaveOldItemPositions() must be called at when the positions you want them to be returned to 
+    {
+        int cookStationIndex = 0;
+        int tableIndex = 0;
+        foreach(GameObject obj in selectableItems)
+        {
+            if (obj.CompareTag("IngredientBox"))
+            {
+                if (obj.name.Contains("tomato"))
+                {
+                    obj.transform.position = tomatoBoxPos; 
+                }
+                else if (obj.name.Contains("lettuce"))
+                {
+                    obj.transform.position = lettuceBoxPos; 
+                }
+                else if (obj.name.Contains("flour"))
+                {
+                    obj.transform.position = flourBoxPos; 
+                }
+            }
+            else if (obj.CompareTag("Grinder"))
+            {
+                obj.transform.position = grinderPos; 
+            }
+            else if (obj.CompareTag("Cooktop"))
+            {
+                obj.transform.position = cookStationPos[cookStationIndex++];
+            }
+            else if (obj.CompareTag("Table"))
+            {
+                obj.transform.position = tablePos[tableIndex++];
+            }
+            else if (obj.CompareTag("Distraction"))
+            {
+                obj.transform.position = animatronicPos; 
+            }
+            else if (obj.CompareTag("TrashCan"))
+            {
+                obj.transform.position = trashCanPos;
+            }
+        }
+    }
 
     public GameObject grinder;
 
@@ -356,6 +442,15 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         }
     }
 
+    public void UpdateCookStationsList()
+    {
+        cookStations.Clear();
+        foreach (Cooking cooking in cookStationsParent.GetComponentsInChildren<Cooking>())
+        {
+            cookStations.Add(cooking.gameObject);
+        }
+    }
+
     public float CalculateUpgradesNum()
     {
         float upgradesNum = 0;
@@ -448,7 +543,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         if (Currency.inst.AbleToWithdraw(cookStationsUpgradeCost))
         {
             Currency.inst.Withdraw(cookStationsUpgradeCost);
-            cookStations[numOfActiveCookStations].SetActive(true);
+            
             //NotifyObservers();
             Debug.Log("Bought a cook stations upgrade");
         }
@@ -468,6 +563,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStationPlacementMode = true;
             placementSystem.isEnabled = true;
+            UpdateCookStationsList();
             //NotifyObservers();
             if (numCookStations == maxCookStations - 1)
             {
@@ -517,35 +613,41 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         if (Currency.inst.AbleToWithdraw(changeLayoutCost))
         {
+            Debug.Log("Bought Change layout");
             selectableItems.Clear();
             foreach (GameObject obj in starterItems)
             {
                 selectableItems.Add(obj);
-                obj.GetComponent<Select>().Selected = false;
             }
             Currency.inst.Withdraw(changeLayoutCost);
             changeLayoutMode = true;
             placementSystem.isEnabled = true;
-            // Find all selectable items for placement mode keyboard input
-            // (i.e. tables, cook stations, animatronics)
-            foreach (Transform cookTransform in cookStationsParent.GetComponentInChildren<Transform>())
+            // Find all selectable items for placement mode keyboard input (i.e. tables, cook stations, animatronics)
+            foreach (Transform cookTransform in cookStationsParent.GetComponentInChildren<Transform>()) // Add cook stations as selectable
             {
                 selectableItems.Add(cookTransform.gameObject);
-                cookTransform.gameObject.GetComponent<Select>().Selected = false;
             }
-            foreach (Transform tableTransform in tablesParent.GetComponentInChildren<Transform>())
+            foreach (Transform tableTransform in tablesParent.GetComponentInChildren<Transform>()) // Add tables as selectable
             {
                 if (tableTransform.gameObject.GetComponent<Table>())
                 {
                     selectableItems.Add(tableTransform.gameObject);
-                    tableTransform.gameObject.GetComponent<Select>().Selected = false;
                 }
             }
-            foreach (Transform distractionTransform in distractionParent.GetComponentInChildren<Transform>())
+            foreach (Transform distractionTransform in distractionParent.GetComponentInChildren<Transform>()) // Add animatronic as selectable
             {
                 selectableItems.Add(distractionTransform.gameObject);
-                distractionTransform.gameObject.GetComponent<Select>().Selected = false;
             }
+
+            foreach (GameObject item in selectableItems) // Make sure all obstacles default to not showing their visuals
+            {
+                Obstacle[] obstacles = item.GetComponentsInChildren<Obstacle>();
+                foreach(Obstacle obstacle in obstacles)
+                {
+                    obstacle.showObstacle = false;
+                }
+            }
+            SaveOldItemPositions();
 
         }
         else

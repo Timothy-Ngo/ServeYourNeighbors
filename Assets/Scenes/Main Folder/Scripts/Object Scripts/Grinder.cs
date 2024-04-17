@@ -62,6 +62,16 @@ public class Grinder : MonoBehaviour
         return msg;
     }
 
+    public void Reset()
+    {
+        timerScript.Reset();
+        grinding = false;
+        msgGrindedUp = false;
+        Debug.Log(msgObject);
+        gameObject.GetComponent<Animator>().Play("Idle");
+        Destroy(msgObject);
+    }
+
     public void TakeMSG()
     {
         msgGrindedUp = false;

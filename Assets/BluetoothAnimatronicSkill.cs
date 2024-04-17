@@ -54,8 +54,10 @@ public class BluetoothAnimatronicSkill : Skill
         }
     }
 
+    [ContextMenu("Activate Mechanic")]
     public override void ActivateMechanic()
     {
         playerInteraction.bluetoothSkill = true;
+        DistractionSystem.inst.animatronicDistraction.gameObject.GetComponent<BoxCollider2D>().size = new Vector2(30, 30);
     }
 }

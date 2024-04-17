@@ -46,6 +46,12 @@ public class Timer : MonoBehaviour {
         }
     }
 
+    public void Reset()
+    {
+        
+        running = false;
+        timeLeft = 0;
+    }
     // can call this in Update() to check if the timer is done
     public bool TimerComplete() {
         Debug.Log("done!");

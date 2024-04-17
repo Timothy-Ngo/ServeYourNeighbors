@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEditor;
+using System;
 
 
 
@@ -48,14 +49,11 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] Button tablesUpgradeButton;
 
     // Keyboard Input
+    [Header("Keyboard Input")]
     int currentIndex = 0;
 
 
-    /// <summary>
-    /// Number of frames to completely interpolate between item position and mouse position
-    /// </summary>
-    //[SerializeField] private int interpolationFramesCount = 45;
-
+    [Header("Change Layout Old Positions")]
     bool _isDragging;
     public bool isDragging
     {
@@ -79,6 +77,8 @@ public class PlacementSystem : MonoBehaviour
             Enabled(_isEnabled);
         }
     }
+
+    [SerializeField] GameObject placementConfirmationScreen;
 
 
     // Start is called before the first frame update
@@ -108,6 +108,15 @@ public class PlacementSystem : MonoBehaviour
             instructions.SetActive(true);
             topUIObject.SetActive(true);
             bottomUIObject.SetActive(true);
+            Obstacle[] tableObstacles = Upgrades.inst.tablesParent.GetComponentsInChildren<Obstacle>();
+            foreach (Obstacle obs in tableObstacles)
+            {
+                if (obs.placementObstacle)
+                {
+                    obs.PlaceObstacle();
+                }
+            }
+
             // Add if statement for change layout mode
             if (Upgrades.inst.changeLayoutMode)
             {
@@ -135,6 +144,7 @@ public class PlacementSystem : MonoBehaviour
                 DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
             }
 
+            
             instructionsTextMesh.text = "Hold left click to move object.\r\nPress " + InputSystem.inst.finishPlacementKey.ToString() + " to confirm placement";
         }
         else
@@ -142,22 +152,44 @@ public class PlacementSystem : MonoBehaviour
             instructions.SetActive(false);
             topUIObject.SetActive(false);
             bottomUIObject.SetActive(false);
-            //Destroy(selectedItem);            
+            
+            Obstacle[] tableObstacles = Upgrades.inst.tablesParent.GetComponentsInChildren<Obstacle>();
+            Debug.Log("Placement disabled");
+            foreach (Obstacle obs in tableObstacles)
+            {   
+                if (obs.placementObstacle)
+                {
+                    obs.RemoveObstacle();
+                    Debug.Log(FoodieSystem.inst.pathfinding.IsWalkable(obs.transform.position));
+                }
+                if (obs.showObstacle) // Does not include walls
+                {
+                    obs.showObstacle = false;
+                }
+            }
+           
         }
 
 
     }
 
+    bool IsPlaceable(Vector3 position) // Did not want to write all that extra stuff everytime I used it
+    {
+        return FoodieSystem.inst.pathfinding.IsPlaceable(position);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (isEnabled)
+        if (isEnabled && !placementConfirmationScreen.activeSelf)
         {
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                 Vector3 newPosition = selectedItem.transform.position;
+                Vector3 oldPosition = selectedItem.transform.position;
+                Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
+
                 if (!InMapBoundary(newPosition))
                 {
                     newPosition = FirstAvailableSpace();
@@ -166,60 +198,51 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    for (float x = selectedItem.transform.position.x; x < bottomRightCorner.x; x++)
+                    for (float x = oldPosition.x; x < bottomRightCorner.x; x++)
                     {
                         newPosition = new Vector3(x, newPosition.y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (!InKitchenBoundary(newPosition))
+                            Vector3 oldChairPosition = oldPosition;
+                            Vector3 oldTablePosition = oldChairPosition + Vector3.right;
+                            Vector3 newChairPosition = new Vector3(x, oldChairPosition.y, oldChairPosition.z);
+                            Vector3 newTablePosition = newChairPosition + Vector3.right; // Table Position is always one to the right of the Chair
+                            if (InMapBoundary(newChairPosition) && InMapBoundary(newTablePosition) &&
+                                !InKitchenBoundary(newChairPosition) && !InKitchenBoundary(newTablePosition))
                             {
-                                if (!InKitchenBoundary(newPosition + Vector3.right))
+                                if (IsPlaceable(newTablePosition))
                                 {
-                                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right))
+                                    if (IsPlaceable(newChairPosition))
                                     {
-                                        if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
-                                        {
-                                            foundNewPosition = true;
-                                            Debug.Log("new position is not the old pos + 1");
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            if (newPosition == selectedItem.transform.position + Vector3.right)
-                                            {
-                                                foundNewPosition = true;
-                                                Debug.Log("new position is the old pos + 1");
-                                                break;
-                                            }
-                                        }
-
+                                        foundNewPosition = true;
+                                        newPosition = newChairPosition;
+                                        break;
+                                    }
+                                    else if (newChairPosition == oldTablePosition)
+                                    {
+                                        foundNewPosition = true;
+                                        newPosition = newChairPosition;
+                                        break;
                                     }
                                 }
                             }
 
                         }
-                        else if (selectedItem.CompareTag("Cooktop"))
+                        else if (selectedItem.CompareTag("Distraction"))
                         {
-                            if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                            if (!InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                             {
                                 foundNewPosition = true;
                                 break;
                             }
                         }
-                        else if (selectedItem.CompareTag("Distraction"))
+                        else if (selectedItem.CompareTag("Cooktop"))
                         {
-                            for (int i = -1; i < 2; i++)
+                            if (InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                             {
-                                for (int j = -1; j < 2; j++)
-                                {
-                                    if (!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
-                                    {
-                                        continue;
-                                    }
-                                }
+                                foundNewPosition = true;
+                                break;
                             }
-                            foundNewPosition = true;
-                            break;
                         }
                         else
                         {
@@ -234,30 +257,28 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
-                    if (selectedItem.CompareTag("Table"))
+                    Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in removeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
+                        obstacle.RemoveObstacle();
                     }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().RemoveObstacle();
-                    }
+
                     selectedItem.transform.position = newPosition;
-                    if (selectedItem.CompareTag("Table"))
+
+                    Obstacle[] placeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in placeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
-                    }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        obstacle.PlaceObstacle();
                     }
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                Vector3 newPosition = selectedItem.transform.position;
+                Vector3 oldPosition = selectedItem.transform.position;
+                Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
+
                 if (!InMapBoundary(newPosition))
                 {
                     newPosition = FirstAvailableSpace();
@@ -266,18 +287,33 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    for (float x = selectedItem.transform.position.x - 1; x > topLeftCorner.x; x--)
+                    for (float x = oldPosition.x; x > topLeftCorner.x; x--)
                     {
                         newPosition = new Vector3(x, newPosition.y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (!InKitchenBoundary(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right)
-                                )
+                            Vector3 oldChairPosition = oldPosition;
+                            Vector3 oldTablePosition = oldChairPosition + Vector3.right;
+                            Vector3 newChairPosition = new Vector3(x, oldChairPosition.y, oldChairPosition.z);
+                            Vector3 newTablePosition = newChairPosition + Vector3.right; // Table Position is always one to the right of the Chair
+                            if (InMapBoundary(newChairPosition) && InMapBoundary(newTablePosition) &&
+                                !InKitchenBoundary(newChairPosition) && !InKitchenBoundary(newTablePosition))
                             {
-                                foundNewPosition = true;
-                                break;
+                                if (IsPlaceable(newChairPosition))
+                                {
+                                    if (IsPlaceable(newTablePosition))
+                                    {
+                                        foundNewPosition = true;
+                                        newPosition = newChairPosition;
+                                        break;
+                                    }
+                                    else if (newTablePosition == oldChairPosition)
+                                    {
+                                        foundNewPosition = true;
+                                        newPosition = newChairPosition;
+                                        break;
+                                    }
+                                }
                             }
                         }
                         else if (selectedItem.CompareTag("Cooktop"))
@@ -290,18 +326,11 @@ public class PlacementSystem : MonoBehaviour
                         }
                         else if (selectedItem.CompareTag("Distraction"))
                         {
-                            for (int i = -1; i < 2; i++)
+                            if (!InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                             {
-                                for (int j = -1; j < 2; j++)
-                                {
-                                    if (!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
-                                    {
-                                        continue;
-                                    }
-                                }
+                                foundNewPosition = true;
+                                break;
                             }
-                            foundNewPosition = true;
-                            break;
                         }
                         else
                         {
@@ -316,22 +345,18 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
-                    if (selectedItem.CompareTag("Table"))
+                    Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in removeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
+                        obstacle.RemoveObstacle();
                     }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().RemoveObstacle();
-                    }
+
                     selectedItem.transform.position = newPosition;
-                    if (selectedItem.CompareTag("Table"))
+
+                    Obstacle[] placeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in placeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
-                    }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        obstacle.PlaceObstacle();
                     }
                 }
             }
@@ -339,8 +364,10 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                Vector3 newPosition = selectedItem.transform.position;
+                Vector3 oldPosition = selectedItem.transform.position;
+                Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
+
                 if (!InMapBoundary(newPosition))
                 {
                     newPosition = FirstAvailableSpace();
@@ -349,18 +376,23 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    for (float y = selectedItem.transform.position.y + 1; y < topLeftCorner.y; y++)
+                    for (float y = oldPosition.y; y < topLeftCorner.y; y++)
                     {
                         newPosition = new Vector3(newPosition.x, y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (!InKitchenBoundary(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left)
-                                )
+                            Vector3 oldChairPosition = oldPosition;
+                            Vector3 newChairPosition = new Vector3(oldChairPosition.x, y, oldChairPosition.z);
+                            Vector3 newTablePosition = newChairPosition + Vector3.right; // Table Position is always one to the right of the Chair
+                            if (InMapBoundary(newChairPosition) && InMapBoundary(newTablePosition) &&
+                                !InKitchenBoundary(newChairPosition) && !InKitchenBoundary(newTablePosition))
                             {
-                                foundNewPosition = true;
-                                break;
+                                if (IsPlaceable(newChairPosition) && IsPlaceable(newTablePosition))
+                                {
+                                    foundNewPosition = true;
+                                    newPosition = newChairPosition;
+                                    break;
+                                }
                             }
                         }
                         else if (selectedItem.CompareTag("Cooktop"))
@@ -373,18 +405,11 @@ public class PlacementSystem : MonoBehaviour
                         }
                         else if (selectedItem.CompareTag("Distraction"))
                         {
-                            for (int i = -1; i < 2; i++)
+                            if (!InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                             {
-                                for (int j = -1; j < 2; j++)
-                                {
-                                    if (!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
-                                    {
-                                        continue;
-                                    }
-                                }
+                                foundNewPosition = true;
+                                break;
                             }
-                            foundNewPosition = true;
-                            break;
                         }
                         else
                         {
@@ -399,29 +424,26 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
-                    if (selectedItem.CompareTag("Table"))
+                    Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in removeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
+                        obstacle.RemoveObstacle();
                     }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().RemoveObstacle();
-                    }
+
                     selectedItem.transform.position = newPosition;
-                    if (selectedItem.CompareTag("Table"))
+
+                    Obstacle[] placeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in placeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
-                    }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        obstacle.PlaceObstacle();
                     }
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                Vector3 newPosition = selectedItem.transform.position;
+                Vector3 oldPosition = selectedItem.transform.position;
+                Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
                 if (!InMapBoundary(newPosition))
                 {
@@ -431,18 +453,23 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    for (float y = selectedItem.transform.position.y - 1; y > bottomRightCorner.y; y--)
+                    for (float y = oldPosition.y; y > bottomRightCorner.y; y--)
                     {
                         newPosition = new Vector3(newPosition.x, y, newPosition.z);
                         if (selectedItem.CompareTag("Table"))
                         {
-                            if (!InKitchenBoundary(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                                FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left)
-                            )
+                            Vector3 oldChairPosition = oldPosition;
+                            Vector3 newChairPosition = new Vector3(oldChairPosition.x, y, oldChairPosition.z);
+                            Vector3 newTablePosition = newChairPosition + Vector3.right; // Table Position is always one to the right of the Chair
+                            if (InMapBoundary(newChairPosition) && InMapBoundary(newTablePosition) &&
+                                !InKitchenBoundary(newChairPosition) && !InKitchenBoundary(newTablePosition))
                             {
-                                foundNewPosition = true;
-                                break;
+                                if (IsPlaceable(newChairPosition) && IsPlaceable(newTablePosition))
+                                {
+                                    foundNewPosition = true;
+                                    newPosition = newChairPosition;
+                                    break;
+                                }
                             }
                         }
                         else if (selectedItem.CompareTag("Cooktop"))
@@ -455,18 +482,11 @@ public class PlacementSystem : MonoBehaviour
                         }
                         else if (selectedItem.CompareTag("Distraction"))
                         {
-                            for (int i = -1; i < 2; i++)
+                            if (!InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                             {
-                                for (int j = -1; j < 2; j++)
-                                {
-                                    if (!FoodieSystem.inst.pathfinding.IsPlaceable(new Vector3(newPosition.x + i, newPosition.y + j, newPosition.z)))
-                                    {
-                                        continue;
-                                    }
-                                }
+                                foundNewPosition = true;
+                                break;
                             }
-                            foundNewPosition = true;
-                            break;
                         }
                         else
                         {
@@ -481,49 +501,50 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
-                    if (selectedItem.CompareTag("Table"))
+                    Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in removeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
+                        obstacle.RemoveObstacle();
                     }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().RemoveObstacle();
-                    }
+
                     selectedItem.transform.position = newPosition;
-                    if (selectedItem.CompareTag("Table"))
+
+                    Obstacle[] placeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                    foreach (Obstacle obstacle in placeObstacles)
                     {
-                        selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
-                    }
-                    else
-                    {
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                        obstacle.PlaceObstacle();
                     }
                 }
             }
 
             if (Upgrades.inst.changeLayoutMode)
             {
+
                 if (selectedItem == null)
                 {
                     selectedItem = Upgrades.inst.selectableItems[currentIndex];
-                    selectedItem.GetComponent<Select>().Selected = true;
-
+                    SelectItem(selectedItem);
                 }
                 if (Input.GetKeyDown(KeyCode.Tab))
                 {
                     currentIndex++;
-                    selectedItem.GetComponent<Select>().Selected = false;
                     if (currentIndex >= Upgrades.inst.selectableItems.Count)
                     {
                         currentIndex = 0;
                     }
+                    DeselectItem(selectedItem);
                     selectedItem = Upgrades.inst.selectableItems[currentIndex];
-                    selectedItem.GetComponent<Select>().Selected = true;
+                    SelectItem(selectedItem);
                 }
             }
 
-            if (Input.GetMouseButtonDown(0)) // For dragging items
+            if (Input.GetMouseButtonDown(0) && !placementConfirmationScreen.activeSelf) // For dragging items
             {
+                Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                foreach (Obstacle obstacle in removeObstacles)
+                {
+                    obstacle.RemoveObstacle();
+                }
                 if (Upgrades.inst.changeLayoutMode)
                 {
 
@@ -544,39 +565,28 @@ public class PlacementSystem : MonoBehaviour
                     }
                 }
                 isDragging = true;
-                if (selectedItem.CompareTag("Table"))
-                {
-                    selectedItem.GetComponentInChildren<Obstacle>().RemoveObstacle();
-                }
-                else
-                {
-                    selectedItem.GetComponent<Obstacle>().RemoveObstacle();
-                }
             }
 
 
 
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0) && !placementConfirmationScreen.activeSelf)
             {
                 isDragging = false;
-                if (selectedItem.CompareTag("Table"))
+                Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                foreach (Obstacle obstacle in removeObstacles)
                 {
-                    selectedItem.GetComponentInChildren<Obstacle>().PlaceObstacle();
-                }
-                else
-                {
-                    selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                    obstacle.PlaceObstacle();
                 }
 
             }
-            if (isDragging)
+            if (isDragging && !placementConfirmationScreen.activeSelf)
             {
                 Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 if (topLeftCorner.x < worldMousePosition.x && worldMousePosition.x < bottomRightCorner.x && bottomRightCorner.y < worldMousePosition.y && worldMousePosition.y < topLeftCorner.y)
                 {
                     newPosition = new Vector3(Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).x) - 0.5f,
                         Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f);
-                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    if (IsPlaceable(newPosition))
                     {
                         if (selectedItem.CompareTag("Cooktop") ||
                             selectedItem.CompareTag("Grinder") ||
@@ -596,7 +606,17 @@ public class PlacementSystem : MonoBehaviour
                         {
                             if (!InKitchenBoundary(newPosition))
                             {
-                                selectedItem.transform.position = newPosition;
+                                if (selectedItem.CompareTag("Table"))
+                                {
+                                    if (IsPlaceable(newPosition + Vector3.right) && !InKitchenBoundary(newPosition + Vector3.right))
+                                    {
+                                        selectedItem.transform.position = newPosition;
+                                    }
+                                }
+                                else
+                                {
+                                    selectedItem.transform.position = newPosition;
+                                }
                             }
                         }
                     }
@@ -604,61 +624,17 @@ public class PlacementSystem : MonoBehaviour
                 }
 
             }
-            if (Input.GetKeyDown(InputSystem.inst.finishPlacementKey))
+            if (Input.GetKeyDown(InputSystem.inst.finishPlacementKey) && !placementConfirmationScreen.activeSelf)
             {
-
                 if (selectedItem.transform.position == startingPositionObject.transform.position)
                 {
                     Debug.Log("Item must be placed in restaurant.");
+                    // TODO: Highlight instruction text
                 }
                 else
                 {
-
-                    isEnabled = false;
-                    if (!Upgrades.inst.upgradesScreen.activeSelf)
-                    {
-                        ChangeFloorColorTo(originalFloorColor);
-                        Upgrades.inst.upgradesScreen.SetActive(true);
-                    }
-
-                    if (Upgrades.inst.changeLayoutMode)
-                    {
-                        Upgrades.inst.changeLayoutMode = false;
-                        FoodieSystem.inst.GetCurrentSeats();
-                        return;
-                    }
-                    if (Upgrades.inst.tablePlacementMode)
-                    {
-                        FoodieSystem.inst.GetCurrentSeats();
-                        Upgrades.inst.tablePlacementMode = false;
-                        selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
-                    }
-
-                    if (Upgrades.inst.cookStationPlacementMode)
-                    {
-                        Upgrades.inst.cookStationPlacementMode = false;
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                        Upgrades.inst.cookStations.Add(selectedItem);
-                    }
-
-                    if (Upgrades.inst.counterPlacementMode)
-                    {
-                        Upgrades.inst.counterPlacementMode = false;
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                    }
-
-                    if (Upgrades.inst.animatronicPlacementMode)
-                    {
-                        Upgrades.inst.animatronicPlacementMode = false;
-                        selectedItem.GetComponent<Obstacle>().PlaceObstacle();
-                        Upgrades.inst.animatronicPosition = selectedItem.transform.position;
-                        Upgrades.inst.hasAnimatronic = true;
-                        DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
-                    }
-                    EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
-                    EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
+                    placementConfirmationScreen.SetActive(true);
                 }
-
             }
         }
 
@@ -674,9 +650,11 @@ public class PlacementSystem : MonoBehaviour
                 newPosition = new Vector3(x, y, 0);
                 if (selectedItem.CompareTag("Table"))
                 {
-                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.left) &&
-                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + (2 * Vector3.left)))
+
+                    if (!InKitchenBoundary(newPosition) &&
+                        !InKitchenBoundary(newPosition + Vector3.right) &&
+                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
+                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right))
                     {
                         return newPosition;
                     }
@@ -684,6 +662,13 @@ public class PlacementSystem : MonoBehaviour
                 else if (selectedItem.CompareTag("Cooktop"))
                 {
                     if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    {
+                        return newPosition;
+                    }
+                }
+                else if (selectedItem.CompareTag("Distraction"))
+                {
+                    if (!InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
                     {
                         return newPosition;
                     }
@@ -705,9 +690,27 @@ public class PlacementSystem : MonoBehaviour
     bool InKitchenBoundary(Vector3 position)
     {
         Vector3 topLeft = Layout.inst.topLeftKitchenBoundaryPosition;
+        Debug.Log($"topleft position {topLeft}");
         Vector3 bottomRight = Layout.inst.bottomRightKitchenBoundaryPosition;
-        bool withinXRange = topLeft.x < position.x && position.x < bottomRight.x;
-        bool withinYRange = bottomRight.y < position.y && position.y < topLeft.y;
+        Debug.Log($"bottomeRight position {bottomRight}");
+        bool withinXRange = topLeft.x <= position.x && position.x <= bottomRight.x;
+        bool withinYRange = bottomRight.y <= position.y && position.y <= topLeft.y;
+        if (withinXRange)
+        {
+            Debug.Log($"position {position.x} is in kitchen x range");
+        }
+        else
+        {
+            Debug.Log($"position {position.x} is NOT in kitchen x range");
+        }
+        if (withinYRange)
+        {
+            Debug.Log($"position {position.y} is in kitchen y range");
+        }
+        else
+        {
+            Debug.Log($"position {position.y} is NOT in kitchen y range");
+        }
         return withinXRange && withinYRange;
     }
 
@@ -719,6 +722,23 @@ public class PlacementSystem : MonoBehaviour
                 position.y < topLeftCorner.y;
     }
 
+
+    void SelectItem(GameObject item) // Assumes item has an obstacle child object
+    {
+        Obstacle[] obstacles = item.GetComponentsInChildren<Obstacle>();
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.showObstacle = true;
+        }
+    }
+    void DeselectItem(GameObject item) // Assumes item has an obstacle child object
+    {
+        Obstacle[] obstacles = item.GetComponentsInChildren<Obstacle>();
+        foreach (Obstacle obstacle in obstacles)
+        {
+            obstacle.showObstacle = false;
+        }
+    }
     void ChangeFloorColorTo(Color color)
     {
         foreach (SpriteRenderer rend in floors)
@@ -729,5 +749,110 @@ public class PlacementSystem : MonoBehaviour
 
 
 
+    public void ConfirmYes()
+    {
+        placementConfirmationScreen.SetActive(false);
+
+        if (selectedItem.transform.position == startingPositionObject.transform.position)
+        {
+            Debug.Log("Item must be placed in restaurant.");
+        }
+        else
+        {
+
+            isEnabled = false;
+            if (!Upgrades.inst.upgradesScreen.activeSelf)
+            {
+                ChangeFloorColorTo(originalFloorColor);
+                Upgrades.inst.upgradesScreen.SetActive(true);
+            }
+            if (Upgrades.inst.changeLayoutMode)
+            {
+                Upgrades.inst.changeLayoutMode = false;
+                FoodieSystem.inst.GetCurrentSeats();
+                return;
+            }
+            if (Upgrades.inst.tablePlacementMode)
+            {
+                FoodieSystem.inst.GetCurrentSeats();
+                Upgrades.inst.tablePlacementMode = false;
+                selectedItem.GetComponent<Table>().obstacleScript.PlaceObstacle();
+            }
+
+            if (Upgrades.inst.cookStationPlacementMode)
+            {
+                Upgrades.inst.cookStationPlacementMode = false;
+                selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                Upgrades.inst.cookStations.Add(selectedItem);
+            }
+
+            if (Upgrades.inst.animatronicPlacementMode)
+            {
+                Upgrades.inst.animatronicPlacementMode = false;
+                selectedItem.GetComponent<Obstacle>().PlaceObstacle();
+                Upgrades.inst.animatronicPosition = selectedItem.transform.position;
+                Upgrades.inst.hasAnimatronic = true;
+                DistractionSystem.inst.animatronicDistraction = selectedItem.GetComponent<Distraction>();
+            }
+            EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
+            EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
+        }
+
+
+    }
+
+    public void ConfirmNo()
+    {
+        placementConfirmationScreen.SetActive(false);
+    }
+
+
+    public void ExitPlacementMode()
+    {
+        isEnabled = false;
+        if (!Upgrades.inst.upgradesScreen.activeSelf)
+        {
+            ChangeFloorColorTo(originalFloorColor);
+            Upgrades.inst.upgradesScreen.SetActive(true);
+        }
+
+        foreach (Obstacle obstacle in selectedItem.GetComponentsInChildren<Obstacle>())
+        {
+            obstacle.RemoveObstacle();
+        }
+
+        if (Upgrades.inst.changeLayoutMode)
+        {
+            Upgrades.inst.changeLayoutMode = false;
+            Currency.inst.Deposit(Upgrades.inst.changeLayoutCost);
+            Upgrades.inst.RestoreItemPositions();
+            return;
+        }
+        if (Upgrades.inst.tablePlacementMode)
+        {
+            Upgrades.inst.tablePlacementMode = false;
+            Currency.inst.Deposit(Upgrades.inst.tablesUpgradeCost);
+            Upgrades.inst.tables.Remove(selectedItem);
+            Destroy(selectedItem);
+        }
+
+        if (Upgrades.inst.cookStationPlacementMode)
+        {
+            Upgrades.inst.cookStationPlacementMode = false;
+            Currency.inst.Deposit(Upgrades.inst.cookStationsUpgradeCost);
+            Upgrades.inst.cookStations.Remove(selectedItem);
+            Destroy(selectedItem);
+        }
+
+        if (Upgrades.inst.animatronicPlacementMode)
+        {
+            Upgrades.inst.animatronicPlacementMode = false;
+            Currency.inst.Deposit(Upgrades.inst.animatronicUpgradeCost);
+            Upgrades.inst.hasAnimatronic = false;
+            DistractionSystem.inst.animatronicDistraction = null;
+            Destroy(selectedItem);
+        }
+        
+    }
 
 }

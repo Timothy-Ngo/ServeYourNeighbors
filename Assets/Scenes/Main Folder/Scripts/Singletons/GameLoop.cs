@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using PlasticPipe.PlasticProtocol.Messages;
 
 public class GameLoop : MonoBehaviour, IDataPersistence
 {
@@ -157,7 +158,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         {
             if (!(EventSystem.current.currentSelectedGameObject is null))
             {
-                Debug.Log(EventSystem.current.currentSelectedGameObject.ToString());
+                //Debug.Log(EventSystem.current.currentSelectedGameObject.ToString());
             }
         }
         if (!isTutorial)
@@ -381,8 +382,13 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         Player.inst.Deactivate();
     }
 
+    public GameObject counters1;
+    public GameObject counters2;
+    public GameObject counters3;
+
     void ResetItemsInScene()
     {
+        Debug.Log("Reset Items in Scene called");
         if (PickupSystem.inst.isHoldingItem())
         {
             PickupSystem.inst.DestroyItem();
@@ -390,24 +396,33 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
         foreach (GameObject cookStation in Upgrades.inst.cookStations)
         {
-            GameObject dish = cookStation.GetComponent<Cooking>().dish;
-            if (dish)
-            {
-                Destroy(dish);
-                cookStation.GetComponent<Cooking>().ResetCooktop();
-            }
+            
+            cookStation.GetComponent<Cooking>().Reset();
+            
+        }
+        Counter[] counters = null;
+        if (counters1.activeSelf)
+        {
+            counters = counters1.GetComponentsInChildren<Counter>();
+        }
+        else if (counters2.activeSelf)
+        {
+            counters = counters2.GetComponentsInChildren<Counter>();
+        }
+        else if (counters3.activeSelf)
+        {
+            counters = counters3.GetComponentsInChildren<Counter>();
+        }
+        Debug.Assert(counters != null);
+        foreach (Counter counter in counters)
+        {
+            counter.GetComponent<Counter>().Reset();
         }
 
-        foreach (GameObject counter in Upgrades.inst.counterObjs)
+        GameObject grinder = Upgrades.inst.grinder;
+        if (grinder)
         {
-            counter.GetComponent<Counter>().ResetCounter();
-        }
-
-        GameObject msgItem = Upgrades.inst.grinder;
-        if (msgItem)
-        {
-            Destroy(msgItem.GetComponent<Grinder>().msgObject);
-            msgItem.GetComponent<Grinder>().TakeMSG();
+            grinder.GetComponent<Grinder>().Reset();
         }
     }
 

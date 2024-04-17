@@ -124,12 +124,16 @@ public class Cooking : MonoBehaviour
         return foodReady;
     }
 
-    public void ResetCooktop()
+    public void Reset()
     {
         //dish = dishDefault;
         //dish.GetComponent<Food>().ResetDish();
         foodReady = false;
         gameObject.GetComponent<Animator>().Play("Idle");
+        if (dish)
+        {
+            Destroy(dish);
+        }
     }
 
     // https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity

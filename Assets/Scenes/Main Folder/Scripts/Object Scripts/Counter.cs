@@ -19,10 +19,12 @@ public class Counter : MonoBehaviour {
         return hasItem;
     }
 
-    public void ResetCounter()
+    public void Reset()
     {
         hasItem = false;
         if (item)
+        {
             Destroy(item);
+        }
     }
 }
