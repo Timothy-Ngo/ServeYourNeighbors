@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using PlasticPipe.PlasticProtocol.Messages;
 
 public class GameLoop : MonoBehaviour, IDataPersistence
 {
