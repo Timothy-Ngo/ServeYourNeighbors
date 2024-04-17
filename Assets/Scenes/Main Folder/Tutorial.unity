@@ -7256,6 +7256,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 36f2fd64bc3d8dd41a0b2c8692d353f5, type: 2}
   - {fileID: 11400000, guid: ce31791d1e4fdf74ab62a5887807a4c9, type: 2}
   - {fileID: 11400000, guid: 15e080e77f554dd49b066bcced0ee5ff, type: 2}
+  - {fileID: 11400000, guid: 5e731a5c393fb534a93959e0e002d37f, type: 2}
   dialogueText: {fileID: 1702085528}
   intenseText: {fileID: 1037157055}
   intenseTextObj: {fileID: 1037157053}
@@ -17442,7 +17443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1001200074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -36637,7 +36638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1945658924
 RectTransform:
   m_ObjectHideFlags: 0

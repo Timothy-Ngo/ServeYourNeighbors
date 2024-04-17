@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fcae1d60e48ebd48a0802f7121296bd, type: 3}
-  m_Name: TutorialDialogueBadDistraction
+  m_Name: TutorialCookWalkAway
   m_EditorClassIdentifier: 
   dialogue:
-  - You must be fast and cannot get caught!
-  - Try again.
+  - You can't just walk away from your station!
+  - Stay next to it while you prep.
