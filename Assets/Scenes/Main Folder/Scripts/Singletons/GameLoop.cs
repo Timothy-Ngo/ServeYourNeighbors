@@ -368,6 +368,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     {
         reviewScreenObj.SetActive(false);
         upgradeScreenObj.SetActive(true);
+        Upgrades.inst.EnableUpgradeButtons();
         EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
         EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
         Player.inst.Deactivate();
