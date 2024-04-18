@@ -362,6 +362,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         //Upgrades.inst.EnableUpgradeButtons();
     }
 
+    [SerializeField] UpgradeConfirmation upgradeConfirmation;
+
     public void UpgradeMenu()
     {
         reviewScreenObj.SetActive(false);
@@ -397,6 +399,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         {
             
             cookStation.GetComponent<Cooking>().Reset();
+            cookStation.GetComponent<Cooking>().DestroyDish();
             
         }
         Counter[] counters = null;

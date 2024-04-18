@@ -1,5 +1,4 @@
 // Author: Timothy Ngo
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
@@ -325,6 +324,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     // Start is called before the first frame update
     void Start()
     {
+        /*
         tablesDescription.text += $" ({tablesUpgradeCost}g)";
         cookStationsDescription.text += $" ({cookStationsUpgradeCost}g)";
         countersDescription.text += $"({countersUpgradeCost}g)";
@@ -333,6 +333,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         speedBoostDescription.text += $" ({speedBoostUpgradeCost}g)"; // Deprecated
 
         buttons = upgradeButtons.GetComponentsInChildren<Button>();
+        */
     }
 
     private void Update()

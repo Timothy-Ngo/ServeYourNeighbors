@@ -130,6 +130,9 @@ public class Cooking : MonoBehaviour
         //dish.GetComponent<Food>().ResetDish();
         foodReady = false;
         gameObject.GetComponent<Animator>().Play("Idle");
+    }
+    public void DestroyDish()
+    {
         if (dish)
         {
             Destroy(dish);
