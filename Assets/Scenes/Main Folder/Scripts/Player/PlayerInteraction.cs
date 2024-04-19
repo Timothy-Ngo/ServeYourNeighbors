@@ -25,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
     //bool foodieReleased = false;
     bool currentlyKidnapping = false;
     [Header("-----RANGES----")]
-    bool cooktopRange = false;
+    public bool cooktopRange = false;
     bool tableRange = false;
     bool ingredientBoxRange = false;
     bool trashCanRange = false;
@@ -266,7 +266,7 @@ public class PlayerInteraction : MonoBehaviour
 
         else if (grinderRange)
         {
-            if (PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone())
+            if (canGetMSG && PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone())
             {
                 string action = "[" + InputSystem.inst.interactKey.ToString() + "] Grind";
                 if (TakeAction(action, InputSystem.inst.interactKey))

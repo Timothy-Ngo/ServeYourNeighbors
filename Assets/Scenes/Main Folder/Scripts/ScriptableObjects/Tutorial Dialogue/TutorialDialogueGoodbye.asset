@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: TutorialDialogueGoodbye
   m_EditorClassIdentifier: 
   dialogue:
-  - Thanks for playing the tutorial! Good luck! Go off and...
+  - Thanks for playing the tutorial!
+  - Remember what you learned today.
+  - Be mindful of your SYN and your money.
+  - It's your job now to upgrade your restaurant all the way.
+  - Good luck! Go off and...

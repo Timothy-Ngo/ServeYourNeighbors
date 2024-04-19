@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TutorialDialogueIngredient
   m_EditorClassIdentifier: 
   dialogue:
-  - Excellent! Now let's get to cooking.
+  - Now let's get to cooking.
   - Approach the ingredient box with the tomato on it and grab a tomato.
