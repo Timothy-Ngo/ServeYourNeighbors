@@ -23,6 +23,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
     public TextMeshProUGUI finishPlacementKeyLabel;
     public TextMeshProUGUI pauseKeyLabel;
     public TextMeshProUGUI foodieSightKeyLabel;
+    public TextMeshProUGUI activateAnimatronicKeyLabel;
 
     public TextMeshProUGUI errorMsg;
 
@@ -34,6 +35,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
     public KeyCode finishPlacementKey;
     public KeyCode pauseKey;
     public KeyCode foodieSightKey;
+    public KeyCode activateAnimatronicKey;
 
     List<KeyCode> reservedKeyCodes;
 
@@ -46,6 +48,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
     bool rebindingFinishPlacementKey = false;
     bool rebindingPauseKey = false;
     bool rebindingFoodieSightKey = false;
+    bool rebindingActivateAnimatronicKey = false;
 
 
 
@@ -58,6 +61,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         finishPlacementKey = data.finishPlacementKey;
         pauseKey = data.pauseKey;
         foodieSightKey = data.foodieSightKey;
+        activateAnimatronicKey = data.activateAnimatronicKey;
 
         SetLabels();
     }
@@ -71,6 +75,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         data.finishPlacementKey = finishPlacementKey;
         data.pauseKey = pauseKey;
         data.foodieSightKey = foodieSightKey;
+        data.activateAnimatronicKey = activateAnimatronicKey;
     }
 
     void Start()
@@ -102,6 +107,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         finishPlacementKeyLabel.text = finishPlacementKey.ToString();
         pauseKeyLabel.text = pauseKey.ToString();
         foodieSightKeyLabel.text = foodieSightKey.ToString();
+        activateAnimatronicKeyLabel.text = activateAnimatronicKey.ToString();
     }
 
     // https://docs.unity3d.com/ScriptReference/Event-keyCode.html
@@ -219,6 +225,21 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
                     rebindingFoodieSightKey = false;
                     rebinding = false;
                 }
+                else if (rebindingActivateAnimatronicKey)
+                {
+                    // if inputted key is available, set key to that
+                    if (KeyCodeAvailable(activateAnimatronicKey, e.keyCode))
+                    {
+                        activateAnimatronicKey = e.keyCode;
+                    }
+
+                    // update text
+                    activateAnimatronicKeyLabel.text = activateAnimatronicKey.ToString();
+
+                    // reset flags
+                    rebindingActivateAnimatronicKey = false;
+                    rebinding = false;
+                }
             }
         }
     }
@@ -226,7 +247,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
     // checks if a given keyCode is the same as any in-use keycodes
     bool KeyCodeInUse(KeyCode key)
     {
-        if (key == interactKey || key == cookKey || key == kidnapKey || key == serveKey || key == finishPlacementKey || key == pauseKey || key == foodieSightKey)
+        if (key == interactKey || key == cookKey || key == kidnapKey || key == serveKey || key == finishPlacementKey || key == pauseKey || key == foodieSightKey || key == activateAnimatronicKey)
         {
             return false;
         }
@@ -362,6 +383,19 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         rebindingFoodieSightKey = true;
     }
 
+    public void RebindActivateAnimatronicKey()
+    {
+        // hide error msg
+        errorMsg.gameObject.SetActive(false);
+
+        // change key label to show active rebinding state
+        activateAnimatronicKeyLabel.text = "[Press Key]";
+
+        // set flags
+        rebinding = true;
+        rebindingActivateAnimatronicKey = true;
+    }
+
     public void SetDefaultKeybinding()
     {
         interactKey = KeyCode.F;
@@ -371,6 +405,7 @@ public class InputSystem : MonoBehaviour, ISettingsDataPersistence
         finishPlacementKey = KeyCode.Space;
         pauseKey = KeyCode.Escape;
         foodieSightKey = KeyCode.LeftShift;
+        activateAnimatronicKey = KeyCode.Tab;
 
         SetLabels();
     }

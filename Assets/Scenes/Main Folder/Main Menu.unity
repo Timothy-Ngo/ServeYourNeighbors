@@ -1841,6 +1841,18 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMaster
       objectReference: {fileID: 0}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2114286495}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RebindActivateAnimatronicKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InputSystem, Scripts
+      objectReference: {fileID: 0}
     - target: {fileID: 5479738235822360160, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
       value: 0.15686275
@@ -2338,6 +2350,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &987384627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6994812575140723355, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+  m_PrefabInstance: {fileID: 987384623}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1065533611
@@ -3347,6 +3370,7 @@ MonoBehaviour:
   finishPlacementKeyLabel: {fileID: 779733136}
   pauseKeyLabel: {fileID: 1907254914}
   foodieSightKeyLabel: {fileID: 1780930717}
+  activateAnimatronicKeyLabel: {fileID: 987384627}
   errorMsg: {fileID: 186594474}
   interactKey: 0
   cookKey: 0
@@ -3355,6 +3379,7 @@ MonoBehaviour:
   finishPlacementKey: 0
   pauseKey: 0
   foodieSightKey: 0
+  activateAnimatronicKey: 0
 --- !u!4 &2114286496
 Transform:
   m_ObjectHideFlags: 0

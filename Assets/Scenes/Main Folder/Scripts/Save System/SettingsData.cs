@@ -15,6 +15,7 @@ public class SettingsData
     public KeyCode finishPlacementKey;
     public KeyCode pauseKey;
     public KeyCode foodieSightKey;
+    public KeyCode activateAnimatronicKey;
 
     // audio settings
     public float masterValue;
@@ -30,6 +31,7 @@ public class SettingsData
         finishPlacementKey = KeyCode.Space;
         pauseKey = KeyCode.Escape;
         foodieSightKey = KeyCode.LeftShift;
+        activateAnimatronicKey = KeyCode.Tab;
 
         masterValue = 1f;
         musicValue = 1f;

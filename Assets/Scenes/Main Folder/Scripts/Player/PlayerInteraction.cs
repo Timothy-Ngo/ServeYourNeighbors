@@ -211,8 +211,8 @@ public class PlayerInteraction : MonoBehaviour
             Debug.Log("Distraction Range");
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
             {
-                string action = "[" + InputSystem.inst.kidnapKey.ToString() + "] Turn On";
-                if (TakeAction(action, InputSystem.inst.kidnapKey))
+                string action = "[" + InputSystem.inst.activateAnimatronicKey.ToString() + "] Turn On";
+                if (TakeAction(action, InputSystem.inst.activateAnimatronicKey))
                 {
                     playerStats.incTimesDistracted();
                     distractionScript.DecrementCharges();

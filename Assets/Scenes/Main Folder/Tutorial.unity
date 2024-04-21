@@ -4492,8 +4492,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14ea7c589bab6f4b9e0df8dfc10cd15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
   startObject: 0
+  placementObstacle: 0
 --- !u!4 &214564211
 Transform:
   m_ObjectHideFlags: 0
@@ -10281,6 +10281,10 @@ MonoBehaviour:
   resumeButton: {fileID: 324274106}
   settingsScreen: {fileID: 1789378608}
   layoutScreen: {fileID: 0}
+  upgradeConfirmation: {fileID: 0}
+  counters1: {fileID: 0}
+  counters2: {fileID: 0}
+  counters3: {fileID: 0}
 --- !u!4 &557870998
 Transform:
   m_ObjectHideFlags: 0
@@ -13262,6 +13266,7 @@ MonoBehaviour:
   finishPlacementKeyLabel: {fileID: 1618834762}
   pauseKeyLabel: {fileID: 1391253074}
   foodieSightKeyLabel: {fileID: 1200996453}
+  activateAnimatronicKeyLabel: {fileID: 5479738235998586995}
   errorMsg: {fileID: 522095308}
   interactKey: 0
   cookKey: 0
@@ -13270,6 +13275,7 @@ MonoBehaviour:
   finishPlacementKey: 0
   pauseKey: 0
   foodieSightKey: 0
+  activateAnimatronicKey: 0
 --- !u!4 &753974115
 Transform:
   m_ObjectHideFlags: 0
@@ -33151,6 +33157,7 @@ MonoBehaviour:
   topLeftCorner: {x: 0, y: 0}
   bottomRightCorner: {x: 0, y: 0}
   tablesUpgradeButton: {fileID: 1180128179}
+  placementConfirmationScreen: {fileID: 0}
 --- !u!4 &1711253121
 Transform:
   m_ObjectHideFlags: 0
@@ -45394,6 +45401,18 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetMaster
       objectReference: {fileID: 0}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 753974114}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: RebindActivateAnimatronicKey
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928630783293457500, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: InputSystem, Scripts
+      objectReference: {fileID: 0}
     - target: {fileID: 5479738235822360160, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -45593,6 +45612,17 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 5027428319877362117, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+--- !u!114 &5479738235998586995 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6994812575140723355, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+  m_PrefabInstance: {fileID: 5479738235998586994}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5732257354655704078
 PrefabInstance:
   m_ObjectHideFlags: 0
