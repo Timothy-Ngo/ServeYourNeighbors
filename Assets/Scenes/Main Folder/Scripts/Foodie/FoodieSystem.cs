@@ -35,6 +35,7 @@ public class FoodieSystem : MonoBehaviour
     [Header("-----ORDER STATE-----")]
     public List<Vector3> seats;
     public Queue<Vector3> availableSeats;
+    public List<Vector3> blockedSeats;
     public GameObject tableChairParent;
     public List<Table> tables;
 
