@@ -31,6 +31,7 @@ public class FoodieKidnappedState : FoodieState
         
 
         foodie.foodieSight.SetActive(false);
+        foodie.kidnapCollider.enabled = false;
 
         foodie.GetComponent<BoxCollider2D>().enabled = false;
         if (!stoppedMoving)

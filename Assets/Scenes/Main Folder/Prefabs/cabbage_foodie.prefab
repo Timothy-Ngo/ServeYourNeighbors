@@ -369,6 +369,7 @@ MonoBehaviour:
   foodieMovement: {fileID: 1987003699042778042}
   foodieCollider: {fileID: 1987003699042778043}
   foodieSprite: {fileID: 21300000, guid: d1507026acfebc141869c3d9e1cc7338, type: 3}
+  kidnapCollider: {fileID: 1885997192878313944}
   orderBubble: {fileID: 7252154126318924369}
   timerScript: {fileID: 722390387455592613}
   distractedText: {fileID: 4745854944033754898}

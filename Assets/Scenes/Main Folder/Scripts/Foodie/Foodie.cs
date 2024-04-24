@@ -14,6 +14,7 @@ public class Foodie : MonoBehaviour
     public Collider2D foodieCollider;
     private SpriteRenderer sr;
     public Sprite foodieSprite;
+    public Collider2D kidnapCollider;
 
     [Header("-----UI-----")]
     public GameObject orderBubble;
