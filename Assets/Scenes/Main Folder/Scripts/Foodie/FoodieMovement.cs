@@ -95,6 +95,8 @@ public class FoodieMovement : MonoBehaviour
         {
             pathVectorList.RemoveAt(0);
         }
+        /* TODO: check if this is called appropriately
+         * TODO: make sure it isn't called in the tutorial
         else
         {
             // if no path is found, foodie just leaves the restaurant
@@ -122,6 +124,7 @@ public class FoodieMovement : MonoBehaviour
 
             
         }
+        */
 
 
 
