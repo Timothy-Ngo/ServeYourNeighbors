@@ -37,7 +37,7 @@ public class IncreasedSpeedSkill : Skill
     {
         if (CheckRequirements())
         {
-            //Debug.Log("Making player go vroom vroom");
+            Debug.Log("Making player go vroom vroom");
             Currency.inst.Withdraw(skillCost);
             CompleteSkill();
         }

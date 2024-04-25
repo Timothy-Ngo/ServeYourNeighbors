@@ -28,6 +28,7 @@ public class SkillInformation : MonoBehaviour
     public Button confirmButton;
 
     public TextMeshProUGUI missingRequirementsText;    
+    public GameObject missingRequirementsObj;
 
 
    

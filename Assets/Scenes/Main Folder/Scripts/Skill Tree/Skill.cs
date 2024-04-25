@@ -32,6 +32,9 @@ public abstract class Skill : MonoBehaviour
         isAcquired = true;
         SkillInformation.inst.confirmButton.gameObject.SetActive(false);
         SkillInformation.inst.skillCostText.text = "Skill Acquired";
+        SkillInformation.inst.missingRequirementsText.text = "";
+        
+        
 
     }
     public void Select()
@@ -41,21 +44,25 @@ public abstract class Skill : MonoBehaviour
         SkillInformation.inst.skillCostText.text = $"{skillCost}";
         if (isAcquired)
         {
+            SkillInformation.inst.missingRequirementsObj.SetActive(false);
             CompleteSkill();
-            return;
-        }
-        if (CheckRequirements())
-        {
-            SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(false);
-            SkillInformation.inst.confirmButton.gameObject.SetActive(true);
-            AchievedRequirements();
         }
         else
         {
-            SkillInformation.inst.confirmButton.gameObject.SetActive(false);
-            SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(true);
-            SkillInformation.inst.missingRequirementsText.text = "";
-            MissingRequirements();
+            SkillInformation.inst.missingRequirementsObj.SetActive(true);
+            if (CheckRequirements())
+            {
+                SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(false);
+                SkillInformation.inst.confirmButton.gameObject.SetActive(true);
+                AchievedRequirements();
+            }
+            else
+            {
+                SkillInformation.inst.confirmButton.gameObject.SetActive(false);
+                SkillInformation.inst.missingRequirementsText.transform.parent.gameObject.SetActive(true);
+                SkillInformation.inst.missingRequirementsText.text = "";
+                MissingRequirements();
+            }
         }
     }
 
