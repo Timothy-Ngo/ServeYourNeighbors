@@ -1,11 +1,7 @@
 // Author: Helen Truong
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 public class Foodie : MonoBehaviour
 {
 
@@ -20,6 +16,8 @@ public class Foodie : MonoBehaviour
     public GameObject orderBubble;
     public Timer timerScript;
     public TextMeshProUGUI distractedText;
+    public Image timerBar;
+    public Gradient gradient;
 
     [Header("-----TABLE-----")]
     public Table table;
@@ -69,6 +67,7 @@ public class Foodie : MonoBehaviour
         sightSR.enabled = false;
         sr = GetComponent<SpriteRenderer>();
         foodieSprite = sr.sprite;
+        timerBar = timerScript.gameObject.GetComponent<Image>();
 
         stateMachine.Initialize(lineState);
 
@@ -87,6 +86,8 @@ public class Foodie : MonoBehaviour
             sightSR.enabled = FoodieSystem.inst.sightToggleEnabled;
         }
         
+        timerBar.color = gradient.Evaluate(timerBar.fillAmount); // https://youtu.be/Po6lOgPjQwY?si=UXduAud6JiIlRMby&t=348
+      
     }
 
     [SerializeField] public FoodieStateMachine stateMachine { get; set; }
