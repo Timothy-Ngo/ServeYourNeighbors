@@ -39,6 +39,7 @@ public class FoodieKidnappedState : FoodieState
 
             foodie.foodieMovement.StopMoving();
             stoppedMoving = true;
+            foodie.gameObject.GetComponent<Animator>().Play("Kidnapped");
         }
     }
 }

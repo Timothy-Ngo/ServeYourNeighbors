@@ -107,6 +107,7 @@ public class Foodie : MonoBehaviour
         orderBubble.SetActive(false);
         timerScript.gameObject.SetActive(false);
         distractedText.gameObject.SetActive(false);
+        distractionTimerScript.gameObject.SetActive(false);
     }
     
     private void OnTriggerEnter2D(Collider2D collision)

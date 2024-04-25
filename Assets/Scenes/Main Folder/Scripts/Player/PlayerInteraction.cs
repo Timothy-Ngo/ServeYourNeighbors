@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using JetBrains.Annotations;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -51,6 +50,10 @@ public class PlayerInteraction : MonoBehaviour
     [Header("-----OTHERS----")]
     public bool bluetoothSkill = false;
 
+    List<Collider2D> collidedObjects = new List<Collider2D>();
+
+    public bool calledCollisionFunction = false;
+
     private void Start()
     {
         interactionMessage = GameObject.Find("InteractionPrompt");
@@ -60,8 +63,92 @@ public class PlayerInteraction : MonoBehaviour
         //cooktop = GameObject.Find("cook_station");
         //cooktopScript = cooktop.GetComponent<Cooking>();
     }
-
+    Vector3 currentObject = Vector3.zero;
+    Vector3 prevObject = Vector3.zero;
     private void Update()
+    {
+        Collider2D closestObject = null;
+        float closestDistance = 100f;
+        Collider2D prevClosestObject = null;
+
+        
+
+        foreach (Collider2D collidedObject in collidedObjects)
+        {
+            Vector3 objectPosition = collidedObject.gameObject.transform.position;
+            float objectDistance = CalculateEuclideanDistance(objectPosition);
+            if (objectDistance < closestDistance)
+            {
+                prevObject = currentObject;
+                currentObject = objectPosition;
+                closestDistance = objectDistance;
+
+                prevClosestObject = closestObject;
+                //Debug.Log("previous object: " + prevClosestObject.gameObject.name);
+                
+                
+                closestObject = collidedObject;
+                //Debug.Log("current object: " + closestObject.gameObject.name);
+
+                if (prevObject != currentObject)
+                {
+                    Debug.Log("closest object is now: " + closestObject.gameObject.name);
+                    //calledCollisionFunction = false;
+                }
+            }
+        }
+
+        //if (closestObject == null)
+        //{
+        //    calledCollisionFunction = false;
+        //}
+        
+        if (closestObject != null )//&& !calledCollisionFunction)
+        {
+            //calledCollisionFunction = true;
+            if (closestObject.tag == "Cooktop")
+            {
+                CooktopCollision();
+            }
+            else if (closestObject.CompareTag("Table"))
+            {
+                TableCollision();
+            }
+            else if (closestObject.CompareTag("IngredientBox"))
+            {
+                IngredientBoxCollision();
+            }
+            else if (closestObject.CompareTag("TrashCan"))
+            {
+                TrashcanCollision();
+            }
+            else if (closestObject.CompareTag("Distraction"))
+            {
+                DistractionCollision();
+            }
+            else if (closestObject.CompareTag("Foodie"))
+            {
+                FoodieCollision();
+            }
+            else if (closestObject.CompareTag("Grinder"))
+            {
+                GrinderCollision();
+            }
+            else if (closestObject.CompareTag("FoodieSight"))
+            {
+                FoodieSightCollision();
+            }
+            else if (closestObject.CompareTag("Counter"))
+            {
+                CounterCollision();
+            }
+            
+
+        }
+
+    }
+
+    public void CooktopCollision()
     {
         if (canCook && cooktopRange)
         {
@@ -116,8 +203,11 @@ public class PlayerInteraction : MonoBehaviour
                 SetInteraction(false);
             }
         }
+    }
 
-        else if (tableRange)
+    public void TableCollision()
+    {
+        if (tableRange)
         {
             //Debug.Log("In range of table to give dish");
             //Debug.Log(PickupSystem.inst.isHoldingDish());
@@ -174,8 +264,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (ingredientBoxRange)
+    public void IngredientBoxCollision()
+    {
+        if (ingredientBoxRange)
         {
             // if player isn't holding anything
             if (canGetIngredient && !PickupSystem.inst.isHoldingItem())
@@ -189,8 +282,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (canThrowAway && trashCanRange)
+    public void TrashcanCollision()
+    {
+        if (canThrowAway && trashCanRange)
         {
             // if player is holding something
             if (PickupSystem.inst.isHoldingItem())
@@ -205,8 +301,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (distractionRange && canDistract)
+    public void DistractionCollision()
+    {
+        if (distractionRange && canDistract)
         {
             Debug.Log("Distraction Range");
             if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
@@ -221,8 +320,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (foodieRange)
+    public void FoodieCollision()
+    {
+        if (foodieRange)
         {
             // cannot kidnap if holding something or if the foodie is in line outside
             if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState && foodieScript.stateMachine.currentFoodieState != foodieScript.leaveState)
@@ -252,7 +354,7 @@ public class PlayerInteraction : MonoBehaviour
                         // hide the foodie's order bubble and timer bar
                         foodieScript.HideUI();
                     }
-
+                    foodieScript.timerScript.timeLeft = 0;
                     foodieScript.gameObject.GetComponent<Animator>().Play("Kidnapped");
                     foodieScript.stateMachine.ChangeState(foodieScript.kidnappedState);
 
@@ -263,8 +365,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (grinderRange)
+    public void GrinderCollision()
+    {
+        if (grinderRange)
         {
             if (canGetMSG && PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone())
             {
@@ -304,8 +409,11 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
-        else if (counterRange)
+    public void CounterCollision()
+    {
+        if (counterRange)
         {
             if (PickupSystem.inst.isHoldingDish() || PickupSystem.inst.isHoldingIngredient() || PickupSystem.inst.isHoldingTopping())
             {
@@ -328,12 +436,12 @@ public class PlayerInteraction : MonoBehaviour
                         {
                             SoundFX.inst.DishCounterPlaceSFX(1f);
                         }
-                        else 
+                        else
                         {
                             Debug.Log($"No sfx for {item.name} of tag type {item.tag}.");
                         }
-                            // place dish down on table
-                            Vector3 offset = new Vector3(0f, 0.3f, 0);
+                        // place dish down on table
+                        Vector3 offset = new Vector3(0f, 0.3f, 0);
                         PickupSystem.inst.PlaceItem(counterScript.transform, offset);
                         counterScript.SetFull(true);
 
@@ -390,7 +498,10 @@ public class PlayerInteraction : MonoBehaviour
                 }
             }
         }
+    }
 
+    public void FoodieSightCollision()
+    {
         if (foodieSightRange)
         {
             if (PickupSystem.inst.isHoldingFoodie() && foodieSightScript.stateMachine.currentFoodieState != foodieSightScript.lineState)
@@ -425,7 +536,6 @@ public class PlayerInteraction : MonoBehaviour
 
             }
         }
-
     }
 
     public void CanKidnap()
@@ -511,6 +621,11 @@ public class PlayerInteraction : MonoBehaviour
             //Debug.Log("Within range of cooktop");
             cooktopRange = true;
             cooktopScript = collision.gameObject.transform.GetComponent<Cooking>();
+
+            if ((!cooktopScript.IsPrepping() && !cooktopScript.IsCooking() && PickupSystem.inst.isHoldingIngredient() && !cooktopScript.IsFoodReady()) || (cooktopScript.IsPrepping()) || (canGetDish && cooktopScript.IsFoodReady()))
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("Table"))
         {
@@ -519,6 +634,11 @@ public class PlayerInteraction : MonoBehaviour
             tableScript = collision.gameObject.transform.parent.GetComponent<Table>();
             //Debug.Log($"table: {tableScript}");
 
+            if (tableScript.foodie != null && tableScript.foodie.stateMachine.currentFoodieState == tableScript.foodie.orderState && PickupSystem.inst.isHoldingDish())
+            {
+                collidedObjects.Add(collision);
+            }
+
         }
         else if (collision.CompareTag("IngredientBox"))
         {
@@ -526,14 +646,24 @@ public class PlayerInteraction : MonoBehaviour
             ingredientBoxRange = true;
             ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
             ingredientBoxScript.Animate("Open");
-
             //Debug.Log("ingredientBox: " + collision.gameObject.name);
+            
+            if (canGetIngredient && !PickupSystem.inst.isHoldingItem())
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("TrashCan"))
         {
             //Debug.Log("Within range of trash can");
             collision.gameObject.GetComponent<Animator>().Play("Open");
             trashCanRange = true;
+
+            if (PickupSystem.inst.isHoldingItem())
+            {
+                collidedObjects.Add(collision);
+            }
+          
         }
         else if (collision.CompareTag("Distraction"))
         {
@@ -541,30 +671,56 @@ public class PlayerInteraction : MonoBehaviour
             distractionRange = true;
             distractionScript = collision.GetComponent<Distraction>();
             //Debug.Log("distraction: " + collision.gameObject.name);
+
+            if (DistractionSystem.inst.animatronicDistraction.statusText.text == "OFF" && distractionScript.ChargesAvailable())
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("Foodie"))
         {
+            // may have issues with the foodie moving in and out of collision
             //Debug.Log("Within range of foodie");
             foodieRange = true;
             foodieScript = collision.GetComponentInParent<Foodie>();
+
+            if (!PickupSystem.inst.isHoldingItem() && foodieScript.stateMachine.currentFoodieState != foodieScript.lineState && foodieScript.stateMachine.currentFoodieState != foodieScript.leaveState)
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("Grinder"))
         {
             //Debug.Log("Within range of grinder");
             grinderRange = true;
             grinderScript = collision.GetComponent<Grinder>();
+
+            if ((canGetMSG && PickupSystem.inst.isHoldingFoodie() && !grinderScript.IsGrindingDone()) || (canGetMSG && grinderScript.timerScript.timeLeft <= 0 && grinderScript.IsGrindingDone() && !PickupSystem.inst.isHoldingItem()))
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("FoodieSight"))
         {
             //Debug.Log("Within range of foodie sight");
             foodieSightRange = true;
             foodieSightScript = collision.GetComponentInParent<Foodie>();
+
+            if (PickupSystem.inst.isHoldingFoodie() && foodieSightScript.stateMachine.currentFoodieState != foodieSightScript.lineState)
+            {
+                collidedObjects.Add(collision);
+            }
         }
         else if (collision.CompareTag("Counter"))
         {
             //Debug.Log("Within range of counter");
             counterRange = true;
             counterScript = collision.GetComponent<Counter>();
+
+            if ((PickupSystem.inst.isHoldingDish() || PickupSystem.inst.isHoldingIngredient() || PickupSystem.inst.isHoldingTopping()) || (!PickupSystem.inst.isHoldingItem() && counterScript.Full()))
+            {
+                collidedObjects.Add(collision);
+            }
         }
 
     }
@@ -578,12 +734,23 @@ public class PlayerInteraction : MonoBehaviour
             {
                 cooktopScript.StopPrep();
             }
+
+            
+            if (collidedObjects.Contains(collision)) 
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of cooktop");
         }
         else if (collision.CompareTag("Table"))
         {
             tableRange = false;
             tableScript = null;
+            
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of table");
         }
         else if (collision.CompareTag("IngredientBox"))
@@ -591,18 +758,33 @@ public class PlayerInteraction : MonoBehaviour
             ingredientBoxScript.Animate("Close");
             ingredientBoxRange = false;
             ingredientBoxScript = null;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of ingredient box");
         }
         else if (collision.CompareTag("TrashCan"))
         {
             collision.gameObject.GetComponent<Animator>().Play("Idle");
             trashCanRange = false;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of trash can");
         }
         else if (collision.CompareTag("Distraction"))
         {
             distractionRange = false;
             distractionScript = null;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of distraction");
         }
         else if (collision.CompareTag("Foodie"))
@@ -614,23 +796,44 @@ public class PlayerInteraction : MonoBehaviour
                 currentlyKidnapping = false;
                 qtKidnap.ForceStop();
             }
+
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of foodie");
         }
         else if (collision.CompareTag("Grinder"))
         {
             grinderRange = false;
             grinderScript = null;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of grinder");
         }
         else if (collision.CompareTag("FoodieSight"))
         {
             foodieSightRange = false;
             foodieSightScript = null;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of foodie sight");
         }
         else if (collision.CompareTag("Counter"))
         {
             counterRange = false;
+
+            if (collidedObjects.Contains(collision))
+            {
+                collidedObjects.Remove(collision);
+            }
             //Debug.Log("Out of range of counter");
         }
 
@@ -656,5 +859,18 @@ public class PlayerInteraction : MonoBehaviour
     {
         SetInteraction(true);
         messageText.SetText(prompt);
+    }
+
+    // calculates the Euclidean distance between the player and an object
+    private float CalculateEuclideanDistance(Vector3 objectPosition)
+    {
+        Vector3 playerPosition = gameObject.transform.position;
+
+        float xDiff = playerPosition.x - objectPosition.x;
+        float yDiff = playerPosition.y - objectPosition.y;
+
+        float euclideanDistance = Mathf.Sqrt(Mathf.Pow(xDiff, 2) + Mathf.Pow(yDiff, 2));
+
+        return euclideanDistance;
     }
 }
