@@ -653,29 +653,29 @@ public class PlacementSystem : MonoBehaviour
 
                     if (!InKitchenBoundary(newPosition) &&
                         !InKitchenBoundary(newPosition + Vector3.right) &&
-                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition) &&
-                        FoodieSystem.inst.pathfinding.IsPlaceable(newPosition + Vector3.right))
+                        IsPlaceable(newPosition) &&
+                        IsPlaceable(newPosition + Vector3.right))
                     {
                         return newPosition;
                     }
                 }
                 else if (selectedItem.CompareTag("Cooktop"))
                 {
-                    if (InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    if (InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                     {
                         return newPosition;
                     }
                 }
                 else if (selectedItem.CompareTag("Distraction"))
                 {
-                    if (!InKitchenBoundary(newPosition) && FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    if (!InKitchenBoundary(newPosition) && IsPlaceable(newPosition))
                     {
                         return newPosition;
                     }
                 }
                 else
                 {
-                    if (FoodieSystem.inst.pathfinding.IsPlaceable(newPosition))
+                    if (IsPlaceable(newPosition))
                     {
                         return newPosition;
                     }
@@ -850,6 +850,7 @@ public class PlacementSystem : MonoBehaviour
             Currency.inst.Deposit(Upgrades.inst.animatronicUpgradeCost);
             Upgrades.inst.hasAnimatronic = false;
             DistractionSystem.inst.animatronicDistraction = null;
+            Upgrades.inst.animatronicDescription.gameObject.transform.parent.GetComponent<Button>().interactable = true;
             Destroy(selectedItem);
         }
         

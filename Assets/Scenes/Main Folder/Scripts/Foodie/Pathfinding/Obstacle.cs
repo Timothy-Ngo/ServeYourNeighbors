@@ -21,9 +21,13 @@ public class Obstacle : MonoBehaviour
     /// </summary>
     public bool startObject = false;
     public bool placementObstacle = false;
-    private void Start()
+    private void Awake()
     {
         obstacleRend = GetComponent<SpriteRenderer>();
+    }
+    private void Start()
+    {
+        
         showObstacle = false;
         if (startObject)
         {

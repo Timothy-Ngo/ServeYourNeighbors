@@ -101,7 +101,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
 
     public bool hasHibachiChef = false;
     public int animatronicUpgradeCost = 100;
-    [SerializeField] TextMeshProUGUI animatronicDescription;
+    public TextMeshProUGUI animatronicDescription;
     public bool animatronicPlacementMode = false;
     public Vector3 animatronicPosition;
 
