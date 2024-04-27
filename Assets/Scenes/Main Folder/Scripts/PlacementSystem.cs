@@ -36,6 +36,7 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField] GameObject startingPositionObject;
     [SerializeField] GameObject bottomUIObject;
     [SerializeField] GameObject topUIObject;
+    [SerializeField] GameObject errorMsg;
 
 
     //Boundaries
@@ -92,10 +93,13 @@ public class PlacementSystem : MonoBehaviour
 
         topLeftCorner = topLeftCornerObj.transform.position;
         bottomRightCorner = bottomRightCornerObj.transform.position;
+        errorMsg.SetActive(false);
     }
 
     private void Enabled(bool enable)
     {
+        
+
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
         if (Upgrades.inst.upgradesScreen.activeSelf)
         {
@@ -108,6 +112,7 @@ public class PlacementSystem : MonoBehaviour
             instructions.SetActive(true);
             topUIObject.SetActive(true);
             bottomUIObject.SetActive(true);
+            errorMsg.SetActive(false);
             Obstacle[] tableObstacles = Upgrades.inst.tablesParent.GetComponentsInChildren<Obstacle>();
             foreach (Obstacle obs in tableObstacles)
             {
@@ -186,6 +191,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.RightArrow))
             {
+                
                 Vector3 oldPosition = selectedItem.transform.position;
                 Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
@@ -257,6 +263,7 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
+                    errorMsg.SetActive(false);
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -275,6 +282,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
+                
                 Vector3 oldPosition = selectedItem.transform.position;
                 Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
@@ -345,6 +353,7 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
+                    errorMsg.SetActive(false);
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -364,6 +373,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                
                 Vector3 oldPosition = selectedItem.transform.position;
                 Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
@@ -424,6 +434,7 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
+                    errorMsg.SetActive(false);
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -442,6 +453,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
+                
                 Vector3 oldPosition = selectedItem.transform.position;
                 Vector3 newPosition = oldPosition;
                 bool foundNewPosition = false;
@@ -501,6 +513,7 @@ public class PlacementSystem : MonoBehaviour
                 }
                 if (foundNewPosition)
                 {
+                    errorMsg.SetActive(false);
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -540,6 +553,7 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0) && !placementConfirmationScreen.activeSelf) // For dragging items
             {
+                
                 Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                 foreach (Obstacle obstacle in removeObstacles)
                 {
@@ -571,12 +585,16 @@ public class PlacementSystem : MonoBehaviour
 
             if (Input.GetMouseButtonUp(0) && !placementConfirmationScreen.activeSelf)
             {
+                errorMsg.SetActive(false);
                 isDragging = false;
-                Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
-                foreach (Obstacle obstacle in removeObstacles)
+                // QUESTION: --- is this supposed to be place or remove obstacle
+                Obstacle[] placeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
+                foreach (Obstacle obstacle in placeObstacles)
                 {
                     obstacle.PlaceObstacle();
                 }
+
+                
 
             }
             if (isDragging && !placementConfirmationScreen.activeSelf)
@@ -588,6 +606,7 @@ public class PlacementSystem : MonoBehaviour
                         Mathf.RoundToInt((worldMousePosition + new Vector3(0, 0, 10)).y) - 0.5f, 0f);
                     if (IsPlaceable(newPosition))
                     {
+                        errorMsg.SetActive(false);
                         if (selectedItem.CompareTag("Cooktop") ||
                             selectedItem.CompareTag("Grinder") ||
                             selectedItem.CompareTag("TrashCan") ||
@@ -633,7 +652,50 @@ public class PlacementSystem : MonoBehaviour
                 }
                 else
                 {
-                    placementConfirmationScreen.SetActive(true);
+                    // check if foodie can find a path to table
+                    if (selectedItem.CompareTag("Table") || selectedItem.CompareTag("Distraction"))
+                    {
+
+                        bool pathExists = true;
+                        foreach (Table table in FoodieSystem.inst.tables) // check if there exists a path to every table
+                        {
+                            GameObject tableObject = table.gameObject;
+
+                            Obstacle[] tempObstacles = tableObject.GetComponentsInChildren<Obstacle>();
+                            foreach (Obstacle obstacle in tempObstacles)
+                            {
+                                obstacle.RemoveObstacle();
+                            }
+                            List<Vector3> path = FoodieSystem.inst.pathfinding.FindPath(FoodieSystem.inst.startOfLine, tableObject.transform.position);
+                            foreach (Obstacle obstacle in tempObstacles)
+                            {
+                                obstacle.PlaceObstacle();
+                            }
+
+                            if (path == null)
+                            {
+                                pathExists = false;
+                            }
+
+                        }
+
+                        
+
+                        if (pathExists)
+                        {
+                            placementConfirmationScreen.SetActive(true);
+                        }
+                        else
+                        {
+                            errorMsg.SetActive(true);
+                            Debug.Log("INVALID PLACEMENT: path cannot be found to position");
+                        }
+                    }
+                    else
+                    {
+                        placementConfirmationScreen.SetActive(true);
+                    }
+
                 }
             }
         }

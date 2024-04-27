@@ -95,32 +95,44 @@ public class FoodieMovement : MonoBehaviour
         {
             pathVectorList.RemoveAt(0);
         }
+        else
+        {
+            /*
+            if (!GameLoop.inst.isTutorial)
+            {
+                Foodie foodieScript = gameObject.GetComponent<Foodie>();
+                FoodieSystem.inst.blockedSeats.Add(foodieScript.orderState.tablePosition);
+
+                Debug.Log("table is blocked off");
+
+                if (FoodieSystem.inst.availableSeats.Count > 0)
+                {
+                    Debug.Log("going to new table");
+                    foodieScript.orderState.tablePosition = FoodieSystem.inst.availableSeats.Dequeue();
+                    SetTargetPosition(foodieScript.orderState.tablePosition, FoodieSystem.inst.pathfinding);
+                    foodieScript.tablePosition = foodieScript.orderState.tablePosition;
+
+                    foodieScript.orderState.GetFoodieTableScript();
+                }
+                else
+                {
+                    Debug.Log("no other tables available booooo");
+                    foodieScript.HideUI();
+                    foodieScript.gameObject.GetComponent<Animator>().Play("Angry Leave");
+                    foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
+                }
+            }
+            Debug.Log("SetTargetPosition: no path found");
+            */
+        }
         /* TODO: check if this is called appropriately
          * TODO: make sure it isn't called in the tutorial
         else
         {
             // if no path is found, foodie just leaves the restaurant
-            Foodie foodieScript = gameObject.GetComponent<Foodie>();
-            FoodieSystem.inst.blockedSeats.Add(foodieScript.orderState.tablePosition);
+            
 
-            Debug.Log("table is blocked off");
-
-            if (FoodieSystem.inst.availableSeats.Count > 0)
-            {
-                Debug.Log("going to new table");
-                foodieScript.orderState.tablePosition = FoodieSystem.inst.availableSeats.Dequeue();
-                SetTargetPosition(foodieScript.orderState.tablePosition, FoodieSystem.inst.pathfinding);
-                foodieScript.tablePosition = foodieScript.orderState.tablePosition;
-
-                foodieScript.orderState.GetFoodieTableScript();
-            }
-            else
-            {
-                Debug.Log("no other tables available booooo");
-                foodieScript.HideUI();
-                foodieScript.gameObject.GetComponent<Animator>().Play("Angry Leave");
-                foodieScript.stateMachine.ChangeState(foodieScript.leaveState);
-            }
+            
 
             
         }

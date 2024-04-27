@@ -92,7 +92,7 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (prevObject != currentObject)
                 {
-                    Debug.Log("closest object is now: " + closestObject.gameObject.name);
+                    //Debug.Log("closest object is now: " + closestObject.gameObject.name);
                     //calledCollisionFunction = false;
                 }
             }
