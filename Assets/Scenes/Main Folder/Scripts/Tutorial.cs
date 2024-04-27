@@ -579,6 +579,7 @@ public class Tutorial : MonoBehaviour
                 animatronic.GetComponent<Distraction>().ResetCharges();
                 foodieSystem.GetCurrentSeats();
                 promptText.text = "";
+                ResetAbilities();
                 yield return StartCoroutine(DistractionLoop());
             }
             else
@@ -595,6 +596,7 @@ public class Tutorial : MonoBehaviour
                 }
                 yield return new WaitUntil(() => foodieScript == null && foodieScript2 == null);
                 yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[20]));
+                ResetAbilities();
             }
         }
         else
@@ -606,6 +608,7 @@ public class Tutorial : MonoBehaviour
             promptText.text = "";
             yield return StartCoroutine(MoveThroughDialogue(dialogueAssets[19]));
             yield return new WaitUntil(() => foodieScript == null && foodieScript2 == null);
+            ResetAbilities();
             yield return StartCoroutine(DistractionLoop());
         }
     }
