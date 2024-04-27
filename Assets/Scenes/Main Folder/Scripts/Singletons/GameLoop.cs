@@ -57,6 +57,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [Header("-----UPGRADES SCREEN-----")]
     [SerializeField] private Button tablesUpgradeButton;
     [SerializeField] private GameObject skillTreeScreen;
+    [SerializeField] private GameObject placementSystem;
 
     [Header("-----SYN METER-----")]
     [SerializeField] SYNMeter synMeter;
@@ -209,7 +210,7 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             */
         }
 
-        if (Input.GetKeyDown(InputSystem.inst.pauseKey) && !upgradeScreenObj.activeInHierarchy && !reviewScreenObj.activeInHierarchy && !outfitsScreenObj.activeInHierarchy)
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey) && !upgradeScreenObj.activeInHierarchy && !reviewScreenObj.activeInHierarchy && !outfitsScreenObj.activeInHierarchy && !placementSystem.activeInHierarchy && !skillTreeScreen.activeInHierarchy)
         {
             if (pauseScreenOpened)
             {

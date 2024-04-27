@@ -11,6 +11,14 @@ public class SkillTree : MonoBehaviour, IDataPersistence
     [SerializeField] Button exitButton;
     [SerializeField] Button tablesUpgradeButton;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(InputSystem.inst.pauseKey))
+        {
+            ExitUI();
+        }
+    }
+
     public void EnterUI()
     {
         Debug.Log("EnterUI() pressed");

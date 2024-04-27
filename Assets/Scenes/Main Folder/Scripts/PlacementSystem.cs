@@ -49,6 +49,9 @@ public class PlacementSystem : MonoBehaviour
 
     [SerializeField] Button tablesUpgradeButton;
 
+    [SerializeField] Button confirmYesButton;
+    [SerializeField] GameObject cancelButton;
+
     // Keyboard Input
     [Header("Keyboard Input")]
     int currentIndex = 0;
@@ -65,7 +68,7 @@ public class PlacementSystem : MonoBehaviour
         }
     }
 
-    bool _isEnabled;
+    public bool _isEnabled;
     /// <summary>
     /// Will enable and disable the system
     /// </summary>
@@ -94,6 +97,7 @@ public class PlacementSystem : MonoBehaviour
         topLeftCorner = topLeftCornerObj.transform.position;
         bottomRightCorner = bottomRightCornerObj.transform.position;
         errorMsg.SetActive(false);
+        this.gameObject.SetActive(false);
     }
 
     private void Enabled(bool enable)
@@ -108,11 +112,12 @@ public class PlacementSystem : MonoBehaviour
         }
         if (enable)
         {
-            ChangeFloorColorTo(placementFloorColor);
             instructions.SetActive(true);
             topUIObject.SetActive(true);
             bottomUIObject.SetActive(true);
             errorMsg.SetActive(false);
+            cancelButton.SetActive(true);
+            ChangeFloorColorTo(placementFloorColor);
             Obstacle[] tableObstacles = Upgrades.inst.tablesParent.GetComponentsInChildren<Obstacle>();
             foreach (Obstacle obs in tableObstacles)
             {
@@ -684,6 +689,8 @@ public class PlacementSystem : MonoBehaviour
                         if (pathExists)
                         {
                             placementConfirmationScreen.SetActive(true);
+                            confirmYesButton.Select();
+                            cancelButton.SetActive(false);
                         }
                         else
                         {
@@ -694,9 +701,16 @@ public class PlacementSystem : MonoBehaviour
                     else
                     {
                         placementConfirmationScreen.SetActive(true);
+                        confirmYesButton.Select();
+                        cancelButton.SetActive(false);
                     }
 
                 }
+            }
+
+            if (Input.GetKeyDown(InputSystem.inst.pauseKey))
+            {
+                ExitPlacementMode();
             }
         }
 
@@ -827,6 +841,7 @@ public class PlacementSystem : MonoBehaviour
             {
                 ChangeFloorColorTo(originalFloorColor);
                 Upgrades.inst.upgradesScreen.SetActive(true);
+                tablesUpgradeButton.Select();
             }
             if (Upgrades.inst.changeLayoutMode)
             {
@@ -858,14 +873,15 @@ public class PlacementSystem : MonoBehaviour
             }
             EventSystem.current.firstSelectedGameObject = tablesUpgradeButton.gameObject;
             EventSystem.current.SetSelectedGameObject(tablesUpgradeButton.gameObject);
+            this.gameObject.SetActive(false);
         }
-
 
     }
 
     public void ConfirmNo()
     {
         placementConfirmationScreen.SetActive(false);
+        cancelButton.SetActive(true);
     }
 
 
@@ -876,6 +892,7 @@ public class PlacementSystem : MonoBehaviour
         {
             ChangeFloorColorTo(originalFloorColor);
             Upgrades.inst.upgradesScreen.SetActive(true);
+            tablesUpgradeButton.Select();
         }
 
         foreach (Obstacle obstacle in selectedItem.GetComponentsInChildren<Obstacle>())
@@ -915,7 +932,8 @@ public class PlacementSystem : MonoBehaviour
             Upgrades.inst.animatronicDescription.gameObject.transform.parent.GetComponent<Button>().interactable = true;
             Destroy(selectedItem);
         }
-        
+        this.gameObject.SetActive(false);
+
     }
 
 }

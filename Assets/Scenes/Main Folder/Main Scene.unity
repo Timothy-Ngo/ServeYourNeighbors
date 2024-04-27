@@ -2608,6 +2608,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 324274106}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Selectable, UnityEngine.UI
+        m_MethodName: Select
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &71377922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12278,9 +12290,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.42745098, g: 0.007843138, b: 0.019607844, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.42745098, g: 0.007843138, b: 0.019607844, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -12412,6 +12424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd07f210a8b116b41b5d372af5272386, type: 3}
+--- !u!1 &428953311 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6671339492838857314, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+  m_PrefabInstance: {fileID: 1463879091}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &430728036 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5057046934603470771, guid: 02853b705fae92349b5a13a9c346c9b5, type: 3}
@@ -15710,6 +15727,7 @@ MonoBehaviour:
   continueReviewButton: {fileID: 4766183069804671131}
   tablesUpgradeButton: {fileID: 1180128179}
   skillTreeScreen: {fileID: 843552517}
+  placementSystem: {fileID: 1711253118}
   synMeter: {fileID: 584663805}
   playerUI: {fileID: 91747036}
   endGameScreen: {fileID: 1555204348}
@@ -40453,6 +40471,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.b
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.g
+      value: 0.007843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_SelectedColor.r
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.b
+      value: 0.019607844
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.g
+      value: 0.007843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+      propertyPath: m_Colors.m_HighlightedColor.r
+      value: 0.42745098
+      objectReference: {fileID: 0}
+    - target: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -47969,6 +48011,9 @@ MonoBehaviour:
   topLeftCorner: {x: 0, y: 0}
   bottomRightCorner: {x: 0, y: 0}
   tablesUpgradeButton: {fileID: 1180128179}
+  confirmYesButton: {fileID: 1798893426}
+  cancelButton: {fileID: 428953311}
+  _isEnabled: 0
   placementConfirmationScreen: {fileID: 500806825}
 --- !u!4 &1711253121
 Transform:
@@ -50100,6 +50145,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a4800c99dc3b454aafaac9ce8c55a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1798893426 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6671339492838857312, guid: 2d46a414a2d232d4096af79b4e29f882, type: 3}
+  m_PrefabInstance: {fileID: 1798893423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1800593780

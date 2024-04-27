@@ -514,6 +514,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Debug.Assert(numTables <= maxTables, "# of tables is over the max amount.");
             Currency.inst.Withdraw(tablesUpgradeCost);
             tablePlacementMode = true; // Must be set true before enabling placement system
+            placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
             UpdateTablesList();
             //NotifyObservers();
@@ -562,6 +563,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Debug.Assert(numCookStations <= maxCookStations, "# of cook stations is over the max amount.");
             Currency.inst.Withdraw(cookStationsUpgradeCost);
             cookStationPlacementMode = true;
+            placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
             UpdateCookStationsList();
             //NotifyObservers();
@@ -597,6 +599,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Debug.Assert(numCounters <= maxCounters, "# of counters is over the max amount.");
             Currency.inst.Withdraw(countersUpgradeCost);
             counterPlacementMode = true;
+            placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
             if (numCounters == maxCounters)
             {
@@ -621,6 +624,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             }
             Currency.inst.Withdraw(changeLayoutCost);
             changeLayoutMode = true;
+            placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
             // Find all selectable items for placement mode keyboard input (i.e. tables, cook stations, animatronics)
             foreach (Transform cookTransform in cookStationsParent.GetComponentInChildren<Transform>()) // Add cook stations as selectable
@@ -701,6 +705,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Debug.Assert(!hasAnimatronic, "# of animatronics is over the max amount.");
             Currency.inst.Withdraw(animatronicUpgradeCost);
             animatronicPlacementMode = true;
+            placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
             animatronicDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
             animatronicDescription.text = "Max number of animatronics reached.";
