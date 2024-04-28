@@ -278,6 +278,7 @@ public class PlacementSystem : MonoBehaviour
                 if (foundNewPosition)
                 {
                     errorMsg.SetActive(false);
+                    instructionsTextMesh.color = Color.white;
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -368,6 +369,7 @@ public class PlacementSystem : MonoBehaviour
                 if (foundNewPosition)
                 {
                     errorMsg.SetActive(false);
+                    instructionsTextMesh.color = Color.white;
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -449,6 +451,7 @@ public class PlacementSystem : MonoBehaviour
                 if (foundNewPosition)
                 {
                     errorMsg.SetActive(false);
+                    instructionsTextMesh.color = Color.white;
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -528,6 +531,7 @@ public class PlacementSystem : MonoBehaviour
                 if (foundNewPosition)
                 {
                     errorMsg.SetActive(false);
+                    instructionsTextMesh.color = Color.white;
                     Obstacle[] removeObstacles = selectedItem.GetComponentsInChildren<Obstacle>();
                     foreach (Obstacle obstacle in removeObstacles)
                     {
@@ -628,6 +632,7 @@ public class PlacementSystem : MonoBehaviour
             if (Input.GetMouseButtonUp(0) && !placementConfirmationScreen.activeSelf)
             {
                 errorMsg.SetActive(false);
+                instructionsTextMesh.color = Color.white;
                 isDragging = false;
                 /*
                 */
@@ -681,6 +686,7 @@ public class PlacementSystem : MonoBehaviour
                     if (IsPlaceable(newPosition))
                     {
                         errorMsg.SetActive(false);
+                        instructionsTextMesh.color = Color.white;
                         if (selectedItem.CompareTag("Cooktop") ||
                             selectedItem.CompareTag("Grinder") ||
                             selectedItem.CompareTag("TrashCan") ||
@@ -722,6 +728,7 @@ public class PlacementSystem : MonoBehaviour
                 if (selectedItem.transform.position == startingPositionObject.transform.position)
                 {
                     Debug.Log("Item must be placed in restaurant.");
+                    instructionsTextMesh.color = Color.red;
                     // TODO: Highlight instruction text
                 }
                 else
