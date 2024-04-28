@@ -26,6 +26,15 @@ public class FileDataHandler
         this.useEncryption = useEncryption;
     }
 
+    public void DeleteSaveFile()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        if (File.Exists(fullPath))
+        {
+            File.Delete(fullPath);
+        }
+    }
+
     public GameData Load()
     {
         // use Path.Combine to account for different OS's having different path separators

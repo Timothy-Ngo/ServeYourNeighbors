@@ -33,6 +33,7 @@ public class SceneMgr : MonoBehaviour
             if (!SaveSystem.inst.HasGameData())
             {
                 continueGameButton.interactable = false;
+                newGameButton.Select();
             }
         }
     }

@@ -254,6 +254,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
         {
             endGameScreen.SetActive(true);
             playerUI.SetActive(false);
+
+            SaveSystem.inst.dataHandler.DeleteSaveFile();
             // TODO: Add sfx
             // TODO: Stop player movement
         }
@@ -351,8 +353,6 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
     public void PlayAgain()
     {
-        // TODO: This method should maybe? take the player back to the menu in the future 
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); 
         SceneManager.LoadScene("Main Menu");
     }
 

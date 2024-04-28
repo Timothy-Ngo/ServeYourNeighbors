@@ -729,7 +729,6 @@ public class PlacementSystem : MonoBehaviour
                 {
                     Debug.Log("Item must be placed in restaurant.");
                     instructionsTextMesh.color = Color.red;
-                    // TODO: Highlight instruction text
                 }
                 else
                 {

@@ -38,7 +38,7 @@ public class SaveSystem : MonoBehaviour
 
     private List<IDataPersistence> dataPersistenceObjects;
     private List<ISettingsDataPersistence> settingsDataPersistenceObjects;
-    private FileDataHandler dataHandler;
+    public FileDataHandler dataHandler;
 
     [SerializeField] SkillTree skillTree;
 
