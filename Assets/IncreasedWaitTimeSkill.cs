@@ -23,13 +23,14 @@ public class IncreasedWaitTimeSkill : Skill
     public override void MissingRequirements()
     {
         int missingGold = skillCost - Currency.inst.gold;
+        SkillInformation.inst.missingRequirementsText.text = "";
         if (!preReqSkill1.isAcquired)
         {
-            SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill1.skillName} skill.";
+            SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill1.skillName}.\r\n";
         }
         if (!preReqSkill2.isAcquired)
         {
-            SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill2.skillName} skill.";
+            SkillInformation.inst.missingRequirementsText.text += $"Missing {preReqSkill2.skillName}.\r\n";
         }
         if (missingGold > 0)
         {

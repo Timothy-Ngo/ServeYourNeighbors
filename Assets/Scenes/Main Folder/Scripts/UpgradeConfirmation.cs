@@ -14,6 +14,7 @@ public class UpgradeConfirmation : MonoBehaviour
     [SerializeField] string stationsDesc;
     [SerializeField] string animatronicDesc;
     [SerializeField] string changeLayoutDesc;
+    [SerializeField] string startNewDayDesc;
 
     [SerializeField] string maxedTablesDesc;
     [SerializeField] string maxedStationsDesc;
@@ -25,6 +26,7 @@ public class UpgradeConfirmation : MonoBehaviour
     int changeLayoutCost;
 
     [SerializeField] Button buyButton;
+    [SerializeField] GameObject goldIcon;
     Button originalButton;
     UnityAction[] oldListeners;
 
@@ -35,12 +37,14 @@ public class UpgradeConfirmation : MonoBehaviour
         animatronicCost = Upgrades.inst.animatronicUpgradeCost;
         changeLayoutCost = Upgrades.inst.changeLayoutCost;
         // TODO: Save old listeners for sfx
+        goldIcon.SetActive(true);
         ShowTablesInfo();
     }
     public void ShowTablesInfo()
     {
         if (Upgrades.inst.MaxTablesReached())
         {
+            goldIcon.SetActive(false);
             buyButton.gameObject.SetActive(false);
             description.text = maxedTablesDesc;
             cost.text = "";
@@ -48,6 +52,7 @@ public class UpgradeConfirmation : MonoBehaviour
         }
         else
         {
+            goldIcon.SetActive(true);
             description.text = tablesDesc;
             buyButton.gameObject.SetActive(true);
             cost.text = $"{tablesCost}";
@@ -70,6 +75,7 @@ public class UpgradeConfirmation : MonoBehaviour
     {
         if (Upgrades.inst.MaxCookStationsReached())
         {
+            goldIcon.SetActive(false);
             buyButton.gameObject.SetActive(false);
             description.text = maxedStationsDesc;
             cost.text = "";
@@ -77,6 +83,7 @@ public class UpgradeConfirmation : MonoBehaviour
         }
         else
         {
+            goldIcon.SetActive(true);
             description.text = stationsDesc;
             buyButton.gameObject.SetActive(true);
             cost.text = $"{stationsCost}";
@@ -97,6 +104,7 @@ public class UpgradeConfirmation : MonoBehaviour
     {
         if (Upgrades.inst.MaxAnimatronicsReached())
         {
+            goldIcon.SetActive(false);
             buyButton.gameObject.SetActive(false);
             description.text = maxedAnimatronicDesc;
             cost.text = "";
@@ -104,6 +112,7 @@ public class UpgradeConfirmation : MonoBehaviour
         }
         else
         {
+            goldIcon.SetActive(true);
             description.text = animatronicDesc;
             buyButton.gameObject.SetActive(true);
             cost.text = $"{animatronicCost}";
@@ -122,6 +131,7 @@ public class UpgradeConfirmation : MonoBehaviour
     }
     public void ShowChangeLayoutInfo()
     {
+        goldIcon.SetActive(true);
         description.text = changeLayoutDesc;
         buyButton.gameObject.SetActive(true);
         cost.text = $"{changeLayoutCost}";
@@ -136,6 +146,17 @@ public class UpgradeConfirmation : MonoBehaviour
             buyButton.interactable = false;
             cost.text += " - Not Enough";
         }
+    }
+
+    public void ShowStartNewDayInfo()
+    {
+        goldIcon.SetActive(false);
+        description.text = startNewDayDesc;
+        buyButton.gameObject.SetActive(true);
+        cost.text = "Start New Day";
+        buyButton.interactable = true;
+        buyButton.onClick.RemoveAllListeners();
+        buyButton.onClick.AddListener(GameLoop.inst.StartNewDay);
     }
 
 }

@@ -17,13 +17,14 @@ public class FasterCookingSkill : Skill
     {
         int missingCookStations = requiredNumCookStations - Upgrades.inst.numCookStations;
         int missingGold = skillCost - Currency.inst.gold;
+        SkillInformation.inst.missingRequirementsText.text = "";
         if (missingCookStations > 0)
         {
-            SkillInformation.inst.missingRequirementsText.text = $"Missing {missingCookStations} cook stations.\n";
+            SkillInformation.inst.missingRequirementsText.text = $"Missing {missingCookStations} cook stations.";
         }
         if (missingGold > 0)
         {
-            SkillInformation.inst.missingRequirementsText.text += $"Missing {missingGold} gold.";
+            SkillInformation.inst.missingRequirementsText.text += $"\r\nMissing {missingGold} gold.";
         }
     }
     public override void Confirm()

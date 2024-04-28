@@ -38,10 +38,12 @@ public class Obstacle : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.O)) // TODO: Remove in build
         {
             showObstacle = !showObstacle;
         }
+        */
         
     }
 

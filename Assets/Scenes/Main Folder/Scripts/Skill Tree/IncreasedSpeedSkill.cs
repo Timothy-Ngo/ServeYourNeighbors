@@ -24,13 +24,14 @@ public class IncreasedSpeedSkill : Skill
     {
         int missingTables = requiredNumTables - Upgrades.inst.numTables;
         int missingGold = skillCost - Currency.inst.gold;
+        SkillInformation.inst.missingRequirementsText.text = "";
         if (missingTables > 0)
         {
-            SkillInformation.inst.missingRequirementsText.text = $"Missing {missingTables} tables.\n";
+            SkillInformation.inst.missingRequirementsText.text = $"Missing {missingTables} tables.";
         }
         if (missingGold > 0)
         {
-            SkillInformation.inst.missingRequirementsText.text += $"Missing {missingGold} gold.";
+            SkillInformation.inst.missingRequirementsText.text += $"\r\nMissing {missingGold} gold.";
         }
     }
     public override void Confirm()

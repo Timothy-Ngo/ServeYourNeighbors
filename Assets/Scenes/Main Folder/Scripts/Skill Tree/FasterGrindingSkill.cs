@@ -20,13 +20,14 @@ public class FasterGrindingSkill : Skill
     public override void MissingRequirements()
     {
         int missingGold = skillCost - Currency.inst.gold;
+        SkillInformation.inst.missingRequirementsText.text = "";
         if (!preReqSkill.isAcquired)
         {
-            SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill.skillName} skill.";
+            SkillInformation.inst.missingRequirementsText.text = $"Missing {preReqSkill.skillName}.";
         }
         if (missingGold > 0)
         {
-            SkillInformation.inst.missingRequirementsText.text += $"Missing {missingGold} gold.";
+            SkillInformation.inst.missingRequirementsText.text += $"\r\nMissing {missingGold} gold.";
         }
     }
 
