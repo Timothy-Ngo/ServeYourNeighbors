@@ -624,7 +624,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &10376246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -644,8 +644,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 704.9071, y: 269.5}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 24, y: 21.622}
+  m_SizeDelta: {x: 100, y: 95.9443}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &10376247
 MonoBehaviour:
@@ -10355,8 +10355,9 @@ MonoBehaviour:
   reviewsScript: {fileID: 648400169}
   continueReviewButton: {fileID: 4766183069804671131}
   tablesUpgradeButton: {fileID: 1180128179}
-  skillTreeScreen: {fileID: 0}
-  synMeter: {fileID: 0}
+  skillTreeScreen: {fileID: 843552517}
+  placementSystem: {fileID: 1711253118}
+  synMeter: {fileID: 10376247}
   playerUI: {fileID: 91747036}
   endGameScreen: {fileID: 1555204348}
   outfitsScreenObj: {fileID: 2059942173}
@@ -14666,7 +14667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &843552518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23003,7 +23004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1206986927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33198,7 +33199,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1711253120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33234,6 +33235,9 @@ MonoBehaviour:
   topLeftCorner: {x: 0, y: 0}
   bottomRightCorner: {x: 0, y: 0}
   tablesUpgradeButton: {fileID: 1180128179}
+  confirmYesButton: {fileID: 0}
+  cancelButton: {fileID: 0}
+  _isEnabled: 0
   placementConfirmationScreen: {fileID: 0}
 --- !u!4 &1711253121
 Transform:
