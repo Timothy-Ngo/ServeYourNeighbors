@@ -365,6 +365,7 @@ MonoBehaviour:
   statusText: {fileID: 4625984406902773535}
   chargesText: {fileID: 4362469954385424206}
   timerScript: {fileID: 4587332940636770759}
+  obstacleScript: {fileID: 9039655795500888282}
   maxCharges: 2
 --- !u!61 &2780681128102509496
 BoxCollider2D:
@@ -795,6 +796,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7375062813959073967, guid: 44d7adf61823e0742be1a67f84e59584, type: 3}
   m_PrefabInstance: {fileID: 3903303469091791691}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &9039655795500888282 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5429123291025871761, guid: 44d7adf61823e0742be1a67f84e59584, type: 3}
+  m_PrefabInstance: {fileID: 3903303469091791691}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14ea7c589bab6f4b9e0df8dfc10cd15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4625984405078241001
 PrefabInstance:
   m_ObjectHideFlags: 0

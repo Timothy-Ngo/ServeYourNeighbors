@@ -12,7 +12,7 @@ public class Distraction : MonoBehaviour
     [SerializeField] TextMeshProUGUI chargesText;
 
     public Timer timerScript;
-
+    public Obstacle obstacleScript; 
     [SerializeField] int maxCharges = 2;
     int currentCharges;
 

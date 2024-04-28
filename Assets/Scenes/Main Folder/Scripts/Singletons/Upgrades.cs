@@ -519,17 +519,17 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             UpdateTablesList();
             //NotifyObservers();
             CustomerPayments.inst.standardPayment += 10;
-            if (numTables == maxTables - 1)
-            {
-                tablesDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
-                tablesDescription.text = "Max number of tables reached.";
-            }
             Debug.Log("In table placement mode");
         }
         else
         {
             Debug.Log("Insufficient funds for table upgrade");
         }
+    }
+
+    public bool MaxTablesReached()
+    {
+        return tables.Count == maxTables;
     }
 
     public void CookStations() // Deprecated
@@ -567,11 +567,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             placementSystem.isEnabled = true;
             UpdateCookStationsList();
             //NotifyObservers();
-            if (numCookStations == maxCookStations - 1)
-            {
-                cookStationsDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
-                cookStationsDescription.text = "Max number of cook stations reached.";
-            }
         }
         else
         {
@@ -579,6 +574,10 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         }
     }
 
+    public bool MaxCookStationsReached()
+    {
+        return cookStations.Count == maxCookStations;
+    }
 
     public void Counters() // Deprecated
     {
@@ -707,7 +706,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             animatronicPlacementMode = true;
             placementSystem.gameObject.SetActive(true);
             placementSystem.isEnabled = true;
-            animatronicDescription.gameObject.transform.parent.GetComponent<Button>().interactable = false;
             animatronicDescription.text = "Max number of animatronics reached.";
 
         }
@@ -715,6 +713,11 @@ public class Upgrades : MonoBehaviour, IDataPersistence
         {
             Debug.Log("Insufficient funds for animatronic upgrade");
         }
+    }
+
+    public bool MaxAnimatronicsReached()
+    {
+        return hasAnimatronic;
     }
 
     public void ImproveLayout(int cost) // Uprades main layout 

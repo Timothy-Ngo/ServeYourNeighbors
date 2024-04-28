@@ -19,6 +19,7 @@ public class Cooking : MonoBehaviour
     private Sprite ingredientSprite;
     [SerializeField] Timer timer_script;
     [SerializeField] QTEvent qt_script;
+    public Obstacle obstacleScript;
 
     [Header("-----STATE-----")]
     bool prepping = false;
