@@ -9,7 +9,7 @@ public class IncreasedSpeedSkill : Skill
 
     [SerializeField] PlayerMovement pm; // Needs to be assigned in the inspector
     [SerializeField] int requiredNumTables = 3;
-    [SerializeField] float newSpeed = 10f;
+    [SerializeField] float newSpeed = 5f;
     public void Start()
     {
         Select();
