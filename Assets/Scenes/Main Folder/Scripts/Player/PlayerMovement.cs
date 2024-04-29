@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour {
     // movement
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private float speed = 5f;
+    private float speed = 6f;
     float speedLimiter = 0.7f;
     float inputHorizontal, inputVertical;
     bool facingRight = true;
