@@ -33,7 +33,7 @@ public abstract class Skill : MonoBehaviour
         SkillInformation.inst.confirmButton.gameObject.SetActive(false);
         SkillInformation.inst.skillCostText.text = "Skill Acquired";
         SkillInformation.inst.missingRequirementsText.text = "";
-        
+        SkillInformation.inst.exitButton.Select();
         
 
     }

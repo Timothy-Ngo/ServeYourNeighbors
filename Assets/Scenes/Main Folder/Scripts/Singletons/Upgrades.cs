@@ -192,8 +192,13 @@ public class Upgrades : MonoBehaviour, IDataPersistence
     {
         int cookStationIndex = 0;
         int tableIndex = 0;
+        
         foreach(GameObject obj in selectableItems)
         {
+            foreach (Obstacle obs in obj.GetComponentsInChildren<Obstacle>())
+            {
+                obs.RemoveObstacle();
+            }
             if (obj.CompareTag("IngredientBox"))
             {
                 if (obj.name.Contains("tomato"))
@@ -228,6 +233,14 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             else if (obj.CompareTag("TrashCan"))
             {
                 obj.transform.position = trashCanPos;
+            }
+            foreach (Obstacle obs in obj.GetComponentsInChildren<Obstacle>())
+            {
+                if (!obs.placementObstacle)
+                {
+                    obs.PlaceObstacle();
+                }
+
             }
         }
     }
@@ -624,7 +637,6 @@ public class Upgrades : MonoBehaviour, IDataPersistence
             Currency.inst.Withdraw(changeLayoutCost);
             changeLayoutMode = true;
             placementSystem.gameObject.SetActive(true);
-            placementSystem.isEnabled = true;
             // Find all selectable items for placement mode keyboard input (i.e. tables, cook stations, animatronics)
             foreach (Transform cookTransform in cookStationsParent.GetComponentInChildren<Transform>()) // Add cook stations as selectable
             {
@@ -651,6 +663,7 @@ public class Upgrades : MonoBehaviour, IDataPersistence
                 }
             }
             SaveOldItemPositions();
+            placementSystem.isEnabled = true;
 
         }
         else

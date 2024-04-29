@@ -26,9 +26,11 @@ public class SkillInformation : MonoBehaviour
     public TextMeshProUGUI skillDescText;
     public TextMeshProUGUI skillCostText;
     public Button confirmButton;
-
+    public Button exitButton;
     public TextMeshProUGUI missingRequirementsText;    
     public GameObject missingRequirementsObj;
+
+
 
 
    
