@@ -799,7 +799,7 @@ MonoBehaviour:
   isAcquired: 0
   pm: {fileID: 527837170}
   requiredNumTables: 3
-  newSpeed: 10
+  newSpeed: 8
 --- !u!114 &15058232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16191,6 +16191,7 @@ MonoBehaviour:
   resumeButton: {fileID: 324274106}
   settingsScreen: {fileID: 1789378608}
   layoutScreen: {fileID: 1884690769}
+  outfit: {fileID: 0}
   upgradeConfirmation: {fileID: 456010572}
   counters1: {fileID: 1649677867}
   counters2: {fileID: 973383987}
