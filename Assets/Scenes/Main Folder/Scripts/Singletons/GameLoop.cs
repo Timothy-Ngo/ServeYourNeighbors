@@ -273,8 +273,10 @@ public class GameLoop : MonoBehaviour, IDataPersistence
             int randInt = Random.Range(0, 6);
             if (randInt == 0)
             {
-
                 rainyDay.SetActive(true);
+            } else
+            {
+                rainyDay.SetActive(false);
             }
         }
 
