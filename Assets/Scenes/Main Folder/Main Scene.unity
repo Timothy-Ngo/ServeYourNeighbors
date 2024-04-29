@@ -7736,7 +7736,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -552.5, y: -290.6}
-  m_SizeDelta: {x: 4000, y: 4000}
+  m_SizeDelta: {x: 5500, y: 4000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &253546557
 MonoBehaviour:
@@ -37875,7 +37875,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1318274504
 RectTransform:
   m_ObjectHideFlags: 0
@@ -37893,7 +37893,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -552.5, y: -290.6}
-  m_SizeDelta: {x: 4000, y: 4000}
+  m_SizeDelta: {x: 5500, y: 4000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1318274505
 MonoBehaviour:
@@ -47991,6 +47991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 552d9b40293aa3446a20f1b89dafc992, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layout: 1
   layout1: {fileID: 502789850}
   trashcan1: {fileID: 267597664}
   tomatoBox1: {fileID: 746962693}
@@ -50150,6 +50151,18 @@ PrefabInstance:
       propertyPath: prompt
       value: 
       objectReference: {fileID: 2079720838}
+    - target: {fileID: 7681427229920770045, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+      propertyPath: layout1Spawn
+      value: 
+      objectReference: {fileID: 103620249}
+    - target: {fileID: 7681427229920770045, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+      propertyPath: layout2Spawn
+      value: 
+      objectReference: {fileID: 1727516681}
+    - target: {fileID: 7681427229920770045, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
+      propertyPath: layout3Spawn
+      value: 
+      objectReference: {fileID: 450163894}
     - target: {fileID: 7681427229920770045, guid: c2369db19c9d72f4196723c2ccf2ad3a, type: 3}
       propertyPath: playerSpawnObj
       value: 

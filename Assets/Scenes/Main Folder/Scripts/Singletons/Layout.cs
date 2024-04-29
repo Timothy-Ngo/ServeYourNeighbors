@@ -18,7 +18,7 @@ public class Layout : MonoBehaviour, IDataPersistence
 
     [Header("-----SCENE LAYOUT-----")]
     bool newLayout = true;
-    int layout = 1;
+    public int layout = 1;
     Vector3 trashcanPosition;
     Vector3 tomatoBoxPosition;
     Vector3 flourBoxPosition;

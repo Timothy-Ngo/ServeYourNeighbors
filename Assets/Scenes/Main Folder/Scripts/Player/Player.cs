@@ -20,8 +20,11 @@ public class Player : MonoBehaviour, IDataPersistence
     }
 
     [Tooltip("Needs to be a game object with the obstacle script on it placed on a point for the player to spawn")]
-    public GameObject playerSpawnObj;
     public Vector2 playerSpawn;
+    public GameObject layout1Spawn;
+    public GameObject layout2Spawn;
+    public GameObject layout3Spawn;
+
 
 
     public void LoadData(GameData data)
@@ -42,13 +45,32 @@ public class Player : MonoBehaviour, IDataPersistence
 
     void Start()
     {
-        playerSpawn = playerSpawnObj.transform.position;
+        playerSpawn = new Vector2();
+        int layout = Layout.inst.layout;
+        if (layout == 1)
+        {
+            playerSpawn = layout1Spawn.transform.position;
+        }
+        else if (layout == 2)
+        {
+            playerSpawn = layout2Spawn.transform.position;
+        }
+        else if (layout == 3)
+        {
+            playerSpawn = layout3Spawn.transform.position;
+        }
+        else
+        {
+            Debug.LogError("Could not find player spawn");
+
+        }
         // Initialize player spawn
         Activate();
     }
 
     public void MoveToSpawnPoint()
     {
+        int layout = Layout.inst.layout;
         transform.position = playerSpawn;
     }
 
