@@ -79,6 +79,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
     [SerializeField] private GameObject layoutScreen;
     private bool layoutSelected = false;
 
+    public GameObject outfit; 
+
     public void LoadData(GameData data)
     {
         day = data.day;
@@ -340,6 +342,8 @@ public class GameLoop : MonoBehaviour, IDataPersistence
 
         // Reapply obstacles
         FoodieSystem.inst.pathfinding.UpdateObstacles();
+
+        Player.inst.outfitObject.GetComponent<Animator>().Play(Player.inst.outfitName);
 
         // Save game data
         SaveSystem.inst.SaveGame();
