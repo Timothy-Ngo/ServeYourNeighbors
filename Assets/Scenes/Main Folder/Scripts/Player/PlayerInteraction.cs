@@ -92,6 +92,7 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (prevObject != currentObject)
                 {
+                    
                     //Debug.Log("closest object is now: " + closestObject.gameObject.name);
                     //calledCollisionFunction = false;
                 }
@@ -643,8 +644,17 @@ public class PlayerInteraction : MonoBehaviour
         else if (collision.CompareTag("IngredientBox"))
         {
             //Debug.Log("Within range of ingredient box");
+            if (ingredientBoxScript != null)
+            {
+                if (ingredientBoxScript.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Open"))
+                {
+                    ingredientBoxScript.Animate("Close");
+
+                }
+            }
             ingredientBoxRange = true;
             ingredientBoxScript = collision.gameObject.transform.GetComponent<IngredientBox>();
+
             ingredientBoxScript.Animate("Open");
             //Debug.Log("ingredientBox: " + collision.gameObject.name);
             
@@ -755,7 +765,12 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (collision.CompareTag("IngredientBox"))
         {
-            ingredientBoxScript.Animate("Close");
+            
+            if (ingredientBoxScript.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Open"))
+            {
+                ingredientBoxScript.Animate("Close");
+
+            }
             ingredientBoxRange = false;
             ingredientBoxScript = null;
 
