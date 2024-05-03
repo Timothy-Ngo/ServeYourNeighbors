@@ -34,7 +34,7 @@ public class CustomerPayments : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-    
+        /*
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if (Input.GetKeyDown(KeyCode.F5))
@@ -42,6 +42,7 @@ public class CustomerPayments : MonoBehaviour
                 CollectPayment(1000);
             }
         }
+        */
     
     }
 
