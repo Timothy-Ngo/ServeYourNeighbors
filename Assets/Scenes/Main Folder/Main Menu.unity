@@ -1886,8 +1886,24 @@ PrefabInstance:
       value: DisableSettingsScreen
       objectReference: {fileID: 0}
     - target: {fileID: 5479738235822360163, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479738235822360163, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479738235822360163, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479738235822360163, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -631
+      value: -670
+      objectReference: {fileID: 0}
+    - target: {fileID: 5479738235822360163, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 459
       objectReference: {fileID: 0}
     - target: {fileID: 5479738235891095330, guid: 048c5a0840925e44f81171245aec5d86, type: 3}
       propertyPath: m_Colors.m_SelectedColor.b
